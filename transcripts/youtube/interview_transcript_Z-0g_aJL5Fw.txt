@@ -1,0 +1,414 @@
+SOURCE: YouTube
+VIDEO_ID: Z-0g_aJL5Fw
+URL: https://www.youtube.com/watch?v=Z-0g_aJL5Fw
+GPU: 0
+DURATION: 1981.0s (33.0 min)
+TRANSCRIBED: 2025-11-28 09:31
+================================================================================
+
+FULL TRANSCRIPT:
+--------------------------------------------------------------------------------
+ Design Tiktok. Hey everyone, I'm here today with Adam, and today we'll be doing a mock system design interview. I'm really excited to have Adam in this video. Adam, do you mind just introducing yourself and telling us a little bit about what you work on? Sure. Hi, my name's Adam. I work on Cloud Engineering and Backend Systems, currently at Oracle, but I'll be moving over to Google soon. Awesome. Yeah, we're really excited to jump into a practice system design interview today. The question that we'll be doing is design Tiktok. Okay, cool, design Tiktok. Well, this is a fun, I actually have never used Tiktok. Great. So maybe we can start by just quickly, kind of, if you could give me, I have an idea. Obviously, I know what it is, but if you could just kind of give me a quick overview of what we're looking for. It may be a little bit specific on the portion of Tiktok we're wanting to focus on. Awesome. Yeah. So, yeah, high level overview of Tiktok is, it's a mobile app, so it's for video sharing between users. And the basic idea is you're able to upload a video to Tiktok, and then you're able to view a feed of videos. So you see one video time, you scroll up, you see the next video. You can follow users, so you see their videos that they post. And then you can also perform actions on those videos, like favoriting them or commenting on them, I think. So those are sort of the basic things we'll want to support. That makes sense. Sorry, I'm just going to take a minute and kind of jot down some notes real quick. Sounds great. Yeah, I mean, time I'll switch over and just screen share here into our whiteboard. Cool, so. So it looks like Tiktok is a mobile app. If it's okay with you, I think I'm just going to focus on sort of the back end infrastructure and not so much go into the mobile app portion, just because I think there's a little bit more feature rich detail there, the back end system. Yeah, sounds great. But what I can see, the first thing I kind of want to dive into are sort of these functional requirements. And what I say functional requirements, I just kind of mean, you know, the sort of top level buckets of work that we're wanting to look into. So the first thing from what you explain to me was upload videos, right? So a user from their mobile device or or really in theory, since we're just dividing the device in the back end, if it's okay, I'm going to assume that we're just going to create an API that is sort of. Client agnostic that's going to accept user data to upload videos. So we're going to kind of think sort of section one here, if I was going to write this up, these functional. I'm just going to say number one here is upload videos. And so when we upload videos. These videos. They're sort of time box, right? It's sort of the same way of Instagram, like they only are about 15 seconds each. Is that right? Yeah. And yeah, we can assume there, you know, 30 seconds to maybe a maximum of like a minute long. Okay. So max one minute. Cool. And I'm also assuming that if I'm uploading videos, there's also, would there be like text associated with that? Like sort of like it with Instagram or Facebook where you can upload a photo, but you can also like tag and add like text and, you know, things like that. Yeah, that's a good question. Yeah, let's assume like, yeah, you can, you can add like a comment or caption to it. We don't need to get maybe into the details of like tagging and how that would work, but yeah, maybe some text data associated with it. Okay, cool. So let's say a video plus text. Cool. And then kind of number two here, what I'm thinking is you said view feed. So when I think about, you know, doing the feed, what we're doing is we're aggregating. And correct me from all we're talking about aggregating videos from. Is it people I follow only? Is it people I follow? So plus sort of like I know that TikTok has this special algorithm that they used to grab recommended videos. Would it be kind of like can, can I assume they're sort of a mixture of those two things? Yeah, I think that's, I think that's a good question. For simplicity, we could focus maybe on videos of people you follow, but would be interested in hearing about sort of how you would sort of create like a trending or like video recommendation as well. For the purposes of this, do you want me to include like an ability for me to comment like videos as part of that functionality? Yeah, let's, let's try to build out how we would like favorite videos and maybe like follow particular creators. Okay, cool. So yeah, that's actually my next functional requirement here, which is kind of follow users. So favoriting, following, commenting, forwarding. I don't know if they allowed that but just I'll just kind of bucket that as like a sort of video interaction end point. Sure. Cool. Alright, so that kind of covers these as like the general functional requirements. So really quickly, I just want to talk about these non functional. So really non functional, what I mean by that is kind of like let's start with availability. The ability. Latency. And scale. So. So it sounds to me like I'm going to make an assumption here that this is a hot needs to be a highly available system, just simply because of the way the scale of the users that are going to be using it. Sounds like it's going to be a lot and it really because of the serving videos, it does need to be highly available. So I'm just going to say roughly, you know, highly available. I'm going to say around 99.999%. If that's correct, that sounds about right for you. Yeah, that sounds good. You know, there's always these trade outs, right? Like when we talk about when I'm thinking about how I'm going to design a system, I'm just trying to understand like if it's not super high, like if it's maybe less doesn't need to be as highly available. Maybe there's certain things we can do to balance our budget and how we're going to budget for our compute resources and that sort of thing. So cool. So I also think about latency. You know, the one good thing is we're from the side of it, since it is a mobile device, it sounds like we can kind of cash a lot of content on the device itself. So when we initially pull stuff, we'll be able to obviously get the top level stuff really quickly, but after that, we can kind of be pulling stuff in the background. So we do. Sounds like we have a little bit of leeway there. Is that sound about right to you? Yeah, that sounds good. I think maybe later on, we can talk a little bit about the latency or how this would differ across different features like upload versus download and how to think about that. Okay, I'll just put TBD for that. Cool. And then scale. So can you just give me a rough estimate on like if we're talking about users. Can you do you have any kind of idea how many users we're talking about here, like in a day. Yeah, in a day, let's say we want to support like a million active users in a day. Okay. So a million daily active users. Cool. So I'm just going to do a couple of estimates here and we're talking about this. So just this gives me an idea of, you know, how I'm going to store everything. So we said max here for the video. Videos were about. What's the one minute? I'm just going to make a quick assumption and say that a minute of compressed H264 video is about five megabytes. That sounds about right to you. And then maybe we can say each user is uploading to per day equals 10 megabytes per day per day per user. I might get too much into this yet. I just want to get a rough idea for the big chunk here, which is videos. You know, the rest of it user metadata is going to be minimal. I think it's going to be, you know, one K per user per day. So I think that's a pretty good estimate, roughly. Cool. Okay. Cool. So I think with all that. Is there anything else I'm kind of, you can see that I'm missing here. Is that seem like a rough. Good. I sort of overview of the system that we're trying to tackle here. Yeah, it seems like a good overview. I think we can. We can dive in now. Okay. Cool. So I think I'm going to start with just kind of a couple of API endpoints just to get a wrap my head around. I think what I'd like to start with is we'll just start here and we'll say upload video, because we have it. Really, that's going to be. If I talk about, I don't want you to much in the parameters of it, but if I talk about the database schema that sort of backs that. Really, our user object is going to be something along the lines of. We're going to have some sort of user ID. And that's going to be like a UID. We're going to have a. Some sort of video. Video link. That's actually, I'll get to that later, but I think that's going to be once we upload the video, we're going to want to store it. I think it's some sort of blob storage, I guess three. So this will be a fully qualified link to that, to that object. So this would be like a URL. And then maybe meta, this would be just like meta data. This would just be string string data. So that's kind of the first. And point I'm thinking. So let me just kind of go into that real quick. I'm not going to get into much of the user detail stuff here, just because I think that's sort of a solved problem. I think we can get to that if we have time. But for the scope of this, I'm not going to talk too much about it. So I'm just going to take a minute and kind of think of this through. Okay, cool. So I think. Obviously, we're going to want some sort of database, right? To back this. And this is, this is going to be where we store this table. So I'm assuming this is going to, for right now, I'm just going to make an assumption this is going to be a relational database. Postgres, whatever flavor of relational database you should choose. So upload video is going to send this, this object to the deep, the relational database. Could you just briefly sort of talk about maybe the differences between a relational database versus another type of database and why we might want to use this. Yeah, so like a relational database versus like a knows equal database, for example, relation is going to be a little bit more structured in the data. So typically you'll use relational databases for things like, you know, user data objects linking different tables together. So, for example, you can have like a single user that has many videos. So you would have that many video objects. And those can be stored in two different tables. You can do SQL queries against those things like knows equal databases are really good for unstructured data, like log data, things like that. So a little bit more freeform in nature, not as, you know, not as structured in the sense that you're going to be querying that data and doing a lot of joins to it. You're kind of just going to be more like freeform searching for key values, keys and values inside that data. Yeah, in this case, you know, relational database can be relational database can be a lot more strict, but can also be more space and speed efficient or specific query. So yeah, that makes sense here. So yeah, like I think what we do is upload the video object to this database. I'm sorry, rather, this would actually just be the video data, right, it would what would be the best way to describe this video. I just say the video table, right, so this is going to send to the video table. The idea here is that this is just the data because what we're then going to want to do is send the actual video object to some sort of cloud bucket. Like I mentioned before, so like s3. This is cloud thing. So like this would be like a blob store. The idea here is that, yeah, the video itself actually lives here and then in this table, we have a link to that. So we're going to be running like a post. Really running a post to this API endpoint, this upload video endpoint. Let me just move all this over a bit. This would be my video plus my user information. The upload video accepts the video and the user information. We save it in the table. We upload it to blob storage and then we're going to return like some sort of, you know, some sort of 200 response, which is what the API would respond with to the app itself saying that the video you're correctly. So that kind of handles our upload section is pretty straightforward for the upload section there. Is there any questions about that or did you have anything I think I missed there? No, I think that makes a lot of sense. Yeah, we have the sort of overview of where the video goes, where the metadata goes, and how the app would sort of make that request. So I think that makes sense. Awesome. So let's talk really quick about the view feed. So this will be kind of a similar endpoint view feed. And what this is actually going to be is a get request. So when you open up the app. So when you open up the app. I think what we want to load this content. Right when the application opens like I'm guessing we want to start pre loading as much as we can. Ahead of time so that the user isn't waiting too much for videos to load, right? Yeah, I think we'd want to do that. Insofar as it would let us, you know, view videos faster, but maybe not so much that it would, you know, maybe use a user bandwidth and things like that. Yeah, I think maybe like the top, like the, whatever the first like three videos, for example, we'd want to just grab those as quick as possible. Because the reason I asked that is I think it would make sense to sort of like have some sort of like redis cache over here. Some sort of cache, whatever it is. And the idea here would be that we actually pre load a list of like user. But the top 10 videos that we're going to load for the user before they even get to the view feed page. So like if a user with a specific user UID hits this view feed, we're going to go to this cache that's already pre built and we're going to grab those top videos that are already pre selected. Like, for example, this UID would give me this would respond with like, you know, 10 videos, video links rather that are associated with that user ID and the links for the blob storage so that the app would then be grabbing them from the blob storage right away. Does that make sense? Yeah, it makes sense. Yeah, that's super interesting. Can you like tell me a little bit more about how they cash with work or yeah. So I'm actually thinking about a service here in the background that would run. So this would sort of like a be a pre cache service service. Precache service. And this would just kind of run potentially on like a like a schedule, but also just like maybe on demand. Something like that. And what it would do is it would compile playlists for users and pre cache them. So it could be potentially like we could sort of base it on when the user actually goes and does the get request that we sort of pre reload it for the next one, or we just do it in the background. There's a couple of strategies we could use there. What I'm trying to get away from is relying too much because from what I can tell this system seems very read heavy, right? Like there's a lot there's going to be a lot of read reading going on. So in addition to having this main database, which I'll get to scaling, I think in a bit, but I think for this main main read data, this main database. We're also going to want to have some sort of read worker, which would be like a read only database. And the reason being we don't want to create too much load on this single database that's accepting these uploads. We want to have something that's managing the reads. So in fact, I would actually do something like this where the second area is pulling from the primary. And this is used for read only, which builds the pre cache, which loads the cache, which then when the view feed gets hit, it loads it instantly. At least the query, right? So does that make sense? Yeah, that makes a lot of sense. I think getting back to one of the first questions about latency. Can you talk a little bit about how introducing this cache would sort of affect. Latency in the system and seeing updates and things like that? Yeah, for sure. So one thing we need to consider is how quickly we want like if I don't know if actually the video that I upload. I don't think that would show up in my feed. And if so, yeah, I think we'd what so this feed is basically a curated list of videos. So I think the point here is that because I know that TikTok has like a special algorithm they use to populate your feed. So I'm trying to get rid of all that happening at the moment of get like at the moment of loading the app. I'm trying to have it free built, right? So that right away we're getting what we need from the backend. And now having to wait for some sort of service to compile that on the fly. Plus this also solves a little bit of our scaling issue because if we have situations where you can imagine. TikTok has a million users if what if one million users all get on at the same time and run the same exact query. We could really kill our databases because we're running all these queries at the same time and we could also up that latency. So you can solve that with some like, you know, replete like auto scaling groups, but even auto scaling groups take time to sort of spin up. So that's kind of the thing I'm thinking about here. But the real key here is I think I just noticed that this seems very read heavy. So I was trying to get to the point where those reads were sort of managed on their own. Yeah, I think it's a great great insight. Cool. I think that kind of handles the view feed for the most part. Yeah, I feel pretty good about that. Last piece here would be favoriting videos. I think we would have just another endpoint here where we would. So I think we have another one. And this would just be like, I'm just going to call this. User activity, maybe, or something like that. This would be. That's a little bit generic, but I'm going to speak through this. We're in a little bit long time. I try and name it something better in the real world, something more descriptive of what it actually did. But the idea here is that when I hit the user activity, this is like follow, this is doing liking videos, that sort of thing. And I apologize. I'm actually going to just move this around a little bit so that I can get to my database cleaner. Yeah. Just put this down a bit. So yeah, the idea behind user activity is this is literally just going to hit this RDP, the database. And so for my, I would actually have a different table here. I'd have like a some sort of. Just put this over here. So this table would look something a lot of wise. Still have a user ID and a UID. I think we would have. So. Yeah, I think. I think this would be a, like a followers, like a, like a user activity table. The idea here would be. We're going to need a couple of keys here. So following. Is actually going to have to be a foreign key to another table. Because we're going to have for anyone user, we're going to be obviously be following multiple other accounts, right? So we're going to need another table in there that's got a list of user IDs that I'm following user accounts. In addition to that, we're going to want likes. So we're going to want to store another, I think another foreign key to like a videos table. So I'm assuming we, like. I'm assuming if each account has a like a table of videos, like we're seeing up here. We would basically have. Sorry, I think I missed something here. We're probably going to want to have a. Like a video. UID, like a video ID. This would be a UID field here so that I can. I'm going to add a key to this video ID and say that that's a list of like the likes of the likes that I'm liking. And this all feeds later into the pre cash service algorithm, which I'm not going to get into, but I think that's important to store. So basically whatever activity I have, this user activity is going to hit the database. I'm going to store this up here for now. It's going to hit this database. And add that to my to my to this table, right? So following this user, I'm liking this video, et cetera. So that if I ever needed to like rent a get request, which sounds like the pre cash service will actually need to run. Some sort of request against user activity or. Or some sort of. Maybe we have like an internal service that manages that I'm not sure. But yeah, I. I have an API that would that would return all the users likes and followers essentially as I'm getting at. And maybe that's a get request here from the user activity. But that's sort of the rough idea of what I'm thinking for that. Does that make sense from sort of the flow perspective? Yeah, that makes sense. Awesome. Okay. Well, yeah, I think we've got sort of the main interactions here. We've we've got most of the features sort of structurally built out. I'd be curious as sort of a follow up here. What do you think would be sort of the bottlenecks of the system? If you were to, for example, like 10 x the traffic one day or something like that to really scale things up. Yeah, absolutely. So first thing I have to think about is just regions before thinking about. If we're thinking about having this multiple versions of this in regions like regional data centers. We might want to consider that just geo locating. So my first inclination is just whatever user. We're going to put the user behind some sort of. Basically all these API points are going to want to go behind some sort of like CDN. Right. Content delivery network. So like Akamai or something like that because. Like the minute we grab a video, for example, let's say, let's say. In a lot of situations where we really 10 x traffic, it's typically in these scenarios around like. You know, somebody famous sends out a video, right? And we have they have 10 million followers and everyone wants to be the video. So the idea behind the CDN is the minute the first person grabs it. The CDN caches it locally. Behind the on the CDN system so that all the users who are grabbing it or just grabbing it from the CDN. And the CDN is doing like a, you know, a routing to the local, the closest. No, so that the internet traffic isn't always hitting my system. My blob storage, it's only hitting the CDN. So that sort of. Fronts because like obviously these videos are relatively big and the scale of like. And in the side when we're talking about 10 million users times. You know, five megabytes per video. That's a pretty substantial number. So putting a CDN behind that in front of that's important. Well, I think having a load balancer in front of these API endpoints as well. Well, we'll do thing once we'll just we'll do a couple things. Number one. Number one, it's going to let me. Commit to this highly available. Non-functional requirement because these API endpoints can be scalable. And we can do things like have multiple. Multiple deployments. So multiple services running. So the load balancer is picking which one of these services is available at any one time. And, you know, scaling them accordingly or sorry. Routing traffic accordingly. So A or B, for example. And so it's not only is it balancing between the two, but it also looks to do things like zero downtime deployment. So if we have to update this software, the backend software that's running this. Flip all traffic to be an only allow B to be serving traffic while. A is down and getting updates, right? And I A to B is very simple simplistic view that that could be hundreds of computers. That's sort of the idea there. So that's kind of where I see the bottleneck. Like I said, database is always kind of a bottleneck, I think. So we'd have definitely like sort of a main right database with read only. That workers. That manage sort of the get requests. And these would also be in some sort of auto scaling group so that we could scale them up as needed. Same thing with the pre cash service. I think we have a pretty good idea once we got more in detail with this. How are pre like what what we needed and what. As far as like timing and requirements around what we need for services. We have a pretty good understanding. So I don't know how like auto scaling this we need to be. It might just be able to be like set in stone or roughly equivalent to that so that we know ahead of times. Cash similar similar situation. Cash is a pretty scalable and things like that. The one last thing I think about is this right database. So. If we were to text traffic to this we'd want to consider doing some sort of database sharding so that we are. And we'd have some sort of database shard service here in front of this where. Where we are basically. Sorry, let me just clean this up a bit. Basically. So this sharding service sits in front of the right the all the rights. And it picks it's like a load balancer for databases essentially and it picks which database it's going to go to based on. There's all kinds of sharding. And algorithms or strategies you can do things like the simplest version of that is like if you took. Maybe like a region so all us requests go to this database all UK request go to this database you can do things like that. Yeah, so that's kind of the way I would picture it because that will help us to split the load between these databases. Awesome. Yeah, well, I think we've got we jumped into some details there. I think overall we've got all the pieces sort of in place and I think this is a pretty good stopping part. Do you have any sort of last things you would add to this before we before we sort of wrap up. No, I think just the something I might have had a little more time. I would maybe get a little bit more into the pre cash service because I think it might need its own almost separate like database structure and things like that. But I think like I said, I don't want to get too much into the weeds with the tiktok specific. Like other algorithmy kind of stuff. I think just kind of keeping it saying that this exists somewhere and we would just use it is good enough for the purposes of this interview. No, I feel I feel pretty good about it. Awesome. All right, well, yeah, let's call it here and yeah, so just sort of recapping what we went over. So we talked about designing API, talked about database structure, talked about different microservices and load balancing and things like that. I thought overall like you did a really awesome job of really clearly communicating all these ideas and also sort of jumping in and providing extra knowledge about the specific things. Even when I asked like a follow-up question or even without asking, I feel like you really jumped in and sort of showed you had mastery over like all of these topics, which was really awesome. And even though this is sort of a little bit of a condensed version of this, I feel like you could have gone multiple layers deeper on like any of these topics. So it really shows me that you know what you're talking about. But yeah, what did you think overall? Yeah, I think it's always interesting trying to design something that you've never used. So we're sort of having to make a couple of assumptions on, you know, knowing I know Facebook, I know Instagram. So I kind of understand those, but so making some assumptions on how it's used by people. Really kind of helped. Yeah, I thought it won't work. Well, thank you so much, Adam. And good luck to everyone on your system design interview. Thank you so much.
+
+TIMESTAMPED SEGMENTS:
+--------------------------------------------------------------------------------
+[0.0s - 2.0s] Design Tiktok.
+[5.4s - 8.4s] Hey everyone, I'm here today with Adam,
+[8.4s - 11.7s] and today we'll be doing a mock system design interview.
+[11.7s - 14.8s] I'm really excited to have Adam in this video.
+[14.8s - 17.0s] Adam, do you mind just introducing yourself
+[17.0s - 19.1s] and telling us a little bit about what you work on?
+[19.1s - 21.4s] Sure. Hi, my name's Adam.
+[21.4s - 24.8s] I work on Cloud Engineering and Backend Systems,
+[24.8s - 30.0s] currently at Oracle, but I'll be moving over to Google soon.
+[31.0s - 32.0s] Awesome.
+[32.0s - 37.0s] Yeah, we're really excited to jump into a practice system design interview today.
+[37.0s - 42.0s] The question that we'll be doing is design Tiktok.
+[42.0s - 45.0s] Okay, cool, design Tiktok.
+[45.0s - 49.0s] Well, this is a fun, I actually have never used Tiktok.
+[49.0s - 52.0s] Great. So maybe we can start by just quickly,
+[52.0s - 54.0s] kind of, if you could give me, I have an idea.
+[54.0s - 56.0s] Obviously, I know what it is,
+[56.0s - 59.0s] but if you could just kind of give me a quick overview of what we're looking for.
+[59.0s - 66.0s] It may be a little bit specific on the portion of Tiktok we're wanting to focus on.
+[66.0s - 68.0s] Awesome. Yeah.
+[68.0s - 71.0s] So, yeah, high level overview of Tiktok is,
+[71.0s - 75.0s] it's a mobile app, so it's for video sharing between users.
+[75.0s - 80.0s] And the basic idea is you're able to upload a video to Tiktok,
+[80.0s - 83.0s] and then you're able to view a feed of videos.
+[83.0s - 87.0s] So you see one video time, you scroll up, you see the next video.
+[87.0s - 91.0s] You can follow users, so you see their videos that they post.
+[91.0s - 94.0s] And then you can also perform actions on those videos,
+[94.0s - 97.0s] like favoriting them or commenting on them, I think.
+[97.0s - 102.0s] So those are sort of the basic things we'll want to support.
+[102.0s - 104.0s] That makes sense.
+[104.0s - 108.0s] Sorry, I'm just going to take a minute and kind of jot down some notes real quick.
+[108.0s - 113.0s] Sounds great. Yeah, I mean, time I'll switch over and just screen share here
+[113.0s - 115.0s] into our whiteboard.
+[115.0s - 118.0s] Cool, so.
+[118.0s - 121.0s] So it looks like Tiktok is a mobile app.
+[121.0s - 126.0s] If it's okay with you, I think I'm just going to focus on sort of the back end infrastructure
+[126.0s - 129.0s] and not so much go into the mobile app portion,
+[129.0s - 133.0s] just because I think there's a little bit more feature rich detail there,
+[133.0s - 135.0s] the back end system.
+[135.0s - 137.0s] Yeah, sounds great.
+[137.0s - 141.0s] But what I can see, the first thing I kind of want to dive into are sort of these
+[141.0s - 144.0s] functional requirements.
+[144.0s - 147.0s] And what I say functional requirements, I just kind of mean,
+[147.0s - 152.0s] you know, the sort of top level buckets of work that we're wanting to look into.
+[152.0s - 156.0s] So the first thing from what you explain to me was upload videos, right?
+[156.0s - 160.0s] So a user from their mobile device or or really in theory,
+[160.0s - 162.0s] since we're just dividing the device in the back end,
+[162.0s - 168.0s] if it's okay, I'm going to assume that we're just going to create an API that is sort of.
+[169.0s - 175.0s] Client agnostic that's going to accept user data to upload videos.
+[175.0s - 178.0s] So we're going to kind of think sort of section one here,
+[178.0s - 183.0s] if I was going to write this up, these functional.
+[183.0s - 187.0s] I'm just going to say number one here is upload videos.
+[187.0s - 192.0s] And so when we upload videos.
+[192.0s - 195.0s] These videos.
+[195.0s - 197.0s] They're sort of time box, right?
+[197.0s - 201.0s] It's sort of the same way of Instagram, like they only are about 15 seconds each.
+[201.0s - 203.0s] Is that right?
+[203.0s - 204.0s] Yeah.
+[204.0s - 209.0s] And yeah, we can assume there, you know, 30 seconds to maybe a maximum of like a minute long.
+[209.0s - 210.0s] Okay.
+[210.0s - 213.0s] So max one minute.
+[213.0s - 215.0s] Cool.
+[215.0s - 218.0s] And I'm also assuming that if I'm uploading videos,
+[218.0s - 222.0s] there's also, would there be like text associated with that?
+[222.0s - 226.0s] Like sort of like it with Instagram or Facebook where you can upload a photo,
+[226.0s - 232.0s] but you can also like tag and add like text and, you know, things like that.
+[232.0s - 233.0s] Yeah, that's a good question.
+[233.0s - 239.0s] Yeah, let's assume like, yeah, you can, you can add like a comment or caption to it.
+[239.0s - 243.0s] We don't need to get maybe into the details of like tagging and how that would work,
+[243.0s - 246.0s] but yeah, maybe some text data associated with it.
+[246.0s - 248.0s] Okay, cool.
+[249.0s - 254.0s] So let's say a video plus text.
+[254.0s - 255.0s] Cool.
+[255.0s - 261.0s] And then kind of number two here, what I'm thinking is you said view feed.
+[261.0s - 267.0s] So when I think about, you know, doing the feed, what we're doing is we're aggregating.
+[267.0s - 271.0s] And correct me from all we're talking about aggregating videos from.
+[271.0s - 273.0s] Is it people I follow only?
+[273.0s - 275.0s] Is it people I follow?
+[275.0s - 282.0s] So plus sort of like I know that TikTok has this special algorithm that they used to grab recommended videos.
+[282.0s - 286.0s] Would it be kind of like can, can I assume they're sort of a mixture of those two things?
+[286.0s - 290.0s] Yeah, I think that's, I think that's a good question.
+[290.0s - 296.0s] For simplicity, we could focus maybe on videos of people you follow,
+[296.0s - 303.0s] but would be interested in hearing about sort of how you would sort of create like a trending or like video recommendation as well.
+[303.0s - 313.0s] For the purposes of this, do you want me to include like an ability for me to comment like videos as part of that functionality?
+[313.0s - 324.0s] Yeah, let's, let's try to build out how we would like favorite videos and maybe like follow particular creators.
+[324.0s - 326.0s] Okay, cool.
+[326.0s - 331.0s] So yeah, that's actually my next functional requirement here, which is kind of follow users.
+[331.0s - 335.0s] So favoriting, following, commenting, forwarding.
+[335.0s - 343.0s] I don't know if they allowed that but just I'll just kind of bucket that as like a sort of video interaction end point.
+[343.0s - 344.0s] Sure.
+[344.0s - 345.0s] Cool.
+[345.0s - 349.0s] Alright, so that kind of covers these as like the general functional requirements.
+[349.0s - 357.0s] So really quickly, I just want to talk about these non functional.
+[357.0s - 370.0s] So really non functional, what I mean by that is kind of like let's start with availability.
+[370.0s - 377.0s] The ability.
+[377.0s - 382.0s] Latency.
+[382.0s - 384.0s] And scale.
+[384.0s - 386.0s] So.
+[386.0s - 399.0s] So it sounds to me like I'm going to make an assumption here that this is a hot needs to be a highly available system, just simply because of the way the scale of the users that are going to be using it.
+[399.0s - 412.0s] Sounds like it's going to be a lot and it really because of the serving videos, it does need to be highly available. So I'm just going to say roughly, you know, highly available.
+[412.0s - 417.0s] I'm going to say around 99.999%.
+[417.0s - 420.0s] If that's correct, that sounds about right for you.
+[420.0s - 421.0s] Yeah, that sounds good.
+[421.0s - 434.0s] You know, there's always these trade outs, right? Like when we talk about when I'm thinking about how I'm going to design a system, I'm just trying to understand like if it's not super high, like if it's maybe less doesn't need to be as highly available.
+[434.0s - 442.0s] Maybe there's certain things we can do to balance our budget and how we're going to budget for our compute resources and that sort of thing.
+[442.0s - 447.0s] So cool. So I also think about latency.
+[447.0s - 454.0s] You know, the one good thing is we're from the side of it, since it is a mobile device, it sounds like we can kind of cash a lot of content on the device itself.
+[454.0s - 463.0s] So when we initially pull stuff, we'll be able to obviously get the top level stuff really quickly, but after that, we can kind of be pulling stuff in the background. So we do.
+[463.0s - 467.0s] Sounds like we have a little bit of leeway there. Is that sound about right to you?
+[467.0s - 479.0s] Yeah, that sounds good. I think maybe later on, we can talk a little bit about the latency or how this would differ across different features like upload versus download and how to think about that.
+[479.0s - 483.0s] Okay, I'll just put TBD for that.
+[483.0s - 494.0s] Cool. And then scale. So can you just give me a rough estimate on like if we're talking about users.
+[494.0s - 499.0s] Can you do you have any kind of idea how many users we're talking about here, like in a day.
+[499.0s - 507.0s] Yeah, in a day, let's say we want to support like a million active users in a day.
+[507.0s - 509.0s] Okay.
+[509.0s - 512.0s] So a million daily active users.
+[512.0s - 517.0s] Cool. So I'm just going to do a couple of estimates here and we're talking about this.
+[517.0s - 522.0s] So just this gives me an idea of, you know, how I'm going to store everything.
+[522.0s - 526.0s] So we said max here for the video.
+[526.0s - 529.0s] Videos were about.
+[529.0s - 539.0s] What's the one minute? I'm just going to make a quick assumption and say that a minute of compressed H264 video is about five megabytes.
+[539.0s - 542.0s] That sounds about right to you.
+[543.0s - 555.0s] And then maybe we can say each user is uploading to per day equals 10 megabytes per day per day per user.
+[555.0s - 560.0s] I might get too much into this yet. I just want to get a rough idea for the big chunk here, which is videos.
+[560.0s - 569.0s] You know, the rest of it user metadata is going to be minimal. I think it's going to be, you know, one K per user per day.
+[569.0s - 573.0s] So I think that's a pretty good estimate, roughly.
+[573.0s - 577.0s] Cool. Okay. Cool. So I think with all that.
+[577.0s - 581.0s] Is there anything else I'm kind of, you can see that I'm missing here. Is that seem like a rough.
+[581.0s - 585.0s] Good. I sort of overview of the system that we're trying to tackle here.
+[585.0s - 588.0s] Yeah, it seems like a good overview. I think we can.
+[588.0s - 590.0s] We can dive in now.
+[590.0s - 596.0s] Okay. Cool. So I think I'm going to start with just kind of a couple of API endpoints just to get a wrap my head around.
+[596.0s - 609.0s] I think what I'd like to start with is we'll just start here and we'll say upload video, because we have it.
+[609.0s - 613.0s] Really, that's going to be.
+[613.0s - 621.0s] If I talk about, I don't want you to much in the parameters of it, but if I talk about the database schema that sort of backs that.
+[621.0s - 627.0s] Really, our user object is going to be something along the lines of.
+[627.0s - 631.0s] We're going to have some sort of user ID.
+[631.0s - 633.0s] And that's going to be like a UID.
+[633.0s - 636.0s] We're going to have a.
+[636.0s - 642.0s] Some sort of video.
+[642.0s - 643.0s] Video link.
+[643.0s - 648.0s] That's actually, I'll get to that later, but I think that's going to be once we upload the video, we're going to want to store it.
+[648.0s - 651.0s] I think it's some sort of blob storage, I guess three.
+[651.0s - 657.0s] So this will be a fully qualified link to that, to that object.
+[657.0s - 662.0s] So this would be like a URL.
+[662.0s - 667.0s] And then maybe meta, this would be just like meta data. This would just be string string data.
+[667.0s - 670.0s] So that's kind of the first.
+[670.0s - 674.0s] And point I'm thinking.
+[674.0s - 677.0s] So let me just kind of go into that real quick.
+[677.0s - 682.0s] I'm not going to get into much of the user detail stuff here, just because I think that's sort of a solved problem.
+[682.0s - 684.0s] I think we can get to that if we have time.
+[684.0s - 690.0s] But for the scope of this, I'm not going to talk too much about it.
+[690.0s - 702.0s] So I'm just going to take a minute and kind of think of this through.
+[702.0s - 705.0s] Okay, cool. So I think.
+[705.0s - 709.0s] Obviously, we're going to want some sort of database, right?
+[709.0s - 713.0s] To back this.
+[713.0s - 718.0s] And this is, this is going to be where we store this table.
+[718.0s - 725.0s] So I'm assuming this is going to, for right now, I'm just going to make an assumption this is going to be a relational database.
+[725.0s - 729.0s] Postgres, whatever flavor of relational database you should choose.
+[729.0s - 738.0s] So upload video is going to send this, this object to the deep, the relational database.
+[738.0s - 747.0s] Could you just briefly sort of talk about maybe the differences between a relational database versus another type of database and why we might want to use this.
+[747.0s - 757.0s] Yeah, so like a relational database versus like a knows equal database, for example, relation is going to be a little bit more structured in the data.
+[757.0s - 766.0s] So typically you'll use relational databases for things like, you know, user data objects linking different tables together.
+[766.0s - 771.0s] So, for example, you can have like a single user that has many videos.
+[771.0s - 773.0s] So you would have that many video objects.
+[773.0s - 775.0s] And those can be stored in two different tables.
+[775.0s - 785.0s] You can do SQL queries against those things like knows equal databases are really good for unstructured data, like log data, things like that.
+[785.0s - 797.0s] So a little bit more freeform in nature, not as, you know, not as structured in the sense that you're going to be querying that data and doing a lot of joins to it.
+[797.0s - 803.0s] You're kind of just going to be more like freeform searching for key values, keys and values inside that data.
+[803.0s - 816.0s] Yeah, in this case, you know, relational database can be relational database can be a lot more strict, but can also be more space and speed efficient or specific query.
+[816.0s - 820.0s] So yeah, that makes sense here.
+[820.0s - 824.0s] So yeah, like I think what we do is upload the video object to this database.
+[824.0s - 837.0s] I'm sorry, rather, this would actually just be the video data, right, it would what would be the best way to describe this video.
+[837.0s - 841.0s] I just say the video table, right, so this is going to send to the video table.
+[841.0s - 852.0s] The idea here is that this is just the data because what we're then going to want to do is send the actual video object to some sort of cloud bucket.
+[852.0s - 858.0s] Like I mentioned before, so like s3.
+[858.0s - 860.0s] This is cloud thing.
+[860.0s - 865.0s] So like this would be like a blob store.
+[865.0s - 872.0s] The idea here is that, yeah, the video itself actually lives here and then in this table, we have a link to that.
+[872.0s - 877.0s] So we're going to be running like a post.
+[877.0s - 887.0s] Really running a post to this API endpoint, this upload video endpoint.
+[887.0s - 894.0s] Let me just move all this over a bit.
+[894.0s - 900.0s] This would be my video plus my user information.
+[900.0s - 903.0s] The upload video accepts the video and the user information.
+[903.0s - 905.0s] We save it in the table.
+[905.0s - 918.0s] We upload it to blob storage and then we're going to return like some sort of, you know, some sort of 200 response, which is what the API would respond with to the app itself saying that the video you're correctly.
+[918.0s - 923.0s] So that kind of handles our upload section is pretty straightforward for the upload section there.
+[923.0s - 928.0s] Is there any questions about that or did you have anything I think I missed there?
+[928.0s - 931.0s] No, I think that makes a lot of sense.
+[931.0s - 940.0s] Yeah, we have the sort of overview of where the video goes, where the metadata goes, and how the app would sort of make that request.
+[940.0s - 942.0s] So I think that makes sense.
+[942.0s - 943.0s] Awesome.
+[943.0s - 946.0s] So let's talk really quick about the view feed.
+[946.0s - 957.0s] So this will be kind of a similar endpoint view feed.
+[957.0s - 961.0s] And what this is actually going to be is a get request.
+[961.0s - 968.0s] So when you open up the app.
+[968.0s - 970.0s] So when you open up the app.
+[970.0s - 974.0s] I think what we want to load this content.
+[974.0s - 979.0s] Right when the application opens like I'm guessing we want to start pre loading as much as we can.
+[979.0s - 984.0s] Ahead of time so that the user isn't waiting too much for videos to load, right?
+[984.0s - 987.0s] Yeah, I think we'd want to do that.
+[987.0s - 997.0s] Insofar as it would let us, you know, view videos faster, but maybe not so much that it would, you know, maybe use a user bandwidth and things like that.
+[997.0s - 1004.0s] Yeah, I think maybe like the top, like the, whatever the first like three videos, for example, we'd want to just grab those as quick as possible.
+[1004.0s - 1017.0s] Because the reason I asked that is I think it would make sense to sort of like have some sort of like redis cache over here.
+[1017.0s - 1020.0s] Some sort of cache, whatever it is.
+[1020.0s - 1030.0s] And the idea here would be that we actually pre load a list of like user.
+[1030.0s - 1036.0s] But the top 10 videos that we're going to load for the user before they even get to the view feed page.
+[1036.0s - 1049.0s] So like if a user with a specific user UID hits this view feed, we're going to go to this cache that's already pre built and we're going to grab those top videos that are already pre selected.
+[1049.0s - 1068.0s] Like, for example, this UID would give me this would respond with like, you know, 10 videos, video links rather that are associated with that user ID and the links for the blob storage so that the app would then be grabbing them from the blob storage right away.
+[1068.0s - 1069.0s] Does that make sense?
+[1069.0s - 1070.0s] Yeah, it makes sense.
+[1070.0s - 1076.0s] Yeah, that's super interesting. Can you like tell me a little bit more about how they cash with work or yeah.
+[1076.0s - 1083.0s] So I'm actually thinking about a service here in the background that would run.
+[1083.0s - 1087.0s] So this would sort of like a be a pre cache service service.
+[1087.0s - 1090.0s] Precache service.
+[1090.0s - 1099.0s] And this would just kind of run potentially on like a like a schedule, but also just like maybe on demand.
+[1100.0s - 1106.0s] Something like that. And what it would do is it would compile playlists for users and pre cache them.
+[1106.0s - 1119.0s] So it could be potentially like we could sort of base it on when the user actually goes and does the get request that we sort of pre reload it for the next one, or we just do it in the background.
+[1119.0s - 1122.0s] There's a couple of strategies we could use there.
+[1122.0s - 1129.0s] What I'm trying to get away from is relying too much because from what I can tell this system seems very read heavy, right?
+[1129.0s - 1132.0s] Like there's a lot there's going to be a lot of read reading going on.
+[1132.0s - 1141.0s] So in addition to having this main database, which I'll get to scaling, I think in a bit, but I think for this main main read data, this main database.
+[1141.0s - 1149.0s] We're also going to want to have some sort of read worker, which would be like a read only database.
+[1150.0s - 1157.0s] And the reason being we don't want to create too much load on this single database that's accepting these uploads.
+[1157.0s - 1160.0s] We want to have something that's managing the reads.
+[1160.0s - 1167.0s] So in fact, I would actually do something like this where the second area is pulling from the primary.
+[1167.0s - 1177.0s] And this is used for read only, which builds the pre cache, which loads the cache, which then when the view feed gets hit, it loads it instantly.
+[1177.0s - 1180.0s] At least the query, right?
+[1180.0s - 1182.0s] So does that make sense?
+[1182.0s - 1184.0s] Yeah, that makes a lot of sense.
+[1184.0s - 1187.0s] I think getting back to one of the first questions about latency.
+[1187.0s - 1191.0s] Can you talk a little bit about how introducing this cache would sort of affect.
+[1191.0s - 1195.0s] Latency in the system and seeing updates and things like that?
+[1195.0s - 1196.0s] Yeah, for sure.
+[1196.0s - 1203.0s] So one thing we need to consider is how quickly we want like if I don't know if actually the video that I upload.
+[1203.0s - 1206.0s] I don't think that would show up in my feed.
+[1206.0s - 1211.0s] And if so, yeah, I think we'd what so this feed is basically a curated list of videos.
+[1211.0s - 1220.0s] So I think the point here is that because I know that TikTok has like a special algorithm they use to populate your feed.
+[1220.0s - 1225.0s] So I'm trying to get rid of all that happening at the moment of get like at the moment of loading the app.
+[1225.0s - 1227.0s] I'm trying to have it free built, right?
+[1227.0s - 1231.0s] So that right away we're getting what we need from the backend.
+[1231.0s - 1235.0s] And now having to wait for some sort of service to compile that on the fly.
+[1235.0s - 1242.0s] Plus this also solves a little bit of our scaling issue because if we have situations where you can imagine.
+[1242.0s - 1249.0s] TikTok has a million users if what if one million users all get on at the same time and run the same exact query.
+[1249.0s - 1255.0s] We could really kill our databases because we're running all these queries at the same time and we could also up that latency.
+[1255.0s - 1265.0s] So you can solve that with some like, you know, replete like auto scaling groups, but even auto scaling groups take time to sort of spin up.
+[1265.0s - 1268.0s] So that's kind of the thing I'm thinking about here.
+[1268.0s - 1272.0s] But the real key here is I think I just noticed that this seems very read heavy.
+[1272.0s - 1276.0s] So I was trying to get to the point where those reads were sort of managed on their own.
+[1276.0s - 1279.0s] Yeah, I think it's a great great insight.
+[1279.0s - 1286.0s] Cool. I think that kind of handles the view feed for the most part.
+[1286.0s - 1289.0s] Yeah, I feel pretty good about that.
+[1289.0s - 1299.0s] Last piece here would be favoriting videos. I think we would have just another endpoint here where we would.
+[1299.0s - 1307.0s] So I think we have another one. And this would just be like, I'm just going to call this.
+[1307.0s - 1312.0s] User activity, maybe, or something like that. This would be.
+[1312.0s - 1317.0s] That's a little bit generic, but I'm going to speak through this. We're in a little bit long time.
+[1317.0s - 1322.0s] I try and name it something better in the real world, something more descriptive of what it actually did.
+[1322.0s - 1334.0s] But the idea here is that when I hit the user activity, this is like follow, this is doing liking videos, that sort of thing.
+[1334.0s - 1344.0s] And I apologize. I'm actually going to just move this around a little bit so that I can get to my database cleaner.
+[1344.0s - 1347.0s] Yeah.
+[1347.0s - 1354.0s] Just put this down a bit. So yeah, the idea behind user activity is this is literally just going to hit this RDP, the database.
+[1354.0s - 1361.0s] And so for my, I would actually have a different table here. I'd have like a some sort of.
+[1361.0s - 1365.0s] Just put this over here.
+[1365.0s - 1370.0s] So this table would look something a lot of wise. Still have a user ID and a UID.
+[1370.0s - 1373.0s] I think we would have.
+[1373.0s - 1376.0s] So.
+[1376.0s - 1378.0s] Yeah, I think.
+[1378.0s - 1387.0s] I think this would be a, like a followers, like a, like a user activity table. The idea here would be.
+[1387.0s - 1392.0s] We're going to need a couple of keys here. So following.
+[1392.0s - 1403.0s] Is actually going to have to be a foreign key to another table.
+[1403.0s - 1408.0s] Because we're going to have for anyone user, we're going to be obviously be following multiple other accounts, right?
+[1408.0s - 1417.0s] So we're going to need another table in there that's got a list of user IDs that I'm following user accounts.
+[1417.0s - 1421.0s] In addition to that, we're going to want likes.
+[1421.0s - 1428.0s] So we're going to want to store another, I think another foreign key to like a videos table.
+[1428.0s - 1432.0s] So I'm assuming we, like.
+[1432.0s - 1439.0s] I'm assuming if each account has a like a table of videos, like we're seeing up here.
+[1439.0s - 1443.0s] We would basically have.
+[1443.0s - 1447.0s] Sorry, I think I missed something here. We're probably going to want to have a.
+[1447.0s - 1449.0s] Like a video.
+[1449.0s - 1451.0s] UID, like a video ID.
+[1451.0s - 1455.0s] This would be a UID field here so that I can.
+[1455.0s - 1463.0s] I'm going to add a key to this video ID and say that that's a list of like the likes of the likes that I'm liking.
+[1463.0s - 1469.0s] And this all feeds later into the pre cash service algorithm, which I'm not going to get into, but I think that's important to store.
+[1469.0s - 1475.0s] So basically whatever activity I have, this user activity is going to hit the database.
+[1475.0s - 1477.0s] I'm going to store this up here for now.
+[1477.0s - 1480.0s] It's going to hit this database.
+[1480.0s - 1483.0s] And add that to my to my to this table, right?
+[1483.0s - 1488.0s] So following this user, I'm liking this video, et cetera.
+[1488.0s - 1494.0s] So that if I ever needed to like rent a get request, which sounds like the pre cash service will actually need to run.
+[1494.0s - 1497.0s] Some sort of request against user activity or.
+[1497.0s - 1500.0s] Or some sort of.
+[1500.0s - 1503.0s] Maybe we have like an internal service that manages that I'm not sure.
+[1503.0s - 1504.0s] But yeah, I.
+[1504.0s - 1510.0s] I have an API that would that would return all the users likes and followers essentially as I'm getting at.
+[1510.0s - 1514.0s] And maybe that's a get request here from the user activity.
+[1514.0s - 1517.0s] But that's sort of the rough idea of what I'm thinking for that.
+[1517.0s - 1520.0s] Does that make sense from sort of the flow perspective?
+[1520.0s - 1522.0s] Yeah, that makes sense.
+[1522.0s - 1523.0s] Awesome.
+[1523.0s - 1527.0s] Okay. Well, yeah, I think we've got sort of the main interactions here.
+[1527.0s - 1531.0s] We've we've got most of the features sort of structurally built out.
+[1531.0s - 1534.0s] I'd be curious as sort of a follow up here.
+[1534.0s - 1537.0s] What do you think would be sort of the bottlenecks of the system?
+[1537.0s - 1544.0s] If you were to, for example, like 10 x the traffic one day or something like that to really scale things up.
+[1544.0s - 1545.0s] Yeah, absolutely.
+[1545.0s - 1551.0s] So first thing I have to think about is just regions before thinking about.
+[1551.0s - 1558.0s] If we're thinking about having this multiple versions of this in regions like regional data centers.
+[1558.0s - 1562.0s] We might want to consider that just geo locating.
+[1562.0s - 1565.0s] So my first inclination is just whatever user.
+[1565.0s - 1570.0s] We're going to put the user behind some sort of.
+[1570.0s - 1574.0s] Basically all these API points are going to want to go behind some sort of like CDN.
+[1574.0s - 1575.0s] Right.
+[1575.0s - 1578.0s] Content delivery network.
+[1578.0s - 1581.0s] So like Akamai or something like that because.
+[1581.0s - 1586.0s] Like the minute we grab a video, for example, let's say, let's say.
+[1586.0s - 1591.0s] In a lot of situations where we really 10 x traffic, it's typically in these scenarios around like.
+[1591.0s - 1594.0s] You know, somebody famous sends out a video, right?
+[1594.0s - 1598.0s] And we have they have 10 million followers and everyone wants to be the video.
+[1598.0s - 1601.0s] So the idea behind the CDN is the minute the first person grabs it.
+[1601.0s - 1604.0s] The CDN caches it locally.
+[1604.0s - 1610.0s] Behind the on the CDN system so that all the users who are grabbing it or just grabbing it from the CDN.
+[1610.0s - 1614.0s] And the CDN is doing like a, you know, a routing to the local, the closest.
+[1614.0s - 1618.0s] No, so that the internet traffic isn't always hitting my system.
+[1618.0s - 1621.0s] My blob storage, it's only hitting the CDN.
+[1621.0s - 1623.0s] So that sort of.
+[1623.0s - 1627.0s] Fronts because like obviously these videos are relatively big and the scale of like.
+[1627.0s - 1631.0s] And in the side when we're talking about 10 million users times.
+[1631.0s - 1633.0s] You know, five megabytes per video.
+[1633.0s - 1636.0s] That's a pretty substantial number.
+[1636.0s - 1640.0s] So putting a CDN behind that in front of that's important.
+[1640.0s - 1645.0s] Well, I think having a load balancer in front of these API endpoints as well.
+[1645.0s - 1650.0s] Well, we'll do thing once we'll just we'll do a couple things.
+[1650.0s - 1655.0s] Number one.
+[1655.0s - 1659.0s] Number one, it's going to let me.
+[1659.0s - 1662.0s] Commit to this highly available.
+[1662.0s - 1666.0s] Non-functional requirement because these API endpoints can be scalable.
+[1666.0s - 1670.0s] And we can do things like have multiple.
+[1670.0s - 1671.0s] Multiple deployments.
+[1671.0s - 1673.0s] So multiple services running.
+[1673.0s - 1678.0s] So the load balancer is picking which one of these services is available at any one time.
+[1678.0s - 1682.0s] And, you know, scaling them accordingly or sorry.
+[1682.0s - 1684.0s] Routing traffic accordingly.
+[1684.0s - 1687.0s] So A or B, for example.
+[1687.0s - 1693.0s] And so it's not only is it balancing between the two, but it also looks to do things like zero downtime deployment.
+[1693.0s - 1698.0s] So if we have to update this software, the backend software that's running this.
+[1698.0s - 1703.0s] Flip all traffic to be an only allow B to be serving traffic while.
+[1703.0s - 1706.0s] A is down and getting updates, right?
+[1706.0s - 1712.0s] And I A to B is very simple simplistic view that that could be hundreds of computers.
+[1712.0s - 1714.0s] That's sort of the idea there.
+[1714.0s - 1716.0s] So that's kind of where I see the bottleneck.
+[1716.0s - 1719.0s] Like I said, database is always kind of a bottleneck, I think.
+[1719.0s - 1724.0s] So we'd have definitely like sort of a main right database with read only.
+[1724.0s - 1726.0s] That workers.
+[1726.0s - 1730.0s] That manage sort of the get requests.
+[1730.0s - 1737.0s] And these would also be in some sort of auto scaling group so that we could scale them up as needed.
+[1737.0s - 1739.0s] Same thing with the pre cash service.
+[1739.0s - 1744.0s] I think we have a pretty good idea once we got more in detail with this.
+[1744.0s - 1747.0s] How are pre like what what we needed and what.
+[1747.0s - 1752.0s] As far as like timing and requirements around what we need for services.
+[1752.0s - 1756.0s] We have a pretty good understanding. So I don't know how like auto scaling this we need to be.
+[1756.0s - 1764.0s] It might just be able to be like set in stone or roughly equivalent to that so that we know ahead of times.
+[1764.0s - 1766.0s] Cash similar similar situation.
+[1766.0s - 1771.0s] Cash is a pretty scalable and things like that.
+[1771.0s - 1775.0s] The one last thing I think about is this right database.
+[1775.0s - 1776.0s] So.
+[1776.0s - 1782.0s] If we were to text traffic to this we'd want to consider doing some sort of database sharding so that we are.
+[1782.0s - 1790.0s] And we'd have some sort of database shard service here in front of this where.
+[1790.0s - 1794.0s] Where we are basically.
+[1794.0s - 1800.0s] Sorry, let me just clean this up a bit.
+[1800.0s - 1807.0s] Basically.
+[1807.0s - 1813.0s] So this sharding service sits in front of the right the all the rights.
+[1813.0s - 1821.0s] And it picks it's like a load balancer for databases essentially and it picks which database it's going to go to based on.
+[1821.0s - 1825.0s] There's all kinds of sharding.
+[1825.0s - 1833.0s] And algorithms or strategies you can do things like the simplest version of that is like if you took.
+[1833.0s - 1843.0s] Maybe like a region so all us requests go to this database all UK request go to this database you can do things like that.
+[1843.0s - 1852.0s] Yeah, so that's kind of the way I would picture it because that will help us to split the load between these databases.
+[1852.0s - 1857.0s] Awesome. Yeah, well, I think we've got we jumped into some details there.
+[1857.0s - 1863.0s] I think overall we've got all the pieces sort of in place and I think this is a pretty good stopping part.
+[1863.0s - 1871.0s] Do you have any sort of last things you would add to this before we before we sort of wrap up.
+[1871.0s - 1874.0s] No, I think just the something I might have had a little more time.
+[1874.0s - 1881.0s] I would maybe get a little bit more into the pre cash service because I think it might need its own almost separate like database structure and things like that.
+[1881.0s - 1886.0s] But I think like I said, I don't want to get too much into the weeds with the tiktok specific.
+[1886.0s - 1888.0s] Like other algorithmy kind of stuff.
+[1888.0s - 1895.0s] I think just kind of keeping it saying that this exists somewhere and we would just use it is good enough for the purposes of this interview.
+[1895.0s - 1897.0s] No, I feel I feel pretty good about it.
+[1897.0s - 1905.0s] Awesome. All right, well, yeah, let's call it here and yeah, so just sort of recapping what we went over.
+[1905.0s - 1913.0s] So we talked about designing API, talked about database structure, talked about different microservices and load balancing and things like that.
+[1913.0s - 1925.0s] I thought overall like you did a really awesome job of really clearly communicating all these ideas and also sort of jumping in and providing extra knowledge about the specific things.
+[1926.0s - 1935.0s] Even when I asked like a follow-up question or even without asking, I feel like you really jumped in and sort of showed you had mastery over like all of these topics, which was really awesome.
+[1935.0s - 1942.0s] And even though this is sort of a little bit of a condensed version of this, I feel like you could have gone multiple layers deeper on like any of these topics.
+[1942.0s - 1945.0s] So it really shows me that you know what you're talking about.
+[1945.0s - 1949.0s] But yeah, what did you think overall?
+[1949.0s - 1954.0s] Yeah, I think it's always interesting trying to design something that you've never used.
+[1954.0s - 1960.0s] So we're sort of having to make a couple of assumptions on, you know, knowing I know Facebook, I know Instagram.
+[1960.0s - 1968.0s] So I kind of understand those, but so making some assumptions on how it's used by people.
+[1968.0s - 1970.0s] Really kind of helped.
+[1970.0s - 1972.0s] Yeah, I thought it won't work.
+[1972.0s - 1974.0s] Well, thank you so much, Adam.
+[1974.0s - 1978.0s] And good luck to everyone on your system design interview.
+[1979.0s - 1981.0s] Thank you so much.

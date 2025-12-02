@@ -1,34 +1,41 @@
 # AI4LIFE Utils
 
-A data processing and utilities repository for the AI4LIFE project, providing tools for preprocessing and analyzing essay datasets.
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-## Overview
+Lightweight collection of data transformation and processing utilities used by the AI4LIFE project. This repository contains scripts and helpers for preparing, validating, and transforming student essays, transcripts, and related auxiliary data for downstream NLP and evaluation tasks.
 
-This repository contains Python scripts and utilities for transforming and analyzing educational essay data. The primary tool is [pivot.py](pivot.py), which handles core data transformations across multiple essay datasets.
+Why use this repo
+- Provides repeatable pipelines to transform raw essay datasets into analysis-ready formats.
+- Small, focused scripts that are easy to adapt and extend for new datasets or preprocessing needs.
+- Includes quick quality checks, baseline model orchestration, and transcript processing tools.
 
-## Features
+Quick links
+- Main data transformer: [pivot.py](pivot.py)  
+- Dataset checks: [checkDatasets.py](checkDatasets.py)  
+- Baseline model starter: [baselineModel.py](baselineModel.py)  
+- Essay rater/scorer helper: [rate.py](rate.py)  
+- Transcript helper: [transcript.py](transcript.py)  
+- Example data / reference files: [transcripts_for_qa_extraction.json](transcripts_for_qa_extraction.json)  
+- Dependencies: [requirements.txt](requirements.txt)  
+- License: [LICENSE](LICENSE)
 
-- **Data transformation pipeline** — Convert and pivot essay datasets into analysis-ready formats
-- **Multi-dataset support** — Process various essay sets (e.g., essay_set1, essay_set6, essay_set_12_all)
-- **Structured output** — Generate processed datasets in standardized formats
-- **Dependency management** — Easy setup with Python virtual environments
+Repository layout
+- data/ — Local dataset inputs and processed outputs. Keep raw/processed in organized subfolders.
+- transcripts/ — Transcript inputs used by `transcript.py`.
+- pivot.py — Core script to pivot and transform essay dataset formats into standard analysis layouts.
+- baselineModel.py — Minimal baseline model/runner for quick comparisons.
+- rate.py — Scoring and rating utilities used by evaluation workflows.
+- checkDatasets.py — Sanity checks and dataset validators for expected schema/fields.
+- transcript.py — Utilities for converting and filtering transcript files.
+- transcripts_for_qa_extraction.json — Example transcript JSON used for QA extraction experiments.
+- check.txt — Short README/checks log (workspace-specific).
 
-## Quick Start
-
-### Prerequisites
-
-- Python 3.7 or higher
-- pip package manager
-- Git
-
-### Installation
-
-1. Clone the repository:
-   ```sh
-   git clone <repository-url>
-   cd AI4LIFE/utils
+Getting started (developer)
+1. Clone the repository and move into it:
+   ```bash
+   git clone https://github.com/long7872/HireMe-utils.git
    ```
-
+   
 2. Create and activate a virtual environment:
    ```sh
    python -m venv .venv
@@ -40,55 +47,63 @@ This repository contains Python scripts and utilities for transforming and analy
    pip install -r requirements.txt
    ```
 
-## Usage
+## Example usage
 
-Run the main data processing pipeline:
+1. Run the main data transformation pipeline:
+   ```sh
+   python pivot.py
+   ```
 
-```sh
-python pivot.py
-```
+See the top of [pivot.py](pivot.py) for any script-specific CLI arguments or constants to adjust
 
-The script will process dataset files from the `data/` directory and output transformed results.
+2. Validate datasets:
+   ```sh
+   python checkDatasets.py
+   ```
 
-### Input Data
+3. Run a simple baseline model or quick evaluation:
+   ```sh
+   python baselineModel.py
+   python rate.py
+   ```
 
-Place CSV files in the `data/processed/` directory. Expected format:
-```csv
-id,score1,score2,score3,score4,essay_text
-```
+4. Process transcript files / generate QA extraction input:
+   ```sh   
+   python transcript.py --input transcripts/ --output data/processed_transcripts/
+   # Example data file: transcripts_for_qa_extraction.json
+   ```
 
-### Output
+## Notes and conventions
 
-Processed files are generated in the `data/` directory with pivoted or transformed structures ready for analysis.
+Input CSVs and JSONs should be placed under data (or processed where appropriate). See pivot.py for expected input schemas.
+Scripts are intentionally script-first (single-file) — they are easy to read and modify for custom dataset pipelines.
+Keep raw data out of Git and store only metadata or small example files checked into the repo.
 
-## Project Structure
+## Tests and validation
 
-```
-.
-├── pivot.py              # Main data transformation script
-├── requirements.txt      # Python package dependencies
-├── README.md             # This file
-├── LICENSE               # Project license
-├── .gitignore            # Git exclusion rules
-└── data/                 # Dataset files (not tracked in version control)
-```
+This repository does not include a formal test suite at present. Use checkDatasets.py for dataset-level validations and add unit tests in tests/ if you intend to harden conversions.
+Where to get help
+
+Open an issue in the repository for bugs, requests, or questions.
+Ask the AI4LIFE engineering team or maintainers for guidance on dataset-specific concerns.
 
 ## Contributing
 
-Contributions are welcome! Please:
+Contributions are welcome. Please:
+Fork and create a feature branch
+Add tests for new functionality where possible
+Keep changes small and well described
+Submit a pull request for review
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/your-feature`)
-3. Make your changes and test thoroughly
-4. Commit with clear messages (`git commit -m 'Add feature description'`)
-5. Push and open a pull request
+See CONTRIBUTING.md (if available) or open an issue to discuss larger changes.
 
-Please ensure code follows project conventions and update this README if adding new scripts or functionality.
+## Maintainers
 
-## License
+Maintained by the AI4LIFE engineering team. For ownership or access questions, open an issue in this repository.
+License
 
-This project is licensed under the terms specified in [LICENSE](LICENSE).
+This project is licensed under the terms in [LICENSE](LICENSE).
 
-## Support
+## Acknowledgements
 
-For questions or issues, please open a GitHub issue in the repository.
+Core utilities and experiments for essay analysis and QA pipeline support the broader AI4LIFE research workflows.

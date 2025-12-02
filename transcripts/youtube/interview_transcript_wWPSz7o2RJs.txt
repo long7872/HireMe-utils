@@ -1,0 +1,116 @@
+SOURCE: YouTube
+VIDEO_ID: wWPSz7o2RJs
+URL: https://www.youtube.com/watch?v=wWPSz7o2RJs
+GPU: 1
+DURATION: 678.1s (11.3 min)
+TRANSCRIBED: 2025-11-28 09:18
+================================================================================
+
+FULL TRANSCRIPT:
+--------------------------------------------------------------------------------
+ Nearest, can you just tell me about your leadership style? Sure, sure. So definitely, that's a great question. And to be honest, a successful leader needs to be really flexible on the use of leadership styles. So I just don't follow one particular leadership style. It depends upon the situations, it depends upon people and the needs of the organization. But overall, my leadership style is usually a combination of visionary coaching and democratic styles. So when I say visionary, I mean, I set up team vision aligned with the company goals and whenever the project starts or in the middle of the project, I make sure the project vision and impact is communicated to the team. It can include anywhere from how much the customers, leadership, how much they appreciate their work and waiting to see the project going live. And I definitely help in continuously keeping the team motivated and excited about using this. So that kind of motivation through developing the vision that helps in team navigating through different complex problems and resolving blockers with the positive frame of mind. And a visionary leadership style is also very important while the team our company is going through layoffs or reogs because we set team, we inspire the team towards opportunities in front of us rather than looking back of what happened. So that was about visionary. And when we when I do one-on-ones with the team or undertake performance reviews or even by delegating the task, I make sure like I use coaching style of leadership because I want my team to grow, develop and achieve their career goals. So I act like GPS for them where I try to find out where they are, where they want to go, how they want to go there and how I can help in getting them to their destination. So the task delegation also that factors in pretty much a lot of like their interest, not just their skills and timeline. And a lot of the frameworks I use while coaching people including dub dub EBI and even SBI for giving constructive feedback. And mainly like a lot like this coaching style definitely I practice with my team. A lot of the time. Got it. Got it. Yeah. That makes a lot of sense for like working cross functionally on blocking the team. How about just day-to-day execution? Is there any sort of like leadership style that you undertake there? So yeah, day-to-day execution, if it's about decision-making, let's say if it is about decision-making, then I mentioned the third leadership style, democratic leadership style, whether it's about making architecture decisions, whether it is thinking about what is the next priority, what is the next tech-dead item that we need to prioritize or if we talk about like learning from what happened during the past two weeks, whether it is about sprint retrospectives, sprint demos or a lot of all those sprint activities, I use democratic style because I want to make sure that people have a say on their on decision making that they are continuously learning and with this style it promotes team effort and collaboration as well. Got it. Okay. Cool. So when you were talking about getting feedback to the team as a coach maybe, you mentioned some SBI model. Can you share more about what this is? Sure. SBI stands for situation, behavior and impact. And while giving constructive feedback, it is very important to not judge people. So like when I talk about situation, it's like when and where it occurred, when we talk about behavior, like what was the observable behavior, not judging, okay, you did this wrong or something like that. So an impact, like what was the impact, let's say for example, if let's say our project was supposed to take two months and it took three months. So I would approach something like it was great to see the project delivered with great quality. And I do want to discuss one thing though that project was supposed to launch last one, but it got delayed because of which customers were impacted. So could you please share what happened? So here I'm not concluding on what, why it failed, why the project delayed, I'm trying to have an open ended conversation with the team member to figure out what happened and together we can figure out what are the next steps and action items we can take so that these things do not repeat. Yeah, that's great. I think one of the things that I've learned the most is one of the things that people you work with remember the most is not what they did with you. But it's rather how they felt when they worked with you. So I think that's a, that makes a lot of sense. I'd like to push you a little bit more here. So you mentioned visionary coaching democratic styles. Are there any other sorts of leadership styles that you use? Yeah, definitely. So there are like I mentioned, we have to be flexible on the use of leadership styles and these are the three styles I use mostly, but there are multiple other styles that I have to use depending upon the situation like affiliative style. So I do occasionally happy hours, team launches, fun events, I make sure that there is harmony created among the people and I create a positive and working environment with the team whether it's normal day to day or whether the situation is stressful because of other external factors, layoffs and forcing circumstances. So in those cases, I have to temporarily put the goals and standards aside to make sure that the employees outside in need is met and it's important to be compassionate during that time to towards the ones who are impacted or other people as well. So that is about affiliative then about pace setting style also I have used sometimes in the past. I do set high standards within the team and sometimes yes, I have to bring the team to that standard like there was one scenario where there was a critical issue within the team and critical issue, critical production issue that we had and the team was comparatively newer. So it was very important to act with urgency and I noticed some gaps there. So in that critical issue, I kind of led by example and understood the problem figured out with the team what they investigated so far, delegated appropriately and set up a multi along zoom meeting with the team so that they understand how I'm approaching this problem, how we can move faster and next time if this thing happens again and this thing did happen again. So a leading engineer was able to follow the same mechanism same like he stepped up and followed the team steps to resolve things quickly. So that's how pace setting and sometimes even like there are some cases where there is a tech stack where when I have such a great engineers that I mean who doesn't want to be managed and who doesn't need a guiding hand. So sometimes even less fair style works for those kind of people who are really competent and busy. So you basically hands on when you need to be hands on, hands off when you're not hands off, you observe the engineer and you understand you know what's the right leadership style to use in what situation you're you're very flexible engineering leader, right? Yeah that's right and that is that is a challenge and interesting part about a leadership as well. So you have to be really flexible on that. Makes sense. I know we've been talking a lot about different leadership styles and it's not very natural to try to think about how you know what kind of styles you are so I appreciate you being reflective here. If you were to describe in one word a kind of leadership style that you do not use you know can you think of one? It's okay if you can't but I'm really curious if there's any kind of style that you just for sure wouldn't use. Yeah so one style is called coerced style that I do not really follow in general. So it's like giving direct orders it's like military style giving direct orders without seeking employees' inputs or even listening to their reactions with with such kind of high performing motivated team if we apply these kind of styles it doesn't go well with the team it reduces job satisfaction people don't like it creates an environment of fear insecurity and even people can leave the company in that case. So that's why it is usually I mean usually used when really nothing else works where the only option is that the candidate has to go like yeah I mean he's really severely underperforming and there is no other option that works but with a high performing team it doesn't work out so definitely one style I don't want to use. Yes especially in I guess like engineering teams highly performing engineering teams where everyone has strong opinions you know giving military style directions isn't cohesive for the team success but thanks thanks for walking us through and I think this was a pretty reflective conversation about how you think about your leadership style and I think this is a very common question in engineering manager your software development manager type interviews so appreciate your time here before we wrap things up were there any resources that you use to learn about you know be reflective and learn about leadership styles were there any books that you used or you know were were these all sort of just you being you having had years of experience as an engineering manager. So definitely a combination of both so as an engineering manager I mean I get to interact with so many different kinds of people so I can figure out what works what doesn't work at the same time there are training materials there are courses there are boot camps from universities like university of Berkeley or even staff.
+
+TIMESTAMPED SEGMENTS:
+--------------------------------------------------------------------------------
+[0.0s - 2.2s] Nearest, can you just tell me about your leadership style?
+[5.4s - 12.4s] Sure, sure. So definitely, that's a great question. And to be honest, a successful leader needs to
+[12.4s - 18.8s] be really flexible on the use of leadership styles. So I just don't follow one particular
+[18.8s - 24.6s] leadership style. It depends upon the situations, it depends upon people and the needs of the organization.
+[25.5s - 31.8s] But overall, my leadership style is usually a combination of visionary coaching and democratic
+[31.8s - 39.1s] styles. So when I say visionary, I mean, I set up team vision aligned with the company goals
+[39.1s - 44.5s] and whenever the project starts or in the middle of the project, I make sure the project vision
+[44.5s - 50.3s] and impact is communicated to the team. It can include anywhere from how much the customers,
+[50.3s - 55.6s] leadership, how much they appreciate their work and waiting to see the project going live.
+[56.2s - 64.4s] And I definitely help in continuously keeping the team motivated and excited about using this.
+[65.0s - 69.9s] So that kind of motivation through developing the vision that helps in
+[70.6s - 75.2s] team navigating through different complex problems and resolving blockers with the positive
+[75.2s - 81.6s] frame of mind. And a visionary leadership style is also very important while the team
+[81.6s - 88.4s] our company is going through layoffs or reogs because we set team, we inspire the team towards
+[88.4s - 94.8s] opportunities in front of us rather than looking back of what happened. So that was about visionary.
+[95.4s - 102.2s] And when we when I do one-on-ones with the team or undertake performance reviews or even by
+[102.3s - 108.9s] delegating the task, I make sure like I use coaching style of leadership because I want my team to
+[108.9s - 117.3s] grow, develop and achieve their career goals. So I act like GPS for them where I try to find out
+[117.3s - 124.1s] where they are, where they want to go, how they want to go there and how I can help in getting
+[124.1s - 131.3s] them to their destination. So the task delegation also that factors in pretty much a lot of like
+[132.1s - 138.6s] their interest, not just their skills and timeline. And a lot of the frameworks I use while
+[138.6s - 145.2s] coaching people including dub dub EBI and even SBI for giving constructive feedback.
+[145.8s - 152.5s] And mainly like a lot like this coaching style definitely I practice with my team. A lot of the
+[152.5s - 156.7s] time. Got it. Got it. Yeah. That makes a lot of sense for like working cross functionally
+[156.7s - 162.5s] on blocking the team. How about just day-to-day execution? Is there any sort of like leadership style
+[162.5s - 169.0s] that you undertake there? So yeah, day-to-day execution, if it's about decision-making,
+[169.5s - 174.4s] let's say if it is about decision-making, then I mentioned the third leadership style,
+[174.4s - 179.9s] democratic leadership style, whether it's about making architecture decisions, whether it is
+[179.9s - 187.3s] thinking about what is the next priority, what is the next tech-dead item that we need to
+[187.3s - 194.3s] prioritize or if we talk about like learning from what happened during the past two weeks,
+[194.3s - 201.6s] whether it is about sprint retrospectives, sprint demos or a lot of all those sprint activities,
+[201.6s - 208.1s] I use democratic style because I want to make sure that people have a say on their on decision
+[208.1s - 215.6s] making that they are continuously learning and with this style it promotes team effort and
+[215.6s - 221.0s] collaboration as well. Got it. Okay. Cool. So when you were talking about getting feedback to the
+[221.0s - 229.4s] team as a coach maybe, you mentioned some SBI model. Can you share more about what this is? Sure.
+[229.4s - 236.6s] SBI stands for situation, behavior and impact. And while giving constructive feedback, it is
+[236.6s - 244.2s] very important to not judge people. So like when I talk about situation, it's like when and where
+[244.2s - 251.8s] it occurred, when we talk about behavior, like what was the observable behavior, not judging,
+[251.8s - 257.8s] okay, you did this wrong or something like that. So an impact, like what was the impact,
+[257.8s - 262.6s] let's say for example, if let's say our project was supposed to take two months and it took three
+[263.4s - 267.4s] months. So I would approach something like it was great to see the project delivered with great
+[267.4s - 273.3s] quality. And I do want to discuss one thing though that project was supposed to launch last one,
+[273.3s - 279.6s] but it got delayed because of which customers were impacted. So could you please share what happened?
+[280.5s - 289.4s] So here I'm not concluding on what, why it failed, why the project delayed, I'm trying to have an
+[289.4s - 296.5s] open ended conversation with the team member to figure out what happened and together we can figure
+[296.5s - 301.9s] out what are the next steps and action items we can take so that these things do not repeat.
+[303.4s - 307.0s] Yeah, that's great. I think one of the things that I've learned the most is
+[308.1s - 312.0s] one of the things that people you work with remember the most is not what they did with you.
+[312.6s - 317.8s] But it's rather how they felt when they worked with you. So I think that's a, that makes a lot of
+[317.8s - 325.0s] sense. I'd like to push you a little bit more here. So you mentioned visionary coaching democratic
+[325.0s - 333.3s] styles. Are there any other sorts of leadership styles that you use? Yeah, definitely. So there are
+[334.2s - 340.1s] like I mentioned, we have to be flexible on the use of leadership styles and these are the
+[340.1s - 344.6s] three styles I use mostly, but there are multiple other styles that I have to use depending
+[344.6s - 352.6s] upon the situation like affiliative style. So I do occasionally happy hours, team launches,
+[352.6s - 359.0s] fun events, I make sure that there is harmony created among the people and I create a positive
+[359.0s - 365.4s] and working environment with the team whether it's normal day to day or whether the situation is
+[365.4s - 373.4s] stressful because of other external factors, layoffs and forcing circumstances. So in those cases,
+[373.4s - 379.6s] I have to temporarily put the goals and standards aside to make sure that the employees outside
+[379.6s - 386.3s] in need is met and it's important to be compassionate during that time to towards the ones who are
+[386.3s - 394.8s] impacted or other people as well. So that is about affiliative then about pace setting style also
+[394.8s - 401.4s] I have used sometimes in the past. I do set high standards within the team and sometimes yes,
+[401.4s - 407.4s] I have to bring the team to that standard like there was one scenario where there was a critical
+[407.4s - 413.1s] issue within the team and critical issue, critical production issue that we had and the team was
+[413.1s - 420.6s] comparatively newer. So it was very important to act with urgency and I noticed some gaps there.
+[421.3s - 428.5s] So in that critical issue, I kind of led by example and understood the problem figured out with
+[428.5s - 437.0s] the team what they investigated so far, delegated appropriately and set up a multi along zoom
+[437.0s - 442.8s] meeting with the team so that they understand how I'm approaching this problem, how we can move
+[442.8s - 450.1s] faster and next time if this thing happens again and this thing did happen again. So a leading
+[450.1s - 457.0s] engineer was able to follow the same mechanism same like he stepped up and followed the team steps
+[457.0s - 464.1s] to resolve things quickly. So that's how pace setting and sometimes even like there are some cases
+[464.1s - 473.3s] where there is a tech stack where when I have such a great engineers that I mean who doesn't want
+[473.3s - 480.1s] to be managed and who doesn't need a guiding hand. So sometimes even less fair style works
+[480.2s - 487.6s] for those kind of people who are really competent and busy. So you basically hands on when you
+[487.6s - 492.6s] need to be hands on, hands off when you're not hands off, you observe the engineer and you understand
+[492.6s - 497.2s] you know what's the right leadership style to use in what situation you're you're very flexible
+[497.2s - 502.2s] engineering leader, right? Yeah that's right and that is that is a challenge and interesting part
+[502.2s - 507.1s] about a leadership as well. So you have to be really flexible on that.
+[507.1s - 512.2s] Makes sense. I know we've been talking a lot about different leadership styles and it's not very
+[512.2s - 517.0s] natural to try to think about how you know what kind of styles you are so I appreciate you being
+[517.0s - 524.6s] reflective here. If you were to describe in one word a kind of leadership style that you do not use
+[526.0s - 531.4s] you know can you think of one? It's okay if you can't but I'm really curious if there's any kind
+[531.4s - 539.0s] of style that you just for sure wouldn't use. Yeah so one style is called coerced style
+[539.9s - 547.0s] that I do not really follow in general. So it's like giving direct orders it's like military style
+[547.8s - 553.7s] giving direct orders without seeking employees' inputs or even listening to their reactions
+[554.6s - 561.1s] with with such kind of high performing motivated team if we apply these kind of styles it doesn't go
+[561.1s - 567.2s] well with the team it reduces job satisfaction people don't like it creates an environment of fear
+[567.2s - 575.9s] insecurity and even people can leave the company in that case. So that's why it is usually I mean
+[575.9s - 583.3s] usually used when really nothing else works where the only option is that the candidate has to go
+[583.3s - 589.4s] like yeah I mean he's really severely underperforming and there is no other option that works but
+[590.3s - 596.1s] with a high performing team it doesn't work out so definitely one style I don't want to use.
+[596.8s - 601.9s] Yes especially in I guess like engineering teams highly performing engineering teams where
+[601.9s - 609.8s] everyone has strong opinions you know giving military style directions isn't cohesive for the
+[609.8s - 615.4s] team success but thanks thanks for walking us through and I think this was a pretty reflective
+[615.4s - 620.2s] conversation about how you think about your leadership style and I think this is a very common
+[620.2s - 626.0s] question in engineering manager your software development manager type interviews so appreciate
+[626.0s - 633.8s] your time here before we wrap things up were there any resources that you use to learn about you
+[633.8s - 639.4s] know be reflective and learn about leadership styles were there any books that you used or you know
+[639.4s - 646.0s] were were these all sort of just you being you having had years of experience as an engineering
+[646.0s - 656.8s] manager. So definitely a combination of both so as an engineering manager I mean I get to interact
+[656.8s - 663.0s] with so many different kinds of people so I can figure out what works what doesn't work at the
+[663.0s - 669.5s] same time there are training materials there are courses there are boot camps from universities
+[669.5s - 678.1s] like university of Berkeley or even staff.

@@ -1,0 +1,396 @@
+SOURCE: YouTube
+VIDEO_ID: VJpfO6KdyWE
+URL: https://www.youtube.com/watch?v=VJpfO6KdyWE
+GPU: 1
+DURATION: 1860.4s (31.0 min)
+TRANSCRIBED: 2025-11-28 09:35
+================================================================================
+
+FULL TRANSCRIPT:
+--------------------------------------------------------------------------------
+ How to build Instagram Everyone in this video we're going to be talking about how to build Instagram So we're going to be going through a system design interview question This is similar to the kinds of interview questions you might be asked at companies like Facebook, Google, Amazon, etc And today we'll be going through sort of an example of one of these problems I'll be giving sort of an example answer as well as talking about some of the strategies and tips I would use to answer this question So yeah, before we begin What I would typically do is Take a moment of beginning the interview to sort of really understand the question and the problem and then go through some of the Requirements and features that you think you'll need to be able to build this is a good opportunity to brainstorm some I Features and think about the scale of your application So let's imagine we're trying to build Instagram or trying to build sort of a reduced feature set But we're trying to still think about scalability and Building something that will work reliably So yeah, let's talk about our requirements. So we are designing Instagram Let's think about the requirements of our system. So let's say the first one is going to be that we need to be able to upload images From a level client Like a phone I was or Android Our second requirement is going to be that we need to allow users to follow other users and so they can You know see content from other people We'd also like to generate a new speed or sort of a feed of images and display that to Users when they visit the app And we won't we maybe won't get into sort of a super complicated feed, but At least thinking about sort of the API to request that feed and how we would Yeah, ensure that is is generated reliably And then the last thing is we do want to think about scale. So Let's imagine that we're working with or we want to design a system that's going to scale up to support 10 million users Great So these are requirements. This is something I would sort of flesh out and discuss with the interviewer and make sure I understand sort of what each of these things means and and sort of what the requirements would look like So you could sort of dive into each of these things and get more specific around like your cable You know, what is a mobile client? Is that a native app or a mobile web? Do we need to support other platforms? Are we concerned about certain constraints like network or You know storage space on the device things like that Getting into the other ones users following other users we get into sort of what that model looks like which we will do During a few of images we can talk about you know, what is sort of the expected latency of getting images how often should be updated or should the content be fresh And does that include only people that you follow or some sort of explore future And then lastly talking about scale. There's a lot we can get into here. And this is what we'll start with first This is always something I like to do at the beginning of thinking about a design for system is Ultimately What sort of Scale do we need our system to work at? So the first thing I would do is let's start with this 10 million number and let's break that down a little bit into what that actually means So let's assume that we're talking about 10 million users who are using our service on a monthly basis and like 10 million active monthly users And let's imagine that each of them is uploading two photos per month That's how we define you know this active user. That's our average case that we're shooting for and let's say that each of those photos Is going to be around five megabytes and let's let's allow that to sort of include some the metadata like the caption as well as the location and You know, maybe some other Photo metadata that we want to include And we'll sort of we'll ignore for now things like comments and other types of things we might need to store Because that wasn't in sort of explicitly in our requirements, but that's something we could also think about later And yeah, so let's let's count these numbers a little bit. So 10 million is 10 to the seven Two times five megabytes. So that's basically 10 to the eight So that boils down to 100 million megabytes, which is 100 terabytes per month. So You know times a year we're going to be looking at 1.2 petabytes of data And so that's a lot of that's a lot of data. So obviously this is And that's only going to grow over time So this sort of doing this exercise sort of informs just you know, how much traffic are we going to have what are our storage requirements I'm going to look like and what sort of systems should we choose to support those um And so since we're talking about a lot of photo data here as well as metadata We know that just sort of looking forward into our system We're going to have to be thinking about different ways to store those types of data and how to do it in a way that's reliable and efficient So yeah, so we'll let's look at that And the next thing I would do um before we get into specific components of the system is um I like to sort of take us that back and think about um the API or the Or the data or data model of our system. So um in this case, let's start with the data model because I think we know clearly which things we need to store in this case um And and then we can talk about the API a little bit later So what I'm going to do is I'm going to just create um we know we have three different data types basically that we need to To model um, there's the users. There's the photos. They're posting And then um, there's sort of this user following uh Model as well where we need to store sort of this relationship between different users So what I'm going to do is I'm going to sketch out those three sort of database tables um And I'll also talk about sort of the kinds of database um, I would choose for these different types of data Um, so Let's look here first Um, let's make this our user table We'll make one for photos And we'll also make one for uh, followers so Yeah, let's talk about these for now. Let's Say this for later um, so The first thing I want to talk about is um, our choice of database So we have a lot of choices here and we have multiple kinds of data. So we can store things in different ways um, this is a What I view to be a fundamentally relational type of data problem because we know we have Clear types of data users photos um, as well as a relational um System between them. So we have um Users Are related to other users in a many to many way By way of this following mechanism. So one user can follow many users many users can be followed by a user um And a user can be followed by many people I think I might do the same thing you just said um On the other hand, we also have photos um, which are related to users in a um In a many to one way so one photo can only have one um user owner But a user can have many photos And so there's this inherent sort of relationship between the kinds of data that we're trying to model Um, and that to me it runs itself to a relational database Obviously, we could also store things and by relational database. I mean like a sequel database like my sequel or postgres um or or any others There are other options so we could also look at no sequel databases um and uh What I would suggest is that you Think about um Whether your data is inherently relational and whether you would benefit from being able to To do relational queries um in this case. I think being able to Quickly get all of the you know photos for a particular user That's a thing you would have to do on a very regular basis um That's that's an inherently sort of relational query pattern And so I think choosing a sequel database in this make in the sense uh makes makes perfect sense and Yeah, so I'm gonna go with that I'm gonna go ahead and start modeling out these tables based on sort of Requirements we know we have a work system and and just sort of using common sense here of patterns. I've seen before So in the user table um We're going to have a primary ID um, which is going to be our primary key it's going to be an integer and it's going to you know increments Serially Um, this is just sort of sequel speed and in terms of the um the scheme out of that uh of this table So some other things we'll probably need for a user uh with the name To be a string We're going to have probably an email address, which will also be a string We're going to have um Perhaps like a location perhaps um some sort of uh, you know other ID or um Other attributes about the person. So I'll go ahead and maybe just mention some of these things Um, maybe time zone things like that And but these are sort of I think the basic things we need to get started here Um For the photo table um, we're also going to have an ID Um, so it's going to be again our primary key Um, we're also going to have In this case, we're going to have a foreign ID Uh, referencing the uh user. So this is going to be Uh, a foreign key referencing You hear that ID um, so that would be our relationship between these two tables um, we're probably going to have a Um, you know, maybe a caption or description for this Uh, this image and then we might have additional metadata like the location it was stored, which might be A string or or coordinate type um And then um lastly, I mean one thing we're going to have to do here is um, because of the large nature of these images We're not going to store them in our database itself um, we're going to just use this database to model the metadata About the images about users So what we're going to also need here is some sort of path or URL Which is going to be a reference to our sort of distributed file system that's going to actually store and replicate and um Uh Handle basically everything related to storing these files these images So that's sort of the basic uh Building blocks of that which is what we need um, and then lastly, I'm going to talk about sort of the following the model for Building followers. So in this case, it's actually pretty simple Um, we could actually just have two columns here. Um, there's going to be Uh, user user one essentially and user two and these are both going to be um foreign keys referencing um, one user And And the other user and what this table does essentially is it models. It's just a relational uh, table that models Um, one direction of someone following so user one um, can follow user two without user two following user one Um, so we might call this in addition to calling this user one or user two we could call this like um, you know from and two To sort of model this Single direction relationship. Um, this is a little bit different than you know, Facebook where um friends are inherently um, bi-directional So just something to keep in mind as you're thinking about this um, relationship Great. Okay, so now we have sort of our basic data model in place um, let's talk a little bit about the overall system and the high level components that we need to sort of Bring all this stuff together Keeping in mind these sort of scalability and requirements that we laid out at the beginning as well as the features that we need to support namely um Having users upload photos having them be able to follow other users and Getting to see this this new speed of images that um have been posted by their their followers Moving on to that. Let's talk about um each of these components so At fundamental level, I'm going to start with the database since that's what we were just talking about so Um, this is our going to be our metadata database um In addition, um, one of the important pieces here is this idea of the Image paths that we're storing in the photo table and where those are going to be stored so We're also going to have Um in a distributed object storage mechanism and this is something like s3 So We'll leave this a little abstract, but basically What we want to do is use a distributed file system like s3 that's going to store and replicate our data in a reliable way And then we're going to store the reference paths to files that are stored there um in our metadata database and that way uh, we can um We can have a separate reliable place to upload images and reference them um that will be um accessible and fast Um, and there's a few ways we can sort of improve the efficiency of this which we'll get into in just a moment Um, but essentially There's sort of this connection between these two um In this in this way All right, so next we'll be talking about is our application service layer So we haven't gotten into this yet, but this is going to be the actual sort of core of our system Um These are going to be the servers that are responsible for the so-called like crud operations create read update and delete so this is what sort of serves as the um The system that's going to be Responding to requests from clients whether mobile or web etc Um, and are going to be handling those and then performing operations on the database or Getting information and returning into the user So this is really the core part of any web back-end system. It's going to be um Often many different kinds of servers for one of these large applications Typically the patterns to start with a monolithic architecture where you build a web app That responds to all the different types of requests that are coming in and then over time as your traffic scales up and you um find different um Patterns of usage or different query patterns are more popular than other ones or different kinds of requests like um Operations that have to happen asynchronously or that take a long time to calculate You begin to start splitting up this monolithic and different services or microservices And that perform specific operations and can be scaled independently of one another um to optimize your um server usage So let's think a little bit about the access patterns that are probably going to happen in in an instagram like application When we reach the scale of 10 million users Um, what we expect to happen here is there's going to be a lot more people viewing and reading um their Their feed than there are going to be people uploading And we need to be able to do both those operations efficiently and supports um Maybe different sort of access patterns that are happening a different um peep times of the day, you know, there's all these different sort of um Usage patterns that we need to be aware of that might affect the the way we build our system So Knowing that this is sort of a read heavy system um, we're going to want to have um probably not just one um like one database here. We're going to want to have and Replicas of this read replicas of this database that will allow us to efficiently read data from them um Without essentially slowing down um Our ability to also write data and upload new images And this will allow us to achieve a higher um scalability of our system um And just overall like a larger throughput of uh request volume since the database and like connections to it Or often one of the major bottlenecks of um any system Um, so we're going to go ahead and build our application server here um Um and what I'd like to do is um split this into maybe two different services um so Let's think about like the read Services and the writing or uploading services separately um Since as I mentioned they might have different patterns different requirements um they might um require different types of caching and and other things um So for example our read um we might implement caching here in between the database and the app server Um like in a memory storage like redis this would allow us to um return frequently access data uh much much faster than Making a request to the database every single time um So Yeah, let's scroll cash here Actually going to Move these over a little bit so that I can So all this cash in between them And Let's just mention that we're going to um Read from uh read from the cash here And then on our uh on our right service um we're going to write to the database And we're also going to um Now there's several different caching policies um I won't get into all different ways in which that works But essentially we want to use sort of a right-through right-back policy where When um a right behavior or or an update happens on some content that's in our database we want to Um update our cash at the same time so that um Downstream the read service that's using this cash to return data to users Um is updated in a reasonable time and is consistent with the um Uh with the sort of source of truth in our main database Um, so I'm sort of just drawing these errors here to represent these relationships But there's multiple ways in which this update could happen um and Ways in which these sort of things would be triggered and Implemented in reality Um, I'm just going to note that like this would probably be some sort of distributed cash system like redis I'm that would be really performance and sort of sit separately from our uh from our main database um So all right, so now we have um two different um services here. They're responsible for different parts of our Uh of our feature sets one is responsible for um fetching images and Returning data to user the others responsible for performing this sort of upgrade uh this upload process Which would also Not only send data into our metadata database, but also would handle Actually uploading the image from the client to the File storage system All right, so now we're beginning to get a sense of um what the system would look like So um sort of moving up the stock a little bit. So um, we're also going to need to have um A load balancer so as any system scales becomes um very important that the um sort of fundamental pieces of the system can support the load and volume requirements Of the number of users that are attempting to use it because otherwise you'll Begin dropping requests or taking really long time to serve users as the request sort of few up Uh one of the most common patterns of solving this sort of problem Or solving some of these problems is to scale horizontally So what we would do is we would not have just one um app server for reading and writing we would have uh many many servers um perhaps located in different Access points throughout um throughout the world depending on how large grapple vision is and um we would serve requests to these servers in uh sort of a load balanced way So that each one is sort of utilized um Equally with the others as much as possible so that no one server becomes too overloaded or too overworked To the point where it begins dropping load plus So this is the responsibility of a load balancer Um it can also handle um there there could be a separate load balancer separate router to handle um sending requests to the correct application server first implicitly Let's just sort of imagine that it's one sort of um proxy here that's doing both load balancing and um and routing You Our um client is going to be making this request So again, we'll probably have Um a variety of global clients who Who will be reaching our server through the internet and And sending requests that could be um Uh getting images could be uploading images um and so Starting from the client they'll call our API Um which will have a different route for each of these sort of features that we lost to support um Our request will come uh to our load balancer which will be sort of the top level um Part of our system it will get the request it will figure out which service it belongs to Um and we'll route it to that service um or one of the instances of that service um And then it will um in the red case it will um Figure out you know does this user have uh it will do all the sort of business logic if you're in the out um, you know What um image of my looking for does this user have access to this image or is it private Um it will look to the cash first to see if it has um this image in there um and if the cash is uh You know fresh it will just return the image uh sorry it will return the image data um Uh or any user metadata um that it needs That response would come um all the way back through get returned to the mobile client Um and would then and would then include the uh path to the image that needs to be loaded Um that request would probably be fired off separately and would then um Would then be loaded um in a separate request from our um from our distributed file system Uh and then sort of sitting in between here we might have a cdn or some sort of distribution network That would make these requests uh faster by having Basically access points and different parts that are sort of closer and make the sort of last mile um Requests latency much faster Um in the upload case when a user is creating a new image Um something similar would happen where we would open a connection to the server um it would begin to I would upload all the metadata related to you um Uh user and in the photo that we're uploading and then it would um handle receiving that image and Passing it on into the object storage Um as we mentioned that process would also um And cause the cache to be uploaded so that That um new content could be available to users here in the press And that's basically it so wonder we haven't talked about here is the process by which we would Generate sort of a feed of um images for each user And the way I think about that is that could in fact be a process that happens and also gets stored in either this cache or another um feed cache Um and that process could be managed by this uh read server or by a separate service Let's call it You It's called the feed generation service um This service would um Access our cache as well as our database And this would be operating perhaps depending on the requirements of the feed that we want would be operating on a schedule You know perhaps generating a new feed um for each user on like an hourly basis and And uh Yeah would would talk to the database to understand which content was new and would sort of um generate these things which typically would be Too computationally intensive to do on the fly for every request And instead we can do it ahead of time we can keep these feeds Store them in our cache and then allow the um app server that's responsible for uh for getting the feed to then just read the cache results That's basically how that would work All right um there's obviously a lot more detail we could go into on every single part of the system um We covered a lot of ground here and talked about a lot of different components um, but this is sort of the overall system that I would design for Instagram um and Yeah, if you have any thoughts or questions, please please uh leave a comment and uh we look forward to Uh making more videos like this if they're helpful
+
+TIMESTAMPED SEGMENTS:
+--------------------------------------------------------------------------------
+[0.0s - 2.0s] How to build Instagram
+[5.8s - 11.0s] Everyone in this video we're going to be talking about how to build Instagram
+[11.0s - 14.8s] So we're going to be going through a system design interview question
+[15.2s - 22.6s] This is similar to the kinds of interview questions you might be asked at companies like Facebook, Google, Amazon, etc
+[23.1s - 26.6s] And today we'll be going through sort of an example of one of these problems
+[26.9s - 32.7s] I'll be giving sort of an example answer as well as talking about some of the strategies and tips I would use to answer this question
+[33.8s - 35.8s] So yeah, before we begin
+[37.5s - 39.5s] What I would typically do is
+[39.7s - 46.0s] Take a moment of beginning the interview to sort of really understand the question and the problem and then go through some of the
+[47.0s - 52.1s] Requirements and features that you think you'll need to be able to build this is a good opportunity to brainstorm some
+[52.7s - 54.7s] I
+[54.7s - 57.2s] Features and think about the scale of your application
+[58.6s - 64.3s] So let's imagine we're trying to build Instagram or trying to build sort of a reduced feature set
+[64.4s - 67.5s] But we're trying to still think about scalability and
+[68.6s - 71.8s] Building something that will work reliably
+[72.9s - 78.9s] So yeah, let's talk about our requirements. So we are designing Instagram
+[79.9s - 87.7s] Let's think about the requirements of our system. So let's say the first one is going to be that we need to be able to upload images
+[88.9s - 90.9s] From a level client
+[93.1s - 95.1s] Like a phone I was or Android
+[96.1s - 102.8s] Our second requirement is going to be that we need to allow users to follow other users and so they can
+[103.3s - 105.3s] You know see content from other people
+[105.8s - 112.0s] We'd also like to generate a new speed or sort of a feed of images and display that to
+[113.0s - 115.0s] Users when they visit the app
+[116.6s - 120.6s] And we won't we maybe won't get into sort of a super complicated feed, but
+[121.4s - 125.6s] At least thinking about sort of the API to request that feed and how we would
+[126.8s - 130.4s] Yeah, ensure that is is generated reliably
+[131.1s - 133.9s] And then the last thing is we do want to think about scale. So
+[134.8s - 141.4s] Let's imagine that we're working with or we want to design a system that's going to scale up to support 10 million users
+[142.7s - 144.7s] Great
+[145.0s - 151.5s] So these are requirements. This is something I would sort of flesh out and discuss with the interviewer and make sure I understand
+[151.6s - 156.4s] sort of what each of these things means and and sort of what the requirements would look like
+[157.2s - 162.0s] So you could sort of dive into each of these things and get more specific around like your cable
+[162.5s - 164.5s] You know, what is a mobile client?
+[164.5s - 167.4s] Is that a native app or a mobile web?
+[168.6s - 170.6s] Do we need to support other platforms?
+[171.7s - 176.5s] Are we concerned about certain constraints like network or
+[178.8s - 181.3s] You know storage space on the device things like that
+[184.0s - 191.4s] Getting into the other ones users following other users we get into sort of what that model looks like which we will do
+[192.8s - 201.9s] During a few of images we can talk about you know, what is sort of the expected latency of getting images how often should be updated or should the content be fresh
+[203.4s - 207.8s] And does that include only people that you follow or some sort of explore future
+[208.4s - 213.1s] And then lastly talking about scale. There's a lot we can get into here. And this is what we'll start with first
+[213.6s - 219.1s] This is always something I like to do at the beginning of thinking about a design for system is
+[219.6s - 221.6s] Ultimately
+[222.0s - 224.0s] What sort of
+[224.0s - 226.9s] Scale do we need our system to work at?
+[232.2s - 237.5s] So the first thing I would do is let's start with this 10 million number and let's break that down a little bit into what that actually means
+[237.7s - 243.8s] So let's assume that we're talking about 10 million users who are using our service on a monthly basis and
+[244.7s - 246.7s] like 10 million active monthly users
+[247.6s - 253.7s] And let's imagine that each of them is uploading two photos per month
+[255.6s - 262.8s] That's how we define you know this active user. That's our average case that we're shooting for and let's say that each of those photos
+[264.3s - 274.2s] Is going to be around five megabytes and let's let's allow that to sort of include some the metadata like the caption as well as the location and
+[275.1s - 277.1s] You know, maybe some other
+[277.1s - 279.1s] Photo metadata that we want to include
+[281.9s - 288.2s] And we'll sort of we'll ignore for now things like comments and other types of things we might need to store
+[289.4s - 294.5s] Because that wasn't in sort of explicitly in our requirements, but that's something we could also think about later
+[295.6s - 298.2s] And yeah, so let's let's count these numbers a little bit. So
+[300.3s - 303.3s] 10 million is 10 to the seven
+[305.2s - 308.7s] Two times five megabytes. So that's
+[310.5s - 312.5s] basically 10 to the eight
+[313.1s - 315.1s] So that boils down to
+[318.8s - 324.3s] 100 million megabytes, which is 100 terabytes per month. So
+[325.6s - 327.8s] You know times a year we're going to be looking at
+[328.5s - 331.0s] 1.2 petabytes of data
+[332.0s - 335.6s] And so that's a lot of that's a lot of data. So obviously this is
+[336.4s - 338.2s] And that's only going to grow over time
+[338.8s - 345.0s] So this sort of doing this exercise sort of informs just you know, how much traffic are we going to have what are our storage requirements
+[345.6s - 348.8s] I'm going to look like and what sort of systems should we choose to support those
+[349.6s - 351.1s] um
+[351.2s - 354.2s] And so since we're talking about a lot of photo data here as well as metadata
+[355.0s - 357.6s] We know that just sort of looking forward into our system
+[358.3s - 365.2s] We're going to have to be thinking about different ways to store those types of data and how to do it in a way that's reliable and efficient
+[366.4s - 368.4s] So yeah, so we'll let's look at that
+[372.8s - 379.1s] And the next thing I would do um before we get into specific components of the system is um
+[379.2s - 381.3s] I like to sort of take us that back and think about
+[382.0s - 384.0s] um the API or the
+[384.9s - 396.5s] Or the data or data model of our system. So um in this case, let's start with the data model because I think we know clearly which things we need to store in this case um
+[398.0s - 401.4s] And and then we can talk about the API a little bit later
+[402.2s - 409.0s] So what I'm going to do is I'm going to just create um we know we have three different data types basically that we need to
+[409.6s - 413.5s] To model um, there's the users. There's the photos. They're posting
+[414.1s - 417.2s] And then um, there's sort of this user following uh
+[417.9s - 422.4s] Model as well where we need to store sort of this relationship between different users
+[423.1s - 427.3s] So what I'm going to do is I'm going to sketch out those three sort of database tables um
+[428.4s - 435.0s] And I'll also talk about sort of the kinds of database um, I would choose for these different types of data
+[437.6s - 439.6s] Um, so
+[441.2s - 443.2s] Let's look here first
+[443.8s - 446.8s] Um, let's make this our user table
+[447.7s - 449.7s] We'll make one for
+[449.7s - 451.7s] photos
+[452.0s - 454.0s] And we'll also make one for
+[455.0s - 457.0s] uh, followers
+[457.2s - 459.2s] so
+[473.6s - 477.4s] Yeah, let's talk about these for now. Let's
+[478.8s - 480.9s] Say this for later um, so
+[482.8s - 486.5s] The first thing I want to talk about is um, our choice of database
+[486.6s - 491.5s] So we have a lot of choices here and we have multiple kinds of data. So we can store things in different ways
+[492.1s - 494.1s] um, this is a
+[495.2s - 500.4s] What I view to be a fundamentally relational type of data problem because we know we have
+[501.4s - 507.6s] Clear types of data users photos um, as well as a relational
+[508.5s - 510.0s] um
+[510.0s - 512.0s] System between them. So we have
+[512.2s - 513.2s] um
+[513.2s - 515.2s] Users
+[515.2s - 518.0s] Are related to other users in a many to many way
+[518.8s - 525.3s] By way of this following mechanism. So one user can follow many users many users can be followed by a user
+[526.0s - 527.2s] um
+[527.6s - 530.2s] And a user can be followed by many people
+[530.8s - 533.1s] I think I might do the same thing you just said um
+[534.3s - 539.9s] On the other hand, we also have photos um, which are related to users in a um
+[541.2s - 544.9s] In a many to one way so one photo can only have one
+[545.6s - 547.6s] um user owner
+[547.8s - 549.8s] But a user can have many photos
+[551.0s - 555.5s] And so there's this inherent sort of relationship between the kinds of data that we're trying to model
+[556.1s - 558.9s] Um, and that to me it runs itself to a relational database
+[558.9s - 564.6s] Obviously, we could also store things and by relational database. I mean like a sequel database like my sequel or postgres
+[565.2s - 567.2s] um or or any others
+[568.3s - 573.7s] There are other options so we could also look at no sequel databases um and uh
+[575.9s - 577.9s] What I would suggest is that you
+[578.4s - 580.2s] Think about um
+[580.2s - 585.4s] Whether your data is inherently relational and whether you would benefit from being able to
+[585.9s - 590.2s] To do relational queries um in this case. I think being able to
+[590.9s - 594.9s] Quickly get all of the you know photos for a particular user
+[595.0s - 599.3s] That's a thing you would have to do on a very regular basis um
+[599.6s - 602.4s] That's that's an inherently sort of relational query pattern
+[603.0s - 609.2s] And so I think choosing a sequel database in this make in the sense uh makes makes perfect sense and
+[610.4s - 611.5s] Yeah, so I'm gonna go with that
+[611.5s - 614.6s] I'm gonna go ahead and start modeling out these tables based on sort of
+[614.9s - 620.2s] Requirements we know we have a work system and and just sort of using common sense here of patterns. I've seen before
+[621.3s - 623.6s] So in the user table um
+[624.6s - 628.5s] We're going to have a primary ID um, which is going to be our
+[629.6s - 633.3s] primary key it's going to be an integer and it's going to you know increments
+[633.3s - 634.7s] Serially
+[634.7s - 641.0s] Um, this is just sort of sequel speed and in terms of the um the scheme out of that uh of this table
+[641.9s - 646.3s] So some other things we'll probably need for a user uh with the name
+[647.6s - 649.8s] To be a string
+[649.8s - 653.2s] We're going to have probably an email address, which will also be a string
+[654.1s - 656.4s] We're going to have um
+[658.5s - 666.0s] Perhaps like a location perhaps um some sort of uh, you know other ID or um
+[666.9s - 671.7s] Other attributes about the person. So I'll go ahead and maybe just mention some of these things
+[672.2s - 674.5s] Um, maybe time zone things like that
+[674.5s - 677.6s] And but these are sort of I think the basic things we need to get started here
+[679.6s - 681.2s] Um
+[681.2s - 683.6s] For the photo table um, we're also going to have an ID
+[685.2s - 687.2s] Um, so it's going to be again our
+[688.0s - 690.0s] primary key
+[690.5s - 692.0s] Um, we're also going to have
+[692.7s - 694.5s] In this case, we're going to have a foreign ID
+[696.4s - 701.0s] Uh, referencing the uh user. So this is going to be
+[702.2s - 704.2s] Uh, a foreign key
+[704.2s - 705.4s] referencing
+[705.4s - 712.9s] You hear that ID um, so that would be our relationship between these two tables um, we're probably going to have a
+[714.3s - 717.7s] Um, you know, maybe a caption or description for this
+[718.6s - 725.3s] Uh, this image and then we might have additional metadata like the location it was stored, which might be
+[726.0s - 729.3s] A string or or coordinate type um
+[730.5s - 737.2s] And then um lastly, I mean one thing we're going to have to do here is um, because of the large nature of these images
+[737.6s - 744.8s] We're not going to store them in our database itself um, we're going to just use this database to model the metadata
+[745.2s - 747.2s] About the images about users
+[747.4s - 750.7s] So what we're going to also need here is some sort of path or URL
+[751.6s - 760.6s] Which is going to be a reference to our sort of distributed file system that's going to actually store and replicate and um
+[761.7s - 763.2s] Uh
+[763.8s - 768.6s] Handle basically everything related to storing these files these images
+[770.8s - 772.8s] So that's sort of the basic uh
+[773.5s - 780.4s] Building blocks of that which is what we need um, and then lastly, I'm going to talk about sort of the following the model for
+[780.5s - 783.7s] Building followers. So in this case, it's actually pretty simple
+[784.4s - 788.1s] Um, we could actually just have two columns here. Um, there's going to be
+[789.6s - 796.9s] Uh, user user one essentially and user two and these are both going to be um
+[797.9s - 799.9s] foreign keys
+[801.8s - 804.4s] referencing um, one user
+[805.1s - 807.1s] And
+[810.0s - 818.6s] And the other user and what this table does essentially is it models. It's just a relational uh, table that models
+[819.2s - 827.2s] Um, one direction of someone following so user one um, can follow user two without user two following user one
+[827.9s - 834.2s] Um, so we might call this in addition to calling this user one or user two we could call this like um, you know from and two
+[834.6s - 836.6s] To sort of model this
+[837.6s - 845.7s] Single direction relationship. Um, this is a little bit different than you know, Facebook where um friends are inherently um, bi-directional
+[846.6s - 850.5s] So just something to keep in mind as you're thinking about this um, relationship
+[851.4s - 861.8s] Great. Okay, so now we have sort of our basic data model in place um, let's talk a little bit about the overall system and the high level components that we need to sort of
+[862.4s - 864.2s] Bring all this stuff together
+[864.8s - 871.4s] Keeping in mind these sort of scalability and requirements that we laid out at the beginning as well as the features that we need to support
+[871.9s - 873.6s] namely um
+[873.6s - 875.6s] Having users upload photos
+[876.4s - 879.3s] having them be able to follow other users and
+[880.0s - 887.7s] Getting to see this this new speed of images that um have been posted by their their followers
+[889.2s - 893.2s] Moving on to that. Let's talk about um each of these components
+[893.8s - 895.2s] so
+[896.0s - 900.5s] At fundamental level, I'm going to start with the database since that's what we were just talking about so
+[902.2s - 905.3s] Um, this is our going to be our metadata database
+[907.4s - 908.6s] um
+[909.4s - 914.8s] In addition, um, one of the important pieces here is this idea of the
+[915.6s - 921.9s] Image paths that we're storing in the photo table and where those are going to be stored so
+[923.3s - 925.3s] We're also going to have
+[927.8s - 936.0s] Um in a distributed object storage mechanism and this is something like s3
+[940.8s - 942.8s] So
+[942.8s - 945.5s] We'll leave this a little abstract, but basically
+[946.0s - 949.2s] What we want to do is use a distributed file system like
+[949.8s - 953.6s] s3 that's going to store and replicate our data in a reliable way
+[954.6s - 957.1s] And then we're going to store the
+[958.0s - 963.2s] reference paths to files that are stored there um in our metadata database
+[964.2s - 966.2s] and that way uh, we can
+[966.9s - 968.7s] um
+[968.7s - 973.5s] We can have a separate reliable place to upload images and reference them um that will be
+[974.4s - 976.4s] um accessible and fast
+[976.8s - 981.7s] Um, and there's a few ways we can sort of improve the efficiency of this which we'll get into in just a moment
+[982.5s - 984.5s] Um, but essentially
+[986.9s - 988.9s] There's sort of this connection between these two
+[989.6s - 991.2s] um
+[992.7s - 994.7s] In this in this way
+[994.8s - 999.6s] All right, so next we'll be talking about is our application service layer
+[999.6s - 1004.4s] So we haven't gotten into this yet, but this is going to be the actual sort of core of our system
+[1005.2s - 1006.1s] Um
+[1006.1s - 1011.4s] These are going to be the servers that are responsible for the so-called like crud operations create read update and delete
+[1011.7s - 1013.7s] so this is what sort of serves as the
+[1014.4s - 1015.9s] um
+[1015.9s - 1018.0s] The system that's going to be
+[1018.0s - 1022.1s] Responding to requests from clients whether mobile or web etc
+[1022.8s - 1028.0s] Um, and are going to be handling those and then performing operations on the database or
+[1028.9s - 1030.9s] Getting information and returning into the user
+[1031.9s - 1036.9s] So this is really the core part of any web back-end system. It's going to be um
+[1038.1s - 1042.3s] Often many different kinds of servers for one of these large applications
+[1042.9s - 1046.8s] Typically the patterns to start with a monolithic architecture where you build a web app
+[1047.3s - 1052.8s] That responds to all the different types of requests that are coming in and then over time as your traffic scales up and you
+[1053.3s - 1055.3s] um find different
+[1056.1s - 1057.2s] um
+[1057.2s - 1063.0s] Patterns of usage or different query patterns are more popular than other ones or different kinds of requests like
+[1063.7s - 1065.2s] um
+[1065.2s - 1069.1s] Operations that have to happen asynchronously or that take a long time to calculate
+[1069.6s - 1073.9s] You begin to start splitting up this monolithic and different services or microservices
+[1074.6s - 1080.4s] And that perform specific operations and can be scaled independently of one another um to optimize your
+[1081.1s - 1083.1s] um server usage
+[1083.5s - 1090.4s] So let's think a little bit about the access patterns that are probably going to happen in in an instagram like application
+[1090.8s - 1093.2s] When we reach the scale of 10 million users
+[1094.9s - 1098.8s] Um, what we expect to happen here is there's going to be a lot more people
+[1099.5s - 1101.5s] viewing and reading um their
+[1102.3s - 1104.7s] Their feed than there are going to be people uploading
+[1105.6s - 1110.0s] And we need to be able to do both those operations efficiently and
+[1110.7s - 1112.7s] supports um
+[1113.9s - 1121.9s] Maybe different sort of access patterns that are happening a different um peep times of the day, you know, there's all these different sort of um
+[1123.5s - 1128.1s] Usage patterns that we need to be aware of that might affect the the way we build our system
+[1130.4s - 1132.4s] So
+[1133.1s - 1138.4s] Knowing that this is sort of a read heavy system um, we're going to want to have um
+[1139.6s - 1141.6s] probably not just one
+[1142.0s - 1144.5s] um like one database here. We're going to want to have
+[1145.3s - 1146.5s] and
+[1146.5s - 1152.3s] Replicas of this read replicas of this database that will allow us to efficiently read data from them
+[1153.0s - 1154.2s] um
+[1154.2s - 1157.0s] Without essentially slowing down um
+[1158.0s - 1161.1s] Our ability to also write data and upload new images
+[1162.1s - 1164.2s] And this will allow us to achieve a higher
+[1164.9s - 1166.9s] um scalability of our system
+[1167.8s - 1168.5s] um
+[1169.3s - 1175.7s] And just overall like a larger throughput of uh request volume since the database and like connections to it
+[1176.2s - 1179.7s] Or often one of the major bottlenecks of um any system
+[1182.0s - 1184.5s] Um, so we're going to go ahead and build our
+[1185.5s - 1187.5s] application server here
+[1187.9s - 1189.9s] um
+[1194.8s - 1200.0s] Um and what I'd like to do is um split this into maybe two different services um so
+[1200.7s - 1202.7s] Let's think about like the read
+[1203.6s - 1209.6s] Services and the writing or uploading services separately um
+[1211.7s - 1216.2s] Since as I mentioned they might have different patterns different requirements um they might
+[1216.8s - 1220.1s] um require different types of caching and and other things
+[1222.4s - 1223.6s] um
+[1226.0s - 1232.5s] So for example our read um we might implement caching here in between the database and the app server
+[1233.2s - 1236.9s] Um like in a memory storage like redis this would allow us to
+[1237.6s - 1239.9s] um return frequently access data
+[1240.8s - 1242.0s] uh much
+[1242.0s - 1244.0s] much faster than
+[1244.4s - 1247.2s] Making a request to the database every single time
+[1248.8s - 1250.1s] um
+[1250.1s - 1251.8s] So
+[1251.8s - 1253.8s] Yeah, let's scroll cash here
+[1264.7s - 1266.7s] Actually going to
+[1268.8s - 1270.3s] Move these over a little bit so that I can
+[1270.9s - 1273.4s] So all this cash in between them
+[1278.4s - 1280.0s] And
+[1280.0s - 1284.0s] Let's just mention that we're going to um
+[1287.5s - 1290.0s] Read from uh read from the cash here
+[1293.5s - 1298.8s] And then on our uh on our right service um we're going to write to the database
+[1300.4s - 1302.8s] And we're also going to um
+[1308.2s - 1313.6s] Now there's several different caching policies um I won't get into all different ways in which that works
+[1313.6s - 1317.8s] But essentially we want to use sort of a right-through right-back policy where
+[1318.5s - 1324.2s] When um a right behavior or or an update happens on some content that's in our database we want to
+[1324.8s - 1328.3s] Um update our cash at the same time so that um
+[1328.3s - 1332.8s] Downstream the read service that's using this cash to return data to users
+[1333.2s - 1337.9s] Um is updated in a reasonable time and is consistent with the um
+[1338.9s - 1342.0s] Uh with the sort of source of truth in our main database
+[1344.2s - 1347.9s] Um, so I'm sort of just drawing these errors here to represent these relationships
+[1347.9s - 1351.9s] But there's multiple ways in which this update could happen um and
+[1352.6s - 1354.8s] Ways in which these sort of things would be triggered and
+[1355.7s - 1357.7s] Implemented in reality
+[1359.2s - 1364.4s] Um, I'm just going to note that like this would probably be some sort of distributed cash system like redis
+[1365.0s - 1373.0s] I'm that would be really performance and sort of sit separately from our uh from our main database um
+[1375.1s - 1381.5s] So all right, so now we have um two different um services here. They're responsible for different parts of our
+[1382.0s - 1387.5s] Uh of our feature sets one is responsible for um fetching images and
+[1388.4s - 1394.8s] Returning data to user the others responsible for performing this sort of upgrade uh this upload process
+[1395.7s - 1397.2s] Which would also
+[1397.2s - 1401.6s] Not only send data into our metadata database, but also would handle
+[1402.3s - 1406.1s] Actually uploading the image from the client to the
+[1407.1s - 1409.1s] File storage system
+[1412.6s - 1416.7s] All right, so now we're beginning to get a sense of um what the system would look like
+[1417.6s - 1423.2s] So um sort of moving up the stock a little bit. So um, we're also going to need to have
+[1424.5s - 1425.9s] um
+[1425.9s - 1432.3s] A load balancer so as any system scales becomes um very important that the
+[1433.2s - 1439.3s] um sort of fundamental pieces of the system can support the load and volume requirements
+[1439.8s - 1444.4s] Of the number of users that are attempting to use it because otherwise you'll
+[1445.3s - 1451.5s] Begin dropping requests or taking really long time to serve users as the request sort of few up
+[1452.6s - 1456.4s] Uh one of the most common patterns of solving this sort of problem
+[1457.4s - 1461.2s] Or solving some of these problems is to scale horizontally
+[1461.9s - 1465.0s] So what we would do is we would not have just one
+[1465.9s - 1470.3s] um app server for reading and writing we would have uh many many servers
+[1470.8s - 1473.0s] um perhaps located in different
+[1473.7s - 1480.1s] Access points throughout um throughout the world depending on how large grapple vision is and
+[1481.7s - 1487.8s] um we would serve requests to these servers in uh sort of a load balanced way
+[1489.3s - 1492.9s] So that each one is sort of utilized um
+[1494.3s - 1501.1s] Equally with the others as much as possible so that no one server becomes too overloaded or too overworked
+[1501.6s - 1503.4s] To the point where it begins dropping load plus
+[1504.1s - 1506.8s] So this is the responsibility of a load balancer
+[1509.6s - 1514.8s] Um it can also handle um there there could be a separate load balancer separate router to handle
+[1515.3s - 1519.1s] um sending requests to the correct application server first implicitly
+[1519.1s - 1524.3s] Let's just sort of imagine that it's one sort of um proxy here that's doing both load balancing and
+[1524.9s - 1526.9s] um and routing
+[1532.0s - 1534.0s] You
+[1542.8s - 1546.0s] Our um client is going to be making this request
+[1546.8s - 1548.5s] So again, we'll probably have
+[1550.7s - 1552.9s] Um a variety of global clients
+[1553.8s - 1555.8s] who
+[1558.8s - 1560.8s] Who will be
+[1561.8s - 1564.8s] reaching our server through the internet and
+[1565.9s - 1569.1s] And sending requests that could be um
+[1570.5s - 1574.7s] Uh getting images could be uploading images um and so
+[1575.8s - 1579.2s] Starting from the client they'll call our API
+[1580.1s - 1583.2s] Um which will have a different route for each of these sort of features that we lost to support
+[1584.0s - 1585.2s] um
+[1586.8s - 1592.5s] Our request will come uh to our load balancer which will be sort of the top level um
+[1593.5s - 1598.8s] Part of our system it will get the request it will figure out which service it belongs to
+[1599.5s - 1601.2s] Um and we'll route it to that service
+[1602.4s - 1605.4s] um or one of the instances of that service um
+[1606.4s - 1611.2s] And then it will um in the red case it will um
+[1612.5s - 1617.6s] Figure out you know does this user have uh it will do all the sort of business logic if you're in the out um, you know
+[1618.3s - 1623.7s] What um image of my looking for does this user have access to this image or is it private
+[1625.0s - 1633.0s] Um it will look to the cash first to see if it has um this image in there um and if the cash is uh
+[1633.1s - 1638.2s] You know fresh it will just return the image uh sorry it will return the image data um
+[1639.2s - 1643.0s] Uh or any user metadata um that it needs
+[1644.4s - 1649.4s] That response would come um all the way back through get returned to the mobile client
+[1650.2s - 1655.6s] Um and would then and would then include the uh path to the image that needs to be loaded
+[1656.4s - 1661.2s] Um that request would probably be fired off separately and would then
+[1661.9s - 1663.2s] um
+[1665.3s - 1672.2s] Would then be loaded um in a separate request from our um from our distributed file system
+[1673.5s - 1679.0s] Uh and then sort of sitting in between here we might have a cdn or some sort of distribution network
+[1679.6s - 1683.3s] That would make these requests uh faster by having
+[1684.7s - 1690.3s] Basically access points and different parts that are sort of closer and make the sort of last mile um
+[1691.8s - 1693.8s] Requests latency much faster
+[1697.7s - 1701.3s] Um in the upload case when a user is creating a new image
+[1702.0s - 1707.4s] Um something similar would happen where we would open a connection to the server um it would begin to
+[1708.1s - 1711.1s] I would upload all the metadata related to you um
+[1712.1s - 1718.3s] Uh user and in the photo that we're uploading and then it would um handle receiving that image and
+[1718.8s - 1721.0s] Passing it on into the object storage
+[1724.0s - 1727.8s] Um as we mentioned that process would also um
+[1727.8s - 1729.9s] And cause the cache to be uploaded so that
+[1730.4s - 1734.2s] That um new content could be available to users here in the press
+[1735.4s - 1741.0s] And that's basically it so wonder we haven't talked about here is the process by which we would
+[1741.5s - 1745.2s] Generate sort of a feed of um images for each user
+[1746.1s - 1754.8s] And the way I think about that is that could in fact be a process that happens and also gets stored in either this cache or another
+[1755.2s - 1757.2s] um feed cache
+[1757.2s - 1763.2s] Um and that process could be managed by this uh read server or by a separate service
+[1765.4s - 1767.4s] Let's call it
+[1768.4s - 1770.4s] You
+[1774.4s - 1776.4s] It's called the feed generation service um
+[1778.0s - 1780.0s] This service would um
+[1782.8s - 1784.8s] Access our cache as well as our database
+[1787.3s - 1793.4s] And this would be operating perhaps depending on the requirements of the feed that we want would be operating on a schedule
+[1793.9s - 1800.1s] You know perhaps generating a new feed um for each user on like an hourly basis and
+[1801.0s - 1803.0s] And uh
+[1803.4s - 1810.7s] Yeah would would talk to the database to understand which content was new and would sort of um generate these things which typically would be
+[1811.2s - 1815.2s] Too computationally intensive to do on the fly for every request
+[1815.8s - 1818.7s] And instead we can do it ahead of time we can keep these feeds
+[1819.2s - 1824.6s] Store them in our cache and then allow the um app server that's responsible for
+[1825.2s - 1828.3s] uh for getting the feed to then just read the
+[1829.2s - 1830.9s] cache results
+[1830.9s - 1832.9s] That's basically how that would work
+[1834.0s - 1839.3s] All right um there's obviously a lot more detail we could go into on every single part of the system um
+[1839.3s - 1846.9s] We covered a lot of ground here and talked about a lot of different components um, but this is sort of the overall system that I would design for Instagram
+[1847.6s - 1848.9s] um and
+[1850.0s - 1857.2s] Yeah, if you have any thoughts or questions, please please uh leave a comment and uh we look forward to
+[1858.2s - 1860.4s] Uh making more videos like this if they're helpful

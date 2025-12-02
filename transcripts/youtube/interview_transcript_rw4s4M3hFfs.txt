@@ -1,0 +1,963 @@
+SOURCE: YouTube
+VIDEO_ID: rw4s4M3hFfs
+URL: https://www.youtube.com/watch?v=rw4s4M3hFfs
+GPU: 1
+DURATION: 3595.4s (59.9 min)
+TRANSCRIBED: 2025-11-28 09:31
+================================================================================
+
+FULL TRANSCRIPT:
+--------------------------------------------------------------------------------
+ Let's see how many times I'm going to say the phrase a Google coding interview in this two-minute intro. What's up, everybody? How's it going? We are all in dire need of a Google coding interview. It has been far too long since I've made a Google coding interview. And so in this video, that's what we're doing, a Google coding interview. But this Google coding interview is unlike a lot of my previous Google coding interviews on this channel. I am not doing this Google coding interview with an international grandmaster at competitive programming. I'm not doing this Google coding interview with someone who's won a medal in the international Olympiad of Informatics. No, this Google coding interview is with a normal software engineer, because a lot of you commented in the previous Google coding interview videos that you wanted to see, perhaps some more realistic performance in a Google coding interview. And so this is just that. I'm joined by Kirti. She's a software engineer based in India. As far as I know, she is not an elite level international grandmaster competitive programmer. Hasn't won medals and be international Olympiad of Informatics. And so this is going to be a realistic Google coding interview. We did this Google coding interview on a Google doc, because that's how coding interviews are done at Google, especially right now, even on sites are virtual. So they're done on Google doc. And the question that I asked Kirti is a very hard question that we have on AlgoExpert. By the way, if you're preparing for your coding interviews and you want to get a job at Google or at any other big tech company, then go check out my company. AlgoExpert. Go to AlgoExpert.io and use the promo code CLEM, CLM, Ferdisk on the platform. We've helped tons of software engineers land jobs at Google and all other big tech companies and startups. And this question is actually a question that I have asked myself at Google in a real interview about a year or two years ago. And last thing before we jump into the interview, we actually did a second Google coding interview on Kirti's channel. We got a channel where she talks about software engineering and coding interviews. So go sell her some love and check that out after you finish watching this Google coding interview. I will put the link to that Google coding interview in the description and in the comments below. And with that, enjoy the Google coding interview. So how many times did I say Google coding interview? Oh, and try to solve the problem as you watch the video and comment down below how you would solve it. Oh, and in the last 10 minutes of the video, we did a feedback session to cover Kirti's performance so you don't want to miss that. Hi Kirti, how's it going? Are you excited for this interview? I'm very excited and very nervous. OK, well, try not to be nervous or try to let the nerves fuel you into acing this interview. And I'm going to put the timer on the clock now. We're going to have about 45 minutes. And I'll let you know when we're running out of time or if we have to speeden things up, OK? Sure. All right, starting the clock now. So Kirti, I want to imagine that I want you to imagine that you are about to move. So maybe you're moving to a new location. And you want to find an apartment that you want to live in. So imagine that you have one street. And the street, you can imagine that it's on a single line. So imagine, you know, a single line here. I'm just typing a bunch of ones to show that it's a single file line. And at each block in this line, there's an apartment. So you can imagine that I'm probably going to give you a list, a list of blocks, street blocks. And at each block or each index, there's an apartment that you might want to consider living in. Are you following me so far? Yeah. OK, so you want to make sure that the apartment you live in is really good for you. And the way that you're going to determine, if it's good for you, is if the apartment is close to some buildings that you really value. So for example, you really value, or you might really value, being close to a gym, or being close to the office, or being close to the supermarket. Does that make sense? And so I'm going to give you information about at each block, whether or not there's a building, like an office, or like a school, or a gym. And you're going to want to find the apartment that minimizes the farthest distance that you would have to walk to to get to all the buildings that you value. So I realize that I've given you a lot of information. I'm going to show you a couple sample inputs just so that you get an idea. So imagine the first sample input is going to be called blocks. And it's going to be a list, let me put it like this, that has a bunch of objects, like hash cables, so to speak. And these objects have all these buildings that map to Booleans. So here, at index 0, you can see that there's a gym that maps to false, meaning that at block 0, there is no gym. But there is a school, but there is no store. At block 1, there is a gym. There is no school, and there is no store. Does that make sense? Yeah. OK, and so then the second input that I'm going to give you is going to be a list of required buildings. So if I go a little bit lower here, I'll put rex, requires, or requirements. And this is going to be a list of strings. And this list of strings is going to have the buildings that you value. So here, you happen to value gym school and store. But I could maybe give you just gym and school, or I could give you just gym. It could be any buildings. And they don't necessarily have to be in these objects. And so here, if you value gym school and store, that means that you have to find the block that has an apartment. And by the way, every block has an apartment. The apartments are kind of implied to be at every block. You have to have to find the block that will minimize the farthest distance that you would have to go to to reach all of your requirements. And so here, for this sample input, the answer would be index 3, which would be this one. If you want, I can highlight it, let's say, in light green here, this one. Because for this one, the farthest that you have to walk to, to get to all your required buildings, the gym, the school, and the store is a distance of one. Because the school is right here. Then a gym is one above. And then a store is one below. OK, OK. So can there be only three things that is gym school and store, or they can be more number of things? There can be any number of buildings. And the only thing is that in the blocks, at each block, you will have information about every single building. So for example, if I were to add here something like, I don't know, office, then you could expect that every block would have a data point about an office, whether it's true or false. OK, and it will be a valid input. So I don't have to check whether all four are present or not, right? Yeah, you don't have to check whether all four are present. They will always be present. OK, OK. So at the top of my head, if I have to talk about proof or solution, so I can consider each block to be my solution. And I can just keep calculating the distance from them, right? OK. So suppose I consider that my apartment will be here. So like in this case, I can see that there can be multiple things in an apartment. They can be a gym as well as a school, right? Yeah, yeah. So the distance will be 0 plus 0 like that. So I will keep calculating the minimum distance as I traverse the array. And wherever I find the minimum one, I can just return that. OK, and just can you walk me through conceptually? Like how exactly do you find the minimum distance? OK, so suppose we just suppose the requirement was just gym and school, OK? So I come over here. I have the number of variables that are there in requirements. So same number of variables. So right now, I am going to keep two variables, that is the distance for the minimum distance for gym as well as the minimum distance for school. And they will be a result that I will store that will be the minimum of some of both of them, right? That is my minimum result that is possible. So when I am here, so I will have three variables. So one will be distance from gym. So in gym distance, then there will be school distance and there will be resultant that this will have the minimum value, OK? So here since this is false, my school distance will become 1 and this initially will be some maximum value say we take infinity or int max. And so this is infinity and this is 0, right? Then I come over here. Here gym is, here gym is true. So here the gym distance becomes 0. So school since I have traveled one distance, so it will become sort of the resultant from the previous one plus 1, right? So it will be the distance of this plus 1 and then I will keep checking whether the resultant has to be updated or not, right? So the earlier result was max because it was not possible to reach gym at all. Here it so at every point, I am just seeing the blocks before and not the blocks after that, right? So I will traverse the entire thing once and then check. So but it is also possible that the minimum can be from a right end, right? Instead of from my left end, it can be from right end as well. So probably what I should do is traverse the area twice, one from the left side and one from the right side and then check that what is the answer. And just before you keep walking down that path here to just to be clear, you are looking for the minimum, the minimum farthest distance that you would have to walk to, right? Because so for example, like at index 3 here, which was the answer here, the farthest distance that you would have to walk to was still 1. Even though there was a school here which was 0, you would have to walk 1 to get to the gym up here and 1 to get to the store down here. Does that make sense? Can you please repeat that point? Yeah, so since you have multiple requirements or you might have multiple requirements, you want to minimize the farthest distance or the greatest distance that you would have to walk to. Because here, if you care about gym, school and store, school is 0 distance from this index, right? Okay. But gym, you have to walk 1 to go up here and store, you have to walk down 1 to find it here. So the point that I'm trying to make that I just want to make sure you're clear with is that it's the farthest distance that you have to go to that you're minimizing, not just any distance. Okay, so it is now, so, okay, I understood it wrong. If I understood that it was the sum of the distances, it is not like that. It is like farthest for anyone that I have to go, right? Yes, exactly. It's not the sum. Oh, okay. Even though the sum here is like, I guess 2, it's not that that we care about. It's the farthest that you would have to go to. Okay, so it will be like, so I will have to minimize the max of gym distance and school distance essentially. Yes. Yeah. Okay. Okay. That's one way to put it. Yeah. So I have to minimize the maximum value among the requirements. Does that sound fine? Yep. I think that sounds good. So basically I will have and I can have a hash map sort of thing, an ordered map. So corresponding to each requirement, I will keep the maximum distance, right? So and I will minimize that, okay, so, okay, so corresponding, so, okay, I have to keep that. Okay, so for the entire array, just give me a second for the entire array for each block, I need to minimize the maximum distance. So for this, suppose I have to calculate the maximum distance, I will have to, so that will become order of n square. So now proof force will become order of n square. So if I have to for this block, I will have to check the maximum distance from all the other blocks, right? Similarly for this block, I will have to check for all the other blocks. So to minimize that, to make it order of n, I will have to use dynamic programming and store the values in an array. So if I have see dp array of distances, so this will again be, it will be sort of array of vectors. So and vectors will be the distances, the max distances for each of the requirements. So it will be like, so suppose there are n blocks, right? So this dp, okay, this auto, this thing, I am not really caring about it, okay? Okay, yeah, this caps lock. So I will keep a dp array of size n, suppose, okay, and each of them is a vector. So it will be vector of, vector of integers, say dp and this the entire size will be n. And each vector will be of the size, so what will be the size of requirements, okay? Say that is in this case. And we will initialize the whole thing to some maximum value. Does this look fine? Okay. Right? So now as a traverse, can I just start writing the pseudocode and then we will keep discussing? If you want, but just to make sure I follow you, could you re-walk me through like what the logic you're going to, you're about to write in pseudocoders? Okay. So this is the array of vectors that I am storing, right? So as I traverse this array for each point, I am going to keep calculating and like I will see all the answers previous to it and update it. So if like the maximum distance of this school should be the maximum distance of the previous one plus one, if it is not present over here, right? Okay. So it basically, I am calculating maximum distance for each requirement for each block in the array. Yeah. Does that sound fine? Yep. But how are you doing, you said you're doing that in one iteration? It will take two iterations, I think. So one will be, I will go from left to right, right? And one will be from right to left. I see. Okay. Does that sound fine? And I take minimum of both. Okay. Yeah. I think I'm following you. So if you want, you can, you can write the pseudocode that you were going to write. Okay. So I'll just write it in simple terms. So I equal to 0, I less than n, I plus plus. Okay. So I'm promising the entire array right now. And for each element, I have to track for all the requirements, right? So for n equal, let's equal to 0. So j less than m, m is the size of the requirements over here, right? Yeah. So what I'll do is, if it is the first one, so for the first one, I will update over here. So I'll traverse this from i equal to 1. Also, can I assume that they will be at least one element or should I handle cases when there's just one, one block or two blocks? Let's just find that there's always, let's assume, you know, for simplicity that there's always at least one requirement and one block. Yeah. Okay. So for that case, I'll write it equal to 0. So this is for my first block, okay? So for first block, as I go through this, so if these are the blocks given to me, so if blocks of 0, that is the first block that I'm seeing, if the element, so I'm just seeing it. So can we say that input is given in terms of requirements? So 0, 1, 2, or should I save this thing like, should I like pre-process this thing and save it in, you know, array sort of thing? So basically what I'm trying to say is that for block 0, this is requirement 0, this is requirement 1, this is requirement 2. I see, I had the requirements as a vector, a string vector, but if you, if this is simpler for you, you can assume that you've pre-processed it to map the requirements to numbers if that's easier for you. So would you rather have me write the pre-processing code as well or is it okay to go like this? For now, let's assume that you've, that you've written it. So just, just to understand, you're saying that basically your requirements now look like like this. Right. I can just map it to 0, 1, 2. Yeah. And assuming that you would do the, you would do the same for the blocks, like the unordered map here, the keys in the unordered map. Yes. So this will be an integer and this will be a Boolean. So Boolean and integer. Okay. Okay. That's fine. Yeah. Let's, let's go with that for now. Okay. So, if my first block has this requirement, jth requirement, then what I do is I update that distance. So dp of, so otherwise it will be int maxi. So otherwise, so for this one, I update dp of 0, g 2, 0. So the distance is 0 for this one. Okay. Okay. Does this seem fine to you till now? So this is for the first block. Yeah. So you, but you've only done it for the first block. Yes. So for the rest of the blocks, so I'm starting from i equal to 1, i less than n, sorry. So here, so for rest of the blocks, what I'm doing is, so dp of i, any i th block and for each j, what I'm going to do is it will be equal to, so I have to find the maximum, the farthest that I have to go, right. So it will be, so the farthest that I have to go. So if, first of all, I will check if that one is true, so if blocks of ij, that means if it is present over there itself, then I can just assign the dp of ij to 0. That means that thing is present over there. If it is not present, what I do is, I check if it was present somewhere earlier, right. So for this, so what was the distance for the previous one, plus 1, it will be right. Now it is possible that we haven't found the previous one. So the value will be int max over there. So if I add plus 1, it will go out of 1, right. So I will have to add a check over here that if dp of i minus 1j is not equal to int max, right, then my dp of ij will be equal to, so minimum of whatever is the value. So if it is max now, so I do not have to consider it or if it is 0, then okay. So minimum of dp of i minus 1j plus 1, does this seem fine? Yeah, so this is for, so this is where I am going left to right, right. So for each of them, I am updating that what is the maximum distance that you have to go, right. Now with this, instead of doing this, I can do one more thing. So I keep this as m plus 1 instead of m. So the last element that I am going to store will be the minimum of all these values. So this is like the maximum distance that I have to go, right. So I have to minimize the farthest distance that I have to go for all the blocks, right. So for each block I have to find that. So for each dp of i, basically I am storing one more element which will essentially be maximum of all of these distances for that block, right. So when I am calculating this, so for each of them, right, so where is this ending, yeah. So after each this, so dp of instead of this, yeah, over here I can add. So dp of i m will be equal to maximum of, so initially it will be, okay. So for each of them, I have to add dp of i m as some 0, right. So we can assume that at least, so I have to find the maximum distance, right. So if that value is maximum initially only then anyway it will always be max, right. The answer will always end up being max. So I initialize dp of i m as 0 and I will make this as dp of i m and dp of i g. So whatever value I have calculated. If that value is greater then I have to add it. So I am storing the maximum value over here. Does this make sense? Yes, you are updating at each iteration the maximum mend distance of the requirements that you found. Exactly, right. So I have done this when I am going from left to right, but the maximum for this distance can also be from right to left, right. So I will have to do the whole thing like the same code, I have to then in the other direction as well, right. So now what I do is now for int i equal to n minus 1, I greater than equal to 0. So I can just copy this whole thing and make some small changes, right. So dp of i m, I do not have to update it to 0 now because some value is already there. I do not want to discard the value, right. So now again for each block I will check. So this will remain same. Now instead of i minus 1, I will make it i plus 1 and instead of n minus 1, I will go from n minus 2 and it should be greater than equal to 0 and it will be max of this. So yeah, I think this should work. Can I drive and check? I am sorry. Can I just drive and once and check or do you have any questions or does this seem fine? Yeah, I was going to say could you walk me through, like let's take the sample input that we have above with gym school and store and we can assume that I guess gym is 0, school is 1 and store is 2 and walk me through the algorithm, you know, like basically iteration by iteration just to see that it works conceptually. So I will just store the dp values over here, right. So dp, so for like 0th value what will be the values initially, if so instead of writing int max, I am just going to write some big number 100 for now, right. So that will be easier to understand, okay. Yeah, or if you want you can even put like just like an asterisk or like a single character like this. Okay. So for dp of 0, so first we will go through this one. So only for a school it will be true, so it will be something like asterisk, 0 asterisk and the last value will be asterisk itself, okay. Because the last value you take the maximum of all three of these, okay. So also, okay, so here this is the tricky part, I also I have not taken care of resultant which will be the maximum of all of these dp of I am essentially. So we can calculate that, okay. Just let us first see if the rest is working or not, so dp of I 1, yeah, yeah. So I come over here, I put dp of I am as 0, which is okay. So for each block, I check if it is true, okay, otherwise I will add the distance, okay. So here since this is true, this distance is going to be 0, right. Now this is false, so this will be either int max or this plus 1. So this is going to be 1 and the distance of store is going to be this plus 1. So here since it was max only, I am going to keep it max and dp of I am is going to be max of these all. So since this is asterisk, so this will also be asterisk. So the maximum distance is infinity itself right now. And just here to just stop you for one second just to make sure that we are on the same page. So here you are playing, you are effectively applying this line, right. This is, I just copied the line that you had written, right. And so at this second element, you took the minimum at that element, which was int max and dp of I minus 1 at j, which was this is 0 here, plus 1. Yes. So 0 is 1. Yeah. Yeah. So it was meant, so it was meant of int max and 0 plus 1. Yes. Okay, that makes sense. Yeah. So now coming to the second element, so if I am here, so here the values are going to be since this is true, it is going to be 0. And this is also true, so it will be 0. And since this is false, it will be minimum of either int max or int max plus 1 since this is int max. So again, the value is maximum only. So this will again not get updated because the farthest distance still now is still infinity, right. Now if I come over here, it will be, so here the gem is false. So it will be either 0 or it will be either int max or 0 plus 1. So in this case, it will be 1. Here it is true. So school is true and store is again false. So this is again infinity, infinity, okay. So for 4 again, so this is false, so it will max distance will be 2. Here it will be 0. So store is wait, so 0, 0, 1, 2, 3, 4, okay. So here this is true. So what I am going to do is this will finally become 0 and our dp of I m will be equal to max of dp of I m and dp of I j. So what is the maximum value of all of this, oh sorry, yeah what is the maximum value of all of this? It is 2, right. So the farthest distance for all of this is 2 in this case, right. And this is, this is this line just again to make sure that we're on the same pegs. It's this line is same dp of I, which is the next 4 at m is this value is the maximum of dp of I of m, which was int max because you've initialized it to int max. Correct. Yeah. And then, oh yeah, because you've initialized every single value to int max, is that what this does here? No, but I also initialized dp of I m to 0, right. So this value will initialize it to 0 down here. Yeah. Yeah. Okay. So max of 0, sorry, so max of 0 and dp of I of j, which would be, like basically at every iteration, you would do max of 0, 2, max of 2, 0, 2, 0, and then up with 2, right. Yes. Okay. Okay. So in the second iteration, so this answer will remain same and I'm going to start from n minus 2, which is this one, okay. So I start from here. So gen value was initially, okay. So since this is false, what I'm going to do is I'm going to take, so I'm going to over here, right. So it will be either minimum of what is there or dp of I plus 1 j. So either minimum of 1 or minimum of 2 plus 1, which is 3, right. So in our case, we won't update it, so this is going to be one itself, right. Now since the school is true, this will be 0. Now again, this store distance will either be this or 0 plus 1, which in our case will be 1. Yes. That makes sense, yeah. So now the answer, the dp of I, of dp of I m for this case will become 1 because the maximum distance is 1, yeah, right. So in the end, I will return the minimum of all of these dp I ms, right. So minimum of 2, 1 like that, yeah, right. So in this, so again coming over here. So here gym value is true, so it will be 0 and this is also true, so it will be 0. And since this is false, here it was infinity, so it will be minimum of 1 plus 1, which is 2. So answer will be 2 over here, makes sense. Yep, makes sense. 1 second just. Yeah, no problem, take your time. Yeah, now 0, so this is okay. Now either the distance will be 1 or max of 0 plus 1, so it does not matter, so this is going to be 1. So either infinity or 2 plus 1, which is 3, so here it will be 3, again over here if we come. So the gym distance over here was infinity, so here it will be 0 plus 1, which is 1. Here it is true, so it will be 0, so 4 and max of all of these 4, right. So now I have to return minimum of 4, 3, 2, 1, 2, which will be 1. So this will be our answer. Gotcha. And just to be clear, can you remind me the reason that when you go from right to left, you skip the final index, what is the logic behind that? Because essentially I want to see the distances from the right, right. So this is the right most element, so like there is no element on the right, so there is no, like when we calculated from left to right, I did not calculate for 0, right. So I already did some pre-calculation, it is similar to that, but since some calculation has already done over here, I do not have to do it separately, just that. Yep, make sense, okay, make sense. And so I guess as a final few things for the finding the minimum index, just walk me through out loud what you would do. Yeah, so you just, I can just keep a result, right, and here every time I calculate dp of I m, so I do not have to update the result in the first iteration since anywhere I am going to do it again, right. So my result will be equal to minimum of result and dp of I m. So this is when I am going back, when I like in my iteration from right to left, when I am going back, I calculate these values. So when there is just one element, this will not work because in that case I am not calculating dp of I m at all, this will be at least, when there will be at least two elements, right. So when there is just one element n equal to 1, I will have to return the, so for this one, I should calculate, I have an dp of I m for the first one, right. So dp of I m will be equal to essentially this, right. So my resultant here, I can just restore result equal to dp of I m. So this is just for the case when there will be one element. And plus, I mean in the case when there is one element, I guess I could have specified that maybe the input just always has two elements rather than one, because one, there is only one apartment that you could go to, so it doesn't really make sense. But good that you, that you caught that, could you walk me through the time and space complexity of this algorithm? Yes. So for each block, I am going through all the requirements, right. So if this is, so there were n blocks and m requirements. So the time complexity will be order of nm over there also and over here also. So it is order of 2 into nm, which is essentially order of nm. And this space complexity is also order of nm, since I am storing the requirements for all of them. Yeah. Okay. Great. And this is better than the brute force solution that you like alluded to at the very beginning. Although I think at the beginning you were, you were doing the minimum, the minimal distance of the sum, but you were still alluding to a brute force solution. Yes. Yes. Were you expecting a better complexity solution or is this okay? Nope. This is, this is great. Just maybe as a, as a final thing, because we, we still have roughly 10 minutes here. But as a final thing, just out of curiosity, like how would you, if you, if you had to, do you see ways that you would improve this code, maybe from a, from a code perspective? Like, because here we sort of did it in pseudo code, like part, real code, part pseudo code. But how would you, how would you do this if you had to, like, write the function signatures and things like that? Yeah. So, obviously I have not taken correct naming conventions, I've just taken IEG and written, like, not at all professional way. So the naming conventions, I should definitely change. Like I have taken vector of vector and I've called it dp, which is like in, then a third person is reading, it doesn't really make sense, right? So maybe I could have named it requirements, distances and, like, similarly, naming conventions for IEG and say I could have definitely done better and return it in better way. Okay. Cool. Well, listen, Kirch, I think, I think this is great. Super quick commentary. As you're about to see in the last 10 minutes of the interview, we did a second coding interview question and in hindsight, I think that that was a mistake from me, the interviewer, because I had already gotten a really good signal about Kirch's algorithmic skills from the first question, but I hadn't gotten the best signal from her coding ability because I didn't see her code in a sort of production grade formal quality. She even told me herself that she would rename certain variables and things like that. And so in hindsight, I think that instead of doing a second question where we only had 10 minutes and I knew that we weren't going to get to the coding part, so I effectively just reassessed her algorithmic skills from a conceptual point of view. I think that I would have been better off having her rewrite her code in a more production grade quality, in a more formal grade quality, and that would have given me more signal about her coding ability. That was my mistake in hindsight, anyway, I'm telling you now, and enjoy the rest of the interview. But we still have roughly 10 minutes on the clock, Kirch, so we're going to do something completely different. So let's switch gears. When you're at a big tech company and you're on an engineering team, you often care about, or almost always care about, the state of the code base, and specifically, that all the continuous integration tests and unit tests that are running in the code base, that they're passing, right? You don't want tests to be failing. And sometimes when engineers push code into the main repository, they fail, they break the tests. And so the tests start to fail, right? Does that kind of make sense? Yeah. So what we called it on my team at Google was the build. And so the build referred to, kind of like, you know, whether the code in the main repository works correctly, compiles, all the tests are passing. And if everything worked well, we would say that the build was green. If everything didn't work well, if there was maybe like one test that failed, we would say that the build was red, or there was a build failure, okay? So I'm going to give you some data. It's going to be a list of lists of bullions. So it's going to be something like, let me copy paste something for you here. It will be something like this. This is going to be question number two. And what this is going to represent is each list here. You could imagine that the value at a specific index represents like one hour or one unit of time. And if there's a true, it means that the build is green. So here the build was green, then the build was green the next hour, then it was green again. So everything was passing. And suddenly, it was false, meaning it wasn't passing, it was broken. And then for another hour, it was false, okay? Now, when this happens, an engineering team isn't happy. You want the build to be green, so you immediately want to go and fix it. And so that's why you see that immediately in the next list, it's been fixed and it's back to true, true, true, until it goes to false because it's broken. And then an engineer has to fix it and you go back to true, true, true, right? Okay. So we call these lists here that are effectively like the build is green, green, green, green, and then suddenly it breaks and then it gets fixed. We call that a build run, a build run, okay? And so what we care about as a team is to effectively minimize the time that it takes to fix build runs, right? We don't want build runs to be false or to be broken for a long period of time, okay? So we want to minimize that. And what we care about as a data point is something that I'm going to call a green percentage, which is effectively within a build run, the percentage of time that the build was green versus broken. And so the greater the percentage, the better, because like, for example, here in this particular array, you can see that the green percentage is 80%, meaning the build was green, 80% of the time. And then it was broken for 20% of the time before it got fixed again, okay? We want that to be as high as possible. And specifically, the algorithm that I want you to give me is I want you to take in this list of build runs, okay? And I want you to return the greatest number of consecutive build runs that have a strictly decreasing green percentage. So it basically tells us the longest period of time during which our engineers were increasingly slow to fix broken builds. Does that make sense? Yes. How come the sizes of the lists are different? So like, are we building different projects all the time? Or is it because if it is the same projection in the number of hours taken to build, we see them? No, because you can imagine that these represent hours. So basically, it's like, okay, for a single code base, the build was green, green, green, and then it broke. It broke for two consecutive hours. And then as soon as it got fixed again, we represent that in a separate like list. And so this is all like the same code base effectively. But here it's green, green, green, then it gets broken. And then it gets fixed. So here, the green percentage up here is 60%. So you can just about the percentage and not about like the number of hours or anything. So because it doesn't matter the number of hours. Okay. Okay. Any other thing in the question you would like to add, or was that it? That's it. And so we want the greatest number of consecutive build runs, so consecutive lists like this, that have a strictly decreasing green percentage. And since we are running out of time, ideally just walk me through, if you can come up with an algorithm that's all this conceptually how you would do it. You don't have to write any code for now. Okay. Since it is supposed to be consecutive, so this essentially is the longest decreasing the sub array sort of a question. So you have to find a sub array because it is consecutive. Right. So if it didn't have to be consecutive, it could have been subsequence and I could have just said long this decreasing subsequence, right. And we could have done a normal dynamic programming over here. Since this is consecutive, there are sub array. So I can just keep two pointers over here. And so there will be two pointers, one will be left pointer, one will be right pointer. So from left to right, the percentage should be strictly decreasing or should it be less than equal to condition? Let's do strictly decreasing. Okay. So I will move my right pointer and check that, okay. If it can be added to the answer to the left to right, if it is less than the right element that we had earlier, then I'll just increase the length to one. Otherwise I'm going to update my left pointer and then calculate again. And I will have a result in over here. Does that make sense? Or should I just write it? And here when you're saying, when you're saying from left to right, you're saying you have one pointer at the left of the main big list, so that starts at here? Yes. So the left is essentially zero and my right is also initially zero, okay. So what I do is that if, so I will keep doing that, I will basically move my right pointer, right. So I will check that if the percentage of the right is less than percentage of right minus one, because I just moved it, right. Gotcha. Okay. Sorry to cut you off to your piece. So I understand now just how are you going to be calculating the percentages? Yeah. So that I can pre-process and keep so the number of truths and number of forces. So it will be number of truths upon number of truths plus forces in 200, right. And so would you, would you do like a linear search for that? We'll have to go through the entire list at least once, right, because to check how many were true, how many were false. So yeah, I'll have to walk through at least once. I tell you that they always start as the build runs by definition are always true and then they turn into false. Okay. Okay. Then I can just do a lower bound which will return me greater than or equal to or I can just do a binary search that is the lower bound essentially the first place where it was false, right. Right. That's all. Yep. Okay. So I can calculate that in log n if n is the size of the list and yeah, so log n to find the percentage. So I will have the first place where false came. So the ones before that were true and we know the size of the list. So we can calculate the percentage. Right. Exactly. And so then the total time complexity of your algorithm would be? So I would have to travel this entire thing once so and so if say m is the maximum size of the list and n is the number of lists. So it will be order of n into log n. Yep. Okay. Great. It was in curiosity. We were out of time now. We're exactly at like 46 minutes. So I think this was this was great. We covered at least conceptually. So a second question. I think we can jump into the feedback now. Okay. Okay. Cool. So I'm going to stop the timer. So for the feedback, I'm actually going to send you a link of the feedback form that we have on our mock interviews on algo expert, which is actually like very similar to the feedback that you would get Google. So at Google, there are a here I'm basing myself off with Google, but this is very similar at most big tech companies, but at Google, usually there are these four main categories that you're obsessed on are algorithms, coding, communication, problem solving and a few other things, but these a few other things are kind of intertwined and things like how do you handle curveballs or ambiguity or you know, were you, was there any moment where you were like disrespect for you didn't react well to stress or things like that. But here we're going to focus on these four main things. So I think that for algorithms, I would definitely give you a four, which is, you know, the best score here because you for not only the first question, but also the second question and very little time you came up with the optimal algorithms to solve the question. You basically had no help from me in both of them and you clearly, you know, demonstrated that you, you know, how to work with algorithms well right here. Your dynamic programming was on point binary search who got that right. So really, really well done there. Then if you want, we'll jump down to problem solving before covering the other two because problem solving is often like pretty related to the algorithms. Here, I would probably also give you a four for the problem solving and maybe I would hesitate a tiny bit with the three just in the sense of like, you know, maybe there was room for, you know, you could have asked a tiny bit more clarifying questions because at the beginning, you were going down the path of the minimizing the sum. But like that, that is personally, I don't really find that as that big of a, of a bad thing, I think, you know, this was a complicated question as far as like the amount of information I gave you. And otherwise, I think you just approached the problem well, you know, you covered, you talked about edge cases, you asked about like, you know, what if it's an empty array, if it has one element, you even handled the case with one element, and you, you covered a little bit of the brute force solution at the beginning. So overall, yeah, I think that the problem solving was really on point there too. So I would give you probably a four there. Commentary. So we're about to jump into the coding ability section of the feedback. And as I said in the first commentary in the middle of the interview, I think that in hindsight, I made a mistake as the interviewer, I didn't get quite as much coding ability signal as I would have liked from Kirti and from this interview. You'll see that in the feedback here. I kind of air on the nicer side, I'm a little bit nicer to Kirti that I could have been. And ultimately, in a real interview, what I would have done here is I would have left a note for the hiring committee telling them that I didn't get quite the amount of signal about Kirti's coding ability as I would have liked to have gotten, and for them to just keep that in mind. Then, if we jump into the coding, so for the coding, you notice that at the end, I ask you kind of like, well, you would do to improve the code. And I think that's important to ask as an interviewer, just because I know that, you know, sometimes, especially depending on your background, and like when you're under stress in the interview, especially on a Google Doc, you write, you know, you go with fast variable names like DP, especially if you come from a competitive programming back on DP, DFS. But clearly, like you said it yourself, you would have likely, you know, cleaned up the code a little bit, renamed it more properly. You also asked me about the pre-processing and all that stuff, which I'm very confident you could do. So for the coding, I would go with anywhere between a three and a four, you know, I don't think that there was anything really like a red flag. The one thing that maybe would have made me think it was a red flag is if you didn't tell me anything, I've had could have been improved, you know, if you didn't realize that things like DP aren't amazing as naming conventions and things like that. But otherwise, I think that was fine. I guess maybe one point of improvement that I would maybe have given for coding might be subjective, but I think you, you did it well because I think your algorithm probably runs perfectly, but you, you stuffed a lot of stuff in all of your four loops. Like, for instance, keeping track of the, of the final minimum index distance, the result, I think, you know, that could have been an entirely like separate function. You could have also done, you could have also separated some of the, like, the maximums that you're keeping track of in a separate function. Like, I don't know, you know, it worked well for you. So overall here, again, I think I would probably give the tween of three and a four. Okay. That I would say subjective, I should have probably mentioned it because some interviews might probably expect that, you know, why to increase the complexity by making another function and, you know, another call and it's just an overhead. So, but yeah, it becomes cleaner like that. So it's a, it's a trade off basically, which I should have mentioned probably that I could have coded it like that as well. Yeah. And I guess if you want to take one piece of feedback that might help you in any future interviews you do, it would be that, like, maybe you can at least tell your interviewer that you're thinking that you could do it in two different ways. You feel comfortable with doing it all, you know, in a single function or in a single four loop, but maybe it would be, you know, easier for readability purposes or for, you know, logic, rocking purposes to split it up into more different logical units. Yeah. Yeah. Yeah, because I guess the last one I'll say here is this, yeah, in general, but this is again, this is kind of subjective, but for me, I find it very helpful to kind of think of how I'm going to solve the problem and, you know, let's say three different logical steps. So here, it would be number one, you know, left to right, number two, right to left, and then number three, maybe, I guess in the right to left with that approach, you always update things, you know, there, so that makes sense. But then I would have separated out that final step of finding them in an index and separate kind of logical units. But again, I think overall, I think you did great there and I think, you know, we're on the same page given what you just said right now. Okay. The final thing is communication. For communication, I would probably give, I would probably give between a three in a two or like two and a half and three, and I don't think I would give it two because two is a bit harsh. I think I would give it three. The only, like, reservation I would have about communication is just that this problem is relatively complicated, right? Even if you find the solution really quickly, which you did, so clearly, like, the problem itself wasn't that difficult for you, it is a pretty difficult problem that has a lot of little, you know, things to keep in mind, like you're keeping track of the minimum here, but then it's the maximum and, you know, you skipped the last index and you skipped the first index and all that. And I think that, you know, you could have maybe communicated a tiny bit more. And I think that some, some interviewers might have gotten a little bit more lost. Personally, like, my approach is I really want to make sure that I'm understanding what you do. So like, I'll stop you in the interview just to clarify and you saw that I did that a couple of times. But ideally, ideally, like, you don't have to let your interviewer do that. Ideally, you're the one who's proactive, who's, like, just to be clear, you know, this is the line here that I'm using. And what you can do is you don't feel comfortable with that, or if you're like, you know, this seems useless, you can ask your interviewer, which you did do, which you did do. So good great job there. You can ask your interviewer, like, are you following me here? Do you want me to go into more detail as to how I'm getting this or not? Overall, I would probably put you at the three for communication. To tally up, you know, you've got like a four in algorithms and problem solving, three and a half, let's say in coding, three, three and a half in communication. For the final score, I think I would, I'd be inclined to give a strong hire somewhere between a higher and a strong hire, and since you have to make a decision, I'd probably give a strong hire. Awesome. I can't be hired, I can't know. But yeah, I mean, yeah, again, as far as I'm concerned, and, you know, all the viewers can see in the interview, like, I think you did a, you did a great job. And especially, like, it's under pressure, you do, how do you react to this feedback? Like, did you feel good about it? Honestly, I thought I would get a lower score for algorithm solving because communication is my thing. So, yeah, this is the first, like, this was a challenging thing that, okay, I have to improve on my communication because I think, yeah, I could have communicated my approach also a little better. So, yeah, that's a good feedback for me. Yeah, and just also one thing to keep in mind is, like, every interviewer is a little bit different in how they assess, you know, like, what, what one person might be a great amazing communication, someone else might score a tiny bit lower, but then conversely for algorithms, it might be a little bit different. Like, I personally found that your algorithm skills, like, really impressive. Like, you, you didn't stumble at any point, and you immediately realized the clever approach of the left to right and right to left things. So... I did not expect that. Thank you so much. I'm really happy. All right, well, listen, Kirti, awesome job. If I weren't interviewer at Google still, I would give you a strong hire, and I would, I would hope that you did very well in your other interviews in the hiring committee side the same way, but any last words for the viewers? I guess most of the people who come and do this mock interviews in your channel are competitive programmers. So, I am not any, like, big, high-file competitive programming, I have good programmer at all. So, I have a small chatter where I make hard questions and explain them in a very simple way. So, if viewers like that, they can just go check it out and give me feedback, I would like to improve and help them as well. Definitely. And I'll put your channel in the description below. Thank you so much, Kermit. Thank you so much for having me. It was a pleasure. That's going to be it for this Google coding interview. I hope that you enjoyed this Google coding interview. If you did, don't forget to smash the like button, subscribe to the channel if you haven't already. Check out the other Google coding interview that we did on Kirti's channel in the description and comments below. Otherwise, don't forget to follow me on Twitter and LinkedIn if you enjoy short-former and content. Instagram is really pictures and otherwise I will see you in the next video.
+
+TIMESTAMPED SEGMENTS:
+--------------------------------------------------------------------------------
+[0.0s - 2.6s] Let's see how many times I'm going to say the phrase a Google
+[2.6s - 5.1s] coding interview in this two-minute intro.
+[5.1s - 5.9s] What's up, everybody?
+[5.9s - 7.0s] How's it going?
+[7.0s - 10.7s] We are all in dire need of a Google coding interview.
+[10.7s - 13.3s] It has been far too long since I've made a Google coding
+[13.3s - 13.8s] interview.
+[13.8s - 16.8s] And so in this video, that's what we're doing, a Google
+[16.8s - 18.0s] coding interview.
+[18.0s - 21.3s] But this Google coding interview is unlike a lot of my
+[21.3s - 24.2s] previous Google coding interviews on this channel.
+[24.2s - 26.9s] I am not doing this Google coding interview with an
+[26.9s - 30.2s] international grandmaster at competitive programming.
+[30.2s - 32.3s] I'm not doing this Google coding interview with someone
+[32.3s - 35.2s] who's won a medal in the international Olympiad of
+[35.2s - 36.3s] Informatics.
+[36.3s - 39.4s] No, this Google coding interview is with a normal
+[39.4s - 41.9s] software engineer, because a lot of you commented in
+[41.9s - 44.0s] the previous Google coding interview videos that you
+[44.0s - 47.8s] wanted to see, perhaps some more realistic performance
+[47.8s - 49.2s] in a Google coding interview.
+[49.2s - 51.3s] And so this is just that.
+[51.3s - 52.8s] I'm joined by Kirti.
+[52.8s - 55.2s] She's a software engineer based in India.
+[55.2s - 58.4s] As far as I know, she is not an elite level international
+[58.4s - 60.5s] grandmaster competitive programmer.
+[60.5s - 63.3s] Hasn't won medals and be international Olympiad of
+[63.3s - 64.3s] Informatics.
+[64.3s - 67.2s] And so this is going to be a realistic Google coding
+[67.2s - 67.8s] interview.
+[67.8s - 70.2s] We did this Google coding interview on a Google doc,
+[70.2s - 72.5s] because that's how coding interviews are done at Google,
+[72.5s - 75.3s] especially right now, even on sites are virtual.
+[75.3s - 76.9s] So they're done on Google doc.
+[76.9s - 80.1s] And the question that I asked Kirti is a very hard question
+[80.1s - 81.7s] that we have on AlgoExpert.
+[81.7s - 83.0s] By the way, if you're preparing for your coding
+[83.0s - 85.3s] interviews and you want to get a job at Google or at any other
+[85.3s - 87.3s] big tech company, then go check out my company.
+[87.3s - 88.0s] AlgoExpert.
+[88.0s - 89.7s] Go to AlgoExpert.io and use the promo code
+[89.7s - 92.0s] CLEM, CLM, Ferdisk on the platform.
+[92.0s - 93.9s] We've helped tons of software engineers
+[93.9s - 97.0s] land jobs at Google and all other big tech companies
+[97.0s - 98.0s] and startups.
+[98.0s - 100.8s] And this question is actually a question that I have asked
+[100.8s - 105.0s] myself at Google in a real interview about a year or two
+[105.0s - 105.6s] years ago.
+[105.6s - 107.6s] And last thing before we jump into the interview,
+[107.6s - 110.6s] we actually did a second Google coding interview on Kirti's
+[110.6s - 111.2s] channel.
+[111.2s - 113.6s] We got a channel where she talks about software engineering
+[113.6s - 114.8s] and coding interviews.
+[114.8s - 116.7s] So go sell her some love and check that out
+[116.7s - 119.2s] after you finish watching this Google coding interview.
+[119.2s - 121.8s] I will put the link to that Google coding interview
+[121.8s - 123.8s] in the description and in the comments below.
+[123.8s - 126.6s] And with that, enjoy the Google coding interview.
+[126.6s - 128.8s] So how many times did I say Google coding interview?
+[128.8s - 131.3s] Oh, and try to solve the problem as you watch the video
+[131.3s - 133.8s] and comment down below how you would solve it.
+[133.8s - 135.5s] Oh, and in the last 10 minutes of the video,
+[135.5s - 138.4s] we did a feedback session to cover Kirti's performance
+[138.4s - 139.6s] so you don't want to miss that.
+[139.6s - 142.0s] Hi Kirti, how's it going?
+[142.0s - 143.9s] Are you excited for this interview?
+[143.9s - 147.4s] I'm very excited and very nervous.
+[147.4s - 149.8s] OK, well, try not to be nervous or try
+[149.8s - 153.3s] to let the nerves fuel you into acing this interview.
+[153.3s - 155.8s] And I'm going to put the timer on the clock now.
+[155.8s - 157.9s] We're going to have about 45 minutes.
+[157.9s - 161.1s] And I'll let you know when we're running out of time
+[161.1s - 163.6s] or if we have to speeden things up, OK?
+[163.6s - 165.5s] Sure.
+[165.5s - 168.9s] All right, starting the clock now.
+[168.9s - 172.6s] So Kirti, I want to imagine that I want you to imagine
+[172.6s - 174.5s] that you are about to move.
+[174.5s - 177.1s] So maybe you're moving to a new location.
+[177.1s - 181.3s] And you want to find an apartment that you want to live in.
+[181.3s - 184.5s] So imagine that you have one street.
+[184.5s - 187.3s] And the street, you can imagine that it's on a single line.
+[187.3s - 189.4s] So imagine, you know, a single line here.
+[189.4s - 192.3s] I'm just typing a bunch of ones to show
+[192.3s - 194.8s] that it's a single file line.
+[194.8s - 200.9s] And at each block in this line, there's an apartment.
+[200.9s - 202.2s] So you can imagine that I'm probably
+[202.2s - 208.0s] going to give you a list, a list of blocks, street blocks.
+[208.0s - 210.5s] And at each block or each index, there's
+[210.5s - 213.5s] an apartment that you might want to consider living in.
+[213.5s - 214.8s] Are you following me so far?
+[214.8s - 216.4s] Yeah.
+[216.4s - 221.9s] OK, so you want to make sure that the apartment you live in
+[221.9s - 223.9s] is really good for you.
+[223.9s - 226.8s] And the way that you're going to determine, if it's good for you,
+[226.8s - 231.6s] is if the apartment is close to some buildings
+[231.6s - 233.1s] that you really value.
+[233.1s - 237.4s] So for example, you really value, or you might really value,
+[237.4s - 242.6s] being close to a gym, or being close to the office,
+[242.6s - 245.4s] or being close to the supermarket.
+[245.4s - 246.5s] Does that make sense?
+[246.5s - 249.4s] And so I'm going to give you information
+[249.4s - 254.1s] about at each block, whether or not there's a building,
+[254.1s - 258.9s] like an office, or like a school, or a gym.
+[258.9s - 265.8s] And you're going to want to find the apartment that minimizes
+[265.8s - 270.2s] the farthest distance that you would have to walk to
+[270.2s - 272.9s] to get to all the buildings that you value.
+[272.9s - 275.0s] So I realize that I've given you a lot of information.
+[275.0s - 278.8s] I'm going to show you a couple sample inputs just so that you get an idea.
+[278.8s - 283.4s] So imagine the first sample input is going to be called blocks.
+[283.4s - 286.8s] And it's going to be a list, let me put it like this,
+[286.8s - 293.7s] that has a bunch of objects, like hash cables, so to speak.
+[293.7s - 300.1s] And these objects have all these buildings that map to Booleans.
+[300.1s - 305.0s] So here, at index 0, you can see that there's a gym that maps to false,
+[305.0s - 308.9s] meaning that at block 0, there is no gym.
+[308.9s - 312.3s] But there is a school, but there is no store.
+[312.3s - 315.6s] At block 1, there is a gym.
+[315.6s - 318.2s] There is no school, and there is no store.
+[318.2s - 318.9s] Does that make sense?
+[318.9s - 320.9s] Yeah.
+[320.9s - 323.5s] OK, and so then the second input that I'm going to give you
+[323.5s - 327.0s] is going to be a list of required buildings.
+[327.0s - 332.6s] So if I go a little bit lower here, I'll put rex, requires, or requirements.
+[332.6s - 335.2s] And this is going to be a list of strings.
+[335.2s - 339.4s] And this list of strings is going to have the buildings that you value.
+[339.4s - 343.4s] So here, you happen to value gym school and store.
+[343.4s - 349.0s] But I could maybe give you just gym and school, or I could give you just gym.
+[349.0s - 350.4s] It could be any buildings.
+[350.4s - 353.0s] And they don't necessarily have to be in these objects.
+[353.0s - 356.8s] And so here, if you value gym school and store,
+[356.8s - 361.9s] that means that you have to find the block that has an apartment.
+[361.9s - 364.1s] And by the way, every block has an apartment.
+[364.1s - 367.7s] The apartments are kind of implied to be at every block.
+[367.7s - 372.4s] You have to have to find the block that will minimize the farthest distance
+[372.4s - 376.2s] that you would have to go to to reach all of your requirements.
+[376.2s - 382.2s] And so here, for this sample input, the answer would be index 3, which would be this one.
+[382.2s - 388.0s] If you want, I can highlight it, let's say, in light green here, this one.
+[388.0s - 394.2s] Because for this one, the farthest that you have to walk to, to get to all your required buildings,
+[394.2s - 398.8s] the gym, the school, and the store is a distance of one.
+[398.8s - 401.0s] Because the school is right here.
+[401.0s - 403.9s] Then a gym is one above.
+[403.9s - 406.9s] And then a store is one below.
+[406.9s - 409.2s] OK, OK.
+[409.2s - 413.1s] So can there be only three things that is gym school and store,
+[413.1s - 416.8s] or they can be more number of things?
+[416.8s - 420.0s] There can be any number of buildings.
+[420.0s - 426.0s] And the only thing is that in the blocks, at each block,
+[426.0s - 429.8s] you will have information about every single building.
+[429.8s - 435.0s] So for example, if I were to add here something like, I don't know, office,
+[435.0s - 441.6s] then you could expect that every block would have a data point about an office,
+[441.6s - 444.2s] whether it's true or false.
+[444.2s - 447.8s] OK, and it will be a valid input.
+[447.8s - 452.6s] So I don't have to check whether all four are present or not, right?
+[452.6s - 456.0s] Yeah, you don't have to check whether all four are present.
+[456.0s - 458.0s] They will always be present.
+[458.0s - 461.4s] OK, OK.
+[461.4s - 465.7s] So at the top of my head, if I have to talk about proof or solution,
+[465.7s - 469.8s] so I can consider each block to be my solution.
+[469.8s - 476.7s] And I can just keep calculating the distance from them, right?
+[476.7s - 477.5s] OK.
+[477.5s - 481.9s] So suppose I consider that my apartment will be here.
+[481.9s - 486.6s] So like in this case, I can see that there can be multiple things in an apartment.
+[486.6s - 490.1s] They can be a gym as well as a school, right?
+[490.1s - 490.8s] Yeah, yeah.
+[490.8s - 494.0s] So the distance will be 0 plus 0 like that.
+[494.0s - 499.8s] So I will keep calculating the minimum distance as I traverse the array.
+[499.8s - 507.4s] And wherever I find the minimum one, I can just return that.
+[507.4s - 511.2s] OK, and just can you walk me through conceptually?
+[511.2s - 514.3s] Like how exactly do you find the minimum distance?
+[514.3s - 521.2s] OK, so suppose we just suppose the requirement was just gym and school, OK?
+[521.2s - 523.0s] So I come over here.
+[523.0s - 526.8s] I have the number of variables that are there in requirements.
+[526.8s - 528.0s] So same number of variables.
+[528.0s - 532.4s] So right now, I am going to keep two variables, that is the distance for the minimum distance
+[532.4s - 535.1s] for gym as well as the minimum distance for school.
+[535.1s - 539.6s] And they will be a result that I will store that will be the minimum of some of both of
+[539.6s - 540.6s] them, right?
+[540.6s - 543.6s] That is my minimum result that is possible.
+[543.6s - 547.7s] So when I am here, so I will have three variables.
+[547.7s - 550.8s] So one will be distance from gym.
+[550.8s - 560.4s] So in gym distance, then there will be school distance and there will be resultant that
+[560.4s - 562.6s] this will have the minimum value, OK?
+[562.6s - 569.5s] So here since this is false, my school distance will become 1 and this initially will be some
+[569.5s - 573.1s] maximum value say we take infinity or int max.
+[573.1s - 576.9s] And so this is infinity and this is 0, right?
+[576.9s - 577.9s] Then I come over here.
+[578.6s - 582.8s] Here gym is, here gym is true.
+[582.8s - 585.9s] So here the gym distance becomes 0.
+[585.9s - 591.0s] So school since I have traveled one distance, so it will become sort of the resultant from
+[591.0s - 593.8s] the previous one plus 1, right?
+[593.8s - 599.4s] So it will be the distance of this plus 1 and then I will keep checking whether the resultant
+[599.4s - 601.6s] has to be updated or not, right?
+[601.6s - 608.0s] So the earlier result was max because it was not possible to reach gym at all.
+[608.0s - 614.0s] Here it so at every point, I am just seeing the blocks before and not the blocks after
+[614.0s - 617.0s] that, right?
+[617.0s - 621.8s] So I will traverse the entire thing once and then check.
+[621.8s - 627.8s] So but it is also possible that the minimum can be from a right end, right?
+[627.8s - 631.8s] Instead of from my left end, it can be from right end as well.
+[631.8s - 636.5s] So probably what I should do is traverse the area twice, one from the left side and one
+[636.5s - 642.6s] from the right side and then check that what is the answer.
+[642.6s - 649.2s] And just before you keep walking down that path here to just to be clear, you are looking
+[649.2s - 656.9s] for the minimum, the minimum farthest distance that you would have to walk to, right?
+[656.9s - 665.1s] Because so for example, like at index 3 here, which was the answer here, the farthest
+[665.1s - 668.8s] distance that you would have to walk to was still 1.
+[668.8s - 673.8s] Even though there was a school here which was 0, you would have to walk 1 to get to the
+[673.8s - 678.2s] gym up here and 1 to get to the store down here.
+[678.2s - 679.6s] Does that make sense?
+[679.6s - 682.0s] Can you please repeat that point?
+[682.0s - 689.4s] Yeah, so since you have multiple requirements or you might have multiple requirements, you
+[689.4s - 696.1s] want to minimize the farthest distance or the greatest distance that you would have
+[696.1s - 697.8s] to walk to.
+[697.8s - 707.2s] Because here, if you care about gym, school and store, school is 0 distance from this index,
+[707.2s - 708.2s] right?
+[708.2s - 709.2s] Okay.
+[709.2s - 719.0s] But gym, you have to walk 1 to go up here and store, you have to walk down 1 to find it
+[719.0s - 720.0s] here.
+[720.0s - 724.4s] So the point that I'm trying to make that I just want to make sure you're clear with
+[724.4s - 732.2s] is that it's the farthest distance that you have to go to that you're minimizing, not
+[732.2s - 733.8s] just any distance.
+[733.8s - 736.3s] Okay, so it is now, so, okay, I understood it wrong.
+[736.3s - 739.5s] If I understood that it was the sum of the distances, it is not like that.
+[739.5s - 744.0s] It is like farthest for anyone that I have to go, right?
+[744.0s - 745.2s] Yes, exactly.
+[745.2s - 746.2s] It's not the sum.
+[746.2s - 747.2s] Oh, okay.
+[747.2s - 752.2s] Even though the sum here is like, I guess 2, it's not that that we care about.
+[752.2s - 754.6s] It's the farthest that you would have to go to.
+[754.6s - 760.8s] Okay, so it will be like, so I will have to minimize the max of gym distance and school
+[760.8s - 762.6s] distance essentially.
+[762.6s - 763.6s] Yes.
+[763.6s - 764.6s] Yeah.
+[764.6s - 765.6s] Okay.
+[766.0s - 766.6s] Okay.
+[766.6s - 767.6s] That's one way to put it.
+[767.6s - 768.6s] Yeah.
+[768.6s - 776.1s] So I have to minimize the maximum value among the requirements.
+[776.1s - 777.6s] Does that sound fine?
+[777.6s - 778.6s] Yep.
+[778.6s - 780.5s] I think that sounds good.
+[780.5s - 785.9s] So basically I will have and I can have a hash map sort of thing, an ordered map.
+[785.9s - 792.3s] So corresponding to each requirement, I will keep the maximum distance, right?
+[792.3s - 802.8s] So and I will minimize that, okay, so, okay, so corresponding, so, okay, I have to keep
+[802.8s - 803.8s] that.
+[803.8s - 810.4s] Okay, so for the entire array, just give me a second for the entire array for each block,
+[810.4s - 813.5s] I need to minimize the maximum distance.
+[813.5s - 818.9s] So for this, suppose I have to calculate the maximum distance, I will have to, so that
+[818.9s - 820.4s] will become order of n square.
+[820.4s - 822.9s] So now proof force will become order of n square.
+[822.9s - 827.1s] So if I have to for this block, I will have to check the maximum distance from all the
+[827.1s - 828.7s] other blocks, right?
+[828.7s - 832.9s] Similarly for this block, I will have to check for all the other blocks.
+[832.9s - 838.1s] So to minimize that, to make it order of n, I will have to use dynamic programming and
+[838.1s - 842.5s] store the values in an array.
+[842.5s - 855.8s] So if I have see dp array of distances, so this will again be, it will be sort of array
+[855.8s - 857.4s] of vectors.
+[857.4s - 866.2s] So and vectors will be the distances, the max distances for each of the requirements.
+[866.2s - 871.5s] So it will be like, so suppose there are n blocks, right?
+[871.5s - 879.6s] So this dp, okay, this auto, this thing, I am not really caring about it, okay?
+[879.6s - 881.7s] Okay, yeah, this caps lock.
+[881.7s - 889.0s] So I will keep a dp array of size n, suppose, okay, and each of them is a vector.
+[889.0s - 903.6s] So it will be vector of, vector of integers, say dp and this the entire size will be n.
+[903.6s - 912.2s] And each vector will be of the size, so what will be the size of requirements, okay?
+[912.2s - 914.5s] Say that is in this case.
+[914.5s - 920.9s] And we will initialize the whole thing to some maximum value.
+[920.9s - 922.4s] Does this look fine?
+[922.4s - 923.4s] Okay.
+[923.4s - 924.4s] Right?
+[924.4s - 931.2s] So now as a traverse, can I just start writing the pseudocode and then we will keep discussing?
+[931.2s - 937.5s] If you want, but just to make sure I follow you, could you re-walk me through like what
+[937.5s - 941.0s] the logic you're going to, you're about to write in pseudocoders?
+[941.0s - 942.0s] Okay.
+[943.0s - 946.6s] So this is the array of vectors that I am storing, right?
+[946.6s - 953.4s] So as I traverse this array for each point, I am going to keep calculating and like I will
+[953.4s - 957.0s] see all the answers previous to it and update it.
+[957.0s - 964.0s] So if like the maximum distance of this school should be the maximum distance of the previous
+[964.0s - 968.2s] one plus one, if it is not present over here, right?
+[968.2s - 969.2s] Okay.
+[969.2s - 976.3s] So it basically, I am calculating maximum distance for each requirement for each block in
+[976.3s - 977.3s] the array.
+[977.3s - 978.3s] Yeah.
+[978.3s - 980.7s] Does that sound fine?
+[980.7s - 981.7s] Yep.
+[981.7s - 988.8s] But how are you doing, you said you're doing that in one iteration?
+[988.8s - 992.5s] It will take two iterations, I think.
+[992.5s - 997.2s] So one will be, I will go from left to right, right?
+[997.2s - 1000.3s] And one will be from right to left.
+[1000.3s - 1001.3s] I see.
+[1001.3s - 1002.3s] Okay.
+[1002.3s - 1006.4s] Does that sound fine?
+[1006.4s - 1008.6s] And I take minimum of both.
+[1008.6s - 1009.6s] Okay.
+[1009.6s - 1010.6s] Yeah.
+[1010.6s - 1012.8s] I think I'm following you.
+[1012.8s - 1017.6s] So if you want, you can, you can write the pseudocode that you were going to write.
+[1017.6s - 1018.6s] Okay.
+[1018.6s - 1021.0s] So I'll just write it in simple terms.
+[1021.0s - 1024.8s] So I equal to 0, I less than n, I plus plus.
+[1024.8s - 1025.8s] Okay.
+[1025.8s - 1030.3s] So I'm promising the entire array right now.
+[1030.3s - 1036.3s] And for each element, I have to track for all the requirements, right?
+[1036.3s - 1039.1s] So for n equal, let's equal to 0.
+[1039.1s - 1043.1s] So j less than m, m is the size of the requirements over here, right?
+[1043.1s - 1044.1s] Yeah.
+[1044.1s - 1053.0s] So what I'll do is, if it is the first one, so for the first one, I will update over here.
+[1053.0s - 1055.5s] So I'll traverse this from i equal to 1.
+[1055.5s - 1059.6s] Also, can I assume that they will be at least one element or should I handle cases when
+[1059.6s - 1063.4s] there's just one, one block or two blocks?
+[1063.4s - 1068.3s] Let's just find that there's always, let's assume, you know, for simplicity that there's
+[1068.3s - 1071.3s] always at least one requirement and one block.
+[1071.3s - 1072.3s] Yeah.
+[1072.3s - 1073.3s] Okay.
+[1073.3s - 1081.7s] So for that case, I'll write it equal to 0.
+[1081.7s - 1085.0s] So this is for my first block, okay?
+[1085.0s - 1090.9s] So for first block, as I go through this, so if these are the blocks given to me, so
+[1090.9s - 1099.7s] if blocks of 0, that is the first block that I'm seeing, if the element, so I'm just seeing
+[1099.7s - 1100.7s] it.
+[1100.7s - 1104.6s] So can we say that input is given in terms of requirements?
+[1104.6s - 1113.5s] So 0, 1, 2, or should I save this thing like, should I like pre-process this thing and
+[1113.5s - 1116.1s] save it in, you know, array sort of thing?
+[1116.1s - 1121.2s] So basically what I'm trying to say is that for block 0, this is requirement 0, this
+[1121.2s - 1124.8s] is requirement 1, this is requirement 2.
+[1124.8s - 1132.9s] I see, I had the requirements as a vector, a string vector, but if you, if this is simpler
+[1132.9s - 1138.8s] for you, you can assume that you've pre-processed it to map the requirements to numbers if that's
+[1138.8s - 1139.8s] easier for you.
+[1139.8s - 1146.3s] So would you rather have me write the pre-processing code as well or is it okay to go like this?
+[1146.3s - 1148.9s] For now, let's assume that you've, that you've written it.
+[1148.9s - 1154.9s] So just, just to understand, you're saying that basically your requirements now look like
+[1154.9s - 1155.9s] like this.
+[1155.9s - 1156.9s] Right.
+[1156.9s - 1161.9s] I can just map it to 0, 1, 2.
+[1161.9s - 1162.9s] Yeah.
+[1162.9s - 1168.0s] And assuming that you would do the, you would do the same for the blocks, like the unordered
+[1168.0s - 1170.3s] map here, the keys in the unordered map.
+[1170.3s - 1171.3s] Yes.
+[1171.3s - 1174.6s] So this will be an integer and this will be a Boolean.
+[1174.6s - 1176.6s] So Boolean and integer.
+[1176.6s - 1177.6s] Okay.
+[1177.6s - 1178.6s] Okay.
+[1178.6s - 1179.6s] That's fine.
+[1179.6s - 1180.6s] Yeah.
+[1180.6s - 1182.0s] Let's, let's go with that for now.
+[1182.0s - 1183.0s] Okay.
+[1183.0s - 1191.3s] So, if my first block has this requirement, jth requirement, then what I do is I update
+[1191.3s - 1193.0s] that distance.
+[1193.0s - 1198.3s] So dp of, so otherwise it will be int maxi.
+[1198.3s - 1204.4s] So otherwise, so for this one, I update dp of 0, g 2, 0.
+[1204.4s - 1207.9s] So the distance is 0 for this one.
+[1207.9s - 1208.9s] Okay.
+[1208.9s - 1209.9s] Okay.
+[1209.9s - 1212.4s] Does this seem fine to you till now?
+[1212.4s - 1214.4s] So this is for the first block.
+[1214.4s - 1215.4s] Yeah.
+[1215.4s - 1217.6s] So you, but you've only done it for the first block.
+[1217.6s - 1218.6s] Yes.
+[1218.6s - 1223.4s] So for the rest of the blocks, so I'm starting from i equal to 1, i less than n, sorry.
+[1223.4s - 1231.2s] So here, so for rest of the blocks, what I'm doing is, so dp of i, any i th block and
+[1231.2s - 1239.6s] for each j, what I'm going to do is it will be equal to, so I have to find the maximum,
+[1239.6s - 1242.0s] the farthest that I have to go, right.
+[1242.0s - 1248.8s] So it will be, so the farthest that I have to go.
+[1248.8s - 1257.2s] So if, first of all, I will check if that one is true, so if blocks of ij, that means
+[1257.2s - 1268.0s] if it is present over there itself, then I can just assign the dp of ij to 0.
+[1268.0s - 1270.4s] That means that thing is present over there.
+[1270.4s - 1276.6s] If it is not present, what I do is, I check if it was present somewhere earlier, right.
+[1276.6s - 1282.1s] So for this, so what was the distance for the previous one, plus 1, it will be right.
+[1282.1s - 1286.2s] Now it is possible that we haven't found the previous one.
+[1286.2s - 1288.6s] So the value will be int max over there.
+[1288.6s - 1292.4s] So if I add plus 1, it will go out of 1, right.
+[1292.4s - 1304.1s] So I will have to add a check over here that if dp of i minus 1j is not equal to int max,
+[1304.1s - 1320.0s] right, then my dp of ij will be equal to, so minimum of whatever is the value.
+[1320.0s - 1326.2s] So if it is max now, so I do not have to consider it or if it is 0, then okay.
+[1326.2s - 1339.2s] So minimum of dp of i minus 1j plus 1, does this seem fine?
+[1339.2s - 1346.2s] Yeah, so this is for, so this is where I am going left to right, right.
+[1346.2s - 1351.7s] So for each of them, I am updating that what is the maximum distance that you have to go,
+[1351.7s - 1352.7s] right.
+[1352.7s - 1358.9s] Now with this, instead of doing this, I can do one more thing.
+[1358.9s - 1363.3s] So I keep this as m plus 1 instead of m.
+[1363.3s - 1372.1s] So the last element that I am going to store will be the minimum of all these values.
+[1372.1s - 1376.0s] So this is like the maximum distance that I have to go, right.
+[1376.0s - 1381.5s] So I have to minimize the farthest distance that I have to go for all the blocks, right.
+[1381.5s - 1383.8s] So for each block I have to find that.
+[1383.8s - 1390.5s] So for each dp of i, basically I am storing one more element which will essentially be maximum
+[1390.5s - 1393.8s] of all of these distances for that block, right.
+[1393.8s - 1400.9s] So when I am calculating this, so for each of them, right, so where is this ending, yeah.
+[1400.9s - 1409.4s] So after each this, so dp of instead of this, yeah, over here I can add.
+[1409.4s - 1423.9s] So dp of i m will be equal to maximum of, so initially it will be, okay.
+[1423.9s - 1432.4s] So for each of them, I have to add dp of i m as some 0, right.
+[1432.4s - 1439.5s] So we can assume that at least, so I have to find the maximum distance, right.
+[1439.5s - 1445.8s] So if that value is maximum initially only then anyway it will always be max, right.
+[1445.8s - 1448.1s] The answer will always end up being max.
+[1448.1s - 1457.6s] So I initialize dp of i m as 0 and I will make this as dp of i m and dp of i g.
+[1457.6s - 1460.2s] So whatever value I have calculated.
+[1460.2s - 1463.7s] If that value is greater then I have to add it.
+[1463.7s - 1466.5s] So I am storing the maximum value over here.
+[1466.5s - 1468.2s] Does this make sense?
+[1468.2s - 1478.6s] Yes, you are updating at each iteration the maximum mend distance of the requirements that
+[1478.6s - 1479.6s] you found.
+[1479.6s - 1481.6s] Exactly, right.
+[1481.6s - 1489.1s] So I have done this when I am going from left to right, but the maximum for this distance
+[1489.1s - 1493.4s] can also be from right to left, right.
+[1493.4s - 1498.2s] So I will have to do the whole thing like the same code, I have to then in the other direction
+[1498.2s - 1501.8s] as well, right.
+[1501.8s - 1514.8s] So now what I do is now for int i equal to n minus 1, I greater than equal to 0.
+[1514.8s - 1522.6s] So I can just copy this whole thing and make some small changes, right.
+[1522.6s - 1527.8s] So dp of i m, I do not have to update it to 0 now because some value is already there.
+[1527.8s - 1531.0s] I do not want to discard the value, right.
+[1531.0s - 1534.0s] So now again for each block I will check.
+[1534.0s - 1535.0s] So this will remain same.
+[1535.0s - 1540.5s] Now instead of i minus 1, I will make it i plus 1 and instead of n minus 1, I will go
+[1540.5s - 1551.9s] from n minus 2 and it should be greater than equal to 0 and it will be max of this.
+[1551.9s - 1555.9s] So yeah, I think this should work.
+[1555.9s - 1558.4s] Can I drive and check?
+[1558.4s - 1559.4s] I am sorry.
+[1559.4s - 1565.2s] Can I just drive and once and check or do you have any questions or does this seem fine?
+[1565.2s - 1570.6s] Yeah, I was going to say could you walk me through, like let's take the sample input that
+[1570.6s - 1575.6s] we have above with gym school and store and we can assume that I guess gym is 0, school
+[1575.6s - 1582.0s] is 1 and store is 2 and walk me through the algorithm, you know, like basically iteration
+[1582.0s - 1586.2s] by iteration just to see that it works conceptually.
+[1586.2s - 1591.1s] So I will just store the dp values over here, right.
+[1591.1s - 1600.5s] So dp, so for like 0th value what will be the values initially, if so instead of writing
+[1600.5s - 1604.6s] int max, I am just going to write some big number 100 for now, right.
+[1604.6s - 1606.9s] So that will be easier to understand, okay.
+[1606.9s - 1612.2s] Yeah, or if you want you can even put like just like an asterisk or like a single character
+[1612.2s - 1613.2s] like this.
+[1613.2s - 1614.2s] Okay.
+[1614.2s - 1618.8s] So for dp of 0, so first we will go through this one.
+[1618.8s - 1629.6s] So only for a school it will be true, so it will be something like asterisk, 0 asterisk
+[1629.6s - 1636.8s] and the last value will be asterisk itself, okay.
+[1636.8s - 1642.3s] Because the last value you take the maximum of all three of these, okay.
+[1642.3s - 1652.7s] So also, okay, so here this is the tricky part, I also I have not taken care of resultant
+[1652.7s - 1658.3s] which will be the maximum of all of these dp of I am essentially.
+[1658.3s - 1660.3s] So we can calculate that, okay.
+[1660.3s - 1665.2s] Just let us first see if the rest is working or not, so dp of I 1, yeah, yeah.
+[1665.2s - 1669.1s] So I come over here, I put dp of I am as 0, which is okay.
+[1669.1s - 1674.6s] So for each block, I check if it is true, okay, otherwise I will add the distance, okay.
+[1674.6s - 1681.5s] So here since this is true, this distance is going to be 0, right.
+[1681.5s - 1686.2s] Now this is false, so this will be either int max or this plus 1.
+[1686.2s - 1695.3s] So this is going to be 1 and the distance of store is going to be this plus 1.
+[1695.3s - 1702.0s] So here since it was max only, I am going to keep it max and dp of I am is going to be
+[1702.0s - 1703.6s] max of these all.
+[1703.6s - 1707.6s] So since this is asterisk, so this will also be asterisk.
+[1707.6s - 1711.1s] So the maximum distance is infinity itself right now.
+[1711.1s - 1716.0s] And just here to just stop you for one second just to make sure that we are on the same page.
+[1716.0s - 1720.7s] So here you are playing, you are effectively applying this line, right.
+[1720.7s - 1724.1s] This is, I just copied the line that you had written, right.
+[1724.1s - 1731.8s] And so at this second element, you took the minimum at that element, which was int max and
+[1731.8s - 1738.4s] dp of I minus 1 at j, which was this is 0 here, plus 1.
+[1738.4s - 1739.4s] Yes.
+[1739.4s - 1743.0s] So 0 is 1.
+[1743.0s - 1744.0s] Yeah.
+[1744.0s - 1745.0s] Yeah.
+[1745.0s - 1751.7s] So it was meant, so it was meant of int max and 0 plus 1.
+[1751.7s - 1752.7s] Yes.
+[1753.4s - 1755.5s] Okay, that makes sense.
+[1755.5s - 1756.5s] Yeah.
+[1756.5s - 1763.0s] So now coming to the second element, so if I am here, so here the values are going to be
+[1763.0s - 1766.2s] since this is true, it is going to be 0.
+[1766.2s - 1768.4s] And this is also true, so it will be 0.
+[1768.4s - 1774.4s] And since this is false, it will be minimum of either int max or int max plus 1 since this
+[1774.4s - 1775.4s] is int max.
+[1775.4s - 1778.3s] So again, the value is maximum only.
+[1778.3s - 1782.6s] So this will again not get updated because the farthest distance still now is still
+[1782.7s - 1784.3s] infinity, right.
+[1784.3s - 1788.5s] Now if I come over here, it will be, so here the gem is false.
+[1788.5s - 1793.5s] So it will be either 0 or it will be either int max or 0 plus 1.
+[1793.5s - 1795.4s] So in this case, it will be 1.
+[1795.4s - 1796.4s] Here it is true.
+[1796.4s - 1800.2s] So school is true and store is again false.
+[1800.2s - 1803.6s] So this is again infinity, infinity, okay.
+[1803.6s - 1810.6s] So for 4 again, so this is false, so it will max distance will be 2.
+[1810.6s - 1812.6s] Here it will be 0.
+[1812.6s - 1817.9s] So store is wait, so 0, 0, 1, 2, 3, 4, okay.
+[1817.9s - 1820.5s] So here this is true.
+[1820.5s - 1828.3s] So what I am going to do is this will finally become 0 and our dp of I m will be equal
+[1828.3s - 1830.8s] to max of dp of I m and dp of I j.
+[1830.8s - 1841.5s] So what is the maximum value of all of this, oh sorry, yeah what is the maximum value of
+[1841.5s - 1842.5s] all of this?
+[1842.5s - 1843.5s] It is 2, right.
+[1843.5s - 1847.5s] So the farthest distance for all of this is 2 in this case, right.
+[1847.5s - 1853.0s] And this is, this is this line just again to make sure that we're on the same pegs.
+[1853.0s - 1861.8s] It's this line is same dp of I, which is the next 4 at m is this value is the maximum
+[1861.8s - 1868.4s] of dp of I of m, which was int max because you've initialized it to int max.
+[1868.4s - 1869.4s] Correct.
+[1869.8s - 1870.8s] Yeah.
+[1870.8s - 1876.6s] And then, oh yeah, because you've initialized every single value to int max, is that what
+[1876.6s - 1877.8s] this does here?
+[1877.8s - 1881.2s] No, but I also initialized dp of I m to 0, right.
+[1881.2s - 1885.2s] So this value will initialize it to 0 down here.
+[1885.2s - 1886.2s] Yeah.
+[1886.2s - 1887.2s] Yeah.
+[1887.2s - 1888.2s] Okay.
+[1888.2s - 1894.3s] So max of 0, sorry, so max of 0 and dp of I of j, which would be, like basically at every
+[1894.3s - 1901.3s] iteration, you would do max of 0, 2, max of 2, 0, 2, 0, and then up with 2, right.
+[1901.3s - 1902.3s] Yes.
+[1902.3s - 1903.3s] Okay.
+[1903.3s - 1904.3s] Okay.
+[1904.3s - 1909.5s] So in the second iteration, so this answer will remain same and I'm going to start from
+[1909.5s - 1912.2s] n minus 2, which is this one, okay.
+[1912.2s - 1913.8s] So I start from here.
+[1913.8s - 1918.3s] So gen value was initially, okay.
+[1918.3s - 1924.3s] So since this is false, what I'm going to do is I'm going to take, so I'm going to
+[1924.3s - 1925.3s] over here, right.
+[1925.3s - 1929.3s] So it will be either minimum of what is there or dp of I plus 1 j.
+[1929.3s - 1934.8s] So either minimum of 1 or minimum of 2 plus 1, which is 3, right.
+[1934.8s - 1939.7s] So in our case, we won't update it, so this is going to be one itself, right.
+[1939.7s - 1942.2s] Now since the school is true, this will be 0.
+[1942.2s - 1949.1s] Now again, this store distance will either be this or 0 plus 1, which in our case will
+[1949.1s - 1950.1s] be 1.
+[1950.1s - 1951.1s] Yes.
+[1951.1s - 1952.5s] That makes sense, yeah.
+[1952.5s - 1959.7s] So now the answer, the dp of I, of dp of I m for this case will become 1 because the
+[1959.7s - 1964.2s] maximum distance is 1, yeah, right.
+[1964.2s - 1968.7s] So in the end, I will return the minimum of all of these dp I ms, right.
+[1968.7s - 1973.4s] So minimum of 2, 1 like that, yeah, right.
+[1973.4s - 1976.6s] So in this, so again coming over here.
+[1976.6s - 1985.0s] So here gym value is true, so it will be 0 and this is also true, so it will be 0.
+[1985.0s - 1990.8s] And since this is false, here it was infinity, so it will be minimum of 1 plus 1, which is
+[1990.8s - 1991.8s] 2.
+[1991.8s - 1996.8s] So answer will be 2 over here, makes sense.
+[1996.8s - 1999.8s] Yep, makes sense.
+[2000.8s - 2001.8s] 1 second just.
+[2001.8s - 2006.8s] Yeah, no problem, take your time.
+[2006.8s - 2014.0s] Yeah, now 0, so this is okay.
+[2014.0s - 2019.4s] Now either the distance will be 1 or max of 0 plus 1, so it does not matter, so this
+[2019.4s - 2020.8s] is going to be 1.
+[2020.8s - 2027.0s] So either infinity or 2 plus 1, which is 3, so here it will be 3, again over here if
+[2027.0s - 2028.0s] we come.
+[2028.0s - 2033.8s] So the gym distance over here was infinity, so here it will be 0 plus 1, which is 1.
+[2033.8s - 2039.4s] Here it is true, so it will be 0, so 4 and max of all of these 4, right.
+[2039.4s - 2043.9s] So now I have to return minimum of 4, 3, 2, 1, 2, which will be 1.
+[2043.9s - 2046.6s] So this will be our answer.
+[2046.6s - 2047.6s] Gotcha.
+[2047.6s - 2054.4s] And just to be clear, can you remind me the reason that when you go from right to left,
+[2054.4s - 2059.2s] you skip the final index, what is the logic behind that?
+[2059.2s - 2063.0s] Because essentially I want to see the distances from the right, right.
+[2063.0s - 2069.4s] So this is the right most element, so like there is no element on the right, so there
+[2069.4s - 2074.7s] is no, like when we calculated from left to right, I did not calculate for 0, right.
+[2074.7s - 2081.4s] So I already did some pre-calculation, it is similar to that, but since some calculation
+[2081.4s - 2085.4s] has already done over here, I do not have to do it separately, just that.
+[2085.4s - 2088.4s] Yep, make sense, okay, make sense.
+[2088.4s - 2097.1s] And so I guess as a final few things for the finding the minimum index, just walk me
+[2097.1s - 2099.4s] through out loud what you would do.
+[2099.4s - 2108.8s] Yeah, so you just, I can just keep a result, right, and here every time I calculate dp
+[2108.8s - 2113.1s] of I m, so I do not have to update the result in the first iteration since anywhere I am
+[2113.1s - 2115.1s] going to do it again, right.
+[2115.1s - 2125.6s] So my result will be equal to minimum of result and dp of I m.
+[2125.6s - 2131.2s] So this is when I am going back, when I like in my iteration from right to left, when
+[2131.2s - 2134.7s] I am going back, I calculate these values.
+[2134.7s - 2140.3s] So when there is just one element, this will not work because in that case I am not calculating
+[2140.3s - 2144.7s] dp of I m at all, this will be at least, when there will be at least two elements, right.
+[2144.7s - 2152.2s] So when there is just one element n equal to 1, I will have to return the, so for this
+[2152.2s - 2158.0s] one, I should calculate, I have an dp of I m for the first one, right.
+[2158.0s - 2167.2s] So dp of I m will be equal to essentially this, right.
+[2167.2s - 2173.4s] So my resultant here, I can just restore result equal to dp of I m.
+[2173.4s - 2177.3s] So this is just for the case when there will be one element.
+[2177.3s - 2181.7s] And plus, I mean in the case when there is one element, I guess I could have specified
+[2181.7s - 2185.6s] that maybe the input just always has two elements rather than one, because one, there is
+[2185.6s - 2189.4s] only one apartment that you could go to, so it doesn't really make sense.
+[2189.4s - 2197.2s] But good that you, that you caught that, could you walk me through the time and space complexity
+[2197.2s - 2198.2s] of this algorithm?
+[2198.2s - 2199.2s] Yes.
+[2199.2s - 2205.7s] So for each block, I am going through all the requirements, right.
+[2205.7s - 2209.2s] So if this is, so there were n blocks and m requirements.
+[2209.2s - 2213.9s] So the time complexity will be order of nm over there also and over here also.
+[2213.9s - 2217.8s] So it is order of 2 into nm, which is essentially order of nm.
+[2217.8s - 2222.9s] And this space complexity is also order of nm, since I am storing the requirements for
+[2222.9s - 2224.2s] all of them.
+[2224.2s - 2225.2s] Yeah.
+[2225.2s - 2226.2s] Okay.
+[2226.2s - 2227.2s] Great.
+[2227.2s - 2234.5s] And this is better than the brute force solution that you like alluded to at the very beginning.
+[2234.5s - 2239.3s] Although I think at the beginning you were, you were doing the minimum, the minimal distance
+[2239.3s - 2243.0s] of the sum, but you were still alluding to a brute force solution.
+[2243.0s - 2244.0s] Yes.
+[2244.0s - 2245.0s] Yes.
+[2245.0s - 2249.4s] Were you expecting a better complexity solution or is this okay?
+[2249.4s - 2250.4s] Nope.
+[2250.4s - 2251.4s] This is, this is great.
+[2251.4s - 2256.4s] Just maybe as a, as a final thing, because we, we still have roughly 10 minutes here.
+[2256.4s - 2263.0s] But as a final thing, just out of curiosity, like how would you, if you, if you had to,
+[2263.0s - 2267.7s] do you see ways that you would improve this code, maybe from a, from a code perspective?
+[2267.7s - 2273.2s] Like, because here we sort of did it in pseudo code, like part, real code, part pseudo
+[2273.2s - 2274.2s] code.
+[2274.2s - 2278.3s] But how would you, how would you do this if you had to, like, write the function signatures
+[2278.3s - 2279.3s] and things like that?
+[2279.3s - 2280.3s] Yeah.
+[2280.3s - 2285.7s] So, obviously I have not taken correct naming conventions, I've just taken IEG and written,
+[2285.7s - 2288.4s] like, not at all professional way.
+[2288.4s - 2291.6s] So the naming conventions, I should definitely change.
+[2291.6s - 2297.6s] Like I have taken vector of vector and I've called it dp, which is like in, then a third
+[2297.6s - 2300.0s] person is reading, it doesn't really make sense, right?
+[2300.0s - 2310.0s] So maybe I could have named it requirements, distances and, like, similarly, naming conventions
+[2310.0s - 2315.7s] for IEG and say I could have definitely done better and return it in better way.
+[2315.7s - 2316.7s] Okay.
+[2316.7s - 2317.7s] Cool.
+[2317.7s - 2321.0s] Well, listen, Kirch, I think, I think this is great.
+[2321.0s - 2322.3s] Super quick commentary.
+[2322.3s - 2326.2s] As you're about to see in the last 10 minutes of the interview, we did a second coding
+[2326.2s - 2331.6s] interview question and in hindsight, I think that that was a mistake from me, the interviewer,
+[2331.6s - 2335.8s] because I had already gotten a really good signal about Kirch's algorithmic skills from
+[2335.8s - 2340.7s] the first question, but I hadn't gotten the best signal from her coding ability because
+[2340.7s - 2345.0s] I didn't see her code in a sort of production grade formal quality.
+[2345.0s - 2348.9s] She even told me herself that she would rename certain variables and things like that.
+[2348.9s - 2353.1s] And so in hindsight, I think that instead of doing a second question where we only had
+[2353.1s - 2357.1s] 10 minutes and I knew that we weren't going to get to the coding part, so I effectively
+[2357.1s - 2361.0s] just reassessed her algorithmic skills from a conceptual point of view.
+[2361.0s - 2365.5s] I think that I would have been better off having her rewrite her code in a more production
+[2365.5s - 2370.4s] grade quality, in a more formal grade quality, and that would have given me more signal
+[2370.4s - 2371.9s] about her coding ability.
+[2371.9s - 2375.9s] That was my mistake in hindsight, anyway, I'm telling you now, and enjoy the rest of
+[2375.9s - 2376.9s] the interview.
+[2376.9s - 2380.2s] But we still have roughly 10 minutes on the clock, Kirch, so we're going to do something
+[2380.2s - 2381.2s] completely different.
+[2381.2s - 2383.7s] So let's switch gears.
+[2383.7s - 2389.3s] When you're at a big tech company and you're on an engineering team, you often care about,
+[2389.3s - 2395.6s] or almost always care about, the state of the code base, and specifically, that all the
+[2395.6s - 2400.7s] continuous integration tests and unit tests that are running in the code base, that they're
+[2400.7s - 2401.7s] passing, right?
+[2401.7s - 2404.0s] You don't want tests to be failing.
+[2404.0s - 2409.2s] And sometimes when engineers push code into the main repository, they fail, they break
+[2409.2s - 2410.2s] the tests.
+[2410.2s - 2412.8s] And so the tests start to fail, right?
+[2412.8s - 2413.8s] Does that kind of make sense?
+[2413.8s - 2414.8s] Yeah.
+[2414.8s - 2419.9s] So what we called it on my team at Google was the build.
+[2419.9s - 2426.5s] And so the build referred to, kind of like, you know, whether the code in the main repository
+[2426.5s - 2430.6s] works correctly, compiles, all the tests are passing.
+[2430.6s - 2435.0s] And if everything worked well, we would say that the build was green.
+[2435.0s - 2439.4s] If everything didn't work well, if there was maybe like one test that failed, we would
+[2439.4s - 2445.6s] say that the build was red, or there was a build failure, okay?
+[2445.6s - 2447.4s] So I'm going to give you some data.
+[2447.4s - 2451.4s] It's going to be a list of lists of bullions.
+[2451.4s - 2455.2s] So it's going to be something like, let me copy paste something for you here.
+[2455.2s - 2459.4s] It will be something like this.
+[2459.4s - 2463.3s] This is going to be question number two.
+[2463.3s - 2469.0s] And what this is going to represent is each list here.
+[2469.0s - 2476.3s] You could imagine that the value at a specific index represents like one hour or one unit
+[2476.3s - 2477.6s] of time.
+[2477.6s - 2481.2s] And if there's a true, it means that the build is green.
+[2481.2s - 2486.1s] So here the build was green, then the build was green the next hour, then it was green
+[2486.1s - 2487.1s] again.
+[2487.1s - 2488.1s] So everything was passing.
+[2488.1s - 2493.4s] And suddenly, it was false, meaning it wasn't passing, it was broken.
+[2493.4s - 2496.4s] And then for another hour, it was false, okay?
+[2496.4s - 2500.1s] Now, when this happens, an engineering team isn't happy.
+[2500.1s - 2503.6s] You want the build to be green, so you immediately want to go and fix it.
+[2503.6s - 2508.0s] And so that's why you see that immediately in the next list, it's been fixed and it's
+[2508.0s - 2511.8s] back to true, true, true, until it goes to false because it's broken.
+[2511.8s - 2515.2s] And then an engineer has to fix it and you go back to true, true, true, right?
+[2515.2s - 2517.0s] Okay.
+[2517.0s - 2524.1s] So we call these lists here that are effectively like the build is green, green, green, green,
+[2524.1s - 2527.0s] and then suddenly it breaks and then it gets fixed.
+[2527.0s - 2532.1s] We call that a build run, a build run, okay?
+[2532.1s - 2540.4s] And so what we care about as a team is to effectively minimize the time that it takes
+[2540.4s - 2543.4s] to fix build runs, right?
+[2543.4s - 2550.9s] We don't want build runs to be false or to be broken for a long period of time, okay?
+[2550.9s - 2553.8s] So we want to minimize that.
+[2553.8s - 2560.7s] And what we care about as a data point is something that I'm going to call a green percentage,
+[2560.7s - 2566.8s] which is effectively within a build run, the percentage of time that the build was green
+[2566.8s - 2568.2s] versus broken.
+[2568.2s - 2574.2s] And so the greater the percentage, the better, because like, for example, here in this particular
+[2574.2s - 2579.9s] array, you can see that the green percentage is 80%, meaning the build was green, 80%
+[2579.9s - 2580.9s] of the time.
+[2580.9s - 2585.1s] And then it was broken for 20% of the time before it got fixed again, okay?
+[2585.1s - 2587.2s] We want that to be as high as possible.
+[2587.2s - 2594.8s] And specifically, the algorithm that I want you to give me is I want you to take in this
+[2594.8s - 2598.2s] list of build runs, okay?
+[2598.2s - 2607.4s] And I want you to return the greatest number of consecutive build runs that have a strictly
+[2607.4s - 2610.4s] decreasing green percentage.
+[2610.4s - 2618.8s] So it basically tells us the longest period of time during which our engineers were increasingly
+[2618.8s - 2622.4s] slow to fix broken builds.
+[2622.4s - 2623.4s] Does that make sense?
+[2623.4s - 2624.4s] Yes.
+[2625.2s - 2629.9s] How come the sizes of the lists are different?
+[2629.9s - 2633.5s] So like, are we building different projects all the time?
+[2633.5s - 2638.0s] Or is it because if it is the same projection in the number of hours taken to build, we
+[2638.0s - 2639.0s] see them?
+[2639.0s - 2642.8s] No, because you can imagine that these represent hours.
+[2642.8s - 2649.9s] So basically, it's like, okay, for a single code base, the build was green, green, green,
+[2649.9s - 2650.9s] and then it broke.
+[2650.9s - 2653.2s] It broke for two consecutive hours.
+[2653.2s - 2659.1s] And then as soon as it got fixed again, we represent that in a separate like list.
+[2659.1s - 2663.0s] And so this is all like the same code base effectively.
+[2663.0s - 2666.6s] But here it's green, green, green, then it gets broken.
+[2666.6s - 2667.6s] And then it gets fixed.
+[2667.6s - 2671.0s] So here, the green percentage up here is 60%.
+[2671.0s - 2678.3s] So you can just about the percentage and not about like the number of hours or anything.
+[2678.3s - 2682.1s] So because it doesn't matter the number of hours.
+[2682.1s - 2683.1s] Okay.
+[2683.1s - 2684.1s] Okay.
+[2684.1s - 2689.8s] Any other thing in the question you would like to add, or was that it?
+[2689.8s - 2690.8s] That's it.
+[2690.8s - 2698.3s] And so we want the greatest number of consecutive build runs, so consecutive lists like this,
+[2698.3s - 2702.4s] that have a strictly decreasing green percentage.
+[2702.4s - 2708.3s] And since we are running out of time, ideally just walk me through, if you can come
+[2708.3s - 2711.7s] up with an algorithm that's all this conceptually how you would do it.
+[2711.7s - 2713.4s] You don't have to write any code for now.
+[2713.4s - 2714.4s] Okay.
+[2714.4s - 2723.2s] Since it is supposed to be consecutive, so this essentially is the longest decreasing the
+[2723.2s - 2725.8s] sub array sort of a question.
+[2725.8s - 2728.8s] So you have to find a sub array because it is consecutive.
+[2728.8s - 2729.8s] Right.
+[2729.8s - 2735.1s] So if it didn't have to be consecutive, it could have been subsequence and I could have
+[2735.1s - 2738.4s] just said long this decreasing subsequence, right.
+[2738.4s - 2741.4s] And we could have done a normal dynamic programming over here.
+[2741.4s - 2743.9s] Since this is consecutive, there are sub array.
+[2743.9s - 2747.0s] So I can just keep two pointers over here.
+[2747.0s - 2751.3s] And so there will be two pointers, one will be left pointer, one will be right pointer.
+[2751.3s - 2758.5s] So from left to right, the percentage should be strictly decreasing or should it be less
+[2758.5s - 2761.3s] than equal to condition?
+[2761.3s - 2762.9s] Let's do strictly decreasing.
+[2762.9s - 2763.9s] Okay.
+[2763.9s - 2768.6s] So I will move my right pointer and check that, okay.
+[2768.6s - 2775.0s] If it can be added to the answer to the left to right, if it is less than the right element
+[2775.0s - 2778.2s] that we had earlier, then I'll just increase the length to one.
+[2778.2s - 2783.0s] Otherwise I'm going to update my left pointer and then calculate again.
+[2783.0s - 2784.8s] And I will have a result in over here.
+[2784.8s - 2785.8s] Does that make sense?
+[2785.8s - 2787.8s] Or should I just write it?
+[2787.8s - 2791.8s] And here when you're saying, when you're saying from left to right, you're saying you
+[2791.8s - 2797.0s] have one pointer at the left of the main big list, so that starts at here?
+[2797.0s - 2798.0s] Yes.
+[2798.0s - 2804.3s] So the left is essentially zero and my right is also initially zero, okay.
+[2804.3s - 2811.3s] So what I do is that if, so I will keep doing that, I will basically move my right pointer,
+[2811.3s - 2812.3s] right.
+[2812.3s - 2821.9s] So I will check that if the percentage of the right is less than percentage of right
+[2821.9s - 2824.4s] minus one, because I just moved it, right.
+[2824.4s - 2825.4s] Gotcha.
+[2825.4s - 2826.4s] Okay.
+[2826.4s - 2827.4s] Sorry to cut you off to your piece.
+[2827.4s - 2832.1s] So I understand now just how are you going to be calculating the percentages?
+[2832.1s - 2833.1s] Yeah.
+[2833.1s - 2838.5s] So that I can pre-process and keep so the number of truths and number of forces.
+[2838.5s - 2845.5s] So it will be number of truths upon number of truths plus forces in 200, right.
+[2845.5s - 2851.6s] And so would you, would you do like a linear search for that?
+[2851.6s - 2859.1s] We'll have to go through the entire list at least once, right, because to check how
+[2859.1s - 2861.6s] many were true, how many were false.
+[2861.6s - 2865.6s] So yeah, I'll have to walk through at least once.
+[2865.6s - 2872.2s] I tell you that they always start as the build runs by definition are always true and
+[2872.2s - 2873.6s] then they turn into false.
+[2873.6s - 2874.6s] Okay.
+[2874.6s - 2875.6s] Okay.
+[2875.6s - 2881.5s] Then I can just do a lower bound which will return me greater than or equal to or I can
+[2881.5s - 2886.4s] just do a binary search that is the lower bound essentially the first place where it was
+[2886.4s - 2887.4s] false, right.
+[2887.4s - 2888.4s] Right.
+[2888.4s - 2889.4s] That's all.
+[2889.4s - 2890.4s] Yep.
+[2890.4s - 2891.4s] Okay.
+[2891.4s - 2899.5s] So I can calculate that in log n if n is the size of the list and yeah, so log n to find
+[2899.5s - 2900.5s] the percentage.
+[2900.5s - 2903.0s] So I will have the first place where false came.
+[2903.0s - 2906.4s] So the ones before that were true and we know the size of the list.
+[2906.4s - 2908.7s] So we can calculate the percentage.
+[2908.7s - 2909.7s] Right.
+[2909.7s - 2910.7s] Exactly.
+[2910.7s - 2915.6s] And so then the total time complexity of your algorithm would be?
+[2915.6s - 2923.2s] So I would have to travel this entire thing once so and so if say m is the maximum size
+[2923.2s - 2926.9s] of the list and n is the number of lists.
+[2926.9s - 2930.6s] So it will be order of n into log n.
+[2930.6s - 2931.6s] Yep.
+[2931.6s - 2932.6s] Okay.
+[2932.6s - 2933.6s] Great.
+[2933.6s - 2935.7s] It was in curiosity.
+[2935.7s - 2936.8s] We were out of time now.
+[2936.8s - 2940.0s] We're exactly at like 46 minutes.
+[2940.0s - 2942.7s] So I think this was this was great.
+[2942.7s - 2944.8s] We covered at least conceptually.
+[2944.8s - 2946.7s] So a second question.
+[2946.7s - 2948.6s] I think we can jump into the feedback now.
+[2948.6s - 2949.6s] Okay.
+[2949.6s - 2950.6s] Okay.
+[2950.6s - 2951.6s] Cool.
+[2951.6s - 2952.6s] So I'm going to stop the timer.
+[2952.6s - 2956.9s] So for the feedback, I'm actually going to send you a link of the feedback form that
+[2956.9s - 2962.7s] we have on our mock interviews on algo expert, which is actually like very similar to the
+[2962.7s - 2965.7s] feedback that you would get Google.
+[2965.7s - 2970.8s] So at Google, there are a here I'm basing myself off with Google, but this is very similar
+[2970.8s - 2975.3s] at most big tech companies, but at Google, usually there are these four main categories
+[2975.3s - 2979.2s] that you're obsessed on are algorithms, coding, communication, problem solving and a
+[2979.2s - 2985.9s] few other things, but these a few other things are kind of intertwined and things like how
+[2985.9s - 2993.8s] do you handle curveballs or ambiguity or you know, were you, was there any moment where
+[2993.8s - 2999.6s] you were like disrespect for you didn't react well to stress or things like that.
+[2999.6s - 3002.6s] But here we're going to focus on these four main things.
+[3002.6s - 3007.4s] So I think that for algorithms, I would definitely give you a four, which is, you know, the
+[3007.4s - 3012.5s] best score here because you for not only the first question, but also the second question
+[3012.5s - 3018.8s] and very little time you came up with the optimal algorithms to solve the question.
+[3018.8s - 3026.4s] You basically had no help from me in both of them and you clearly, you know, demonstrated
+[3026.4s - 3029.3s] that you, you know, how to work with algorithms well right here.
+[3029.3s - 3034.5s] Your dynamic programming was on point binary search who got that right.
+[3034.5s - 3037.8s] So really, really well done there.
+[3037.8s - 3041.9s] Then if you want, we'll jump down to problem solving before covering the other two because
+[3041.9s - 3046.2s] problem solving is often like pretty related to the algorithms.
+[3046.3s - 3052.0s] Here, I would probably also give you a four for the problem solving and maybe I would
+[3052.0s - 3057.7s] hesitate a tiny bit with the three just in the sense of like, you know, maybe there
+[3057.7s - 3061.9s] was room for, you know, you could have asked a tiny bit more clarifying questions because
+[3061.9s - 3068.4s] at the beginning, you were going down the path of the minimizing the sum.
+[3068.4s - 3074.6s] But like that, that is personally, I don't really find that as that big of a, of a bad
+[3074.6s - 3078.8s] thing, I think, you know, this was a complicated question as far as like the amount of information
+[3078.8s - 3080.6s] I gave you.
+[3080.6s - 3084.7s] And otherwise, I think you just approached the problem well, you know, you covered, you
+[3084.7s - 3088.8s] talked about edge cases, you asked about like, you know, what if it's an empty array, if
+[3088.8s - 3094.0s] it has one element, you even handled the case with one element, and you, you covered a
+[3094.0s - 3096.6s] little bit of the brute force solution at the beginning.
+[3096.6s - 3100.4s] So overall, yeah, I think that the problem solving was really on point there too.
+[3100.4s - 3102.7s] So I would give you probably a four there.
+[3102.7s - 3103.7s] Commentary.
+[3103.7s - 3106.9s] So we're about to jump into the coding ability section of the feedback.
+[3106.9s - 3110.7s] And as I said in the first commentary in the middle of the interview, I think that in
+[3110.7s - 3114.9s] hindsight, I made a mistake as the interviewer, I didn't get quite as much coding ability
+[3114.9s - 3118.8s] signal as I would have liked from Kirti and from this interview.
+[3118.8s - 3120.4s] You'll see that in the feedback here.
+[3120.4s - 3124.8s] I kind of air on the nicer side, I'm a little bit nicer to Kirti that I could have been.
+[3124.8s - 3128.9s] And ultimately, in a real interview, what I would have done here is I would have left
+[3128.9s - 3133.5s] a note for the hiring committee telling them that I didn't get quite the amount of signal
+[3133.5s - 3137.4s] about Kirti's coding ability as I would have liked to have gotten, and for them to just
+[3137.4s - 3138.4s] keep that in mind.
+[3138.4s - 3143.3s] Then, if we jump into the coding, so for the coding, you notice that at the end, I ask
+[3143.3s - 3145.7s] you kind of like, well, you would do to improve the code.
+[3145.7s - 3149.8s] And I think that's important to ask as an interviewer, just because I know that, you know,
+[3149.8s - 3153.8s] sometimes, especially depending on your background, and like when you're under stress in the
+[3153.8s - 3158.4s] interview, especially on a Google Doc, you write, you know, you go with fast variable names
+[3158.4s - 3163.1s] like DP, especially if you come from a competitive programming back on DP, DFS.
+[3163.1s - 3168.3s] But clearly, like you said it yourself, you would have likely, you know, cleaned up the
+[3168.3s - 3171.7s] code a little bit, renamed it more properly.
+[3171.7s - 3176.5s] You also asked me about the pre-processing and all that stuff, which I'm very confident
+[3176.5s - 3177.5s] you could do.
+[3177.5s - 3181.7s] So for the coding, I would go with anywhere between a three and a four, you know, I don't
+[3181.7s - 3186.1s] think that there was anything really like a red flag.
+[3186.5s - 3190.2s] The one thing that maybe would have made me think it was a red flag is if you didn't
+[3190.2s - 3194.0s] tell me anything, I've had could have been improved, you know, if you didn't realize
+[3194.0s - 3198.3s] that things like DP aren't amazing as naming conventions and things like that.
+[3198.3s - 3200.0s] But otherwise, I think that was fine.
+[3200.0s - 3205.3s] I guess maybe one point of improvement that I would maybe have given for coding might
+[3205.3s - 3211.2s] be subjective, but I think you, you did it well because I think your algorithm probably
+[3211.2s - 3217.6s] runs perfectly, but you, you stuffed a lot of stuff in all of your four loops.
+[3217.6s - 3223.7s] Like, for instance, keeping track of the, of the final minimum index distance, the result,
+[3223.7s - 3228.7s] I think, you know, that could have been an entirely like separate function.
+[3228.7s - 3235.6s] You could have also done, you could have also separated some of the, like, the maximums
+[3235.6s - 3239.6s] that you're keeping track of in a separate function.
+[3239.7s - 3242.3s] Like, I don't know, you know, it worked well for you.
+[3242.3s - 3246.3s] So overall here, again, I think I would probably give the tween of three and a four.
+[3246.3s - 3247.3s] Okay.
+[3247.3s - 3251.8s] That I would say subjective, I should have probably mentioned it because some interviews
+[3251.8s - 3257.5s] might probably expect that, you know, why to increase the complexity by making another
+[3257.5s - 3261.2s] function and, you know, another call and it's just an overhead.
+[3261.2s - 3264.0s] So, but yeah, it becomes cleaner like that.
+[3264.0s - 3269.0s] So it's a, it's a trade off basically, which I should have mentioned probably that I
+[3269.0s - 3271.0s] could have coded it like that as well.
+[3271.0s - 3272.0s] Yeah.
+[3272.0s - 3277.0s] And I guess if you want to take one piece of feedback that might help you in any future
+[3277.0s - 3281.8s] interviews you do, it would be that, like, maybe you can at least tell your interviewer
+[3281.8s - 3284.7s] that you're thinking that you could do it in two different ways.
+[3284.7s - 3289.2s] You feel comfortable with doing it all, you know, in a single function or in a single
+[3289.2s - 3295.8s] four loop, but maybe it would be, you know, easier for readability purposes or for, you
+[3295.8s - 3302.1s] know, logic, rocking purposes to split it up into more different logical units.
+[3302.1s - 3303.1s] Yeah.
+[3303.1s - 3304.1s] Yeah.
+[3304.1s - 3308.0s] Yeah, because I guess the last one I'll say here is this, yeah, in general, but this is
+[3308.0s - 3313.0s] again, this is kind of subjective, but for me, I find it very helpful to kind of think
+[3313.0s - 3316.8s] of how I'm going to solve the problem and, you know, let's say three different logical
+[3316.8s - 3317.8s] steps.
+[3317.8s - 3323.2s] So here, it would be number one, you know, left to right, number two, right to left, and
+[3323.2s - 3329.6s] then number three, maybe, I guess in the right to left with that approach, you always update
+[3329.6s - 3332.2s] things, you know, there, so that makes sense.
+[3332.2s - 3336.4s] But then I would have separated out that final step of finding them in an index and separate
+[3336.4s - 3338.0s] kind of logical units.
+[3338.0s - 3341.8s] But again, I think overall, I think you did great there and I think, you know, we're
+[3341.8s - 3344.8s] on the same page given what you just said right now.
+[3344.8s - 3345.8s] Okay.
+[3345.8s - 3347.9s] The final thing is communication.
+[3347.9s - 3352.3s] For communication, I would probably give, I would probably give between a three in a
+[3352.3s - 3355.6s] two or like two and a half and three, and I don't think I would give it two because
+[3355.6s - 3356.6s] two is a bit harsh.
+[3356.6s - 3358.7s] I think I would give it three.
+[3358.7s - 3363.9s] The only, like, reservation I would have about communication is just that this problem
+[3363.9s - 3366.1s] is relatively complicated, right?
+[3366.1s - 3370.3s] Even if you find the solution really quickly, which you did, so clearly, like, the problem
+[3370.3s - 3374.3s] itself wasn't that difficult for you, it is a pretty difficult problem that has a lot
+[3374.3s - 3378.3s] of little, you know, things to keep in mind, like you're keeping track of the minimum
+[3378.3s - 3382.9s] here, but then it's the maximum and, you know, you skipped the last index and you skipped
+[3382.9s - 3384.5s] the first index and all that.
+[3384.5s - 3389.8s] And I think that, you know, you could have maybe communicated a tiny bit more.
+[3389.8s - 3396.4s] And I think that some, some interviewers might have gotten a little bit more lost.
+[3396.4s - 3400.6s] Personally, like, my approach is I really want to make sure that I'm understanding what
+[3400.6s - 3401.6s] you do.
+[3401.6s - 3404.6s] So like, I'll stop you in the interview just to clarify and you saw that I did that a
+[3404.6s - 3405.8s] couple of times.
+[3406.6s - 3412.2s] But ideally, ideally, like, you don't have to let your interviewer do that.
+[3412.2s - 3417.0s] Ideally, you're the one who's proactive, who's, like, just to be clear, you know, this
+[3417.0s - 3418.8s] is the line here that I'm using.
+[3418.8s - 3422.4s] And what you can do is you don't feel comfortable with that, or if you're like, you know,
+[3422.4s - 3427.0s] this seems useless, you can ask your interviewer, which you did do, which you did do.
+[3427.0s - 3428.7s] So good great job there.
+[3428.7s - 3431.5s] You can ask your interviewer, like, are you following me here?
+[3431.5s - 3434.9s] Do you want me to go into more detail as to how I'm getting this or not?
+[3434.9s - 3438.8s] Overall, I would probably put you at the three for communication.
+[3438.8s - 3443.2s] To tally up, you know, you've got like a four in algorithms and problem solving, three
+[3443.2s - 3447.3s] and a half, let's say in coding, three, three and a half in communication.
+[3447.3s - 3451.6s] For the final score, I think I would, I'd be inclined to give a strong hire somewhere
+[3451.6s - 3454.6s] between a higher and a strong hire, and since you have to make a decision, I'd probably
+[3454.6s - 3455.6s] give a strong hire.
+[3455.6s - 3456.6s] Awesome.
+[3456.6s - 3460.1s] I can't be hired, I can't know.
+[3460.1s - 3463.6s] But yeah, I mean, yeah, again, as far as I'm concerned, and, you know, all the viewers
+[3463.6s - 3467.1s] can see in the interview, like, I think you did a, you did a great job.
+[3467.1s - 3471.4s] And especially, like, it's under pressure, you do, how do you react to this feedback?
+[3471.4s - 3473.5s] Like, did you feel good about it?
+[3473.5s - 3478.8s] Honestly, I thought I would get a lower score for algorithm solving because communication
+[3478.8s - 3479.8s] is my thing.
+[3479.8s - 3486.3s] So, yeah, this is the first, like, this was a challenging thing that, okay, I have to
+[3486.3s - 3490.7s] improve on my communication because I think, yeah, I could have communicated my approach
+[3490.7s - 3492.5s] also a little better.
+[3492.5s - 3495.2s] So, yeah, that's a good feedback for me.
+[3495.2s - 3499.4s] Yeah, and just also one thing to keep in mind is, like, every interviewer is a little
+[3499.4s - 3505.4s] bit different in how they assess, you know, like, what, what one person might be a great
+[3505.4s - 3509.8s] amazing communication, someone else might score a tiny bit lower, but then conversely
+[3509.8s - 3511.6s] for algorithms, it might be a little bit different.
+[3511.6s - 3514.9s] Like, I personally found that your algorithm skills, like, really impressive.
+[3514.9s - 3520.2s] Like, you, you didn't stumble at any point, and you immediately realized the clever approach
+[3520.2s - 3522.6s] of the left to right and right to left things.
+[3522.6s - 3523.6s] So...
+[3523.6s - 3524.6s] I did not expect that.
+[3524.6s - 3525.6s] Thank you so much.
+[3525.6s - 3526.6s] I'm really happy.
+[3526.6s - 3529.8s] All right, well, listen, Kirti, awesome job.
+[3529.8s - 3534.1s] If I weren't interviewer at Google still, I would give you a strong hire, and I would,
+[3534.1s - 3538.7s] I would hope that you did very well in your other interviews in the hiring committee
+[3538.7s - 3543.5s] side the same way, but any last words for the viewers?
+[3543.5s - 3548.4s] I guess most of the people who come and do this mock interviews in your channel are
+[3548.4s - 3549.4s] competitive programmers.
+[3549.4s - 3553.9s] So, I am not any, like, big, high-file competitive programming, I have good programmer
+[3553.9s - 3554.9s] at all.
+[3554.9s - 3560.4s] So, I have a small chatter where I make hard questions and explain them in a very simple
+[3560.4s - 3561.4s] way.
+[3561.4s - 3565.4s] So, if viewers like that, they can just go check it out and give me feedback, I would
+[3565.4s - 3567.4s] like to improve and help them as well.
+[3567.4s - 3568.4s] Definitely.
+[3568.4s - 3571.4s] And I'll put your channel in the description below.
+[3571.4s - 3572.4s] Thank you so much, Kermit.
+[3572.4s - 3574.1s] Thank you so much for having me.
+[3574.1s - 3575.8s] It was a pleasure.
+[3575.8s - 3577.4s] That's going to be it for this Google coding interview.
+[3577.4s - 3579.4s] I hope that you enjoyed this Google coding interview.
+[3579.4s - 3582.4s] If you did, don't forget to smash the like button, subscribe to the channel if you haven't
+[3582.4s - 3583.4s] already.
+[3583.4s - 3586.6s] Check out the other Google coding interview that we did on Kirti's channel in the description
+[3586.6s - 3587.6s] and comments below.
+[3587.6s - 3590.9s] Otherwise, don't forget to follow me on Twitter and LinkedIn if you enjoy short-former
+[3590.9s - 3591.9s] and content.
+[3591.9s - 3595.4s] Instagram is really pictures and otherwise I will see you in the next video.

@@ -1,0 +1,319 @@
+SOURCE: YouTube
+VIDEO_ID: ZwwYgiT9GH0
+URL: https://www.youtube.com/watch?v=ZwwYgiT9GH0
+GPU: 0
+DURATION: 1917.0s (31.9 min)
+TRANSCRIBED: 2025-11-28 09:42
+================================================================================
+
+FULL TRANSCRIPT:
+--------------------------------------------------------------------------------
+ Design a distributed message queue. Sure, nice. I think this is a pretty good question. In general, we talked about distributed message queue. So let me talk about the functional requirements. So here, when we talk about queue, we insert entries into the queue and we remove like a kind of produce entries into the queue and consume entries. I think that's kind of the basic of the queue. Is that something like from the basic functionality perspective, are there anything that you are considering? Yeah, this makes sense, this makes sense. So if we talk about like non-functional requirements, which is the most important for this particular problem. So when we talk about a distributed queue, I think we are talking about kind of a highly scalable architecture. I mean, I would say there can be, I mean, let's say we are entering a lot of data into the queue. I can go into some kind of estimation. Let's say I'll just say probably 10 million messages. Or let me ask you one question first. So there can be different ways of creating queues. We can create some kind of topic base where consumer can subscribe to a topic and producer can insert for that topic. Or there can be direct just entering into the queue or it can be found out based more about broadcasting. So which ones do you want to want me to build system design? Let's use a topic base queue. But can you expand a little bit more on each of the three types? I'd love to get like a quick summary of each type. Sure. So topic base is just like, let's say, in e-commerce world, if you talk about, let's say if somebody makes a purchase, you place an order. So there will be like you are writing in the queue that an order is created, order is placed. And there will be many listeners, many consumers listening to that particular topic that saying that whenever an order is created, inform me. Something like that. So they are subscribing to a particular topic. When we talk about fan out based broadcasting, it's mainly like you are kind of not listening to one particular topic, but as soon as a message comes, you are broadcasting to many queues that are listening to it. So and when we talk about direct message, it's mainly like, it's just based on a queue. Say for one user, you just send that message to that particular queue that is driving that user. I mean, that's very specific. Direct is like key to queue mapping. Something like that. Got it. Got it. Okay. Let's use topic base queue for this exercise. Sure. So I mean, we can have multiple topics. So like I mentioned about the orders, there can be so many like when in e-commerce world, it can be when a product is listed or... But let's assume probably 10 million messages. I would say probably 10,000 topics. 10K topics, we can say 10 million messages. And if you are inserting them per day, then once again, so it's... Comes out to be probably around, I would say, 100 gig messages per day, then which is around, I mean, if you talk about... And how long are we going to retain it as such? What is the retention should be for the messages? Let's say 30 day retention. Okay. So 30 day you're saying, right? So if we talk about 30 day retention, it's going to take probably three terabyte for... Sorry, three terabyte, yes. Just three terabyte if you assume one byte. And if you are talking about the message, I'll go to the... What kind of structure that message can be looking like? But even if we are talking about 100 bytes, it's going to be 300 terabytes, which is huge, even for 100 bytes. So it seems like it's definitely going to be very demanding in terms of the space and we need a highly scalable. I think from the size perspective, and I think from the request perspective also, if we are talking about, let's say, 10 million orders created per day for the topic of order. So from that perspective, it looks like the producers, and we are talking about 10k topics, so I guess the producers will be pretty high also. And okay, let's talk about other things. There is a trade-off between latency and throughput in general when we talk about any message queue. So latency is mainly about, I think, time to deliver message mainly when you insert the message into the queue, when it's consumed, like how much latency it is, how much time it is taking to deliver and consume there. So I'm assuming, and even the time to consume, if you deliver a message. So I think we can do it pretty fast, but if we kind of balance it out, are you okay, like it is fast, but not real, not near, real time. I would say, is 2 to 3v minutes okay with you, 2 to 5 minutes? Sure, yeah, that's fine. That's close enough to real time for this exercise. Okay, sounds good. And then if we talk about, I mean, just some kind of consumable, any topic, I'm assuming, that one producer can produce many topics and one can, they can be multiple, okay, so I should move here. This and maybe multiple consumers, I think I'll just go over, can be subscribing to multiple topics and multiple producers. Okay, then in terms of scalability, I would, I think, there can be surge also of requests. Sometimes, so I would create a system with handles of surge as well, of let's say, Black Friday and those kind of situations. So that's probably, I mean, something like non-functional requirements, I can go into the high level design, if you think, and one more question, do I need to consider images or just text sufficient for this one? Let's just consider text for this. Okay, sounds good. So from, yeah, I can go into high level design as such, I mean, high level just kind of block diagram. So let's say if there are multiple producers, so I can add any kind of message. So producer can be creating a different kind of messages. So let's say if we are talking about one producer, I mean, one producer can produce multiple topics, I mean, eventually two multiple topics. So let's say topic one. And if let's say we have a consumer, so we have one consumer, let's say consumer one, I can have one more consumer, consumer two. So let's assume consumer one is looking at the queue for topic one. And let's say if we are talking about another topic here, so producer is maybe same producer. At this point, I am assuming same producer, they can be multiple producers. I am just creating some kind of block diagram. And based on that, yeah. So consumer two can be listening to topic two. They can be listening to topic one as well. So it's mainly, I think just some example I am throwing here. But I think I have some questions and let me, so it's the consuming topic one. I think here I am following the poll model. So let me describe here. So here, so there are two approaches. One is poll model versus push model. So when a producer, when these in this queue, so this is whole queue system. So when a producer produces an event for that particular topic, one option is those producers are pushing down to the consumers. You have these messages ready for consumption. I am just kind of pushing on the consumers in that case. The problem there is, what if there is a surge of traffic, so many requests coming at the consumer at the same time? Now consumers might not be able to, might not be ready to accept that workload. And in those scenarios, it might be difficult to cope up with the load. If producers are producing faster than the consumer is consuming. The other way is we can have a poll model where consumers are, like producers are pushing to the queue. Consumers are pulling from that queue. I think that will give us better scalability and better control. So we can scale producers separately. We can scale consumers separately and we can control the rate also. Given that you mentioned, two to five minutes is okay. So we can control the rate of consumption also, maybe by polling probably every minute or something like that. So here, when we talk about, let us say scalability here. So from producer perspective, I would say from scalability perspective, we can add more and more servers. So if we need to increase the load, increase the number of insertions to the queue, we can add more servers. The other option is we can have more batching also. So batching, there is operating system level batching as well that we can leverage. And so rather than making network call for every request, maybe we can batch and then send over the network to insert into the queue. So that from scalability perspective, we can do. Let us see from consumer perspective, we can scale consumers as well. By adding more servers, let us say the traffic is for a particular topic, we want the consumption to be faster, we can add more servers to consume that particular topic. And we can even add batching here, we can pull after every interval. So maybe one minute, something like that. And maybe in a batch of probably 50, I am just saying some configuration I am talking about, that I will go over the configuration part and let me go over in a little bit. But here, we can add more scalability to the consumers by making use of these features. I think I will go over this queue part, I think queue is the most important here, from how I am going to store data, what should be the message structure, how I am going to store data into that queue and what are the different options. Do you have any questions so far or shall I just continue with sharing the design for the queue? Yeah, I keep going, this is great, no questions for me so far, but thanks for checking in. So when we are talking about queue, so one important thing is when we are talking about a particular message, we need to make sure that the message is containing some key and some topic also. So we need a topic, whether it is order creation or something like that. Then we need payload also, which is the value, we can have in that JSON format, we can have payload. In terms of order, we can have the item information or we can have the order number. So we can have multiple things like this, we can have the who is purchasing buyer ID. So we can have such kind of values in the payload, which is the message that we are sending towards the queue. Now, key would be what is the differentiating factor and it is more about the sharding that I will go over in a little bit. So how we want to partition the messages and message storage. So but key can be, I mean it can be buyer ID. If you want to separate and scale it, shard it based on buyer ID. So for each buyer, then it will go through a different shard representing for that particular buyer based on some consistent hashing or modification, we can think about that. But you have topic we talked about, order or something like that. There can be other fields here that we can have. So in terms of storage, I see there are kind of three options we can do. We can do a SQL level, we can do a no SQL as well. And there is something called write ahead log, which is mainly append only log. Let me go over this SQL. So SQL based solution, I think here if you see the number of events, the number of events that are number of messages that are consumed. It is almost similar to the number of messages that are consumed. They can be more or less here and there. But we see it is a deed and write heavy system both. So we have, I mean we have used SQL and no SQL solutions. Most of the systems are really deed heavy. We are reading a lot of data, but here there is a lot of writes going on. So in these kind of situations, SQL doesn't really work as well as other solutions that we have. We can use no SQL also. We can have some kind of key value storage. We can create a queue also there. We can have the next offset. I mean we can store anything in the volume. There are ways to implement the queue over here as well. But I think for this particular solution, this particular problem, the write ahead log solution would work. I think perfect over here, which what it means is like it is just an append only log. So old style file based solution kind of. So it is mainly like a file that we will append. I think sometimes people think that we are, we are appending to a file. We introduce databases with performance gains. But how would disk interpret this file based systems. So I mean when we talk about append only logs, when we, disks are usually pretty fast, these rotational disks. If it the traffic is like appending to a file, those are pretty fast. I mean we can even have read based configuration where we can strive the disk together. And achieve a lot of performance benefits here. So in this particular case, every message that you add, like every message the producer adds, it depends to the end of the file. Now the problem there, I see here is what if the file, I mean if you are talking about orders, 10 million orders per day, we can't just continue appending to a one single file again and again. It will just blow up and it will become one file can be huge. So we can apply, there can be other strategies, we can segment the file into multiple segments, like probably after every size, X size may be 10KV or something. We can pick some numbers, we will split that file and we will write. So the other segments will be available for reads, but the new, for writing to that particular log file, that will happen to the latest segment. So segmentation is an option here. Then I see that this segmentation, I mean we don't want an infinite file, infinite file we can't afford. So then segmentation, but still here let's go over the numbers here. So we are talking about this 300 terabytes, I mean 3 terabytes and if we are talking about some, for one particular topic it's like 30 gigs, which is still high for 30 days. So what I would do is I would partition this one as well, partition these files over servers, multiple servers. So when I talk about partitioning, here I talked about the key as buyer ID, I can do a buyer ID based partition. So I can use consistent hashing or some kind of mod based, but consistent hashing would work better. So based on that buyer it can partition over multiple servers. So to support the scalability of that particular log file. So here I mean I can do like for segmentation it can be date based also, but in general here I think we I mentioned 3 approaches here. I would go with writer ID log approach, I would go with segmentation as well and partitioning as well to for each of the topics. So that's from the storage perspective and I will go with the message having topic and maybe I mean in that case if you want partition then I would say some kind of checksum CRC and time. So I can have these things in the message that is going to be circulated and stored. So that's from storage perspective, but here I just I just talked about the data storage. I think when we talk about Q, the Q will be the Q can contain way more things beyond data storage because we talk about this right. We talk about polling after one minute, where is the configuration saved and what if I mean we are talking about partitioning, where are we writing and how do we enable fault tolerance. What if once hour goes down, one partition goes down. So in those cases so let me see here so what we can do maybe I think so we talked about data storage here. So this is what I discussed so far. Now there will be some kind of metadata storage. So metadata storage that metadata storage can contain I would say it's a configuration of the topics. So topics like what is the rate of consumption we can say what is the retention period 30 days we mentioned or it can vary based on the topics or even the replication replication. Let me talk about that one a little bit, but here let me explain. So I would need that storage then I would need some kind of state storage also. So like for each consumer what where where did they read because we have an infinite long I mean not infinite long we have a table let's see here table. So if we talk about here this right so let's say I mean some kind of files is stored so let's say a yeah so if we are talking about ABCD so anything we talk about. I mean I'm just using random data but it is possible that one consumer is reading until like I mentioned about polling so every one minute I will be creating a batch getting probably 50 messages for a particular topic. In that case there will be an offset in this particular log I'm just I just kind of simulating the log I don't think we have time for that. But here let's say if this at this stage consumer stopped last time that particular consumer has consumed until this point. So that kind of offset I would need somewhere so that state storage will have the consumer offset for each of those. Then I would have another one we need is mainly about I think here I was talking about fault tolerance also what if one. So what I would do is I would have some kind of leader follower kind of approach where you are writing to the leaders like producers are writing to the leaders consumers are consuming from the leaders as well. But at the same time we want to make sure that data is replicated so that in case the in case the server goes down in then we will need something like I would say here if some kind of coordination service in case a server goes down let's say in case a leader goes down or a new message we want to onboard or something really have. So there is something called coordination service that can interact with those leaders and those followers to make sure that if they go down or if we want to if the new leader is added if we want to stop consumption for a particular topic we are able to do. We are able to make the changes accordingly so this coordination service will be talking to through hard beats the leader followers so I would say here I would say mainly some kind of so this is what we call broker in general. So and here okay I do not think I can add here but this is mainly I would add here some kind of broker and these three things can be handled through zookeeper. So zookeeper is a pretty good pretty good tech that we can use to store some store state store metadata and even interact with our servers which is leaders and followers so to make sure if there is any leaders I mean I would say here so there so it's something like we have a leader for topic one and we are replicating to follower one for topic one so it's mainly follower I know the partitioning over here just to make it simple. But follower means you can say it's a replica so those are mainly in sync replica they are always in sync here so you write to like producers are writing to I would say here if you are talking about producers are writing to this and consumers this is the whole system and consumers are pulling from those leaders. So these this is going out and inside here these replicas are talking to a data storage zookeeper is driving all these things and mainly that's how the system that's how something similar Kafka also works that way. We can I mean I mentioned about batching here on the consumer producer side we can do these things I think one thing I am thinking is when should so when we are writing as a producer when we are writing to messages to the queue when should we say that the right is successful should we say the right is successful right after we write to the leader or should we say the right is successful right after the leader has replicated to the replicas. Mainly I mean let's say if so the problem is I mean if you there there are different approaches here I mean I can share that approach those approaches here so like if you are talking about so there is something called act acknowledgement so it is for like when producer is writing we can say that there is nobody acknowledging. That the message is written in that case there is no way for producer to know whether the message was written successfully and messages can be lost and there the other approaches maybe we have leader who is responding yes the message is received and then we are waiting for all like we are writing to the replicas as well at the same time and making sure that we are getting the acknowledgement that the data is written to the replicas as well if the data is written to the replicas we know that it is a fault tolerance system completely if leader goes down replica has exact same values as that replica has exact same values as leader that we can ensure so I'll pause here do you have any questions quickly or let me think about if there is anything I would add to the system no I think this was a pretty good in depth analysis of how someone might tackle this kind of question assistant design interview and thanks for pausing here I know we are short on time here did you for my I think my just last question here is do you mind just quickly giving me a summary of how you would answer this in a maybe a shorter amount of time if you were asked this in an actual interview okay usually the interviews I mean there is one point just I remember that there is one point that I missed about what happens after 30 days so I'll create a per job for that a back end job that will continue to be varying but coming back to your question about shorter amount of time in general the system design interviews are anywhere from 45 minutes to 1 hour so even I mean this kind of things I think in general we should follow the format we should follow the pattern of going from functional to non functional to high level design and going deep into each of the layers going into the data and then discussing each of them individually so I mean we can expand on it we can talk about timed cues as well but here I mean in short amount of time if you follow the proper sequence we will be able to answer the question quickly I think I covered a lot of concepts that are applicable for distributed message queue and I think yeah if I think to answer this in the shorter amount of time we should follow the pattern got it yeah that makes sense yeah and for the viewers at home typically when you're asked a system design question you do want to follow this sort of structure that nearest followed here and also I think one thing that nearest did really well was that he checked in with me a few times throughout the interview this was just an exercise but being able to like checking with your interviewer can help you get a gauge of where the interviewer might want you to like spend your time and where they might want you to speed up or where they might want you to talk more about trade offs as an example but nearest I think you did a great job here this is very in depth this is exactly the kind of response that I think a 10 out of 10 system design interview answer would look like so nearest things for your time and for the viewers who are watching at home good luck I hope this video was helpful and we'll see you in the next exponent system design mock interview bye for now
+
+TIMESTAMPED SEGMENTS:
+--------------------------------------------------------------------------------
+[0.0s - 2.5s] Design a distributed message queue.
+[5.5s - 9.0s] Sure, nice. I think this is a pretty good question.
+[9.0s - 13.0s] In general, we talked about distributed message queue.
+[13.0s - 17.0s] So let me talk about the functional requirements.
+[17.0s - 24.0s] So here, when we talk about queue, we insert entries into the queue and we remove
+[24.0s - 29.0s] like a kind of produce entries into the queue and consume entries.
+[29.0s - 32.0s] I think that's kind of the basic of the queue.
+[32.0s - 36.0s] Is that something like from the basic functionality perspective,
+[36.0s - 39.0s] are there anything that you are considering?
+[39.0s - 41.0s] Yeah, this makes sense, this makes sense.
+[41.0s - 46.0s] So if we talk about like non-functional requirements,
+[46.0s - 50.0s] which is the most important for this particular problem.
+[50.0s - 53.0s] So when we talk about a distributed queue,
+[53.0s - 58.0s] I think we are talking about kind of a highly scalable architecture.
+[58.0s - 63.0s] I mean, I would say there can be, I mean,
+[63.0s - 68.0s] let's say we are entering a lot of data into the queue.
+[68.0s - 71.0s] I can go into some kind of estimation.
+[71.0s - 76.0s] Let's say I'll just say probably 10 million messages.
+[76.0s - 79.0s] Or let me ask you one question first.
+[79.0s - 82.0s] So there can be different ways of creating queues.
+[82.0s - 87.0s] We can create some kind of topic base where consumer can subscribe to a topic
+[87.0s - 90.0s] and producer can insert for that topic.
+[90.0s - 94.0s] Or there can be direct just entering into the queue
+[94.0s - 97.0s] or it can be found out based more about broadcasting.
+[97.0s - 102.0s] So which ones do you want to want me to build system design?
+[102.0s - 104.0s] Let's use a topic base queue.
+[104.0s - 107.0s] But can you expand a little bit more on each of the three types?
+[107.0s - 110.0s] I'd love to get like a quick summary of each type.
+[110.0s - 113.0s] Sure. So topic base is just like, let's say,
+[113.0s - 115.0s] in e-commerce world, if you talk about,
+[115.0s - 118.0s] let's say if somebody makes a purchase,
+[118.0s - 120.0s] you place an order.
+[120.0s - 125.0s] So there will be like you are writing in the queue
+[125.0s - 128.0s] that an order is created, order is placed.
+[128.0s - 130.0s] And there will be many listeners,
+[130.0s - 134.0s] many consumers listening to that particular topic
+[134.0s - 139.0s] that saying that whenever an order is created, inform me.
+[139.0s - 140.0s] Something like that.
+[140.0s - 143.0s] So they are subscribing to a particular topic.
+[143.0s - 146.0s] When we talk about fan out based broadcasting,
+[146.0s - 149.0s] it's mainly like you are kind of not listening
+[149.0s - 152.0s] to one particular topic, but as soon as a message comes,
+[152.0s - 156.0s] you are broadcasting to many queues that are listening to it.
+[156.0s - 159.0s] So and when we talk about direct message,
+[159.0s - 161.0s] it's mainly like, it's just based on a queue.
+[161.0s - 164.0s] Say for one user, you just send that message
+[164.0s - 169.0s] to that particular queue that is driving that user.
+[169.0s - 172.0s] I mean, that's very specific.
+[172.0s - 175.0s] Direct is like key to queue mapping.
+[175.0s - 176.0s] Something like that.
+[176.0s - 177.0s] Got it. Got it.
+[177.0s - 178.0s] Okay.
+[178.0s - 181.0s] Let's use topic base queue for this exercise.
+[181.0s - 184.0s] Sure. So I mean, we can have multiple topics.
+[184.0s - 186.0s] So like I mentioned about the orders,
+[186.0s - 190.0s] there can be so many like when in e-commerce world,
+[190.0s - 193.0s] it can be when a product is listed or...
+[193.0s - 196.0s] But let's assume probably 10 million messages.
+[196.0s - 199.0s] I would say probably 10,000 topics.
+[199.0s - 203.0s] 10K topics, we can say 10 million messages.
+[203.0s - 207.0s] And if you are inserting them per day,
+[207.0s - 212.0s] then once again, so it's...
+[212.0s - 216.0s] Comes out to be probably around, I would say,
+[216.0s - 219.0s] 100 gig messages per day,
+[219.0s - 223.0s] then which is around, I mean, if you talk about...
+[223.0s - 226.0s] And how long are we going to retain it as such?
+[226.0s - 229.0s] What is the retention should be for the messages?
+[229.0s - 231.0s] Let's say 30 day retention.
+[231.0s - 234.0s] Okay. So 30 day you're saying, right?
+[234.0s - 237.0s] So if we talk about 30 day retention,
+[237.0s - 243.0s] it's going to take probably three terabyte for...
+[243.0s - 247.0s] Sorry, three terabyte, yes.
+[247.0s - 250.0s] Just three terabyte if you assume one byte.
+[251.0s - 254.0s] And if you are talking about the message,
+[254.0s - 255.0s] I'll go to the...
+[255.0s - 259.0s] What kind of structure that message can be looking like?
+[259.0s - 262.0s] But even if we are talking about 100 bytes,
+[262.0s - 264.0s] it's going to be 300 terabytes, which is huge,
+[264.0s - 266.0s] even for 100 bytes.
+[266.0s - 270.0s] So it seems like it's definitely going to be very demanding
+[270.0s - 274.0s] in terms of the space and we need a highly scalable.
+[274.0s - 276.0s] I think from the size perspective,
+[276.0s - 278.0s] and I think from the request perspective also,
+[278.0s - 280.0s] if we are talking about, let's say,
+[280.0s - 284.0s] 10 million orders created per day for the topic of order.
+[284.0s - 289.0s] So from that perspective, it looks like the producers,
+[289.0s - 291.0s] and we are talking about 10k topics,
+[291.0s - 297.0s] so I guess the producers will be pretty high also.
+[297.0s - 300.0s] And okay, let's talk about other things.
+[300.0s - 304.0s] There is a trade-off between latency and throughput in general
+[304.0s - 307.0s] when we talk about any message queue.
+[307.0s - 310.0s] So latency is mainly about, I think,
+[310.0s - 315.0s] time to deliver message mainly when you insert the message
+[315.0s - 318.0s] into the queue, when it's consumed,
+[318.0s - 319.0s] like how much latency it is,
+[319.0s - 324.0s] how much time it is taking to deliver and consume there.
+[324.0s - 327.0s] So I'm assuming, and even the time to consume,
+[327.0s - 329.0s] if you deliver a message.
+[329.0s - 333.0s] So I think we can do it pretty fast,
+[333.0s - 336.0s] but if we kind of balance it out,
+[336.0s - 338.0s] are you okay, like it is fast,
+[338.0s - 341.0s] but not real, not near, real time.
+[341.0s - 344.0s] I would say, is 2 to 3v minutes okay with you,
+[344.0s - 345.0s] 2 to 5 minutes?
+[345.0s - 347.0s] Sure, yeah, that's fine.
+[347.0s - 350.0s] That's close enough to real time for this exercise.
+[350.0s - 352.0s] Okay, sounds good.
+[352.0s - 354.0s] And then if we talk about,
+[354.0s - 358.0s] I mean, just some kind of consumable,
+[358.0s - 360.0s] any topic, I'm assuming,
+[360.0s - 363.0s] that one producer can produce many topics
+[363.0s - 366.0s] and one can, they can be multiple,
+[366.0s - 369.0s] okay, so I should move here.
+[369.0s - 374.0s] This and maybe multiple consumers,
+[374.0s - 376.0s] I think I'll just go over,
+[376.0s - 380.0s] can be subscribing to multiple topics
+[380.0s - 383.0s] and multiple producers.
+[383.0s - 385.0s] Okay, then in terms of scalability,
+[385.0s - 388.0s] I would, I think, there can be surge also
+[388.0s - 390.0s] of requests.
+[390.0s - 393.0s] Sometimes, so I would create a system
+[393.0s - 395.0s] with handles of surge as well,
+[395.0s - 399.0s] of let's say, Black Friday and those kind of situations.
+[399.0s - 403.0s] So that's probably, I mean,
+[403.0s - 406.0s] something like non-functional requirements,
+[406.0s - 408.0s] I can go into the high level design,
+[408.0s - 410.0s] if you think, and one more question,
+[410.0s - 412.0s] do I need to consider images
+[412.0s - 415.0s] or just text sufficient for this one?
+[415.0s - 417.0s] Let's just consider text for this.
+[417.0s - 419.0s] Okay, sounds good.
+[419.0s - 424.0s] So from, yeah, I can go into high level design as such,
+[424.0s - 428.0s] I mean, high level just kind of block diagram.
+[428.0s - 431.0s] So let's say if there are multiple producers,
+[431.0s - 434.0s] so I can add any kind of message.
+[434.0s - 438.0s] So producer can be creating a different kind of messages.
+[438.0s - 441.0s] So let's say if we are talking about one producer,
+[441.0s - 444.0s] I mean, one producer can produce multiple topics,
+[444.0s - 447.0s] I mean, eventually two multiple topics.
+[447.0s - 450.0s] So let's say topic one.
+[450.0s - 452.0s] And if let's say we have a consumer,
+[452.0s - 455.0s] so we have one consumer, let's say consumer one,
+[455.0s - 460.0s] I can have one more consumer, consumer two.
+[460.0s - 465.0s] So let's assume consumer one is looking at the queue
+[465.0s - 468.0s] for topic one.
+[468.0s - 473.0s] And let's say if we are talking about another topic here,
+[474.0s - 478.0s] so producer is maybe same producer.
+[478.0s - 480.0s] At this point, I am assuming same producer,
+[480.0s - 482.0s] they can be multiple producers.
+[482.0s - 484.0s] I am just creating some kind of block diagram.
+[484.0s - 489.0s] And based on that, yeah.
+[489.0s - 493.0s] So consumer two can be listening to topic two.
+[493.0s - 496.0s] They can be listening to topic one as well.
+[496.0s - 500.0s] So it's mainly, I think just some example I am throwing here.
+[501.0s - 506.0s] But I think I have some questions and let me,
+[506.0s - 508.0s] so it's the consuming topic one.
+[508.0s - 511.0s] I think here I am following the poll model.
+[511.0s - 514.0s] So let me describe here.
+[514.0s - 518.0s] So here, so there are two approaches.
+[518.0s - 521.0s] One is poll model versus push model.
+[521.0s - 525.0s] So when a producer, when these in this queue,
+[525.0s - 529.0s] so this is whole queue system.
+[529.0s - 535.0s] So when a producer produces an event for that particular topic,
+[535.0s - 540.0s] one option is those producers are pushing down to the consumers.
+[540.0s - 547.0s] You have these messages ready for consumption.
+[547.0s - 550.0s] I am just kind of pushing on the consumers in that case.
+[550.0s - 554.0s] The problem there is, what if there is a surge of traffic,
+[554.0s - 558.0s] so many requests coming at the consumer at the same time?
+[558.0s - 564.0s] Now consumers might not be able to, might not be ready to accept that workload.
+[564.0s - 570.0s] And in those scenarios, it might be difficult to cope up with the load.
+[570.0s - 574.0s] If producers are producing faster than the consumer is consuming.
+[574.0s - 578.0s] The other way is we can have a poll model where consumers are,
+[578.0s - 581.0s] like producers are pushing to the queue.
+[581.0s - 584.0s] Consumers are pulling from that queue.
+[584.0s - 589.0s] I think that will give us better scalability and better control.
+[589.0s - 594.0s] So we can scale producers separately.
+[594.0s - 599.0s] We can scale consumers separately and we can control the rate also.
+[599.0s - 602.0s] Given that you mentioned, two to five minutes is okay.
+[602.0s - 606.0s] So we can control the rate of consumption also,
+[606.0s - 612.0s] maybe by polling probably every minute or something like that.
+[612.0s - 619.0s] So here, when we talk about, let us say scalability here.
+[619.0s - 626.0s] So from producer perspective, I would say from scalability perspective,
+[626.0s - 629.0s] we can add more and more servers.
+[629.0s - 638.0s] So if we need to increase the load, increase the number of insertions to the queue,
+[638.0s - 640.0s] we can add more servers.
+[640.0s - 644.0s] The other option is we can have more batching also.
+[644.0s - 652.0s] So batching, there is operating system level batching as well that we can leverage.
+[652.0s - 659.0s] And so rather than making network call for every request,
+[659.0s - 666.0s] maybe we can batch and then send over the network to insert into the queue.
+[666.0s - 670.0s] So that from scalability perspective, we can do.
+[670.0s - 678.0s] Let us see from consumer perspective, we can scale consumers as well.
+[678.0s - 683.0s] By adding more servers, let us say the traffic is for a particular topic,
+[683.0s - 690.0s] we want the consumption to be faster, we can add more servers to consume that particular topic.
+[690.0s - 696.0s] And we can even add batching here, we can pull after every interval.
+[696.0s - 700.0s] So maybe one minute, something like that.
+[700.0s - 706.0s] And maybe in a batch of probably 50, I am just saying some configuration I am talking about,
+[706.0s - 711.0s] that I will go over the configuration part and let me go over in a little bit.
+[711.0s - 723.0s] But here, we can add more scalability to the consumers by making use of these features.
+[723.0s - 730.0s] I think I will go over this queue part, I think queue is the most important here,
+[730.0s - 736.0s] from how I am going to store data, what should be the message structure,
+[736.0s - 744.0s] how I am going to store data into that queue and what are the different options.
+[744.0s - 750.0s] Do you have any questions so far or shall I just continue with sharing the design for the queue?
+[750.0s - 755.0s] Yeah, I keep going, this is great, no questions for me so far, but thanks for checking in.
+[755.0s - 763.0s] So when we are talking about queue, so one important thing is when we are talking about a particular message,
+[764.0s - 770.0s] we need to make sure that the message is containing some key and some topic also.
+[770.0s - 775.0s] So we need a topic, whether it is order creation or something like that.
+[775.0s - 783.0s] Then we need payload also, which is the value, we can have in that JSON format, we can have payload.
+[784.0s - 795.0s] In terms of order, we can have the item information or we can have the order number.
+[795.0s - 801.0s] So we can have multiple things like this, we can have the who is purchasing buyer ID.
+[801.0s - 809.0s] So we can have such kind of values in the payload, which is the message that we are sending towards the queue.
+[810.0s - 818.0s] Now, key would be what is the differentiating factor and it is more about the sharding that I will go over in a little bit.
+[818.0s - 825.0s] So how we want to partition the messages and message storage.
+[825.0s - 830.0s] So but key can be, I mean it can be buyer ID.
+[830.0s - 836.0s] If you want to separate and scale it, shard it based on buyer ID.
+[837.0s - 848.0s] So for each buyer, then it will go through a different shard representing for that particular buyer based on some consistent hashing or modification, we can think about that.
+[848.0s - 853.0s] But you have topic we talked about, order or something like that.
+[853.0s - 860.0s] There can be other fields here that we can have.
+[861.0s - 865.0s] So in terms of storage, I see there are kind of three options we can do.
+[865.0s - 872.0s] We can do a SQL level, we can do a no SQL as well.
+[872.0s - 877.0s] And there is something called write ahead log, which is mainly append only log.
+[877.0s - 881.0s] Let me go over this SQL.
+[881.0s - 889.0s] So SQL based solution, I think here if you see the number of events, the number of events that are number of messages that are consumed.
+[889.0s - 893.0s] It is almost similar to the number of messages that are consumed.
+[893.0s - 895.0s] They can be more or less here and there.
+[895.0s - 899.0s] But we see it is a deed and write heavy system both.
+[899.0s - 907.0s] So we have, I mean we have used SQL and no SQL solutions.
+[907.0s - 911.0s] Most of the systems are really deed heavy.
+[911.0s - 916.0s] We are reading a lot of data, but here there is a lot of writes going on.
+[917.0s - 925.0s] So in these kind of situations, SQL doesn't really work as well as other solutions that we have.
+[925.0s - 927.0s] We can use no SQL also.
+[927.0s - 929.0s] We can have some kind of key value storage.
+[929.0s - 931.0s] We can create a queue also there.
+[931.0s - 933.0s] We can have the next offset.
+[933.0s - 935.0s] I mean we can store anything in the volume.
+[935.0s - 938.0s] There are ways to implement the queue over here as well.
+[938.0s - 945.0s] But I think for this particular solution, this particular problem, the write ahead log solution would work.
+[945.0s - 951.0s] I think perfect over here, which what it means is like it is just an append only log.
+[951.0s - 956.0s] So old style file based solution kind of.
+[956.0s - 962.0s] So it is mainly like a file that we will append.
+[962.0s - 967.0s] I think sometimes people think that we are, we are appending to a file.
+[967.0s - 970.0s] We introduce databases with performance gains.
+[970.0s - 975.0s] But how would disk interpret this file based systems.
+[975.0s - 985.0s] So I mean when we talk about append only logs, when we, disks are usually pretty fast, these rotational disks.
+[985.0s - 991.0s] If it the traffic is like appending to a file, those are pretty fast.
+[991.0s - 999.0s] I mean we can even have read based configuration where we can strive the disk together.
+[999.0s - 1004.0s] And achieve a lot of performance benefits here.
+[1004.0s - 1013.0s] So in this particular case, every message that you add, like every message the producer adds, it depends to the end of the file.
+[1013.0s - 1027.0s] Now the problem there, I see here is what if the file, I mean if you are talking about orders, 10 million orders per day, we can't just continue appending to a one single file again and again.
+[1028.0s - 1034.0s] It will just blow up and it will become one file can be huge.
+[1034.0s - 1048.0s] So we can apply, there can be other strategies, we can segment the file into multiple segments, like probably after every size, X size may be 10KV or something.
+[1049.0s - 1054.0s] We can pick some numbers, we will split that file and we will write.
+[1054.0s - 1066.0s] So the other segments will be available for reads, but the new, for writing to that particular log file, that will happen to the latest segment.
+[1066.0s - 1070.0s] So segmentation is an option here.
+[1070.0s - 1081.0s] Then I see that this segmentation, I mean we don't want an infinite file, infinite file we can't afford.
+[1081.0s - 1089.0s] So then segmentation, but still here let's go over the numbers here.
+[1090.0s - 1104.0s] So we are talking about this 300 terabytes, I mean 3 terabytes and if we are talking about some, for one particular topic it's like 30 gigs, which is still high for 30 days.
+[1104.0s - 1114.0s] So what I would do is I would partition this one as well, partition these files over servers, multiple servers.
+[1114.0s - 1124.0s] So when I talk about partitioning, here I talked about the key as buyer ID, I can do a buyer ID based partition.
+[1124.0s - 1133.0s] So I can use consistent hashing or some kind of mod based, but consistent hashing would work better.
+[1133.0s - 1138.0s] So based on that buyer it can partition over multiple servers.
+[1138.0s - 1146.0s] So to support the scalability of that particular log file.
+[1146.0s - 1161.0s] So here I mean I can do like for segmentation it can be date based also, but in general here I think we I mentioned 3 approaches here.
+[1161.0s - 1174.0s] I would go with writer ID log approach, I would go with segmentation as well and partitioning as well to for each of the topics.
+[1174.0s - 1190.0s] So that's from the storage perspective and I will go with the message having topic and maybe I mean in that case if you want partition then I would say some kind of checksum CRC and time.
+[1190.0s - 1199.0s] So I can have these things in the message that is going to be circulated and stored.
+[1199.0s - 1207.0s] So that's from storage perspective, but here I just I just talked about the data storage.
+[1207.0s - 1219.0s] I think when we talk about Q, the Q will be the Q can contain way more things beyond data storage because we talk about this right.
+[1219.0s - 1234.0s] We talk about polling after one minute, where is the configuration saved and what if I mean we are talking about partitioning, where are we writing and how do we enable fault tolerance.
+[1234.0s - 1250.0s] What if once hour goes down, one partition goes down. So in those cases so let me see here so what we can do maybe I think so we talked about data storage here.
+[1250.0s - 1257.0s] So this is what I discussed so far. Now there will be some kind of metadata storage.
+[1257.0s - 1269.0s] So metadata storage that metadata storage can contain I would say it's a configuration of the topics.
+[1269.0s - 1284.0s] So topics like what is the rate of consumption we can say what is the retention period 30 days we mentioned or it can vary based on the topics or even the replication replication.
+[1284.0s - 1296.0s] Let me talk about that one a little bit, but here let me explain. So I would need that storage then I would need some kind of state storage also.
+[1296.0s - 1312.0s] So like for each consumer what where where did they read because we have an infinite long I mean not infinite long we have a table let's see here table.
+[1312.0s - 1336.0s] So if we talk about here this right so let's say I mean some kind of files is stored so let's say a yeah so if we are talking about ABCD so anything we talk about.
+[1336.0s - 1351.0s] I mean I'm just using random data but it is possible that one consumer is reading until like I mentioned about polling so every one minute I will be creating a batch getting probably 50 messages for a particular topic.
+[1351.0s - 1360.0s] In that case there will be an offset in this particular log I'm just I just kind of simulating the log I don't think we have time for that.
+[1360.0s - 1372.0s] But here let's say if this at this stage consumer stopped last time that particular consumer has consumed until this point.
+[1372.0s - 1381.0s] So that kind of offset I would need somewhere so that state storage will have the consumer offset for each of those.
+[1381.0s - 1393.0s] Then I would have another one we need is mainly about I think here I was talking about fault tolerance also what if one.
+[1393.0s - 1408.0s] So what I would do is I would have some kind of leader follower kind of approach where you are writing to the leaders like producers are writing to the leaders consumers are consuming from the leaders as well.
+[1409.0s - 1437.0s] But at the same time we want to make sure that data is replicated so that in case the in case the server goes down in then we will need something like I would say here if some kind of coordination service in case a server goes down let's say in case a leader goes down or a new message we want to onboard or something really have.
+[1437.0s - 1465.0s] So there is something called coordination service that can interact with those leaders and those followers to make sure that if they go down or if we want to if the new leader is added if we want to stop consumption for a particular topic we are able to do.
+[1465.0s - 1485.0s] We are able to make the changes accordingly so this coordination service will be talking to through hard beats the leader followers so I would say here I would say mainly some kind of so this is what we call broker in general.
+[1485.0s - 1501.0s] So and here okay I do not think I can add here but this is mainly I would add here some kind of broker and these three things can be handled through zookeeper.
+[1501.0s - 1530.0s] So zookeeper is a pretty good pretty good tech that we can use to store some store state store metadata and even interact with our servers which is leaders and followers so to make sure if there is any leaders I mean I would say here
+[1531.0s - 1554.0s] so there so it's something like we have a leader for topic one and we are replicating to follower one for topic one so it's mainly follower I know the partitioning over here just to make it simple.
+[1554.0s - 1583.0s] But follower means you can say it's a replica so those are mainly in sync replica they are always in sync here so you write to like producers are writing to I would say here if you are talking about producers are writing to this and consumers this is the whole system and consumers are pulling from those leaders.
+[1584.0s - 1607.0s] So these this is going out and inside here these replicas are talking to a data storage zookeeper is driving all these things and mainly that's how the system that's how something similar Kafka also works that way.
+[1607.0s - 1634.0s] We can I mean I mentioned about batching here on the consumer producer side we can do these things I think one thing I am thinking is when should so when we are writing as a producer when we are writing to messages to the queue
+[1634.0s - 1654.0s] when should we say that the right is successful should we say the right is successful right after we write to the leader or should we say the right is successful right after the leader has replicated to the replicas.
+[1654.0s - 1683.0s] Mainly I mean let's say if so the problem is I mean if you there there are different approaches here I mean I can share that approach those approaches here so like if you are talking about so there is something called act acknowledgement so it is for like when producer is writing we can say that there is nobody acknowledging.
+[1683.0s - 1709.0s] That the message is written in that case there is no way for producer to know whether the message was written successfully and messages can be lost and there the other approaches maybe we have leader who is responding yes the message is received and then we are waiting for all like we are writing to the replicas as well at the same time
+[1709.0s - 1729.0s] and making sure that we are getting the acknowledgement that the data is written to the replicas as well if the data is written to the replicas we know that it is a fault tolerance system completely if leader goes down replica has exact same values as
+[1729.0s - 1757.0s] that replica has exact same values as leader that we can ensure so I'll pause here do you have any questions quickly or let me think about if there is anything I would add to the system no I think this was a pretty good in depth analysis of how someone might tackle this kind of question assistant design interview and thanks for pausing here I know we are short on time here
+[1757.0s - 1777.0s] did you for my I think my just last question here is do you mind just quickly giving me a summary of how you would answer this in a maybe a shorter amount of time if you were asked this in an actual interview
+[1777.0s - 1793.0s] okay usually the interviews I mean there is one point just I remember that there is one point that I missed about what happens after 30 days so I'll create a per job for that a back end job that will continue
+[1793.0s - 1821.0s] to be varying but coming back to your question about shorter amount of time in general the system design interviews are anywhere from 45 minutes to 1 hour so even I mean this kind of things I think in general we should follow the format we should follow the pattern of going from functional to non functional to high level design and going deep into each of the layers
+[1821.0s - 1845.0s] going into the data and then discussing each of them individually so I mean we can expand on it we can talk about timed cues as well but here I mean in short amount of time if you follow the proper sequence we will be able to answer the question quickly
+[1845.0s - 1861.0s] I think I covered a lot of concepts that are applicable for distributed message queue and I think yeah if I think to answer this in the shorter amount of time we should follow the pattern
+[1861.0s - 1881.0s] got it yeah that makes sense yeah and for the viewers at home typically when you're asked a system design question you do want to follow this sort of structure that nearest followed here and also I think one thing that nearest did really well was that he checked in with me a few times throughout the interview
+[1881.0s - 1895.0s] this was just an exercise but being able to like checking with your interviewer can help you get a gauge of where the interviewer might want you to like spend your time and where they might want you to speed up or where they might want you to talk more about trade offs as an example
+[1895.0s - 1907.0s] but nearest I think you did a great job here this is very in depth this is exactly the kind of response that I think a 10 out of 10 system design interview answer would look like
+[1907.0s - 1914.0s] so nearest things for your time and for the viewers who are watching at home good luck I hope this video was helpful and we'll see you in the next
+[1914.0s - 1917.0s] exponent system design mock interview bye for now

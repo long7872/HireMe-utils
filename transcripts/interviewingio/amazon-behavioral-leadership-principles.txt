@@ -1,0 +1,285 @@
+SOURCE: interviewing.io
+INTERVIEW_ID: amazon-behavioral-leadership-principles
+COLLECTED: 2025-11-28 11:01
+================================================================================
+
+Interview Transcript
+Covert Gecko: All I can see on my end is that you want to do some behavioral prep. So do you want to tell me a little bit more about what you're looking for, what you're hoping to get out of the session? That way we can make sure to tailor it just to you.
+
+Samurai Coyote: Yeah, sure. So actually I've seen that for Amazon, the. The behavior question is mostly known as LP question. Right. So I know it's different than other companies. So I was recently prepared for I think about 12 behavior questions instead of 16. Because I asked my recruiter, she just told me that four of the LP questions would be covered. So I just written some questions and some of my stories, but I'm not so very sure that I'm on the right track. So I want today maybe you can help me check if I. What I put here is correct.
+
+Covert Gecko: Okay.
+
+Samurai Coyote: Do you think that's okay? So yeah. So I first thinking that because I didn't know what question you were asking me, so I can. Oh first I can provide you with a list of the what my recruiter sending me about the type of question that I will prepare on esp. I will copy here. Correct. So this is what they copied me. Yeah.
+
+Covert Gecko: Okay.
+
+Samurai Coyote: And I think the others, I don't know, like the custom opposition is not there. So I think only this shell. So what I guess is maybe you ask me some question and I want you first ask me some questions. See what I behave on this just like the real interviewer.
+
+Covert Gecko: Oops. Can you hear me? Great.
+
+Samurai Coyote: Yes. Yeah, yeah, I can hear you Great.
+
+Covert Gecko: Okay, that sounds great. Can you tell me what level are you interviewing for?
+
+Samurai Coyote: I'm not so sure. But my recruiter tell me that for the code and system design it will be L6 or L7 to interview me. But I'm not so sure what level I'm currently for. You see it's SD4 L5. Right. Level four. L5, I think maybe.
+
+Covert Gecko: Yeah. So how Amazon works is it's SD1, SC2, SD3, which is synonymous with like a senior engineer. And then it goes to principal. And so L6 is that SC3. And then the principal is the L7. And so since you're being interviewed by L6 and L7. That means that they're probably evaluating you for an L6. But it's great that you have an L7 in the loop that way. If you do really well, maybe they can evaluate you in that way as well.
+
+Samurai Coyote: Yeah, I guess. Maybe my role is L5 or L6, so that maybe L6, L7 people are interviewing me.
+
+Covert Gecko: Yeah. Yeah. It's usually always, like, the at or above level or your interviewer. So it's usually a good way to test.
+
+Samurai Coyote: Yeah.
+
+Covert Gecko: Okay, great. And then when is your interview? Is it coming up?
+
+Samurai Coyote: It's August. August.
+
+Covert Gecko: Okay, cool. You have some time then. Okay, great.
+
+Samurai Coyote: Yeah, great.
+
+Covert Gecko: So these sessions are especially these mentoring ones, like, very much what you want to do. So I think maybe based on what you're telling me so far, it might make sense for us to just do a sample question, kind of get a feel for where you are. So let's pretend like we've never chatted. I'll ask you a question, you'll pretend like you're answering an interview, and then I'll say, okay, break. And then we can kind of go back. I can give you some feedback, and then we can talk about how you're feeling. So whether you want to, like, spend time workshopping problems or if you just want to do more questions. So happy to play it by ear based on how you're feeling after we do one.
+
+Samurai Coyote: Yeah. I think at first you just gave me two of the questions. Just mimic the like within. Within 10 to 15 minutes, and you see how it appears. Yeah. I also want to know that because I saw in the. I saw in Amazon, they have a preparation. What is called. It's a recruiter leader preparation meeting. So I say that sometime you will be asking a question that you really don't have any experience on that. So I also want to know what I handle with that. Like, just like, yeah, I think you can come first, and I will see how I will handle it.
+
+Covert Gecko: Yeah. There's definitely strategies to handle, like the ones where you're, like, completely thrown off guard or you're, like, not really sure how to answer it. So. And then there's also the ones that are like, you know, like the. Tell me about your biggest failure, where you can actually use that really strategically as a way to answer so that you reflect yourself in a positive light. So we can work through.
+
+Samurai Coyote: We can work through stuff like that, too. Okay, cool.
+
+Covert Gecko: Okay. Do you have any questions on any of the leadership principles before I pick a question and we jump in.
+
+Samurai Coyote: So right now I think only. Only the lp. I think only one lp. I have questions are right a lot. But I think it's good we first of all do some sample question and then I will move to. I think we can move to this part.
+
+Covert Gecko: Cool. Yeah, that's actually one of the ones I'd kind of flag to potentially pull from because in my opinion that's one of the most important.
+
+Samurai Coyote: All right.
+
+Covert Gecko: Yeah, it's just a really important leadership principle for the senior level because it's basically understanding your ability to assess risk and judgment.
+
+Samurai Coyote: Yeah.
+
+Covert Gecko: So they're. It is a really important leadership principle. But I'll ask you a question that's a little bit of an overlap between this and some of the other ones and then we can kind of see where you're at. Does that sound good?
+
+Samurai Coyote: Sure. Let's just get started.
+
+Covert Gecko: Okay, sounds good. All right, give me one second. I'm just going to pick a question. Okay. All right, here we go. Can you give me an example of when you had to make an important decision in the absence of good data because there wasn't any. What was the situation? How did you arrive at your decision and what happened?
+
+Samurai Coyote: Okay, so yes, at TikTok I have a lot of experience that I just have to give the action very quickly. So I was thinking of one that I was handling an issue that very severely to the user experience. So at that time I think I'm also I first give some quick brief introduction. So I maintain two products at the same time. I maintain one is called RMP and another is called which is external portal. But I didn't implement. But one day I think that.
+
+Covert Gecko: I.
+
+Samurai Coyote: Was doing some feature testing work on the PCF dumping and myself is a backend engineer. I found out the submission page was broken. It was totally no CSS and the submit button also disappeared. This can be very severe because we are serving the law enforcement who are using our system to file any urgent takedown or data disclosure tickets including like suicide threats. So missing this because the page you cannot submit any tickets that means can release very serious public safety issues and reputational damage to the company. And at that time I think the issue happened around 11pm While most engineers were offline. So at first I think because you know, at this time I didn't know a lot of information about this. I didn't know what happened and I just tried to clear my. I first tried to see if it's not my local issue. So I cleared my cache. I tried incognito mode and switch browser but the issue was still here but at that time you know I didn't have. I didn't have enough data. So to make sure that it's not like our backend issue or front end issue but it was really a bug in the production because I tried a lot of the front page, different browser on different laptop and it's over here. So I you know I what I did is I clicked the issue very immediately. I first find a lot of my backend engineer also tested on his laptop and he also confirmed this issue. Then I very quickly I paged two of our front engineers. You know that is really like about 12am at the US time but I paid them to solve this because it's a very critical issue and I gave them a quick summary of what we were saying and why it's critical. And also me and my teammate we also reach out to the Singapore based front end engineers. They have some tech lead which I hope in case can help us from the start. And I also immediately push for a rollback instead of trying to let those front end to debug it because I didn't want that product issue to exist and there's a wasting time debugging a ton while the system was done. So I think it ended up taking us about one hour to fully recover that. But luckily you know since we have found it earlier and even before the users to report a P00 safety issue encore you know at that time we have ready picked up so we are lucky we just let our users know that the system was already backed up. We have just we proactively find this issue but you know that's very lucky because we found it earlier and which help us to build a trust and avoid any exploit impact. So I think the finally what I learned from this is because you know like this is a very urgent issue so you have to make sure that what I thinking is because our what what the custom of our product it's the internal handling team and also the outside law enforcement. So we want to make sure you can always use our system without any blocking so that we can always file like urgent data disclosure tickets and you know with so for this that we can make sure that our companies you know like this legal compliance is always high on a very faster response. And it also taught me to thinking more about you know just out of my job responsibility. So just for our platform and the company to become more and more stable and we're more chess in front of customers. Yeah, that's all.
+
+Covert Gecko: Awesome. How did you. How do you run into this issue because you were saying that it was something like proactively that you figured out like were you just running like some tests or were you debugging something else separately?
+
+Samurai Coyote: Yes. So at that time I think that day I just worked very late. I was still doing some tests at about 11pm so what I think is like this. So because we are when we backend each time releasing features, we will go a very long time CIC process and at the end of that I will test it on some Canary ready, sorry Canary branch to test if my. My feature is working correctly on their preview branch. And at that time my feature was about to release. But I saw that I. I first need to do some to create some test tickets using that external portal. But I found that the whole page just crashed without no CSS and it's about 11pm and nobody has found this issue early. And also there's no incoming encore tickets at that time. But I immediately find it's very critical since this is the external portal for the outside user to use that and because the external users they sometimes they don't claim to the encore tickets very timely. So maybe those user have really be affected. But we just didn't get notice about that. So that's why I just think it's very important medical issue immediately for sure.
+
+Covert Gecko: So this was actually a change that had been in production and not related to the changes you were making. You just happened to find it?
+
+Samurai Coyote: Yes. So I think in our. Before that some of our feature, the front end and the backend, they are released not, you know, not synchronizing. So maybe they just accelerate the front end, they push their code and I. So I'm. I'm from Backend team. I didn't get no idea from that, but I feel like it sounded in the production. The page is broken. That's why.
+
+Covert Gecko: Gotcha. Gotcha. Great. All right, let's. Let's jump into interviewing IO mode here. How do you feel like that went?
+
+Samurai Coyote: I actually am not so sure if this question is. So how do you think that it's good prepare for this question? I actually, I think you are asking about when they are lacking of some data, but this is one of my stories that I know I didn't. It's hard to like put, you know, some points or some numbers into the results.
+
+Covert Gecko: Yeah, yeah, yeah. I think that. I think that this is one of the like one of those answers. The reason I asked you this question specifically is because it is a little bit hard and I wanted to kind of get a Read for, like, how you'd answer it. I think you did a good job answering it, but I don't think it was at the senior level. So that's maybe one thing to think about in terms of just like calibrating your response that oftentimes, you know, good examples of this are similar to what you're talking about, but have a little bit more scope and complexity. So maybe a time where a project, it wasn't clear what the next steps are, but you made a judgment call to say, hey, we're going to build this component to be more flexible, or we're going to move forward with an MVP version and get a result, or we're going to release this to a set of customers and capture data in a safe way. Like, those are the types of things I think that are probably a little bit more of a senior level. There's some, there's some great. There's some great nuggets in this too. So let me kind of walk down top to bottom through your, your answer and I'll kind of, I'll kind of tell you, like, what are the things to lean in on? And then what, what context had something that can be helpful? You didn't need it in this problem. It felt like you jumped in and had a great answer right away. But if you're not sure how to answer the question, something that can be really effective is just repeating back the question just to make sure that you've, like, understood what the question is. And then it also gives you a little bit of time too, in case you need to just, like, think for a hot second. Another strategy that works really well is like, say you're trying to decide between two different answers and you just say, hey, one of my answers is related to an operational issue that I ran and another one is related to some design work. Do you have a preference on which one I dive into and kind of throw it back to the interviewer? Because maybe they want an example of you running an operational issue where this would be a good answer to share. So that's kind of a strategy I found to be really effective.
+
+Samurai Coyote: So you are meaning. So you're referring to that. When I feel that the question is. It's not very clear. So I just. Yes, I just. So do you know which kind of, like, dimensions that I can ask for? I know that this question you can extend to a lot of different ways. Like you mentioned operational, right? Operationals and what? Like design, right? Design. This is all the design works or design of the. Maybe calculated documents or that maybe something like that.
+
+Covert Gecko: Yeah. So the reason I shared that is sometimes like you're doing a mental decision making when you answer a question of like, ooh, which example should I use? And you know, it can be a helpful strategy to ask your interviewer which one because maybe they do want an example of an operational issue or not. So that's something to think about in terms of like when you don't know how to answer the question. But this one was great because you jumped in and we're answering the question right away.
+
+Samurai Coyote: Okay, sure. So can you rep. Do you mind just repeat that question into this text? So I want to make sure I clearly understand that the question we had before.
+
+Covert Gecko: Yep.
+
+Samurai Coyote: Because I guess I have another story. I'm not so sure if it's correct here. So right now I found that a lot of story. Actually it has a lot multiple of the LP principles that, I mean leadership principle that I can put it on. So we have to make in the absence of good data because there just wasn't any. So what was the situation and what do you do? Oh yeah. So I think the important thing is absence of the good data.
+
+Covert Gecko: Yeah. But in this example you did have an absence of data and you like, I actually think that was the great part about how you answered this because you first of all, you did great on giving me context to like why this is serious and why it's a really impactful thing for your customer. So that was great. And then you also did. Oh, go first.
+
+Samurai Coyote: Yeah, yeah. I think the only issue is that because the level requirements. So because you see it's for the L6, L7. So I think the level bar is at the air. So maybe it's. I would, I would just. I don't know that if I need to change for another story for this. I mean my personal opinion.
+
+Covert Gecko: Yeah. My opinion is if you are leaning more into that senior level role that I think you should, you should work on finding a different example.
+
+Samurai Coyote: Okay.
+
+Covert Gecko: This example. I'll tell you why this example is good when it comes to like an L5. It's because you weren't afraid to jump in and act with urgency. You pulled in all the right people early. You made sure that they were set up for success in the call by telling them all the information. You weren't afraid to over reach out to people and communicate early and often. You also pushed for a rollback immediately, which is great because it shows your good assessment and judgment of like, hey, this will act quickly and we can help remediate faster. And then evaluate. So like all of those things are great. It just lacked like the depth and complexity I would expect at a senior level. And so that's where I think different, different examples could demonstrate that strength better.
+
+Samurai Coyote: Yeah, sure. So actually I was thinking about another encore story but I guess the most of this encore story is always like L5 I just make sure. Not necessary.
+
+Covert Gecko: Not necessarily. So a good example of an on call issue that would be more senior is something that required connecting a lot of dots or tying multiple issues together.
+
+Samurai Coyote: Connect a lot of dots. A lot of docs with that.
+
+Covert Gecko: Yeah. So what that would mean is it's not just as simple as rolling back a solution. Like it was, you know, maybe there was some sort of like other issue that was being hidden by the bug that the customer was seeing. But under the hood it was like a different issue that was causing it. Like just that it wasn't clear cut on how to solve it.
+
+Samurai Coyote: Oh yeah. So I know what you mean. So like if I quickly resolve it so it can be like bias, bias for action. But you need some issue that it's not very obvious so you quickly find that it's another issue behind that. So that's exactly. Oh, so exactly.
+
+Covert Gecko: So yeah, you had great bias for action in this example and like the like earned trust, you know that kind of stuff but it was just lacking the like the deeper complexity.
+
+Samurai Coyote: Gotcha. So yeah, maybe I think I still need some time to find some of my other stories to CSS exists. Otherwise maybe it's hard to reach UCL6 level. Yeah, I mean, yeah, just for this question.
+
+Covert Gecko: Yeah. Something I would also encourage you to do as you prep is like, you know I can drop into our notes at the end of the session also have you used interviewing IO before?
+
+Samurai Coyote: I use the only coding interview coding.
+
+Covert Gecko: Okay. But you know that you get notes at the end. Like I can share notes out for you.
+
+Samurai Coyote: Yeah, yeah, yeah, I know.
+
+Covert Gecko: So I will drop in, I will drop in example questions for you to go practice. And then what I'd recommend is like just put that list up and like record yourself answering the questions so that you get like your live of like off the cuff attempt at them and then you could go back and like pick okay, what are my really like top five defining stories that have like scope and complexity. Write those out in the star format. So like what's the situation? What was the task, what was the action, what was the result and what did you learn from it? And that can help you just like have some of those in your back Pocket as an example.
+
+Samurai Coyote: Yeah, sure. So. Yes, yes. So how. Yeah, so how do you think that maybe I go over some art of my story. You see that if I reach the L5 or L6 level.
+
+Covert Gecko: Yeah, let me, let me ask you another question.
+
+Samurai Coyote: Sure.
+
+Covert Gecko: Do another sample question and see how you do. And I'll ask something in a different vein so we can kind of get a read. Then I can tell you again, like was this L5 or was this L6?
+
+Samurai Coyote: That's great.
+
+Covert Gecko: Okay, great.
+
+Samurai Coyote: Okay.
+
+Covert Gecko: All right. Tell me about a time that you strongly disagreed with your manager on something that you felt was very important to the business. What was it about and how did you handle it?
+
+Samurai Coyote: Actually, I. Because a lot of my feature, my manager, I mean because my manager just let me do a lot of. Let me let myself do a lot of choice because we already our own subsystem. But I think that. Do you mind. I find examples that I cooperate with other teams but they are giving some suggestion. But I don't agree with that. Do you think I can give an example of this?
+
+Covert Gecko: Yeah, I think that's a good idea.
+
+Samurai Coyote: Yeah. So just like some of my stakeholders. So okay, whilst my question is like, so once a time when I work I was leading the deprecation and the migration of the legacy platform. It's called a DSH on product platform called DCP. So it was original built back in 2022 to meet EU's ESA requirements. And at that time, so my company, they don't have a proper EU side moderation infrastructure. So DCP or the temporary workflow or workaround. But right now, you know, now it's 2025 dcp have a lot of issue like it's have a lot of the online accident and it's not very stable and always cause a lot of like slow queries or frequent HRE message. And by the same time the company, we have a new system, it's a new crowding system which already have the support for all the country like the EU or United Kingdom for Japan. So what I do at that time is I provide the whole support for this an old platform while it's being slightly migrated to the new platforms. But there you know, come another urgent slide. I think it's in 2025 March. So some of our legal team just tell me that they say hey, the UK's OSA law and Japan have some equivalent law like called JSA or something. So they say this law will be taking effect in early July and some more features and your E commerce workflow didn't haven't fully migrated to the new crowding system. They just suggested me to quickly patch those features back onto the old DCT system to meet the deadline. Even you know the system was already, you know we are cleaning out it. So I at that time I firmly disagree with this approach. There are two reasons. The first is that you know the DCP was outdated and it's increasing unstable. So if I will want to pass new feature under that I have to align with you know those business team, you know a lot of team I have to collaborate them to let them debug more, you know developing more features on the old platform. But you know this time it will, you know because they are also required to develop the same feature on a new the crowding a crowd sourcing system. So this way indeed you know at in the end it will lower down the whole speed of a lot of teams and you know reviving it for new components work, you know it will finally delay our shutdown time and duplicate future migration because you are developing an old system in the final you still have to migrate them to the new system. So what I did two things at iperst. I immediately aligned with those impacted engineering teams. I explained to them the risk and urgency because of the two new laws. So I think at that time most of those small businesses they agreed to fast track their migration and they very luckily they finish all the end to end testing by mid April. So with midday month and finally I escalated do this to those legal and PMO teams. I explained why we shouldn't invest in further in the DCP because it will violate our long term efficiencies and also don't meet the user experience goals because this is really a problematic platform. So I push for them to that all of the compliance work for the new OSC and JSON should be completely directed onto the new cloud sourcing system instead of using an old. And finally I think the result is we successfully drop down the old DCP system and we release I think dozens of the computational resources and MESSENGER queue resources. And because this we have made in our company we consulted all the moderation pipeline into the cloud insurer system. I mean make all the legal requirements on OSHSA more streamlined and more solid into one unified system and that will recognize you know, with the team at the right long term goal. That's what I did. And I think finally I know that at that time I disagree with our legal and PMO stakeholders because you want a quickly temporary catch. But I was thinking, you know in A big level. I want to present that we were first using a lot of teams to do the duplicate of work. And also we want as a system level processing to make our system more unified and give our end user a more good, I think a much better experience on using our system. Yeah, I think that's all great.
+
+Covert Gecko: What was your role and title during this work?
+
+Samurai Coyote: So my role in 2000 is I, I provide, you know, so I first I own the whole, the old platform. So like the name of DCP I I that's only my, myself to support that. So first what I did is I provide all the technical documents on that to different team. I think at that time we have 13 teams I I 13 different business team which have the, I think they have the report things into our systems and I support that for the old. Why is it still supporting that? Because, you know some of the traffic of those reporting some was already directed to the new platform. But we are still into the canary test. So at the same time we still do have to make sure that our crowdsourcing handling those three at the same time. So we have to keep the old system on. So that's my response which I choose to you know, check the SLA and make it meet the, you know, the system is still working online. And second what I did is I need to track with other teams so make sure that we can successfully migrating all the code, their old code and business logic into the new kernels. Actually it's very complicated because in all ECP session all the business code was written into my repo. So then you know that as that has my responsibility to, you know, to cooperating with those teams and let them know how they can change those different logic back into their repo to make sure they are, you know, compatible with the new system design. So that's my work to support the whole life cycle of the old system on Purex offline.
+
+Covert Gecko: Yeah, that makes sense. So you're saying the complexity, the complexity was really around having like a seamless transition between the old and the new?
+
+Samurai Coyote: Yes.
+
+Covert Gecko: Yeah, yeah.
+
+Samurai Coyote: I think that's also why we. Yeah, yeah, please go ahead.
+
+Covert Gecko: Yeah, I was just gonna say like when you, when you received pushback ultimately how do you feel like you were able to convince, convince everyone to move forward at the path you were proposing? Like what was your approach to that?
+
+Samurai Coyote: So at first I didn't, at first I didn't convince everyone. So I was given, so they are replied me to give a deadline say you have to make sure that before the end you know before the end of the App Pro. So you have to make sure that all the business can be successful and migrate to the new system or if you cannot guarantee that you have to patch those old works. That's what they say. And I think at that time of meeting and I think it's holding at early April. So I told them that you know, at early April this is definitely not a very good suggestion. So I will I think because we still have time something maybe we can have some more weekly meetings on this. So I think later is we hold more weekly meetings on this discussion to track the, you know, the progress. So like how many teams have been successful migrate and something is still left. I think at that time I just practically, you know, coordinated with all the business teams at Choi Jinx because we have these early deadlines. So this issue should be escalated to make sure that they know the urges of things. And I think that time most of the team was successfully migrated very quickly. Just except for the E Commerce team because the E Commerce is a very large department in our company. So we are legal just told me that it's not your business. I think your engineer business to do this is your department legal. So directly contact our legal. Otherwise we just don't want to develop this on your old system. So I think this is also a good reason so I can push back this issue to their legal team. But for other small. The small business team, I set them a push them to finish that. So you know, I think already like about April 20, I told them that most of the business is finished except for the E Commerce team. But they say they want they have their own schedule so just don't care about it. And finally because I have the data, you know, the data is I track the on every week. So how many percentage of the team is successfully migrated. So they say that yeah, according to the data that by the end of episode all the team will be successfully migrated. So finally they just. I think they finally got convinced on this. But at first, you know, at the early of the episode. So because I just say that it can be migrated so nobody will will be convinced on that. Right. So I just say we can still have time so we can have some weekly meetings to check on the progress on this. That's why I did it.
+
+Covert Gecko: Yeah. Nice. Did you have to like, did you have any trouble with the other teams prioritizing it or. They were pretty good about doing the work once you started prompting these weekly meetings.
+
+Samurai Coyote: No, actually a lot of teams they are. It's very hard to you know because all the teams they have a lot of work to do that so this you know, because they really have their own schedule. So I sometimes ask some of the team and they told me that they don't have any TV the people day they say that this feature will require maybe 20 or 30 people day to handle that and they don't have resources but you know this can be trickier. So actually I you know I provided a lot of the detailed documents at first and they just, they don't want to handle that. So I finally had to find some of the resources of my leaders. Actually this say this is a really important issue because you know they are they all, you know, the courts. I think those collaborative teams, they also have their own schedule. So I find my leader to help escalate this issue. And finally I think that finally both our leaders were agreed that so I can provide more resources for their engineers to shorten their time on the developers. So you know, finally I also kept providing with them a lot of the specifications. Like I provide them how the fields are implemented and also make them to boost their development speed. But you know it's also after I actually learned some higher level to make sure you know the targeted team we can also have this schedule on doing this. But it's not very, I have to say it requires some chicken to corrupt, you know, to talking with different teams.
+
+Covert Gecko: Yeah. Okay, cool. The reason I asked you this many questions because I, I felt like there was more to the more to it that you just weren't kind of sharing more. So that was really helpful context. So I think if you, I think if you bake in some of the details of what we were just talking about that makes it a much stronger answer because something to think about when you're thinking about a senior level role is oftentimes you're doing work that's cross cutting and so you have to go and escalate to different leaders and make sure that the importance of something is shared and then sometimes get creative around like how to actually get work done and resourced and done effectively and on time. So I think that this is actually a good example if you use those details to describe it. Right. So you know, keep, keep the same intro you had in terms of like giving the context, understanding what the timelines are like really important to use timelines. I think that's really effective. But then I think it was really like to me when you're like oh, it should have taken 20 to 30 engineers. I was like oh shoot, this is Way bigger than I was initially understanding it. So I think that leaning into, you know, you saying, you know, this is a time where I had an unpopular stance and I pushed because I didn't want us to revert to, you know, a subpar platform and had to work to make sure that I was putting in some of the extra work to coordinate and set these teams up for success so we could get this work resourced, push it over the line and get us into a much better state going forward. So I think that there's a great story here that you could lean into with a little bit more context.
+
+Samurai Coyote: Yeah, sure. So I think you also asked me like my primary role in that. Do you think that I should actually describe work this instead of letting the interviewers to. Interviewers to ask me after my story.
+
+Covert Gecko: Correct? Yes. So you need to bake this context into your answer because you don't know that an interviewer would ask you those follow up questions so you would lose the opportunity to like give that. So something I always recommend is like be really explicit around timelines or numbers where you can be explicit about what your role was in this and who you were working with and who you influenced to be able to really help demonstrate that level of scope. And then also giving good. Which I think you did a good job at this. Once we started digging into those follow ups, which was, you know, how do you handle the disagreement? Right. So instead of just saying, yeah, we can do this short term thing, you said, no, I can do it in that amount of time. Here's, you know, here's the plan, here's who we need to work with. Let me get this done and resourced. So yes. Bake that stuff into your original response.
+
+Samurai Coyote: Yeah. So. So how do you think I. I don't know my previous answer. So because you asked me more questions. So you think if I had what I mentioned, I mean, after you ask me for questions, you did. So how do you think your story is like L L5 I know that you ask a question. You're saying that because you still need sometime need to escalate this. I, I know that because my level is at times I don't have a lot of, you know, power to immediately affect the, you know, the other teams or this can be a, you know, because at that time I don't have this opportunity to do that. So I have to, you know, sometimes I have to escalate this issue to my leader at.
+
+Covert Gecko: I don't think that's a bad thing though. I don't, I don't like the fact that you knew to escalate and you did so effectively is more important. So I actually don't think that that like knocks you for a level at all. I would say that if it, if I hadn't have asked you follow up questions, I would have put you squarely in the L5 camp. But after we started getting through like some of the complexities, I would say that you were then borderline more L6.
+
+Samurai Coyote: Okay. Yeah. And also quick questions I know before the bar raiser. So hold. I just maybe I'm not sure if it's a feasible question. So how to make sure it's above the bar or. Or not. Or not. I mean below the bar. So yeah, just curious about it.
+
+Covert Gecko: Yeah, I was actually going to ask you if that's how you want to spend our last 15 minutes is going through the leadership principles and I can kind of guide you through what would make an answer L6 level for each of the leadership principals. Would that be helpful?
+
+Samurai Coyote: Sure.
+
+Covert Gecko: Okay. Okay, let's do that. And then just to answer your other question about the bar raiser, like the bar raiser is not going to have any different questions per se than your other interviewers. Like for the most part your interviewers will have probably two or three behavioral questions and then a functional question. So whether it be coding system design, sometimes people ask you to walk through like operational events. But depending on who your bar raiser is, if your bar raiser is not technical, you might end up in a situation where a person just has like all behavioral parts in their loop. So that might be the only kind of like differentiator for the bar raiser. But the bar raiser's role is once you get into that debrief to make sure that you're raising the bar. And that's where you need to be able to demonstrate in multiple examples how you're delivering at that level.
+
+Samurai Coyote: Okay. So yeah, yeah, sure. So yeah, so maybe you can go over, see how to reach the L6 level. So to help authorizer if it's more than above the bar.
+
+Covert Gecko: Yeah, exactly. Let's do that. Okay. So the first, I'm just going to go through my list of leadership principles and I can kind of just talk through them. So the first one is customer obsession, which isn't one that you have on your list here. But I don't think it's one that you necessarily have to explicitly ask questions for because for the most part you're able to pull from it in your other answers. So like the first question you and I talked through, you demonstrated customer obsession there because you understood the severity of the issue, you understood how important your system was to your customer. You escalated quickly, you acted quickly on behalf of your customer. So like, those are good examples of customer obsession in that, in that way. A good question that could kind of pull into other things that I kind of like as a, as a question is like, tell me about a time a customer wanted one thing, but you felt that they needed something else. That can be a way to kind of demonstrate judgment and understanding of like the business versus the customer. As an example.
+
+Samurai Coyote: Yeah, that's one.
+
+Covert Gecko: The next is ownership. So ownership is a good differentiating factor between an L5 and an L6 is, you know, what you feel like your boundaries are. So for a senior level, at the L6 level, you don't really see boundaries, you don't really see lines. You're willing to go kind of above and beyond and understand the larger scope of something or push outside of the boundaries of your team or your responsibilities or like step in and help or guide others, you know, making sure that projects are set up for success and then being a really great communicator. So an example of a question there could be like, tell me about a time that you took on something significant outside of your area of responsibility. So like how are you demonstrating going above and beyond in that way?
+
+Samurai Coyote: Yeah, so I was thinking about one issue because the platform I worked on before is very special. You know, like, you know, my previous company is, you know, large social media companies, but, you know, I didn't work on that team, I worked on a compilers team. So our platform, you know, actually only used by 100 people. So sometimes, you know, you know, because we have two, two group of users. So one is all the police. But you know, we wouldn't have so many police. At most, you know, in us we maybe have 10,000 police. But that's not compared to like the social media platform like Instagram. Hard to have lots of users. And the second is like our internal user only have 100. So I think sometimes like they have some question like thinking big or something. I don't actually, I find it's hard to find results because we don't have so many users, just a small platform. I mean for the, for the, for the numbers of users. Yeah. So do you think that is what you might. Because if be hard, why say you have to make your product thinking very big. And I think it's hard to think big because we just have 100 users.
+
+Covert Gecko: Yeah. Are you applying for? Are you applying for a more like backend heavy role at Amazon or is this.
+
+Samurai Coyote: I think it's backend facing team. I think my thing is backend. It's related to FP3, I'm not so sure. But just the AWS S3 or some surrounding job. I guess maybe the recruiter has to backfill me for some other roles, but I'm sure it's AWS backend roles related to cloud storage S3 or something.
+
+Covert Gecko: Okay, so something that could be valuable for you given your like, you know, previous experience, is to give your interviewers that context before you answer your first question. If they ask you something along these lines, then you can give like some more context and just say like, hey, I think it's actually helpful to set some context first of like my role in my team so you can kind of see, you know, how my group operated in comparison to the more customer facing teams. As an example that might be helpful to give that context.
+
+Samurai Coyote: So. So you mean that maybe it's really good at first. So brief example that we are only for the internal use. So we have only 100 users, so it's good to make them just quickly at first.
+
+Covert Gecko: Yeah, I think, I think a phrasing that you could use is like, hey, you know something. Something that I feel like is an important context for my current role is that I'm on one of the backend compiling teams and so my customers are more, more specifically a smaller set of users that are actually internal. And while, and while they obviously have an end impact on the customer, my largest interactions is with our internal stakeholders. And you can just like share in that way just to give context.
+
+Samurai Coyote: Gotcha.
+
+Covert Gecko: Because Amazon, like depending on which team you're on, of course, but a lot of them try to be pretty vertical in the sense that like even kind of the more back end heavy groups have some way to have a connection to your end customer. But not always. Right. It just, it depends on. On where you're at in the stack. Yes. Yeah.
+
+Samurai Coyote: Next. Have backbone. Discrete commitment.
+
+Covert Gecko: Yeah, let's do that one. So have backbone, disagree and commit is arguably in my opinion one of the more important ones to think about for a senior engineer. I think that our Right. A lot and this have backbone are probably the two I would personally spend the most time on because these are the ones that show how you have good judgment. So in times where like you disagreed with somebody or your manager, you're not one just to say oh, okay, I was told I couldn't do that. Instead you're thinking about the customer, you're thinking about the business, you're thinking about that long term longevity of your platform. Which is why that last example you shared was good because it shows you thinking outside of just what you were asked to do as an example. So some of these, it's important to kind of have the both. Right. It's important to have an example where you were able to help influence a decision. And then also like being willing to admit when you're, when you're wrong too. Like having an example of a time where somebody actually changed your mind is a good one to just have on hand in case you get asked something like that.
+
+Samurai Coyote: Sure. But actually I find it for this question like somebody orders change your mind because you know, especially for that DCT migrate issue, that's like something special. So normally when I doing all the work, so I actually know I learned and changed my mind very quickly. Except that I hold a firm belief that it's what I think is good. So I think that I have a lot of taste, but I don't think that will meet the L6 then because you know, I just doing my basically developer work or you know, like I design a TD and I discussed with my team members or my leader and they say, oh, you are designed too complex. Too complex. So I very quickly I changed my mind. But you know, I don't think this is a good story for caring when it's, you know, touch level I change because sometimes they just think that I'm overthinking of this question. So I, they want me to simplify it. So I'll just changing it very quickly. Yeah.
+
+Covert Gecko: Okay. Yeah, that would not be a good answer for an L6.
+
+Samurai Coyote: Yeah. So I think it's. Yeah, yeah.
+
+Covert Gecko: Now I don't think that it is wrong to share that type of like answer if you got a question like that because you should always be truthful. But I think the way that you position it is more, hey, I got some feedback that really actually shifted the.
+
+Samurai Coyote: Way that I thought.
+
+Covert Gecko: So I got some feedback that my design was a little bit too complex. I took this and immediately worked to understand, okay, what about it was complex. How could I simplify the solution? And then going forward, this is a really helpful lens for me to make sure that I'm always delivering something that's creating simplicity. Right. Like there's a way to like share that. You got critical feedback that might not be as great, but you're using it to demonstrate growth and your ability to deliver into the future.
+
+Samurai Coyote: Okay, gotcha so just make more. Dive deep into these details.
+
+Covert Gecko: How.
+
+Samurai Coyote: Why it's such. Why it's very complex. So it's still good story, right?
+
+Covert Gecko: Yeah. So as long as you. As you're digging into, like, the scope and complexity aspect, I think that that's a good example and that also when you're talking about what you learned from it and you're showing that you, like, built better judgment and you're able to, like, make better assessments going forward, I think that those are really important learnings to share too, because it shows that you're coachable. Then.
+
+Samurai Coyote: Okay. Yeah. Try to find a solid.
+
+Covert Gecko: Yeah.
+
+Samurai Coyote: And I think we have four minutes, so maybe we can go quickly over discussion.
+
+Covert Gecko: Let's talk about art. Yeah, let's talk about our right a lot. Really quick. So on our right a lot. That one's pretty similar to, like, the ownership and have backbone ones that we talked about, where it's like making decisions and having conviction in your decisions and being able to seek multiple perspectives, being able to, like, admit when you're wrong, but also, like, not being afraid to really, like, stand up and push for things that you feel really strongly about. And so that's ones where, if you can. If you can find examples where you had to, like, change people's minds or, like, you know, change the framing almost. And I think your migration one is a good example there because that's an example of a place where you recognize, yeah, we could go do the short thing, but that wouldn't be setting us up for success long term. So those type of. Those types of things.
+
+Samurai Coyote: That's right. Okay.
+
+Covert Gecko: Yep. Learn and be curious. I just, I don't. I don't find that people often ask those types of questions myself. I think that those are more ones that you can get through other examples. So those are like, how do you deep dive something? How. How do you handle situations where you don't know what to do next? How do you challenge the way some things work or, like, improve processes? How do you, like, dive in when you don't know how to do something or you need to learn how to do something? So I find that usually you pick up on some of that from the other questions rather than, like a direct question.
+
+Samurai Coyote: For that. Okay. Yeah, yeah, I was thinking. Yeah, please go ahead.
+
+Covert Gecko: Oh, no, I was gonna. I was gonna go on to one of the other ones.
+
+Samurai Coyote: Yeah, yeah, please go ahead. If you're. I think. Yeah, yeah.
+
+Covert Gecko: So, yeah, invent and simplify is one that's important too, when you're thinking about, like, for an example question. Tell me about the most innovative thing that you've done and why or like how did you make a complex problem and solve it in a simple way? This is actually one that operational events can also be good examples because sometimes they're ones where if you have a really complex problem you're trying to solve, but you're able to just like narrow it down quickly to, you know, be able to basically rule out things that can show good demonstration of you having good, good judgment and good assessment of how to handle things.
+
+Samurai Coyote: Okay. So yeah, actually I think you have finished all the LP slides. So I was thinking that maybe our. I was emailed my recruiter because I saw like right now I'm also confused about the level I'm having because I remember recruiter told me that the code interview and the system design will be LSM plus L6 plus. But I'm not so sure about this LP. Yeah, because I think, I also think that learn a little bit. I don't think it's like L6 levels.
+
+Covert Gecko: That's why I was kind of surprised to see that on there. Yeah.
+
+Samurai Coyote: Yeah. And I also think that for L6 maybe you should ask something about frugality and like customer operation. That's totally something you have to share with. So I'm just confused about it right now. But I will ask them.
+
+Covert Gecko: Yeah, yeah. I would just ask the recruiter, like send a clarifying note and just say like, hey, I've been working on preparing for my interview. I want to make sure that I understand like what's the expectations of the role. Can you share a little bit more about the expectations of the role and level chairs back?
+
+Samurai Coyote: Yeah, definitely. And yeah, I think it's a lot of good suggestion today. So I will try to make more of the details and my backgrounds and why exactly the situation is important or tight and some numbers make it more into the story.
+
+Covert Gecko: Yep, exactly. Yeah. I would say though that I think based on what you had shared today, I think that you would not have like bar raising examples for L6. So I think it would be more advantageous for you to interview at the L5 level because then if you're like coding and system design skills are super strong, that could just help you level up faster once you're in the door. But I don't want to like the LPs to be a limiting factor for you if you're being evaluated at the L6 level.
+
+Samurai Coyote: Yeah, definitely. Yes. So I hope that maybe. So my current level is good for L5 if it's L5 above the bar. But I also think that for L6 is something not very reaching that I know you have to think more, much bigger than the current level.
+
+Covert Gecko: Exactly. Exactly. Yeah. Yeah, exactly. That being said, if you do want to grab some more time with me, you could reach out to the interviewing I.O. team and schedule an additional session if that would be helpful. Yeah, but, yeah, let me know if there's anything I can do to help.
+
+Samurai Coyote: Yeah, but I find a question is each time I book a time, so. So, I mean, the interviewers picked the randomness, so I didn't know if you can select one people to say, oh, I just do interview with those people. I don't think they allowed me to do that. So each time it's something randomly.
+
+Covert Gecko: Yeah, so it is random if you do like just booking one offs, but you can actually do coaching packages where you get like three, five, ten packages and then you can actually work with the same person the whole time. So there's obviously a ton of value from working with different people, though, as long as you feel like you're getting good feedback from people. But sometimes it's helpful to work with the same person so that you feel like you can get the progression with a single person. So, you know, do it you feel like. Makes sense. And if that would be helpful in that way.
+
+Samurai Coyote: Yeah, sure. Definitely.
+
+Covert Gecko: Yeah. Great. Best of luck. And don't be shy if there's anything that pops up I can help with.
+
+Samurai Coyote: Yeah, thanks so much.

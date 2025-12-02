@@ -1,0 +1,300 @@
+SOURCE: YouTube
+VIDEO_ID: I9-PUPYZyiw
+URL: https://www.youtube.com/watch?v=I9-PUPYZyiw
+GPU: 1
+DURATION: 2104.6s (35.1 min)
+TRANSCRIBED: 2025-11-28 09:44
+================================================================================
+
+FULL TRANSCRIPT:
+--------------------------------------------------------------------------------
+ How would you design ChatGPT? Definitely that's a very good question and kind of a trending topic. Let me just kind of start with some kind of functional requirements. Let's say, let me just brainstorm a little bit. So, designing ChatGPT, right? So, ChatGPT mainly there is a user who is interacting with the kind of what that is going to be giving answers to different questions. So, a user can probably start with creating a conversation, updating by maybe sending a message and expecting an answer from the ChatGPT, that system, then it can be like viewing the conversation or mainly deleting the conversation. So, that's about the conversation and there is one more operation like if you don't like the answer or if you do like the answer, I mean you can give thumbs up and thumbs down, you can tell whether it is good or not. So, here I mean that functionality we can provide and even that can train the model, the back side. What do you think about this functional requirements? What do you think? Is that good enough or should I think about more? I think this is good enough. This is good enough for like a MVP versus ChatGPT. So, let's see how these come out. Yeah, yeah. Before I go to non-functional requirements, let me see. So, I can send a message. Does that message is only text based or can it contain images and all as well? Yeah, I like where you're thinking here. Let's just assume for this system design video, we're just going to constrain this to text inputs to ChatGPT. And any language preference like just English enough or just English? And if I do thumbs down, I think maybe I'll consider it might train the model. So, that's fine on the back side. But yeah, let's jump to non-functional requirements. So, one thing is latency. When I send a message, the time it takes for that ChatGPT to respond back with an answer. I've seen it taking even five seconds because there's a lot of processing. Are we okay with that slowness or shall we work on optimization? Yeah, that's fine. That's fine for this one. If we have time later, we can talk more about how we might optimize the latency. Sure. I think the other things is security like login, flow, we can have then rate limiting. Mainly the standard one to prevent DDoS. The other important one for ChatGPT is a user can send a lot of messages to ChatGPT at the same time. And that can bring down those servers. So, the rate limiter should consider those part. Then definitely scalable. The way that ChatGPT has trended, even if we assume let's say 10 million users a day, then 10 million users sending average of five conversations here, let's say five conversations. They're creating maybe even asking four questions. I'm just doing some kind of estimation to figure out how much scalable that architecture should be looking like. So, it's like four questions, four messages I'm sending and I'm getting full responses. So, it's like 200 million, okay. That's a lot. Messages per day. So, yeah, obviously this is a lot of requests. Like if I'm sending a request to the server for 200 messages, it's a lot. I need to consider the load balancer here in my design and all later on. And that's about the server, like number of requests. Then even if we talk about the storage, storing those 200 million messages, even if I assume 100 bytes as a message, although I'll estimate later on. But even that will give probably 20 gigs per day. And for entire year, 365 multiplied by this is like 7.3 terabyte per year and 73 terabyte for 10 years. So, yeah, obviously we have to think about a pretty good scalable database over here. I mean, we can go with no SQL with that supports proper sharding and all, but let me go over that in the high level design. Do you think these calculations sound reasonable? Yeah, this is reasonable. I like where your head is here, right? So, you're starting off thinking about the latency, security, scalability requirements. This all sounds fine to me. Let's move on to the high level design and see what that might look like. Okay, so let's see. Let's see if user, I'll open, okay, there is yeah, user, let's see user. So, there is a user. Then the way, I mean, I'm just thinking about the flow of sending a message or some kind of conversation handling. So this user, if he, if they send a message, let's say, let me see. So, the way I would consider it is mainly some kind of experience layer, I would say. That's usually useful for orchestration and making sure that if there are multiple devices, native iOS Android, desktop web and web. So, we can provide some consistent user experience to the users than writing everything from scratch plus orchestration. So, let's see if I am sending a message here. So, maybe is this good enough for zoom? Maybe you can zoom in a little bit. Okay, that's fine. So, I'll keep it here. So, here, let's say if I send a message here, then I would create some kind of conversation service. So, conversation service is like those requirements that we discussed creating updating, viewing, deleting. So, here, I'm talking about sending a message. So, it will send this, really, this message to that service. Then this conversation service. Now, one important thing is like, you can send anything you want to charge deputy. So, we want to make sure that we first sanitize the input and so, for that, I would create some kind of machine learning model and expose it through some kind of API. So, maybe some kind of profanity API I will create, which can detect like obscene text or maybe insults or threats like people even give threats to charge deputy and all. So, we should be ready with the standard answers for those and able to detect them. So, it's mainly kind of we are sanitizing. So, this API will call the profanity model, I would say some kind of machine learning model. There are pertain models or there are, I think we can train with our dataset as well. There are models like fast text provide by Facebook and multiple other models that help in profanity detection. So, what you're saying here is that for a subset of the inputs from the user, we just won't even send to any of the other downstream services. Like, if we deem that it's just obscene or an insult to chat, if we see or something like that where there's no value and sending it to our downstream systems, then we're just going to give some generic response. Yes. Yes. Yes. So, we don't need to get answer in that case. Yeah. So, that's why we want to sanitize it by calling this model. And so, I would sanitize it first and give a response if needed. Then, if it is sanitized properly, like if we think that it is really good equation. So, I will call a service which is the chat GPD. It is also powered by machine learning. So, this is another API that I'm just using the word API or service I will say here. So, service I will call that is also calling a chat GPD model which is the core which is the kind of meet of this functionality, this chat GPD system. So, that model. So, I will call, I will say that this is the equation. So, I will send this question, then this question is related to model that responds with an answer. And that answer after the conversation service gets that answer, it will store to I would say a database. I will create a database here. So, database. So, I will store the result for what that model responds with and I will save it in the form of that conversation. So, the conversation the way I am imagining a conversation. So, there is a like you can create multiple conversation and each conversation contains a bunch of messages. Some of the some of the messages are your questions, some of the messages are responded by the chat GPD. So, those are the answers. So, that is why those whenever they respond, we will store both of those conversations in that database. So, it will be add that to DB that message and link it to the conversation. So, that conversation is provided and after that that result will be sent back to the user that you will see on the screen. So, this is rough idea about rough design about how it will work when you are sending a message. And viewing it should be relatively simple like you just go to the conversation surveys get that data out of the database and view the conversations. Then deleting and all should be relatively simpler. I think the complexity we can think about we can discuss the thumbs up thumbs down use case let us say. So, if somebody gives thumbs up here. So, let us say thumbs up thumbs down is much better. So, because thumbs down is more complex I would say. So, if we say if somebody gives thumbs down that it will go to the conversation service again and yeah let us see here. So, it will go to the conversation service saying that it is yeah somebody has given thumbs down. Now, that thumbs down there are multiple ways that you can ask user if you are giving thumbs down what answer you would provide like you are not satisfied with the answer. But what kind of answer do you think you will be satisfied with what is wrong with that answer. So, we can provide that kind of functionality to the user and that can be sent over with that thumbs down request as well to the service. So, that that can be stored and that can be used to model train this model as well the chat GPT model because chat GPT model will be continuously learning. So, with that thumbs down one way is we can send a service to through the chat GPT service and train the model. But many times it will take time a lot of processing will need. So, one option is you can create some kind of a Kafka Q or some kind of job where that data is offline processed and ultimately this model is going to be trained based on that thumbs down or maybe the new answer. So, the other other thing I think I missed is ok. So, there is an option there is a possibility that a user I mean I am kind of a malicious user I do not want chat GPT to perform well or if maybe I am just playing with it. So, I can thumbs down thumbs down it again and again that kind of approach that kind of malicious activity should not impact the model. So, for that I will create some kind of another machine learning model called risk model. So, where that will tell you how good of a user how risky that user is. So, I can go into more details or I can switch to maybe more details about conversation service and database. Yeah, I think I think this is good for a high level introduction. Thanks for that. I would love to dive a little deeper into the conversation service actually. Ok. So, from conversation service let's see if I can create some kind of table here. Let's see. So, oops. Yeah. Ok. So, let's see. So, I will have let's say maybe operation. Let's see the conversation service I will create a bunch of rest APIs in that conversation service where we have operation and I would say URL request and I will have response as well. So, like operation if you are talking about let's say delete or let's say create a conversation. So, create a conversation I would add this probably. Delete, view a conversation and then what else did we have? Thumbs up, thumbs down. So, maybe I think there was another one that we had right create view delete and send message. Yeah, send message. So, here I will have something like probably. So, creating a new conversation I will just create a new conversation by post. So, chat GPT, even such conversation. So, here I need to provide with what is the title of the conversation. So, I will have some kind of JSON request where I will provide the title. I will provide I mean it will take automatically from the user token it will take the authentication token and identify with the user. So, then yeah. So, that's the one and it will response with 200 and those kind of status codes it can respond with. Then deleting I can I will just use the delete keyword. I will have a conversation ID for each of the conversation. So, in this response that conversation ID would be return. So, that can be a grid also grid is I mean kind of random numbers. So, that that is unique probabilities, probabilistically and then we have like for deletion I will select that particular conversation to delete. I will have that and respond with I mean I can say 204 also it is no content. So, I do not need to return any content. For viewing I will use the get keyword and I will have that conversation with what that particular. So, this will return the list of messages in that particular conversation in the ordered manner and then if I am sending a message. So, sending a message will be part of the conversation. So, in that conversation I will post I will send a message here. So, maybe message I will post a message in that particular conversation with the message I would say content it can be type also in future if we are expanding to images and all and then parts also if it is media data parts, but right now it is just text. So, right now it is going to be text only. So, text I will provide then yeah. So, thumbs up thumbs down it that also happens at the message level. So, I will have for that conversation for that message. So, this when I am creating a message or sending a message it will return the message ID also. So, that can be in the form of grid or I mean we can think about a different ID number generator. There can be various ways to generate IDs, but here if we have a grid then for that particular message I will have some kind of probably rating or yeah something like that. So, that will indicate in the request I can mention whether it is like operation is or rating is up or down. So, or down maybe something like that and I will respond with the appropriate HTTP status codes. So, there the messages will be having I mean user as user ID or maybe system the system generated messages will have user as a system, but I mean I can go into more details if you think. Okay. So, let me share how the data would look like in the database. So, as I mentioned as we discussed up here that it is going to be so many three terabytes it is going to be huge. And then yeah I think here services would be there would be load balancer that we discussed here, but anyway for from data perspective yeah 73 terabytes I would go with some kind of my no SQL database where let us see that one I mean either I can go with DynamoDB that provides that scalability etc. So, anyway I mean I can go with some no SQL databases, but the way I would structure that is mainly like here let us see if I am creating some kind of table, small table. So, a conversation contains multiple messages. So, I will create some kind of probably conversation table or so. So, where we will have conversation ID and kind of a list of messages ID. So, if we are going with any kind of no SQL. So, we have conversation, but I think I will identify it by the user also. So, it will be mostly kind of user conversation, because a conversation is totally tied with the user. If I am creating conversations so, I will have a list of conversations for myself. So, I can have like for my particular user ID, I can have a list of I would say list or yeah that can be formulated in the form of JSON in no SQL databases. So, with the conversation ID. So, some kind of integer I can have or long it is going to be great right. So, some kind of list with conversation IDs. As I mentioned that can be serialized into JSON. So, then these conversation for each conversation each conversation will have multiple messages. So, it will be something similar format and if I look into the message like how a single message would look like. So, message I would say in terms of message it will be some kind of message ID I would have field, some kind of text. So, message text we have, we will want to know whether it is who is the author, whether it is system generated message, which is the answer or whether it is user ID, user generated. So, then there is a concept I mean we do not need it immediately right now, but we can have like that conversation we can think about in a form of a tree where I mean there is a parent for each message like you asked a question you got their answer, you asked a follow up question you got another answer. Then you suddenly changed the topic in that same conversation. So, we can configure that parent I think it will get complicated right now unless you want me to get into more details, but mainly we can create a parent as well for which will tell you what was the previous conversation for which we are responding. So, that is kind of rough idea. I can go into the model right now and maybe we can discuss this in more detail later, how about that? Sure, yeah. Thanks for walking me through that. Yeah, let's talk about what this actual chat GPT model will look like. Okay, so yeah, so for chat GPT model, let's see here. So, when we send a message, when we send a question and get answers, so there is one straight shadow thing that comes to mind is, so a shadow way that comes to mind is supervised learning, where we can have a lot of label dataset, we can have a list of questions, list of answers and train a model based on that, but really there can be so many combinations of questions in answers. Even if you want to figure out about system design, there can be question like what is system design, how is system design useful, explain system design and why do you want system design. So, even asking similar question, there can be so many variations of questions, the answers, okay, when you say what is system design, it needs to explain what it means exactly, how is it useful, it needs to focus on the uses of it. So, even the combinations of answers and all, it can be pretty like a lot of combinations and getting that dataset to train is really very difficult. So, for because of that, I would not use supervised learning as such immediately, but what I would do is, I would have some kind of transformer model, GPT transformer model, where I will have access to the common crawler data. So, which is Mindy, the let us say we are crawling the list of websites over the internet. So, that will give you so much data to train and we can even add books here, we can add Wikipedia links, which comes in kind of crawler data, we can even add codes like chargeability handles codes, right. So, you can say find a bug in Python code. So, those kind of things we can train, it like we can just add there and that transformer model, what I would do is it will not respond to question and answers, but what it will do is, it will predict that natural sequences of words. So, like if I say what is system design, or maybe if I say system design is, okay. So, then what can come next? So, there can be multiple things that can come. So, let us say system design is about planning and creating architecture. So, it can be meeting requirements. So, then it can be designing services, it can be about designing databases. So, there can be many solutions that can many phrases that can fill that sentence. So, my first step would be creating such, such kind of model, which finishes the sentences, completes the sentences in a natural language, which are grammatically correct and semantically meaningful as well. So, but the one thing through notices, I think how do I get, like how do I select out of these four, which one should be the next like system design is, out of these four, these are the possibilities based on the training. How would I select these, which one is the one that should be returned? So, there are multiple approaches there, there are multiple approaches like there is top k, there is greedy, greedy let us say, I will have probability, I will create a probability of these, let us say there is 0.32 probability chance of this one returning or maybe 0.25 for this one. So, maybe 0.10 or 0.09 and rest of them, some lower priority, probabilities. So, one option is always return the most greedy one. So, planning and creating architecture, but the challenges, if we have awesome, which has probably 0.34 as a probability, then this is not the what I want, I do not want to hear the system design is awesome, I want to understand what system design is. So, that is why there are ways like instead of greedy, we can use some kind of top k method as well, top k strategy or nucleus temperature, there are multiple strategies. In top k, you can select some top 3, let us say top 3, if we say, so I will select top 3 and randomly pick from one of those as the answer. That is the reason why you see that if you send the same message to stability, it can return some other reply back. So, anyway, there are different strategies, but mainly in short, we are finishing sentences with this model. Then after getting that, then I have a lot of data already trained. My next step is to make sure that that model is trained to answer the questions. So, for which I will do some kind of supervised fine-tuning, here I will get some kind of data set and train this particular model with questions and answers, it does not need to be fully like, it needs to be a decent size, but yes, there are still limitations because we cannot have all kinds of questions and answers that we can train. So, here what I would do is here, I would mainly kind of collect training data, train the model in the form of question and answers. So, that I will do, I can go into more details, but let me go to the next step here. So, after even after training the data, it is possible and it is highly likely because training is because of the number of combinations. So, what I would do is I would create some kind of reward model also. So, when we think of reward model, so after training this, even here, if we take this model into account. So, what I would do is I would pick some answers from the model. So, I will pick answers and I will have like AI trainers or people like us annotators, we will decide which answer is good. So, here let us say if we ask a question what is system design? And we get multiple combinations let us see here. So, this is not training data. So, if I ask a question what is system design? And I get multiple answers like system design is I will not write it everything, but system design is planning and creating and all these answers I get. So, now as a user I know what I am looking for. So, I would give some kind of rewards to each of them. So, I would I can have some kind of there is something called liquor scale. It can be in the form of 1 to 7 or 1 to 5. So, I can give rating in the form of 1 to 5 or 1 to 7 that will tell you like that scalar value will tell you how good that answer is. So, based on that answer right. So, based on that answer so, I will put in that reward model and train that reward model with these two training data using training data and training that supervised fine tuning and reward model. I will create the final one final version using reinforcement learning. So, reinforcement learning is very interesting where we train kids to work. I mean it takes into account these fine tuning and reward model. So, we know about kids right. They start walking, they fall down, they learn that ok if they move this way they will fall down. They learn it because they are getting a reward from the environment around whether it is negative reward or positive reward. If they fall that is a negative reward. If they if they are walking we are clapping for them that is a positive reward. Similar way is how we train robot says robot says as well robot says as well. So, these that they are walking they hit some system hit wall they can avoid staircase all of them is based on what reward they are receiving from the environment and continuously training them. So, that is the way that that is the approach that I will use here. I will use a train data and reward model here. So, using that train data I will initialize something called PPO policy is what we say. So, that PPO PPO optimization is then I will take one question go through reward model. So, using PPO optimization I will I will use this fine training model into PPO optimization and take one question at a time go it through the reward model get the reward update PPO that again update again PPO it go through the same process again take another question and continuously learn and learn and learn. So, with this all this approach even if in the beginning we did not have that good of a data set that good of a label data set to train that model we will still get pretty accurate result set in the form of like natural language response from the natural language from a human language or natural language question. So, does that answer your question I think another important one is yes I mean this these emotions and all right this reward model we as a humans know the emotion the tone of how what people are asking. So, that is taken care of in the reward model also in the liquor scale we will ask questions like okay does it why are you rating as one? Does it contain profanity does it contain is the emotion or the tone not correct or is it not natural. So, based on that also that reward model will continuously train itself. Absolutely and as you were explaining the whole thing I was smiling because I feel like this is a this is like honestly we can probably do a very deep dive on many different parts of this design but I just loved how you broke it down into you know these different aspects and I felt like this was a really nice way of for us to see how Chad GBT is built or it could be built and yeah I mean honestly this was a this was a gracesome design video and I know that we're short on time so I didn't want to cut you off here again thank you for your time Neuraj was there any like final thoughts that you wanted to share before we wrap up the video. No I think definitely this Chad GBT is doing great and excited to see and excited to learn more about what's going to be next I think they have started supporting images videos and yeah it's going to be fun. Yeah and you know inputs images audio probably in the future outputs that include like audio or images videos lots of amazing stuff very green space. Neuraj thanks for this awesome overview and for the audience who are watching at home if you get an interesting question like this hopefully this is helpful for your system design interviews and good luck with your upcoming engineering interviews. Thanks so much for watching don't forget to hit the like and subscribe buttons below to let us know that this video is valuable for you and of course check out hundreds more videos just like this I try exponent dot com thanks for watching and good luck on your upcoming interview.
+
+TIMESTAMPED SEGMENTS:
+--------------------------------------------------------------------------------
+[0.0s - 2.0s] How would you design ChatGPT?
+[5.3s - 9.6s] Definitely that's a very good question and kind of a trending topic.
+[10.8s - 19.0s] Let me just kind of start with some kind of functional requirements. Let's say, let me just
+[19.0s - 26.0s] brainstorm a little bit. So, designing ChatGPT, right? So, ChatGPT mainly there is a user who
+[26.0s - 31.1s] is interacting with the kind of what that is going to be giving answers to different questions.
+[31.1s - 39.5s] So, a user can probably start with creating a conversation, updating by maybe sending a message
+[39.5s - 47.6s] and expecting an answer from the ChatGPT, that system, then it can be like viewing the conversation
+[48.3s - 56.5s] or mainly deleting the conversation. So, that's about the conversation and there is one more
+[56.5s - 62.6s] operation like if you don't like the answer or if you do like the answer, I mean you can give
+[62.6s - 68.6s] thumbs up and thumbs down, you can tell whether it is good or not. So, here I mean that functionality
+[68.6s - 74.2s] we can provide and even that can train the model, the back side. What do you think about this
+[74.2s - 79.0s] functional requirements? What do you think? Is that good enough or should I think about more?
+[80.0s - 86.4s] I think this is good enough. This is good enough for like a MVP versus ChatGPT. So, let's see how
+[86.4s - 92.4s] these come out. Yeah, yeah. Before I go to non-functional requirements, let me see. So, I can send
+[92.4s - 99.9s] a message. Does that message is only text based or can it contain images and all as well?
+[100.8s - 106.2s] Yeah, I like where you're thinking here. Let's just assume for this system design video,
+[106.2s - 111.4s] we're just going to constrain this to text inputs to ChatGPT. And any language preference like
+[111.4s - 119.1s] just English enough or just English? And if I do thumbs down, I think maybe I'll consider it
+[119.1s - 127.4s] might train the model. So, that's fine on the back side. But yeah, let's jump to non-functional
+[127.4s - 134.5s] requirements. So, one thing is latency. When I send a message, the time it takes for
+[134.5s - 141.2s] that ChatGPT to respond back with an answer. I've seen it taking even five seconds because
+[141.2s - 147.0s] there's a lot of processing. Are we okay with that slowness or shall we work on optimization?
+[148.6s - 153.3s] Yeah, that's fine. That's fine for this one. If we have time later, we can talk more about
+[153.4s - 158.2s] how we might optimize the latency. Sure. I think the other things is security like login,
+[158.2s - 164.7s] flow, we can have then rate limiting. Mainly the standard one to prevent DDoS.
+[164.7s - 171.4s] The other important one for ChatGPT is a user can send a lot of messages to ChatGPT at the same
+[171.4s - 178.1s] time. And that can bring down those servers. So, the rate limiter should consider those part.
+[178.6s - 185.5s] Then definitely scalable. The way that ChatGPT has trended, even if we assume let's say 10 million
+[185.5s - 193.7s] users a day, then 10 million users sending average of five conversations here, let's say five
+[193.7s - 201.7s] conversations. They're creating maybe even asking four questions. I'm just doing some kind of
+[201.7s - 205.8s] estimation to figure out how much scalable that architecture should be looking like.
+[206.7s - 212.5s] So, it's like four questions, four messages I'm sending and I'm getting full responses.
+[212.5s - 217.9s] So, it's like 200 million, okay. That's a lot. Messages per day.
+[219.8s - 225.4s] So, yeah, obviously this is a lot of requests. Like if I'm sending a request to the server for
+[225.4s - 231.5s] 200 messages, it's a lot. I need to consider the load balancer here in my design and all
+[232.2s - 240.3s] later on. And that's about the server, like number of requests. Then even if we talk about the
+[240.3s - 245.7s] storage, storing those 200 million messages, even if I assume 100 bytes as a message,
+[245.7s - 251.4s] although I'll estimate later on. But even that will give probably 20 gigs per day.
+[252.2s - 260.8s] And for entire year, 365 multiplied by this is like 7.3 terabyte per year and 73 terabyte for 10
+[260.8s - 268.3s] years. So, yeah, obviously we have to think about a pretty good scalable database over here.
+[269.6s - 276.6s] I mean, we can go with no SQL with that supports proper sharding and all, but let me go over that
+[277.3s - 281.5s] in the high level design. Do you think these calculations sound reasonable?
+[282.6s - 286.6s] Yeah, this is reasonable. I like where your head is here, right? So, you're starting off thinking
+[286.6s - 292.3s] about the latency, security, scalability requirements. This all sounds fine to me. Let's move on to the
+[292.3s - 300.9s] high level design and see what that might look like. Okay, so let's see. Let's see if user, I'll open,
+[300.9s - 309.6s] okay, there is yeah, user, let's see user. So, there is a user. Then the way, I mean, I'm just
+[309.6s - 316.2s] thinking about the flow of sending a message or some kind of conversation handling. So this user,
+[316.2s - 324.6s] if he, if they send a message, let's say, let me see. So, the way I would consider it is mainly
+[324.6s - 331.8s] some kind of experience layer, I would say. That's usually useful for orchestration and making sure
+[331.8s - 339.4s] that if there are multiple devices, native iOS Android, desktop web and web. So, we can provide some
+[339.4s - 346.0s] consistent user experience to the users than writing everything from scratch plus orchestration.
+[346.0s - 353.8s] So, let's see if I am sending a message here. So, maybe is this good enough for
+[356.7s - 362.9s] zoom? Maybe you can zoom in a little bit. Okay, that's fine. So, I'll keep it here. So, here,
+[362.9s - 372.8s] let's say if I send a message here, then I would create some kind of conversation service. So,
+[372.8s - 379.2s] conversation service is like those requirements that we discussed creating updating, viewing,
+[379.2s - 385.0s] deleting. So, here, I'm talking about sending a message. So, it will send this, really, this message
+[385.0s - 394.7s] to that service. Then this conversation service. Now, one important thing is like, you can send anything
+[394.8s - 402.5s] you want to charge deputy. So, we want to make sure that we first sanitize the input and so,
+[402.5s - 408.3s] for that, I would create some kind of machine learning model and expose it through some kind of
+[408.3s - 415.9s] API. So, maybe some kind of profanity API I will create, which can detect like obscene text or
+[415.9s - 422.8s] maybe insults or threats like people even give threats to charge deputy and all. So, we should
+[423.0s - 429.8s] be ready with the standard answers for those and able to detect them. So, it's mainly kind of we
+[429.8s - 437.8s] are sanitizing. So, this API will call the profanity model, I would say some kind of machine learning
+[437.8s - 443.4s] model. There are pertain models or there are, I think we can train with our dataset as well.
+[444.3s - 450.3s] There are models like fast text provide by Facebook and multiple other models that help in
+[450.3s - 457.0s] profanity detection. So, what you're saying here is that for a subset of the inputs from the user,
+[457.0s - 463.0s] we just won't even send to any of the other downstream services. Like, if we deem that it's
+[463.8s - 468.2s] just obscene or an insult to chat, if we see or something like that where there's no value
+[468.2s - 473.0s] and sending it to our downstream systems, then we're just going to give some generic response.
+[473.0s - 478.2s] Yes. Yes. Yes. So, we don't need to get answer in that case. Yeah. So, that's why we want to
+[478.2s - 486.6s] sanitize it by calling this model. And so, I would sanitize it first and give a response if needed.
+[487.8s - 493.2s] Then, if it is sanitized properly, like if we think that it is really good
+[495.0s - 503.9s] equation. So, I will call a service which is the chat GPD. It is also powered by machine learning.
+[503.9s - 509.2s] So, this is another API that I'm just using the word API or service I will say here.
+[510.0s - 518.5s] So, service I will call that is also calling a chat GPD model which is the core which is the
+[518.5s - 531.8s] kind of meet of this functionality, this chat GPD system. So, that model. So, I will call,
+[531.8s - 538.0s] I will say that this is the equation. So, I will send this question, then this question is
+[538.0s - 544.6s] related to model that responds with an answer. And that answer after the conversation service
+[545.6s - 552.7s] gets that answer, it will store to I would say a database. I will create a database here.
+[553.5s - 570.8s] So, database. So, I will store the result for what that model responds with and I will
+[570.8s - 575.0s] save it in the form of that conversation. So, the conversation the way I am imagining a
+[575.0s - 579.6s] conversation. So, there is a like you can create multiple conversation and each conversation
+[579.6s - 585.3s] contains a bunch of messages. Some of the some of the messages are your questions,
+[585.3s - 591.8s] some of the messages are responded by the chat GPD. So, those are the answers. So, that is why
+[591.8s - 598.2s] those whenever they respond, we will store both of those conversations in that database. So,
+[598.2s - 607.0s] it will be add that to DB that message and link it to the conversation. So, that conversation
+[607.0s - 613.5s] is provided and after that that result will be sent back to the user that you will see on the
+[613.5s - 620.2s] screen. So, this is rough idea about rough design about how it will work when you are sending a
+[620.2s - 626.6s] message. And viewing it should be relatively simple like you just go to the conversation surveys
+[626.6s - 634.6s] get that data out of the database and view the conversations. Then deleting and all should be
+[634.6s - 642.4s] relatively simpler. I think the complexity we can think about we can discuss the thumbs up thumbs
+[642.4s - 653.0s] down use case let us say. So, if somebody gives thumbs up here. So, let us say thumbs up thumbs down
+[653.0s - 659.9s] is much better. So, because thumbs down is more complex I would say. So, if we say if somebody
+[660.0s - 667.2s] gives thumbs down that it will go to the conversation service again and yeah let us see here.
+[668.1s - 673.9s] So, it will go to the conversation service saying that it is yeah somebody has given thumbs down.
+[675.4s - 682.9s] Now, that thumbs down there are multiple ways that you can ask user if you are giving thumbs
+[682.9s - 689.3s] down what answer you would provide like you are not satisfied with the answer. But what kind of
+[689.3s - 694.1s] answer do you think you will be satisfied with what is wrong with that answer. So, we can provide
+[694.1s - 700.3s] that kind of functionality to the user and that can be sent over with that thumbs down request as well
+[700.3s - 705.7s] to the service. So, that that can be stored and that can be used to model train this model as well
+[706.6s - 713.8s] the chat GPT model because chat GPT model will be continuously learning. So, with that thumbs down
+[714.6s - 721.4s] one way is we can send a service to through the chat GPT service and train the model. But
+[722.3s - 727.8s] many times it will take time a lot of processing will need. So, one option is you can create some kind
+[727.8s - 737.9s] of a Kafka Q or some kind of job where that data is offline processed and ultimately this model
+[737.9s - 745.1s] is going to be trained based on that thumbs down or maybe the new answer. So, the other
+[745.1s - 752.6s] other thing I think I missed is ok. So, there is an option there is a possibility that a user I mean
+[752.6s - 757.1s] I am kind of a malicious user I do not want chat GPT to perform well or if maybe I am just
+[757.7s - 763.9s] playing with it. So, I can thumbs down thumbs down it again and again that kind of approach that kind
+[763.9s - 769.7s] of malicious activity should not impact the model. So, for that I will create some kind of
+[770.6s - 780.0s] another machine learning model called risk model. So, where that will tell you how good of a user
+[780.0s - 789.8s] how risky that user is. So, I can go into more details or I can switch to maybe more details about
+[789.8s - 796.4s] conversation service and database. Yeah, I think I think this is good for a high level
+[797.1s - 801.0s] introduction. Thanks for that. I would love to dive a little deeper into the conversation
+[801.0s - 811.5s] service actually. Ok. So, from conversation service let's see if I can create some kind of table
+[812.0s - 825.7s] here. Let's see. So, oops. Yeah. Ok. So, let's see. So, I will have let's say maybe operation. Let's see
+[825.7s - 832.2s] the conversation service I will create a bunch of rest APIs in that conversation service where we have
+[832.2s - 842.8s] operation and I would say URL request and I will have response as well. So, like operation if
+[842.8s - 851.3s] you are talking about let's say delete or let's say create a conversation. So, create a conversation
+[851.4s - 861.7s] I would add this probably. Delete, view a conversation and then what else did we have? Thumbs up,
+[861.7s - 870.8s] thumbs down. So, maybe I think there was another one that we had right create view delete and
+[871.8s - 880.8s] send message. Yeah, send message. So, here I will have something like probably. So, creating
+[880.8s - 887.1s] a new conversation I will just create a new conversation by post. So, chat GPT, even such
+[887.1s - 894.2s] conversation. So, here I need to provide with what is the title of the conversation. So, I will have
+[894.2s - 900.5s] some kind of JSON request where I will provide the title. I will provide I mean it will take
+[900.5s - 906.9s] automatically from the user token it will take the authentication token and identify with the user.
+[907.8s - 916.2s] So, then yeah. So, that's the one and it will response with 200 and those kind of status codes
+[916.2s - 921.8s] it can respond with. Then deleting I can I will just use the delete keyword. I will have a
+[921.8s - 927.0s] conversation ID for each of the conversation. So, in this response that conversation ID would be
+[927.2s - 935.8s] return. So, that can be a grid also grid is I mean kind of random numbers. So, that that is unique
+[937.4s - 945.9s] probabilities, probabilistically and then we have like for deletion I will select that particular
+[945.9s - 955.5s] conversation to delete. I will have that and respond with I mean I can say 204 also it is no content.
+[955.6s - 962.6s] So, I do not need to return any content. For viewing I will use the get keyword and I will have
+[962.6s - 968.1s] that conversation with what that particular. So, this will return the list of messages in that
+[968.1s - 975.3s] particular conversation in the ordered manner and then if I am sending a message. So,
+[975.3s - 983.3s] sending a message will be part of the conversation. So, in that conversation I will post I will send
+[983.3s - 989.3s] a message here. So, maybe message I will post a message in that particular conversation with the
+[989.3s - 995.8s] message I would say content it can be type also in future if we are expanding to images and all
+[996.4s - 1003.8s] and then parts also if it is media data parts, but right now it is just text. So, right now it is
+[1003.8s - 1014.5s] going to be text only. So, text I will provide then yeah. So, thumbs up thumbs down it that also
+[1014.5s - 1022.4s] happens at the message level. So, I will have for that conversation for that message. So, this
+[1023.7s - 1028.2s] when I am creating a message or sending a message it will return the message ID also.
+[1028.7s - 1036.9s] So, that can be in the form of grid or I mean we can think about a different ID number generator.
+[1036.9s - 1046.3s] There can be various ways to generate IDs, but here if we have a grid then for that particular
+[1046.3s - 1056.0s] message I will have some kind of probably rating or yeah something like that. So, that will
+[1056.0s - 1064.3s] indicate in the request I can mention whether it is like operation is or rating is up or down.
+[1066.9s - 1074.4s] So, or down maybe something like that and I will respond with the appropriate HTTP status codes.
+[1075.2s - 1084.3s] So, there the messages will be having I mean user as user ID or maybe system the system generated
+[1084.3s - 1090.2s] messages will have user as a system, but I mean I can go into more details if you think.
+[1091.1s - 1099.1s] Okay. So, let me share how the data would look like in the database. So, as I mentioned
+[1100.6s - 1105.3s] as we discussed up here that it is going to be so many three terabytes it is going to be huge.
+[1106.0s - 1113.4s] And then yeah I think here services would be there would be load balancer that we discussed here,
+[1114.3s - 1120.9s] but anyway for from data perspective yeah 73 terabytes I would go with some kind of my
+[1120.9s - 1130.4s] no SQL database where let us see that one I mean either I can go with DynamoDB that provides
+[1130.4s - 1137.8s] that scalability etc. So, anyway I mean I can go with some no SQL databases, but the way I would
+[1137.9s - 1147.0s] structure that is mainly like here let us see if I am creating some kind of table,
+[1149.4s - 1156.2s] small table. So, a conversation contains multiple messages. So, I will create some kind of
+[1156.2s - 1166.5s] probably conversation table or so. So, where we will have conversation ID and kind of a list
+[1166.5s - 1176.0s] of messages ID. So, if we are going with any kind of no SQL. So, we have conversation, but I think
+[1176.0s - 1182.6s] I will identify it by the user also. So, it will be mostly kind of user conversation, because
+[1182.6s - 1190.1s] a conversation is totally tied with the user. If I am creating conversations so, I will have
+[1190.1s - 1196.1s] a list of conversations for myself. So, I can have like for my particular user ID,
+[1196.2s - 1205.4s] I can have a list of I would say list or yeah that can be formulated in the form of JSON
+[1205.4s - 1215.3s] in no SQL databases. So, with the conversation ID. So, some kind of integer I can have or long
+[1215.9s - 1221.5s] it is going to be great right. So, some kind of list with conversation IDs.
+[1222.2s - 1233.7s] As I mentioned that can be serialized into JSON. So, then these conversation for each conversation
+[1234.5s - 1241.0s] each conversation will have multiple messages. So, it will be something similar format and if I
+[1241.0s - 1249.8s] look into the message like how a single message would look like. So, message I would say in terms
+[1249.8s - 1257.8s] of message it will be some kind of message ID I would have field, some kind of text.
+[1258.6s - 1265.0s] So, message text we have, we will want to know whether it is who is the author, whether it is
+[1265.0s - 1273.4s] system generated message, which is the answer or whether it is user ID, user generated. So,
+[1273.6s - 1283.2s] then there is a concept I mean we do not need it immediately right now, but we can have like
+[1283.2s - 1290.3s] that conversation we can think about in a form of a tree where I mean there is a parent for each
+[1290.3s - 1294.3s] message like you asked a question you got their answer, you asked a follow up question you got
+[1294.3s - 1300.2s] another answer. Then you suddenly changed the topic in that same conversation. So,
+[1300.2s - 1307.7s] we can configure that parent I think it will get complicated right now unless you want me to get
+[1307.7s - 1314.5s] into more details, but mainly we can create a parent as well for which will tell you what was
+[1314.5s - 1321.8s] the previous conversation for which we are responding. So, that is kind of rough idea.
+[1323.4s - 1329.7s] I can go into the model right now and maybe we can discuss this in more detail later,
+[1329.8s - 1334.9s] how about that? Sure, yeah. Thanks for walking me through that. Yeah, let's talk about what this
+[1334.9s - 1342.9s] actual chat GPT model will look like. Okay, so yeah, so for chat GPT model, let's see here.
+[1344.0s - 1351.3s] So, when we send a message, when we send a question and get answers, so there is one straight
+[1351.3s - 1355.5s] shadow thing that comes to mind is, so a shadow way that comes to mind is supervised learning,
+[1356.2s - 1362.9s] where we can have a lot of label dataset, we can have a list of questions, list of answers
+[1362.9s - 1368.2s] and train a model based on that, but really there can be so many combinations of questions
+[1368.2s - 1374.4s] in answers. Even if you want to figure out about system design, there can be question like what
+[1374.4s - 1381.4s] is system design, how is system design useful, explain system design and why do you want system
+[1381.5s - 1387.8s] design. So, even asking similar question, there can be so many variations of questions,
+[1388.6s - 1395.8s] the answers, okay, when you say what is system design, it needs to explain what it means exactly,
+[1395.8s - 1402.6s] how is it useful, it needs to focus on the uses of it. So, even the combinations of answers and
+[1402.6s - 1411.3s] all, it can be pretty like a lot of combinations and getting that dataset to train is really very
+[1411.5s - 1418.3s] difficult. So, for because of that, I would not use supervised learning as such immediately,
+[1418.3s - 1424.2s] but what I would do is, I would have some kind of transformer model, GPT transformer model,
+[1425.0s - 1433.4s] where I will have access to the common crawler data. So, which is Mindy, the let us say we are
+[1433.4s - 1442.5s] crawling the list of websites over the internet. So, that will give you so much data to train and
+[1442.5s - 1448.8s] we can even add books here, we can add Wikipedia links, which comes in kind of crawler data,
+[1448.8s - 1455.8s] we can even add codes like chargeability handles codes, right. So, you can say find a bug in Python
+[1456.7s - 1464.5s] code. So, those kind of things we can train, it like we can just add there and that transformer model,
+[1464.5s - 1469.4s] what I would do is it will not respond to question and answers, but what it will do is,
+[1469.4s - 1476.7s] it will predict that natural sequences of words. So, like if I say what is system design,
+[1477.4s - 1485.4s] or maybe if I say system design is, okay. So, then what can come next? So, there can be multiple
+[1485.4s - 1490.9s] things that can come. So, let us say system design is about planning and creating architecture.
+[1492.2s - 1498.3s] So, it can be meeting requirements. So, then it can be designing services, it can be about
+[1498.3s - 1506.6s] designing databases. So, there can be many solutions that can many phrases that can fill that sentence.
+[1507.3s - 1515.0s] So, my first step would be creating such, such kind of model, which finishes the sentences,
+[1515.0s - 1519.4s] completes the sentences in a natural language, which are grammatically correct and
+[1519.4s - 1527.8s] semantically meaningful as well. So, but the one thing through notices, I think how do I get,
+[1528.6s - 1534.6s] like how do I select out of these four, which one should be the next like system design is,
+[1534.6s - 1538.0s] out of these four, these are the possibilities based on the training.
+[1538.8s - 1547.0s] How would I select these, which one is the one that should be returned? So, there are multiple
+[1547.0s - 1552.6s] approaches there, there are multiple approaches like there is top k, there is greedy, greedy let us say,
+[1552.6s - 1558.7s] I will have probability, I will create a probability of these, let us say there is 0.32 probability
+[1558.7s - 1567.9s] chance of this one returning or maybe 0.25 for this one. So, maybe 0.10 or 0.09 and rest of them,
+[1567.9s - 1573.4s] some lower priority, probabilities. So, one option is always return the most greedy one.
+[1574.2s - 1581.8s] So, planning and creating architecture, but the challenges, if we have awesome, which has probably
+[1582.6s - 1590.5s] 0.34 as a probability, then this is not the what I want, I do not want to hear the system design is
+[1590.5s - 1596.6s] awesome, I want to understand what system design is. So, that is why there are ways like instead of
+[1596.6s - 1604.2s] greedy, we can use some kind of top k method as well, top k strategy or nucleus temperature,
+[1604.2s - 1612.6s] there are multiple strategies. In top k, you can select some top 3, let us say top 3, if we say,
+[1612.6s - 1619.5s] so I will select top 3 and randomly pick from one of those as the answer. That is the reason why
+[1619.5s - 1627.4s] you see that if you send the same message to stability, it can return some other reply back.
+[1628.4s - 1635.2s] So, anyway, there are different strategies, but mainly in short, we are finishing sentences with
+[1635.2s - 1644.5s] this model. Then after getting that, then I have a lot of data already trained. My next step is
+[1644.5s - 1653.0s] to make sure that that model is trained to answer the questions. So, for which I will do some kind
+[1653.0s - 1661.4s] of supervised fine-tuning, here I will get some kind of data set and train this particular model
+[1661.4s - 1670.6s] with questions and answers, it does not need to be fully like, it needs to be a decent size,
+[1670.6s - 1678.2s] but yes, there are still limitations because we cannot have all kinds of questions and answers
+[1678.3s - 1688.3s] that we can train. So, here what I would do is here, I would mainly kind of collect training data,
+[1688.3s - 1697.1s] train the model in the form of question and answers. So, that I will do, I can go into more details,
+[1697.1s - 1703.6s] but let me go to the next step here. So, after even after training the data, it is possible
+[1703.6s - 1709.8s] and it is highly likely because training is because of the number of combinations. So,
+[1710.6s - 1717.4s] what I would do is I would create some kind of reward model also. So, when we think of reward model,
+[1717.4s - 1726.6s] so after training this, even here, if we take this model into account. So, what I would do is I would
+[1726.6s - 1737.7s] pick some answers from the model. So, I will pick answers and I will have like AI trainers
+[1737.7s - 1748.6s] or people like us annotators, we will decide which answer is good. So, here let us say if we ask
+[1748.7s - 1754.5s] a question what is system design? And we get multiple combinations let us see here.
+[1756.4s - 1761.7s] So, this is not training data. So, if I ask a question what is system design?
+[1763.3s - 1770.4s] And I get multiple answers like system design is I will not write it everything,
+[1770.4s - 1775.4s] but system design is planning and creating and all these answers I get.
+[1776.2s - 1784.7s] So, now as a user I know what I am looking for. So, I would give some kind of rewards to each of them.
+[1785.6s - 1792.6s] So, I would I can have some kind of there is something called liquor scale. It can be in the form of
+[1792.6s - 1800.7s] 1 to 7 or 1 to 5. So, I can give rating in the form of 1 to 5 or 1 to 7 that will tell you like
+[1800.7s - 1808.0s] that scalar value will tell you how good that answer is. So, based on that answer right.
+[1808.0s - 1815.0s] So, based on that answer so, I will put in that reward model and train that reward model
+[1816.1s - 1822.6s] with these two training data using training data and training that supervised fine tuning
+[1823.5s - 1831.3s] and reward model. I will create the final one final version using reinforcement learning.
+[1832.5s - 1839.0s] So, reinforcement learning is very interesting where we train kids to work. I mean it takes
+[1839.0s - 1845.5s] into account these fine tuning and reward model. So, we know about kids right. They start walking,
+[1845.5s - 1851.9s] they fall down, they learn that ok if they move this way they will fall down. They learn it
+[1851.9s - 1857.0s] because they are getting a reward from the environment around whether it is negative reward or
+[1857.0s - 1862.4s] positive reward. If they fall that is a negative reward. If they if they are walking we are
+[1862.4s - 1868.2s] clapping for them that is a positive reward. Similar way is how we train robot says robot says as well
+[1868.2s - 1877.1s] robot says as well. So, these that they are walking they hit some system hit wall they can avoid
+[1877.1s - 1883.9s] staircase all of them is based on what reward they are receiving from the environment and
+[1883.9s - 1890.0s] continuously training them. So, that is the way that that is the approach that I will use here.
+[1890.7s - 1897.3s] I will use a train data and reward model here. So, using that train data I will initialize
+[1897.3s - 1909.8s] something called PPO policy is what we say. So, that PPO PPO optimization is then I will take one
+[1909.8s - 1916.7s] question go through reward model. So, using PPO optimization I will I will use this fine
+[1916.7s - 1923.0s] training model into PPO optimization and take one question at a time go it through the reward
+[1923.1s - 1933.0s] model get the reward update PPO that again update again PPO it go through the same process again
+[1933.0s - 1939.7s] take another question and continuously learn and learn and learn. So, with this all this approach
+[1939.7s - 1946.0s] even if in the beginning we did not have that good of a data set that good of a label data set
+[1946.1s - 1953.4s] to train that model we will still get pretty accurate result set in the form of like natural
+[1953.4s - 1960.6s] language response from the natural language from a human language or natural language question.
+[1961.8s - 1967.4s] So, does that answer your question I think another important one is yes
+[1969.0s - 1975.4s] I mean this these emotions and all right this reward model we as a humans know the emotion
+[1975.4s - 1983.2s] the tone of how what people are asking. So, that is taken care of in the reward model also
+[1983.2s - 1987.8s] in the liquor scale we will ask questions like okay does it why are you rating as one?
+[1988.5s - 1994.3s] Does it contain profanity does it contain is the emotion or the tone not correct or is it not
+[1994.3s - 2000.2s] natural. So, based on that also that reward model will continuously train itself.
+[2001.0s - 2007.0s] Absolutely and as you were explaining the whole thing I was smiling because I feel like
+[2007.0s - 2012.7s] this is a this is like honestly we can probably do a very deep dive on many different parts of
+[2012.7s - 2020.2s] this design but I just loved how you broke it down into you know these different aspects and
+[2020.2s - 2026.4s] I felt like this was a really nice way of for us to see how Chad GBT is built or it could be built
+[2027.0s - 2033.8s] and yeah I mean honestly this was a this was a gracesome design video and I know that we're short
+[2033.8s - 2039.7s] on time so I didn't want to cut you off here again thank you for your time Neuraj was there
+[2039.7s - 2043.1s] any like final thoughts that you wanted to share before we wrap up the video.
+[2043.9s - 2052.5s] No I think definitely this Chad GBT is doing great and excited to see and excited to learn more
+[2052.5s - 2059.8s] about what's going to be next I think they have started supporting images videos and yeah it's
+[2059.8s - 2068.4s] going to be fun. Yeah and you know inputs images audio probably in the future outputs that include
+[2068.4s - 2076.3s] like audio or images videos lots of amazing stuff very green space. Neuraj thanks for this awesome
+[2076.3s - 2080.5s] overview and for the audience who are watching at home if you get an interesting question like
+[2080.6s - 2085.0s] this hopefully this is helpful for your system design interviews and good luck with your upcoming
+[2085.0s - 2090.7s] engineering interviews. Thanks so much for watching don't forget to hit the like and subscribe
+[2090.7s - 2096.2s] buttons below to let us know that this video is valuable for you and of course check out hundreds
+[2096.2s - 2102.6s] more videos just like this I try exponent dot com thanks for watching and good luck on your upcoming
+[2102.6s - 2104.6s] interview.

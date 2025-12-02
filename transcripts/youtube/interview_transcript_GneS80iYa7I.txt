@@ -1,0 +1,682 @@
+SOURCE: YouTube
+VIDEO_ID: GneS80iYa7I
+URL: https://www.youtube.com/watch?v=GneS80iYa7I
+GPU: 1
+DURATION: 2513.8s (41.9 min)
+TRANSCRIBED: 2025-11-28 09:25
+================================================================================
+
+FULL TRANSCRIPT:
+--------------------------------------------------------------------------------
+ So today, we have Noah with us. Noah is a software engineer on AWS. And we're going to be walking through simple data structures, algorithms, problem. And we're going to see how he kind of steps through the problem, clarifies his assumptions, and kind of solves things. So Noah's never seen this problem. And he has no preparation before this. So, you know, all this is going to be fresh to him. So yeah, we're going to step through this. So, okay, Noah, are you ready to kind of begin? Yes, sir. Okay, perfect. Essentially, in this problem, we're going to be past the string as input. And so, for example, we have this string S here. You're just going to have a single input. And we want to determine something about this string. We want to determine whether it's an additive sequence. And so I'm going to kind of get into that and then we can kind of dive into things. And so here we have a string, you know, three, four, seven, eleven. And we want to determine does this string encode an additive sequence? And it can only encode an additive sequence if it's greater than or equal to three characters. And we're only going to be dealing with 0 to 9. And also, we're trying to determine, can we partition the string in a certain way to fulfill a certain property? And so here, let me just go into an example and it might be clear what we're kind of trying to do. So you're going to be given this string. This is an additive sequence. And so why is that the case? So here we can partition the string into this partitioning where we form a sequence here. So we can see there's a three, and then there's a four. And then these two numbers, this three and this four, are going to add together to be this seven, right? This seven and this four are going to add together to be this 11. And then this 11 and this seven is going to add together to be this 18, this 18 and 11 add together to be this 29. And so we started out with a raw string, but we were able to partition the string, see how we draw these separations, in a way where we can show that we can, this string fulfills a property where we have these two numbers kind of putting these together. So that was way too much time on the talking. But we're just trying to determine, is the string given to us an additive sequence? Can we find this partitioning that chops up the string where we can add two numbers and get the next number and so on? So yeah, you're free to ask me any questions and we can kind of hop into it. And yeah, we're going to be using Python. Yeah, as we kind of discussed. OK. Cool. So I'm trying to do it, figure out what the additive sequence is in the second one. Well, the second input, it would be 150 or 15 plus 51. And you can feel free to like chop up the string, kind of space things out, just so you can like work things out in your head and so on. OK. And then so third one doesn't have this add. I just, I really don't, I would see the second one. How would a second one get the additive sequence? Yeah, so for the second one, so let me put it back together. So for the second one, we would take the one and then the 50. They would add together to be the 51. And so now that we have these first two numbers adding together, we have to take this, you know, we have to take this 50, add it together with another number, and then we can pull out that 51. So 50 plus 51 would be this 101. So we would expect to see that 101. And then, you know, this 51 is 101, become the 152. Gotcha. OK. So my first thought is it is kind of like the Fibonacci sequence. Right. So it's probably going to have a pretty similar approach to a problem we have all seen in the past. Usually when I get a problem like one of these, I like to walk through an example. So we did that. It seems pretty straightforward. I don't think there's any like edge cases. So there's going to be at least three characters, right? It can go for the number can be as big as possible. So we're going to have to like run into some time issues. I'm assuming if we do it, like really just enforce it. But yeah, that's a problem for later. So how to actually do this? No idea off the top of my head. OK. So I think a good place to start would be thinking about all the possibilities for the first and second number. What really, you know, we want to explore possibilities here. What could those possibilities be? So I guess kind of a good way to start it would be like, when you first look at this first string, how do you look at to see whether it's an additive sequence? And would we be able to explore those possibilities potentially? So I guess that's a place to kind of start. Yeah. So my brute force way of doing this off the top of my head is I would just do parse one number at a time. So I do see if the first number and the second number add up, and then we'll go to the next one. And then keep on doing, does that make sense? I would do like three or four or like one, one. Yes. String or one letter at a time or number at a time. And then I'd go through the entire string. And if that doesn't work, then I would do it as two. Because oh, so the numbers are subpartitions. They have to be the same length for the entire string. Or can it be like, what would you mean by subpartitions? So the first one was like 15 or 1 plus 50 equals 51. So they can be different. Different length. Yeah, so the first number can be the full string. So this is a good question. And I think we're on the right track of like trying possibilities. So the first number could be anything. It could just be this one here, right? Yeah. The first number could be the 15. The first number could be 150. OK. The first number could also be 1,505. So I guess that gives you an idea of what are all the possibilities for the first number. And then once we choose the first number, we would need to choose a second number. And then there's a certain amount of possibilities for that. And then the way you just framed it there makes me think this might be like a dynamic programming question. Because we're going through the string and we're showing all the possible values. So we might want to do something like that there. Yeah, I would overthink it. We could start with a brute force here. I think that's what I would do. We could just stop with a brute force. So I guess we could kind of explore that. How would we look through these possibilities? And what would that look like? OK. So there are co-options. My instinct is to just have the first number that you'd parse. It would always be just one digit. And then the second one would be one digit and see if that works. If they add up, so you're trying to add the first two to the three, the third subpartition, right? OK, so I would do that. And then I would start playing with the string sizes of, I guess, the second one and seeing if they add up and then the third one or the first one if they don't add up that way. Does that make sense? Yeah, so I think we're on a good track trying all of the possible kind of strings for each respective number. I don't think we should limit ourselves just to one character for the first string. I think for the first string, we could try all the possibilities. So again, the first number, and let's follow this strategy. So the first number, we could just choose one. Or we could choose two. Or we could choose three. So OK, that's one piece of logic we would want to set up. And then for the second number, the second number depends on the first number we chose. Once we have those two numbers, then we're off to the races in terms of, OK, you chose two numbers. Say I chose this three. Say I chose this four. If I add those together, I must see the seven, right? And so then it becomes a game of validation. With the remaining string, we would need to see a seven. If we don't see a seven, then that parsing breaks. And so I think this gives us a place to start. Or I guess a way to frame our thinking, can we exhaustively choose a first number, can we exhaustively choose a second number? OK, yeah, so I think I have an approach. Basically, my thought process is we're going to have the first, we're going to find the first number, and then the second number. And we're going to try and find that in the string. So try and validate that. See if it's there. So to brute force that, I would basically just have the first string be up to the length of the string, minus two. So in this first input, it would be 3, 4, 7, 7, 7, up to 118. And then the second one would be just two. And then we would slowly go backwards through the string and a nested four loop to try and get the string sizes and see if it's there. Does that make sense? Yeah, it does make sense. I think that's a good way to think about it. So OK, you talked about the bounds of the first string. And then OK, the seconds, OK, yeah, that sounds good to me. So let's just kind of walk through the first input before we start doing any coding. OK, so the first string would be 3, 4, 7, 1, 1, 8. And then we would see if that whole first thing plus 2 adds up to 9, right? So it wouldn't. So we would go backwards. And the first number would be up to 3, 4, 7, 1, 1, 1. So we would increase the length of the second number. At that point, does that make sense? That makes sense. I see what you're doing. I think we could make it a bit easier. I think we can just, for the first number, we can just take a single number. And then we have the rest of the string to work with for the second number. And then there's a whole set of possibilities for the second number. The second number could be 4. It could be 47. It could be 4, 7, 1. And we're not even thinking about pruning where we have a look ahead here to look at the rest of the string. If we have a 3 as the rest of the string, that wouldn't make sense. There's 471's going to decimate that. And it wouldn't add together. But we could just choose a single number for the first string and then explore all of the possibilities for the second. And then we could choose two numbers for the first string and then explore all of the possibilities for the second. Choose three numbers for the first string and so on. So I think this gives us a form of way to think about it. We're trying all of the possibilities of the first string. And then within that, there's a nested work going on, trying all of the numbers for the second string. And then from there, we probably want to do some sort of validation. Okay. Yeah. So we do that first string and second go bigger. So we do three and then we do four up until that. Okay. One, two, three, four, three plus four up until seven. So how would we try all of the possibilities for the first string, for example? Like what would that look like in code? Maybe we could just start there coding wise. Well, the first string, it would just loop through the entire string, doing one digit at a time. This is where I haven't worked with plates on a while. I just find it easier to do these type of interviews, 100%. So if I get any of the syntax wrong, don't laugh at me. Yeah, feel free to look up any syntax. Okay. The core of it is like do we have the right approach? Yeah. So I would go just like loop through it in a for loop. So basically for I, in range of basically zero to the length of the string. So I do in Python. I don't even remember. Python. This is what a software engineer at Amazon has to do. Anytime it switches languages, pressure. So yeah, this makes sense. Yeah, we want to go from, okay, index zero, all the way to the end of the string. And you know, we may want to adjust this bound based on, like, okay, what are all the possibilities of the first number? But this is a fine kind of choice. And then, you know, how would we kind of take that first number and so on to adjust the bound? I was thinking of having like a nested for loop in there, where you would start from I, like whatever index you're currently at. And then do that one at a time towards the end. Does that make sense? So what do you mean, concretely? So basically, you'd have like, as you're going through the loop, the second substring would be getting smaller or either you're beginning bigger. Yeah. So we can use this first iterator to take a snippet for the first string. So we could go all the way from, you know, we would go all the way from the start, all the way up to this iterator. So I think that's a fine way to go about it. So we want to take a snippet of the first string here. Yeah, we can do that real quick. First letter would be kind of just doing the strip it. And I'm pretty sure in Python, you can just splice the strings by doing basically zero to I. And I think that would get you up to the first letter, right? Yeah, that would. Okay, so now you're the first letter. We should try and find the second. How much is the number? First number. So we're going to do try it. Would we try and find the loop for the second number now? We'd have to, right? Yeah, that sounds a good way to go about it. So we have the first number in our hands. And then the second number depends on the size of the first number. Yep. So for second index in range, I length of the string, we'll probably have to substring or reduce the index for going up to in the loops by like minus two and minus one. So I can just undo that. I don't know why I just would you do. I just renamed this the first index. Oh, no, you totally should have. Oh, I just saw how you changed your naming convention, right? Yeah, no, I got to keep it one thing you learn on the job is having your variables be so explicit, so you can't get confused. Okay, we have the first number with the second number. And okay, that's good. Yeah, so we go from the first index all the way up to the end of the string. Okay, so what would we, yeah, let's take the sniff it. Let's be first index two. So another thing we should think about is parsing. So we have strings in our hands right now. And these numbers concretely, we're going to want to deal with numbers. I mean, just something you think about. There's not any definite way you have to do this. But would that change? You're parsing how that's just a detail. That's okay. Okay, okay. It's a detail. Present eggs. Now, I'm just trying to think, would it make sense to go do the increasing the range of the second index or not of the second number doing like a sliding window of it? Yeah. Well, we have an iterator there. Yeah. Okay, cool. So you have both numbers at this point. So first index, second index, and then. So we've taken the first two numbers. And then now what do we have left? And like what, you know, would we want to do with that? Well, we're going to try and have to find the third number. We're trying to find like the target number basically. And we're trying to see if it's there. And if we can't find that target ever, we would return like a false. And this string wouldn't be additive. So third number, we wouldn't have to do another boiler, would we? Yeah. Well, okay, that's an interesting thing. So let's imagine we take the three and the four as a snippet up here as an example. You know, we would expect a seven to see a seven next. And this string right here, the 7-1-1-1-8-2-9, or 7-1-1-1-1, that's what we're left with. That string that we're left with, you know, we want to do something with that, some sort of validation where, okay, now we expect to see a seven. And then that kind of kicks off a chain of validation sort of. Since we need to see a seven, if we do see a seven, what are we left with? We're left with the rest of the string. And then we need to see an 11 and so on. So it kind of, it's kind of a recursive. Yeah, so yeah. So we're trying to see if the first, the two strings add are in, are at the beginning of the rest of the string, of the substring, right? And then if they are, we could recursively call it a function. That makes sense, that makes sense. So to do that, we'd first have to put the strings numbers into actual numbers, combine number. Okay, cool. So we're going to, since the numbers right now are strings, we're going to convert them into integers. I'm pretty sure you can just do this in Python, we're just basically parsed the strings for you. We don't have to worry about like, overflows, would we for like the integers? No, these are all going to be within the bounds of like a normal, you know, normal with integer like 32 bits, just a normal signed integer. You don't need to worry about overflow. That's just a detail. Okay, cool, cool. So that's the combined number. And then basically what we're going to do is, we're going to see if the combined number is at the beginning of the string of like the rest of the substring. And then if it is, we're basically going to recursively call this function with like the rest of the substring. Does that make sense? Yeah, that sounds like a good impression. Okay, so I'm just going to put this back into string. It's a little messy right here. We're worried about the casting later, but that's sure that's it. That's fine, that's fine. Okay, so string that and then we're going to see if the however long the first this combined number is in the first substring of the rest of this string. Okay. I'm just trying to think how you compare the strings in Python. I wonder if Python has a way to do it for you. I wouldn't be surprised, but I'm not that familiar with Python right now. Hmm, whatever. So let me just write this down in comments, because this is where it starts to get a little complex again, if the first. So what we could do is we could do another for loop to try to parse out that third number. So you know, if we add the three in the four and we expect to seven, you know, we could just, okay, know the width of the seven or we could like just brute force it and just like parse out one number, two number and see, okay, is this a seven? Is this a seven? Is this is, so we could just do a for loop from over the whole remaining string. That's like one, one thing we could do without actually having to check the width of like the added number, because then, you know, okay, we add them together and then, oh, yeah, yeah, the command item number, you know the width of the command number, and then you could pull that snippet out and just, yeah, yeah, I think that would be, yeah, that's fine as well. I'm trying to think, would there be any advantage doing the other way? No, no, no, I mean, I was, yeah, I'd continue with the way you're going. Okay, cool, cool, cool. Yeah, in actual interviews, when the interviewer would say something like that, that's usually a hint. And I should have just, no, you're fine, no, but I'm just like, that's usually a good sign. Pretty sure, pretty sure, pretty sure. Um, it's like, why would I talk unless I, yeah, uh, anyway, okay, so, um, so if it is number equals the string from, so which index would be, it'd be at second index, to the length of the string, yeah, this good thought process, we would be at the second index. That would kind of start the remainder, um, because we took that first snippet, that second snippet, um, and then, right, and then it would be, yeah. If they, if it's there, if the strings are equal there, then this part is additive, and we would do, oh, sorry, we would call the function again, um, the rest of the substring. Well, basically, if it's not, if they're not equal, this combined number into this, if it's not, if you don't find it in the target string, uh, it would be false here. But then, now we don't want to return false there, that's bad one. So yeah, actually, we're going to do the recursive approach. That was the right thinking, um, we just got to figure out the base cases. So I'm thinking if we had, the base case would be, if there's nothing left of the string, then we have parsed through the whole string and we found it has been additive the whole way. So we'd return through there, um, otherwise, we would just call this is additive again. And then if we never find this case, we would return false. So we don't want to have, like, if not, we want to have, if they are equal to each other, check if there's anything left in the string, uh, link the remainder, right, we'd have to check the remainder length, right, uh, there's a bug here, is that, yes, remainder length equals length, would be this, it would be from here, right, yeah, the, the bounds look, okay, so second index all the way, okay, adding on the length, okay, okay. And then just, yeah, adding that, but adding it from here, and so why were we getting the remainder length? Well, I guess we were just, if there's nothing left in the string, we're, we're basically at the end of it, right, okay, so we don't need it, we found our base case, and we've successfully gone through the whole string, and we found that has been as additive the entire way through. So if we're going to zero, oh, I do, these online formators, oh, sorry, if this, if this, true, I live, return, um, is additive for the second string, second number, uh, from the start of the first index, yep, substring, and then else would be outside of loop. If we have gone, we haven't reached one of those cases, we never found basically a number in the substring that added up, that was able to be added up, it wasn't additive, so it would return false here. Does that all make sense to you? Yeah, I think our high level approach is good. So yeah, I think we can, you know, maybe go into testing this and maybe kind of debug things if we have bugs. Yeah. Hang on. Now we have to look up how to write an is else, else live and by dawn, oh, you just do knows. Should be good there. I don't even need that else. Um, okay, cool. And then actual parsing of the stuff and by phone, okay, I'd be surprised. Okay, so how should we take it from here, kind of testing it and kind of thinking about the correctness? Well, let's just see if it works for the simplest case we have, which was 347, right? So we have, how does this console thing work? Do we call it from here? Uh, yeah, so you can just hit run and should press print out to the console. So let me see. Okay. So the object of type link of type has no length, 191 object of type of, I think string is reserved for STR, yeah, so mixed up with, oh, that's, yeah, perfect. String, string, STR, STR, I think here as well. No, that's because we're typecasting that back into it. And here, that's fine, let's do the whole problem, not realizing that. Okay, let's do the next problem. Print is out of, invalid literal for int with base 10, 25. So when we're actually trying to get the combined number into the first number, then feel free to Google any errors, you know, you don't have to know all these. Usually, I can figure them out real quick, but here we go stack overflow and be like, what is going on? Yeah, so means the string couldn't be provided into an int. Basically, what I would do is I would just print what the numbers are because it's having trouble parsing it. So print, first number, print, second number, and it didn't print anything. So I think it's because we're trying to cast an empty string to an integer. And there's, it's kind of an undefined operation. I think that's what might be happening. Uh, okay, did I mess up the splicing of the strings? You might, it might be easy to implement an auxiliary helper if the string is empty to just return zero, or I mean, I don't know if that, maybe that's not the right empty case. I'm not sure. So position two to position five, not, okay, so it's including and then up to, so we started zero plus one, let me think that we have three, yep, progress, progress, we're printing things. Okay, it's a beauty. So okay, all right, we're printing the first number. So okay, three, three, four, okay, I'm just gonna, we have a lot of extra output here, so I'm just gonna make it a little simpler, we're just gonna do the core of the function. Okay, still does that, that's awesome. Oh, it did. It may take a second to refresh, so you might want to run it again, perfect. Okay, cool. So three, three, three, so we're printing the first number. Okay, good, shit. So it's what it thought, the second number isn't indexed, right? So we do here, I think I can help on the indexing for, the first number, so the indexing for the first number looks good, it makes sense. We want to go, okay, plus one, right? Plus one, yeah, so you know, I think we can kind of bake the offset in, so we can say, you know, range from one to length of S, you know, how many numbers could we do for the first number? Minus two makes sense, but we're exclusive of that top bound, so. So my yep, so we wouldn't be there. Yeah, so we're exclusive top bound, so this goes up to length S minus two. Well, minus one, nice two, so this looks roughly correct. Let me think about this more. Less than or equal to minus two, less than or equal to, okay, so this looks correct to me. Okay, that's the first bound. So okay, we take a snippet from zero all the way up to one, so that's going to give us yield us. Excus of the one, so that'll be a zero, zero snippet on the first iteration. Okay, so I think for the first iteration, this looks good. So let's look at the second index. So we're going to want to take this from, okay, first index plus one to length of S, and then we're exclusive on the last index, because we need a third number. So these bounds look good to me, second number, and then first index, second index, this looks good. So these look good to me, this kind of snippet taking the first and second number. Okay, yeah, so we casted it. Okay, so that got parsed, right? Let's make sure you're parsed, right? Nothing stupid there. It looks like we're comparing the numbers wrong. Shripped, combine number, remainder length, S index out of bounds. So that means we are going one, two, five. The second index at that point would be what? Two. So what part are we looking at right now? So basically on line 35, when we're checking the strings, we're checking if that combine number is in, we're validating that it's in the rest of the substring. Basically there is a index out of range, so I just, that means we're going too far, trying to substring too far into the string. I don't know what the second index is, let me just, so I think this combine number calculation looks good. So we do the integer, integer, and then we cast, okay, and then, okay, so we have the combine number, okay, and then we do this if statement, so we have the combine number, okay, does this combine number equal, you know, the kind of what we expect in the remaining string, so we take the center from second index, that looks good as a lower bound there. Second index plus length, combine number looks good. So this line looks good to me, that's where it's indexing, I think that's where it's going out of bounds. Oh, interesting, okay, so, okay, we'll look at that. So, okay, and then, okay, so we have the remainder, we take from the second index plus the length of the combine number, okay, and then if that's empty, okay, then that means we decompose everything, otherwise we do this, is additive, okay, okay, and I think we might need to do a slice operator there, yeah, I think, no, I think that should have done it. But I think, because if we index into the, I think it'll give us just a single character. Oh, yeah, yeah, I was an honest place, I'm not familiar with Python. No, yeah, yeah, you're totally right, this should have been there. So then that's going to give us, from the first index on, so that's going to give us the second and third number, yeah, okay, so yeah, where I forgot where we were, where we were, airwashed. So, yeah, I think line, let me just do a check, it's line 30, so basically when we're trying to get the remainder length, it's doing the length of the second index plus the length of the combine number was trying to, yeah, so I think a way we could, we could switch this and say, you know, instead of actually taking this indexing operation that can fail, let's switch it to this, let's do, let's do second index, the second index plus, yeah, let's just operate only on the indices and then see, okay, if, from the second index divider onward plus this length of this combine number that we expect is just the whole string. If it's, yeah, if it's the whole string, that's a successful dot with decomposition, we're not even going into the territory of where we can like throw an error because we're trying to chop up a string. So, if this overflows in any manner, okay, whatever, so, you know, return to otherwise, okay, so then, yeah, now we need to think about the logic here, if combine number is equivalent to, let's play second number, so hopefully this doesn't error, okay, this return true, uncommon doesn't, so we should get true, true false, so let's see, okay, so let's pause on the debugging, let's kind of go into talking about the time and space complexity, I think I think we've gotten to a good point where we're sitting and I think we've gone through the meat of like what the approach would look like, so let's kind of talk about like the runtime and like how efficient we're being right now, so maybe you could talk about that. Yeah, so for the time complexity, it's lower bounded to n squared, when I do like the time complexity stuff, I do a pretty simple approach, you just kind of count the four loops and we're having nested one, so there's two four loops, so it's n squared, that's how I do it, usually it's usually pretty correct. Right, well, that's not always the case, but yeah, not always, yeah, which time it gets you right? Right, right, lower bounded to n squared, okay, that makes sense because, okay, we have a linear workout here, we have a linear work nested here, what would the runtime be of, you know, we're calling this recursive, this is additive recursively, how would we kind of reason about that, and we could just leave it at lower bounds, I think, I think, you know, lower bound to n squared, I'd imagine this is additive is lower bounded to, you know, okay. What's the same function? Yeah, exactly, and then, you know, right, so we'd probably be lower bounded to n squared, lower bound is like a cubic ton of complexity, something like that, I'd imagine. Yep, and then space complexity, we're not really doing anything special, so just be, we have the string, and could the combined number could be as big as the string, it could be n squared 2, or just n, I don't know about that. Alright, so I think we're good, I think let's kind of step into the meta and kind of let's talk about how you think things once, how you think you approach things and like just your initial thoughts on this question, and you can also pull in your experience from, you know, maybe being in interviews, so like just, I don't know, just, what's your meta analysis? For sure. So, I thought this question was pretty hard, anytime you're like, you know, splicing strings and substring and stuff and doing like this type of work, it gets like, it's very tedious work and it's hard to do, it's hard to talk about these types of cases, I think. Usually I'd like to ask more questions at the beginning and really have the entire approach nailed down. I like, so basically my rule is, I spent about 50% of the time asking questions, getting to make sure you fully understand the problem before you do any coding. I didn't think I'd get to do that here because it was just a different type of problem than I hoped for that approach to work for, but that was, yeah. Asking questions wise, I mean, I think I asked all the good questions. We covered the edge cases, I think there was edge cases we've been covered with like leading zeros. Yeah, we didn't talk about that. Leading zeros, we did cover overflow, whatever, you know, just pump that off, that's on issue. In a practical scenario, we could overflow pretty quickly, but yeah, we just imagined input wouldn't overflow. And then, okay, yeah, how do you think you did overall or like, what would your assessment be on like, you know, did I did good for no interview preparation? You have not seen this question. Not seen this question. I haven't worked. I literally just walked in. You have no preparation. No work with Python in the past six months, yeah, that part went well. I think this is like pretty comparable to how some of my interviews have gone, uh, yeah. I think usually when you're, I haven't been at, when I, like, interviewing for Amazon, the questions that I were asked weren't as hard as that one, but I've had some other interviews where they asked some pretty tough questions, but I'd say this is definitely like one of the harder and type of questions you're going to be asked in any of your scenarios. Right. Alright, so thank you so much for watching. If you want to practice this problem, you can practice it on interviewpen.com. We cover this problem in depth with a video lesson. You can also code along, and we have plenty of other problems on our site. So I'm going to think no for as time, and we'll do plenty of these in the future. So yeah, thanks for watching.
+
+TIMESTAMPED SEGMENTS:
+--------------------------------------------------------------------------------
+[0.0s - 1.6s] So today, we have Noah with us.
+[1.6s - 4.8s] Noah is a software engineer on AWS.
+[4.8s - 7.3s] And we're going to be walking through simple data structures,
+[7.3s - 8.6s] algorithms, problem.
+[8.6s - 12.1s] And we're going to see how he kind of steps through the problem,
+[12.1s - 15.0s] clarifies his assumptions, and kind of solves things.
+[15.0s - 17.3s] So Noah's never seen this problem.
+[17.3s - 19.6s] And he has no preparation before this.
+[19.6s - 22.0s] So, you know, all this is going to be fresh to him.
+[22.0s - 23.2s] So yeah, we're going to step through this.
+[23.2s - 26.3s] So, okay, Noah, are you ready to kind of begin?
+[26.3s - 27.2s] Yes, sir.
+[27.2s - 27.9s] Okay, perfect.
+[27.9s - 29.2s] Essentially, in this problem,
+[29.2s - 32.6s] we're going to be past the string as input.
+[32.6s - 35.3s] And so, for example, we have this string S here.
+[35.3s - 37.2s] You're just going to have a single input.
+[37.2s - 39.5s] And we want to determine something about this string.
+[39.5s - 41.6s] We want to determine whether it's an additive sequence.
+[41.6s - 43.2s] And so I'm going to kind of get into that
+[43.2s - 44.7s] and then we can kind of dive into things.
+[44.7s - 48.0s] And so here we have a string, you know, three, four, seven,
+[48.0s - 49.2s] eleven.
+[49.2s - 51.5s] And we want to determine does this string encode
+[51.5s - 52.9s] an additive sequence?
+[52.9s - 55.2s] And it can only encode an additive sequence
+[55.2s - 57.6s] if it's greater than or equal to three characters.
+[57.6s - 60.8s] And we're only going to be dealing with 0 to 9.
+[60.8s - 62.8s] And also, we're trying to determine,
+[62.8s - 64.6s] can we partition the string in a certain way
+[64.6s - 66.4s] to fulfill a certain property?
+[66.4s - 68.0s] And so here, let me just go into an example
+[68.0s - 70.4s] and it might be clear what we're kind of trying to do.
+[70.4s - 72.0s] So you're going to be given this string.
+[72.0s - 73.4s] This is an additive sequence.
+[73.4s - 75.1s] And so why is that the case?
+[75.1s - 76.6s] So here we can partition the string
+[76.6s - 79.1s] into this partitioning where we form a sequence here.
+[79.1s - 82.0s] So we can see there's a three, and then there's a four.
+[82.0s - 83.9s] And then these two numbers, this three and this four,
+[83.9s - 87.0s] are going to add together to be this seven, right?
+[87.0s - 89.9s] This seven and this four are going to add together
+[89.9s - 91.2s] to be this 11.
+[91.2s - 93.8s] And then this 11 and this seven is going to add together
+[93.8s - 98.0s] to be this 18, this 18 and 11 add together to be this 29.
+[98.0s - 101.0s] And so we started out with a raw string,
+[101.0s - 103.5s] but we were able to partition the string,
+[103.5s - 105.3s] see how we draw these separations,
+[105.3s - 108.3s] in a way where we can show that we can,
+[108.3s - 110.9s] this string fulfills a property where we have these two numbers
+[110.9s - 112.1s] kind of putting these together.
+[112.1s - 114.2s] So that was way too much time on the talking.
+[114.2s - 115.8s] But we're just trying to determine,
+[115.8s - 117.9s] is the string given to us an additive sequence?
+[117.9s - 121.2s] Can we find this partitioning that chops up the string
+[121.2s - 124.3s] where we can add two numbers and get the next number and so on?
+[124.3s - 126.4s] So yeah, you're free to ask me any questions
+[126.4s - 127.8s] and we can kind of hop into it.
+[127.8s - 129.7s] And yeah, we're going to be using Python.
+[129.7s - 132.3s] Yeah, as we kind of discussed.
+[132.3s - 134.1s] OK.
+[134.1s - 135.8s] Cool.
+[135.8s - 139.1s] So I'm trying to do it, figure out what the additive sequence
+[139.1s - 142.3s] is in the second one.
+[142.3s - 152.1s] Well, the second input, it would be 150 or 15 plus 51.
+[152.1s - 154.4s] And you can feel free to like chop up the string,
+[154.4s - 156.8s] kind of space things out, just so you can like work things
+[156.8s - 158.9s] out in your head and so on.
+[158.9s - 160.7s] OK.
+[160.7s - 167.3s] And then so third one doesn't have this add.
+[167.3s - 170.0s] I just, I really don't, I would see the second one.
+[170.0s - 172.5s] How would a second one get the additive sequence?
+[172.5s - 175.9s] Yeah, so for the second one, so let me put it back together.
+[175.9s - 180.2s] So for the second one, we would take the one and then the 50.
+[180.2s - 181.8s] They would add together to be the 51.
+[181.8s - 183.8s] And so now that we have these first two numbers adding
+[183.8s - 186.3s] together, we have to take this, you know,
+[186.3s - 189.8s] we have to take this 50, add it together with another number,
+[189.8s - 191.4s] and then we can pull out that 51.
+[191.4s - 194.0s] So 50 plus 51 would be this 101.
+[194.0s - 196.3s] So we would expect to see that 101.
+[196.3s - 200.3s] And then, you know, this 51 is 101, become the 152.
+[200.3s - 203.0s] Gotcha.
+[203.0s - 204.6s] OK.
+[204.6s - 209.2s] So my first thought is it is kind of like the Fibonacci
+[209.2s - 210.2s] sequence.
+[210.2s - 210.7s] Right.
+[210.7s - 212.6s] So it's probably going to have a pretty similar approach
+[212.6s - 218.3s] to a problem we have all seen in the past.
+[218.3s - 220.7s] Usually when I get a problem like one of these,
+[220.7s - 222.5s] I like to walk through an example.
+[222.5s - 224.6s] So we did that.
+[224.6s - 227.4s] It seems pretty straightforward.
+[227.4s - 231.7s] I don't think there's any like edge cases.
+[231.7s - 235.8s] So there's going to be at least three characters, right?
+[235.8s - 240.0s] It can go for the number can be as big as possible.
+[240.0s - 243.3s] So we're going to have to like run into some time issues.
+[243.3s - 248.0s] I'm assuming if we do it, like really just enforce it.
+[248.0s - 249.9s] But yeah, that's a problem for later.
+[249.9s - 252.4s] So how to actually do this?
+[252.4s - 254.1s] No idea off the top of my head.
+[254.2s - 256.2s] OK.
+[256.2s - 258.0s] So I think a good place to start would be
+[258.0s - 261.1s] thinking about all the possibilities
+[261.1s - 265.0s] for the first and second number.
+[265.0s - 269.8s] What really, you know, we want to explore possibilities here.
+[269.8s - 271.6s] What could those possibilities be?
+[271.6s - 275.2s] So I guess kind of a good way to start it would be like,
+[275.2s - 277.5s] when you first look at this first string,
+[277.5s - 279.7s] how do you look at to see whether it's
+[279.7s - 281.0s] an additive sequence?
+[281.0s - 283.8s] And would we be able to explore those possibilities
+[283.8s - 285.2s] potentially?
+[285.2s - 290.2s] So I guess that's a place to kind of start.
+[290.2s - 290.7s] Yeah.
+[290.7s - 296.7s] So my brute force way of doing this off the top of my head
+[296.7s - 301.8s] is I would just do parse one number at a time.
+[301.8s - 305.1s] So I do see if the first number and the second number
+[305.1s - 307.3s] add up, and then we'll go to the next one.
+[307.3s - 308.8s] And then keep on doing, does that make sense?
+[308.8s - 311.7s] I would do like three or four or like one, one.
+[311.7s - 312.4s] Yes.
+[312.4s - 315.8s] String or one letter at a time or number at a time.
+[315.8s - 317.3s] And then I'd go through the entire string.
+[317.3s - 321.1s] And if that doesn't work, then I would do it as two.
+[321.1s - 326.9s] Because oh, so the numbers are subpartitions.
+[326.9s - 330.8s] They have to be the same length for the entire string.
+[330.8s - 335.2s] Or can it be like, what would you mean by subpartitions?
+[335.2s - 341.2s] So the first one was like 15 or 1 plus 50 equals 51.
+[341.2s - 342.7s] So they can be different.
+[342.7s - 343.3s] Different length.
+[343.3s - 345.8s] Yeah, so the first number can be the full string.
+[345.8s - 347.6s] So this is a good question.
+[347.6s - 349.2s] And I think we're on the right track of like trying
+[349.2s - 350.0s] possibilities.
+[350.0s - 351.9s] So the first number could be anything.
+[351.9s - 354.0s] It could just be this one here, right?
+[354.0s - 354.5s] Yeah.
+[354.5s - 356.0s] The first number could be the 15.
+[356.0s - 357.5s] The first number could be 150.
+[357.5s - 358.0s] OK.
+[358.0s - 363.1s] The first number could also be 1,505.
+[363.1s - 365.2s] So I guess that gives you an idea of what
+[365.2s - 367.1s] are all the possibilities for the first number.
+[367.1s - 369.6s] And then once we choose the first number,
+[369.6s - 371.6s] we would need to choose a second number.
+[371.6s - 375.2s] And then there's a certain amount of possibilities for that.
+[375.2s - 381.0s] And then the way you just framed it there makes me think
+[381.0s - 383.2s] this might be like a dynamic programming question.
+[383.2s - 384.5s] Because we're going through the string
+[384.5s - 387.2s] and we're showing all the possible values.
+[387.2s - 391.8s] So we might want to do something like that there.
+[391.8s - 393.8s] Yeah, I would overthink it.
+[393.8s - 395.9s] We could start with a brute force here.
+[395.9s - 397.1s] I think that's what I would do.
+[397.1s - 399.3s] We could just stop with a brute force.
+[399.3s - 401.8s] So I guess we could kind of explore that.
+[401.8s - 404.4s] How would we look through these possibilities?
+[404.4s - 405.6s] And what would that look like?
+[405.6s - 406.4s] OK.
+[406.4s - 408.5s] So there are co-options.
+[408.5s - 414.9s] My instinct is to just have the first number that you'd parse.
+[414.9s - 416.7s] It would always be just one digit.
+[416.7s - 418.7s] And then the second one would be one digit
+[418.7s - 421.6s] and see if that works.
+[421.6s - 425.2s] If they add up, so you're trying to add the first two
+[425.2s - 429.0s] to the three, the third subpartition, right?
+[429.0s - 431.6s] OK, so I would do that.
+[431.6s - 436.6s] And then I would start playing with the string sizes of,
+[436.6s - 440.2s] I guess, the second one and seeing if they add up
+[440.2s - 442.7s] and then the third one or the first one
+[442.7s - 444.4s] if they don't add up that way.
+[444.4s - 445.6s] Does that make sense?
+[445.6s - 447.2s] Yeah, so I think we're on a good track
+[447.2s - 449.6s] trying all of the possible kind of strings
+[449.6s - 452.6s] for each respective number.
+[452.6s - 453.7s] I don't think we should limit ourselves
+[453.7s - 455.9s] just to one character for the first string.
+[455.9s - 458.2s] I think for the first string, we could try all
+[458.2s - 459.0s] the possibilities.
+[459.0s - 463.1s] So again, the first number, and let's follow this strategy.
+[463.1s - 466.3s] So the first number, we could just choose one.
+[466.3s - 467.8s] Or we could choose two.
+[467.8s - 469.0s] Or we could choose three.
+[469.0s - 473.3s] So OK, that's one piece of logic we would want to set up.
+[473.3s - 475.6s] And then for the second number, the second number
+[475.6s - 478.4s] depends on the first number we chose.
+[478.4s - 481.8s] Once we have those two numbers, then we're off to the races
+[481.8s - 484.9s] in terms of, OK, you chose two numbers.
+[484.9s - 487.0s] Say I chose this three.
+[487.0s - 488.2s] Say I chose this four.
+[488.2s - 491.3s] If I add those together, I must see the seven, right?
+[491.3s - 493.4s] And so then it becomes a game of validation.
+[493.4s - 497.8s] With the remaining string, we would need to see a seven.
+[497.8s - 500.6s] If we don't see a seven, then that parsing breaks.
+[500.6s - 503.3s] And so I think this gives us a place to start.
+[503.3s - 506.6s] Or I guess a way to frame our thinking,
+[506.6s - 508.0s] can we exhaustively choose a first number,
+[508.0s - 510.3s] can we exhaustively choose a second number?
+[510.3s - 513.7s] OK, yeah, so I think I have an approach.
+[513.7s - 516.6s] Basically, my thought process is we're
+[516.6s - 520.4s] going to have the first, we're going to find the first number,
+[520.4s - 521.4s] and then the second number.
+[521.4s - 526.2s] And we're going to try and find that in the string.
+[526.2s - 528.5s] So try and validate that.
+[528.5s - 529.7s] See if it's there.
+[529.7s - 535.1s] So to brute force that, I would basically just
+[535.1s - 542.5s] have the first string be up to the length of the string,
+[542.5s - 544.4s] minus two.
+[544.4s - 547.2s] So in this first input, it would be 3, 4, 7, 7, 7,
+[547.2s - 549.0s] up to 118.
+[549.0s - 551.4s] And then the second one would be just two.
+[551.4s - 557.5s] And then we would slowly go backwards through the string
+[557.5s - 560.8s] and a nested four loop to try and get the string sizes
+[560.8s - 562.8s] and see if it's there.
+[562.8s - 563.8s] Does that make sense?
+[563.8s - 564.6s] Yeah, it does make sense.
+[564.6s - 567.6s] I think that's a good way to think about it.
+[567.6s - 570.1s] So OK, you talked about the bounds of the first string.
+[570.1s - 573.6s] And then OK, the seconds, OK, yeah, that sounds good to me.
+[573.6s - 578.4s] So let's just kind of walk through the first input
+[578.4s - 580.9s] before we start doing any coding.
+[580.9s - 586.5s] OK, so the first string would be 3, 4, 7, 1, 1, 8.
+[586.5s - 594.2s] And then we would see if that whole first thing plus 2
+[594.2s - 597.2s] adds up to 9, right?
+[597.2s - 599.2s] So it wouldn't.
+[599.2s - 602.2s] So we would go backwards.
+[602.2s - 610.8s] And the first number would be up to 3, 4, 7, 1, 1, 1.
+[614.0s - 622.4s] So we would increase the length of the second number.
+[622.4s - 625.9s] At that point, does that make sense?
+[625.9s - 626.7s] That makes sense.
+[626.7s - 627.6s] I see what you're doing.
+[627.6s - 629.8s] I think we could make it a bit easier.
+[629.8s - 632.4s] I think we can just, for the first number,
+[632.4s - 634.7s] we can just take a single number.
+[634.7s - 636.1s] And then we have the rest of the string
+[636.1s - 638.6s] to work with for the second number.
+[638.6s - 640.4s] And then there's a whole set of possibilities
+[640.4s - 641.4s] for the second number.
+[641.4s - 643.4s] The second number could be 4.
+[643.4s - 645.2s] It could be 47.
+[645.2s - 647.4s] It could be 4, 7, 1.
+[647.4s - 649.2s] And we're not even thinking about pruning
+[649.2s - 654.4s] where we have a look ahead here to look at the rest of the string.
+[654.4s - 656.6s] If we have a 3 as the rest of the string,
+[656.7s - 658.1s] that wouldn't make sense.
+[658.1s - 659.7s] There's 471's going to decimate that.
+[659.7s - 661.2s] And it wouldn't add together.
+[661.2s - 665.6s] But we could just choose a single number for the first string
+[665.6s - 669.0s] and then explore all of the possibilities for the second.
+[669.0s - 672.6s] And then we could choose two numbers for the first string
+[672.6s - 675.3s] and then explore all of the possibilities for the second.
+[675.3s - 677.3s] Choose three numbers for the first string and so on.
+[677.3s - 681.2s] So I think this gives us a form of way to think about it.
+[681.2s - 684.6s] We're trying all of the possibilities of the first string.
+[684.6s - 686.5s] And then within that, there's a nested work
+[686.6s - 690.4s] going on, trying all of the numbers for the second string.
+[690.4s - 692.8s] And then from there, we probably want
+[692.8s - 694.1s] to do some sort of validation.
+[696.2s - 697.1s] Okay.
+[697.1s - 698.6s] Yeah.
+[698.6s - 703.6s] So we do that first string and second go bigger.
+[704.2s - 709.2s] So we do three and then we do four up until that.
+[710.6s - 711.4s] Okay.
+[712.4s - 717.4s] One, two, three, four, three plus four up until seven.
+[718.6s - 721.5s] So how would we try all of the possibilities
+[721.5s - 722.8s] for the first string, for example?
+[722.8s - 724.0s] Like what would that look like in code?
+[724.0s - 726.7s] Maybe we could just start there coding wise.
+[727.8s - 732.8s] Well, the first string, it would just loop through
+[732.8s - 737.0s] the entire string, doing one digit at a time.
+[737.0s - 740.5s] This is where I haven't worked with plates on a while.
+[740.5s - 744.3s] I just find it easier to do these type of interviews, 100%.
+[746.2s - 751.2s] So if I get any of the syntax wrong, don't laugh at me.
+[751.4s - 753.8s] Yeah, feel free to look up any syntax.
+[753.8s - 754.6s] Okay.
+[754.6s - 755.9s] The core of it is like do we have the right approach?
+[755.9s - 756.7s] Yeah.
+[756.7s - 761.7s] So I would go just like loop through it in a for loop.
+[763.8s - 768.8s] So basically for I,
+[771.1s - 780.1s] in range of basically zero to the length of the string.
+[784.4s - 785.7s] So I do in Python.
+[785.7s - 786.6s] I don't even remember.
+[790.2s - 790.9s] Python.
+[792.4s - 795.8s] This is what a software engineer at Amazon has to do.
+[795.8s - 798.3s] Anytime it switches languages, pressure.
+[798.9s - 800.7s] So yeah, this makes sense.
+[800.7s - 802.9s] Yeah, we want to go from, okay, index zero,
+[802.9s - 804.2s] all the way to the end of the string.
+[804.2s - 807.2s] And you know, we may want to adjust this bound based on, like,
+[807.2s - 809.2s] okay, what are all the possibilities of the first number?
+[809.2s - 811.3s] But this is a fine kind of choice.
+[811.3s - 813.8s] And then, you know, how would we kind of take that first number
+[813.8s - 816.8s] and so on to adjust the bound?
+[816.8s - 820.8s] I was thinking of having like a nested for loop in there,
+[820.8s - 825.5s] where you would start from I,
+[825.8s - 830.5s] like whatever index you're currently at.
+[832.7s - 836.6s] And then do that one at a time towards the end.
+[836.6s - 838.0s] Does that make sense?
+[838.0s - 840.1s] So what do you mean, concretely?
+[840.1s - 844.2s] So basically, you'd have like,
+[844.2s - 846.8s] as you're going through the loop,
+[848.0s - 851.4s] the second substring would be getting smaller
+[851.4s - 853.3s] or either you're beginning bigger.
+[853.3s - 853.9s] Yeah.
+[853.9s - 855.4s] So we can use this first iterator
+[855.4s - 857.9s] to take a snippet for the first string.
+[857.9s - 860.8s] So we could go all the way from, you know,
+[860.8s - 862.2s] we would go all the way from the start,
+[862.2s - 863.8s] all the way up to this iterator.
+[864.8s - 867.3s] So I think that's a fine way to go about it.
+[867.3s - 870.4s] So we want to take a snippet of the first string here.
+[870.4s - 872.2s] Yeah, we can do that real quick.
+[872.2s - 877.2s] First letter would be kind of just doing the strip it.
+[879.8s - 881.2s] And I'm pretty sure in Python,
+[881.2s - 886.2s] you can just splice the strings by doing basically zero to I.
+[890.9s - 895.9s] And I think that would get you up to the first letter, right?
+[896.1s - 897.4s] Yeah, that would.
+[897.4s - 899.6s] Okay, so now you're the first letter.
+[899.6s - 902.7s] We should try and find the second.
+[904.0s - 906.0s] How much is the number?
+[906.0s - 907.0s] First number.
+[908.0s - 910.8s] So we're going to do try it.
+[910.8s - 915.8s] Would we try and find the loop for the second number now?
+[915.8s - 917.0s] We'd have to, right?
+[917.0s - 919.6s] Yeah, that sounds a good way to go about it.
+[919.6s - 921.5s] So we have the first number in our hands.
+[921.5s - 923.8s] And then the second number depends on the size of the first number.
+[923.8s - 925.0s] Yep.
+[925.0s - 930.0s] So for second index in range, I length of the string,
+[939.9s - 944.9s] we'll probably have to substring or reduce the index
+[949.2s - 952.8s] for going up to in the loops by like minus two and minus one.
+[953.8s - 957.5s] So I can just undo that.
+[957.5s - 958.7s] I don't know why I just would you do.
+[958.7s - 960.1s] I just renamed this the first index.
+[960.1s - 961.2s] Oh, no, you totally should have.
+[961.2s - 964.0s] Oh, I just saw how you changed your naming convention, right?
+[964.0s - 968.0s] Yeah, no, I got to keep it one thing you learn on the job is having your
+[968.0s - 971.3s] variables be so explicit, so you can't get confused.
+[972.0s - 974.1s] Okay, we have the first number with the second number.
+[975.2s - 976.3s] And okay, that's good.
+[976.3s - 979.4s] Yeah, so we go from the first index all the way up to the end of the string.
+[979.4s - 984.4s] Okay, so what would we, yeah, let's take the sniff it.
+[985.7s - 990.2s] Let's be first index two.
+[991.4s - 993.5s] So another thing we should think about is parsing.
+[993.5s - 997.3s] So we have strings in our hands right now.
+[997.3s - 998.7s] And these numbers concretely,
+[998.7s - 1000.8s] we're going to want to deal with numbers.
+[1000.8s - 1002.0s] I mean, just something you think about.
+[1002.0s - 1004.2s] There's not any definite way you have to do this.
+[1004.2s - 1009.3s] But would that change?
+[1009.3s - 1011.6s] You're parsing how that's just a detail.
+[1011.6s - 1012.2s] That's okay.
+[1012.2s - 1013.0s] Okay, okay.
+[1013.0s - 1013.8s] It's a detail.
+[1013.8s - 1014.5s] Present eggs.
+[1014.5s - 1020.0s] Now, I'm just trying to think, would it make sense to go do the increasing the range
+[1020.0s - 1026.2s] of the second index or not of the second number doing like a sliding window of it?
+[1031.7s - 1032.2s] Yeah.
+[1032.2s - 1033.4s] Well, we have an iterator there.
+[1033.4s - 1034.2s] Yeah.
+[1035.4s - 1036.8s] Okay, cool.
+[1036.8s - 1043.5s] So you have both numbers at this point.
+[1047.0s - 1052.2s] So first index, second index, and then.
+[1052.2s - 1054.3s] So we've taken the first two numbers.
+[1054.3s - 1056.1s] And then now what do we have left?
+[1056.1s - 1058.8s] And like what, you know, would we want to do with that?
+[1061.4s - 1064.0s] Well, we're going to try and have to find the third number.
+[1064.0s - 1069.1s] We're trying to find like the target number basically.
+[1069.1s - 1071.6s] And we're trying to see if it's there.
+[1071.6s - 1078.2s] And if we can't find that target ever, we would return like a false.
+[1078.2s - 1081.5s] And this string wouldn't be additive.
+[1081.5s - 1086.8s] So third number, we wouldn't have to do another boiler, would we?
+[1086.8s - 1087.4s] Yeah.
+[1087.4s - 1089.6s] Well, okay, that's an interesting thing.
+[1089.6s - 1093.8s] So let's imagine we take the three and the four as a snippet up here as an example.
+[1093.8s - 1098.8s] You know, we would expect a seven to see a seven next.
+[1098.8s - 1105.0s] And this string right here, the 7-1-1-1-8-2-9, or 7-1-1-1-1, that's what we're left with.
+[1105.0s - 1108.7s] That string that we're left with, you know, we want to do something with that,
+[1108.7s - 1114.4s] some sort of validation where, okay, now we expect to see a seven.
+[1114.4s - 1120.2s] And then that kind of kicks off a chain of validation sort of.
+[1120.3s - 1124.4s] Since we need to see a seven, if we do see a seven, what are we left with?
+[1124.4s - 1126.2s] We're left with the rest of the string.
+[1126.2s - 1129.0s] And then we need to see an 11 and so on.
+[1129.0s - 1130.8s] So it kind of, it's kind of a recursive.
+[1130.8s - 1132.6s] Yeah, so yeah.
+[1132.6s - 1141.6s] So we're trying to see if the first, the two strings add are in,
+[1141.6s - 1145.0s] are at the beginning of the rest of the string, of the substring, right?
+[1146.0s - 1150.3s] And then if they are, we could recursively call it a function.
+[1150.3s - 1152.2s] That makes sense, that makes sense.
+[1152.2s - 1158.8s] So to do that, we'd first have to put the strings numbers into actual numbers, combine number.
+[1161.3s - 1162.0s] Okay, cool.
+[1162.0s - 1166.6s] So we're going to, since the numbers right now are strings,
+[1166.6s - 1170.9s] we're going to convert them into integers.
+[1170.9s - 1172.4s] I'm pretty sure you can just do this in Python,
+[1172.4s - 1175.7s] we're just basically parsed the strings for you.
+[1175.7s - 1181.4s] We don't have to worry about like, overflows, would we for like the integers?
+[1181.4s - 1185.8s] No, these are all going to be within the bounds of like a normal, you know,
+[1185.8s - 1190.1s] normal with integer like 32 bits, just a normal signed integer.
+[1190.1s - 1191.4s] You don't need to worry about overflow.
+[1191.4s - 1192.5s] That's just a detail.
+[1192.5s - 1194.9s] Okay, cool, cool.
+[1194.9s - 1196.7s] So that's the combined number.
+[1196.7s - 1200.5s] And then basically what we're going to do is, we're going to see if the combined number
+[1200.5s - 1205.9s] is at the beginning of the string of like the rest of the substring.
+[1205.9s - 1214.0s] And then if it is, we're basically going to recursively call this function
+[1214.0s - 1215.6s] with like the rest of the substring.
+[1215.6s - 1216.4s] Does that make sense?
+[1216.4s - 1218.6s] Yeah, that sounds like a good impression.
+[1218.6s - 1224.2s] Okay, so I'm just going to put this back into string.
+[1224.2s - 1225.6s] It's a little messy right here.
+[1231.5s - 1234.8s] We're worried about the casting later, but that's sure that's it.
+[1234.8s - 1235.8s] That's fine, that's fine.
+[1235.8s - 1248.2s] Okay, so string that and then we're going to see if the however long the first this
+[1248.2s - 1253.8s] combined number is in the first substring of the rest of this string.
+[1253.8s - 1254.8s] Okay.
+[1255.8s - 1261.8s] I'm just trying to think how you compare the strings in Python.
+[1261.8s - 1265.0s] I wonder if Python has a way to do it for you.
+[1265.0s - 1270.8s] I wouldn't be surprised, but I'm not that familiar with Python right now.
+[1270.8s - 1275.4s] Hmm, whatever.
+[1275.4s - 1281.0s] So let me just write this down in comments, because this is where it starts to get a little
+[1281.0s - 1284.7s] complex again, if the first.
+[1284.7s - 1289.4s] So what we could do is we could do another for loop to try to parse out that third number.
+[1289.4s - 1295.1s] So you know, if we add the three in the four and we expect to seven, you know, we could
+[1295.1s - 1298.4s] just, okay, know the width of the seven or we could like just brute force it and just
+[1298.4s - 1302.1s] like parse out one number, two number and see, okay, is this a seven?
+[1302.1s - 1303.1s] Is this a seven?
+[1303.1s - 1308.0s] Is this is, so we could just do a for loop from over the whole remaining string.
+[1308.0s - 1311.0s] That's like one, one thing we could do without actually having
+[1311.0s - 1315.1s] to check the width of like the added number, because then, you know, okay, we add them together
+[1315.1s - 1318.6s] and then, oh, yeah, yeah, the command item number, you know the width of the command number,
+[1318.6s - 1323.1s] and then you could pull that snippet out and just, yeah, yeah, I think that would be, yeah,
+[1323.1s - 1324.1s] that's fine as well.
+[1324.1s - 1327.5s] I'm trying to think, would there be any advantage doing the other way?
+[1327.5s - 1331.7s] No, no, no, I mean, I was, yeah, I'd continue with the way you're going.
+[1331.7s - 1333.7s] Okay, cool, cool, cool.
+[1333.7s - 1337.5s] Yeah, in actual interviews, when the interviewer would say something like that, that's usually
+[1337.5s - 1338.5s] a hint.
+[1338.5s - 1343.7s] And I should have just, no, you're fine, no, but I'm just like, that's usually a good
+[1343.7s - 1344.7s] sign.
+[1344.7s - 1345.7s] Pretty sure, pretty sure, pretty sure.
+[1345.7s - 1354.6s] Um, it's like, why would I talk unless I, yeah, uh, anyway, okay, so, um, so if it is
+[1354.6s - 1383.5s] number equals the string from, so which index would be, it'd be at second index,
+[1383.5s - 1388.4s] to the length of the string, yeah, this good thought process, we would be at the second
+[1388.4s - 1389.4s] index.
+[1389.4s - 1392.9s] That would kind of start the remainder, um, because we took that first snippet, that second
+[1392.9s - 1403.7s] snippet, um, and then, right, and then it would be, yeah.
+[1403.7s - 1410.2s] If they, if it's there, if the strings are equal there, then this part is additive,
+[1410.2s - 1423.3s] and we would do, oh, sorry, we would call the function again, um, the rest of the
+[1423.3s - 1424.3s] substring.
+[1424.3s - 1432.5s] Well, basically, if it's not, if they're not equal, this combined number into this, if
+[1432.5s - 1437.4s] it's not, if you don't find it in the target string, uh, it would be false here.
+[1437.4s - 1447.4s] But then, now we don't want to return false there, that's bad one.
+[1447.4s - 1451.2s] So yeah, actually, we're going to do the recursive approach.
+[1451.2s - 1457.0s] That was the right thinking, um, we just got to figure out the base cases.
+[1457.0s - 1466.4s] So I'm thinking if we had, the base case would be, if there's nothing left of the string,
+[1466.4s - 1471.8s] then we have parsed through the whole string and we found it has been additive the whole
+[1471.8s - 1472.8s] way.
+[1472.8s - 1482.6s] So we'd return through there, um, otherwise, we would just call this is additive again.
+[1482.6s - 1488.0s] And then if we never find this case, we would return false.
+[1488.0s - 1496.7s] So we don't want to have, like, if not, we want to have, if they are equal to each other,
+[1496.7s - 1510.6s] check if there's anything left in the string, uh, link the remainder, right, we'd have
+[1510.6s - 1529.7s] to check the remainder length, right, uh, there's a bug here, is that, yes, remainder
+[1529.7s - 1551.3s] length equals length, would be this, it would be from here, right, yeah, the, the bounds
+[1551.3s - 1558.9s] look, okay, so second index all the way, okay, adding on the length, okay, okay.
+[1558.9s - 1578.7s] And then just, yeah, adding that, but adding it from here, and so why were we getting
+[1578.7s - 1580.9s] the remainder length?
+[1580.9s - 1586.4s] Well, I guess we were just, if there's nothing left in the string, we're, we're basically
+[1586.4s - 1589.7s] at the end of it, right, okay, so we don't need it, we found our base case, and we've
+[1589.7s - 1593.4s] successfully gone through the whole string, and we found that has been as additive the
+[1593.4s - 1595.5s] entire way through.
+[1595.5s - 1614.9s] So if we're going to zero, oh, I do, these online formators, oh, sorry, if this, if this,
+[1614.9s - 1640.4s] true, I live, return, um, is additive for the second string, second number, uh,
+[1640.4s - 1661.0s] from the start of the first index, yep, substring, and then else would be outside of loop.
+[1661.0s - 1667.2s] If we have gone, we haven't reached one of those cases, we never found basically a number
+[1667.2s - 1673.2s] in the substring that added up, that was able to be added up, it wasn't additive, so it
+[1673.2s - 1680.5s] would return false here.
+[1680.5s - 1682.2s] Does that all make sense to you?
+[1682.2s - 1686.0s] Yeah, I think our high level approach is good.
+[1686.0s - 1690.8s] So yeah, I think we can, you know, maybe go into testing this and maybe kind of debug
+[1690.8s - 1692.6s] things if we have bugs.
+[1692.6s - 1693.6s] Yeah.
+[1693.6s - 1694.6s] Hang on.
+[1695.0s - 1700.4s] Now we have to look up how to write an is else, else live and by dawn, oh, you just
+[1700.4s - 1701.4s] do knows.
+[1701.4s - 1706.0s] Should be good there.
+[1706.0s - 1710.4s] I don't even need that else.
+[1710.4s - 1715.4s] Um, okay, cool.
+[1715.4s - 1724.6s] And then actual parsing of the stuff and by phone, okay, I'd be surprised.
+[1724.6s - 1733.5s] Okay, so how should we take it from here, kind of testing it and kind of thinking about
+[1733.5s - 1734.5s] the correctness?
+[1734.5s - 1740.9s] Well, let's just see if it works for the simplest case we have, which was 347, right?
+[1740.9s - 1744.5s] So we have, how does this console thing work?
+[1744.5s - 1745.5s] Do we call it from here?
+[1745.5s - 1749.1s] Uh, yeah, so you can just hit run and should press print out to the console.
+[1749.1s - 1750.1s] So let me see.
+[1750.1s - 1751.1s] Okay.
+[1751.1s - 1759.6s] So the object of type link of type has no length, 191 object of type of, I think string
+[1759.6s - 1765.6s] is reserved for STR, yeah, so mixed up with, oh, that's, yeah, perfect.
+[1765.6s - 1774.6s] String, string, STR, STR, I think here as well.
+[1774.6s - 1780.4s] No, that's because we're typecasting that back into it.
+[1781.4s - 1788.6s] And here, that's fine, let's do the whole problem, not realizing that.
+[1788.6s - 1794.0s] Okay, let's do the next problem.
+[1794.0s - 1802.3s] Print is out of, invalid literal for int with base 10, 25.
+[1802.3s - 1809.2s] So when we're actually trying to get the combined number into the first number, then feel
+[1809.2s - 1813.6s] free to Google any errors, you know, you don't have to know all these.
+[1813.6s - 1820.6s] Usually, I can figure them out real quick, but here we go stack overflow and be like, what
+[1820.6s - 1821.6s] is going on?
+[1821.6s - 1825.1s] Yeah, so means the string couldn't be provided into an int.
+[1825.1s - 1828.6s] Basically, what I would do is I would just print what the numbers are because it's having
+[1828.6s - 1829.6s] trouble parsing it.
+[1829.6s - 1837.7s] So print, first number, print, second number, and it didn't print anything.
+[1837.7s - 1842.6s] So I think it's because we're trying to cast an empty string to an integer.
+[1842.6s - 1845.0s] And there's, it's kind of an undefined operation.
+[1845.0s - 1846.5s] I think that's what might be happening.
+[1846.5s - 1852.9s] Uh, okay, did I mess up the splicing of the strings?
+[1852.9s - 1857.0s] You might, it might be easy to implement an auxiliary helper if the string is empty to
+[1857.0s - 1860.8s] just return zero, or I mean, I don't know if that, maybe that's not the right empty
+[1860.8s - 1861.8s] case.
+[1861.8s - 1862.8s] I'm not sure.
+[1862.8s - 1871.8s] So position two to position five, not, okay, so it's including and then up to, so we
+[1871.8s - 1885.1s] started zero plus one, let me think that we have three, yep, progress, progress, we're
+[1885.1s - 1887.1s] printing things.
+[1887.1s - 1888.8s] Okay, it's a beauty.
+[1888.8s - 1891.6s] So okay, all right, we're printing the first number.
+[1891.6s - 1896.6s] So okay, three, three, four, okay, I'm just gonna, we have a lot of extra output here,
+[1896.6s - 1900.9s] so I'm just gonna make it a little simpler, we're just gonna do the core of the function.
+[1900.9s - 1903.6s] Okay, still does that, that's awesome.
+[1903.6s - 1904.6s] Oh, it did.
+[1904.6s - 1909.0s] It may take a second to refresh, so you might want to run it again, perfect.
+[1909.0s - 1910.0s] Okay, cool.
+[1910.0s - 1919.9s] So three, three, three, so we're printing the first number.
+[1920.7s - 1922.2s] Okay, good, shit.
+[1922.2s - 1926.8s] So it's what it thought, the second number isn't indexed, right?
+[1926.8s - 1936.3s] So we do here, I think I can help on the indexing for, the first number, so the indexing
+[1936.3s - 1940.1s] for the first number looks good, it makes sense.
+[1940.1s - 1944.2s] We want to go, okay, plus one, right?
+[1944.2s - 1949.8s] Plus one, yeah, so you know, I think we can kind of bake the offset in, so we can say,
+[1950.2s - 1957.5s] you know, range from one to length of S, you know, how many numbers could we do for the first number?
+[1957.5s - 1961.5s] Minus two makes sense, but we're exclusive of that top bound, so.
+[1961.5s - 1963.9s] So my yep, so we wouldn't be there.
+[1963.9s - 1968.3s] Yeah, so we're exclusive top bound, so this goes up to length S minus two.
+[1968.3s - 1974.5s] Well, minus one, nice two, so this looks roughly correct.
+[1974.5s - 1976.8s] Let me think about this more.
+[1976.8s - 1981.9s] Less than or equal to minus two, less than or equal to, okay, so this looks correct to me.
+[1981.9s - 1983.0s] Okay, that's the first bound.
+[1983.0s - 1987.9s] So okay, we take a snippet from zero all the way up to one, so that's going to give us yield us.
+[1987.9s - 1991.2s] Excus of the one, so that'll be a zero, zero snippet on the first iteration.
+[1991.2s - 1994.9s] Okay, so I think for the first iteration, this looks good.
+[1994.9s - 1997.5s] So let's look at the second index.
+[1997.5s - 2004.2s] So we're going to want to take this from, okay, first index plus one to length of S,
+[2004.2s - 2007.3s] and then we're exclusive on the last index, because we need a third number.
+[2007.3s - 2013.0s] So these bounds look good to me, second number, and then first index, second index, this looks good.
+[2013.0s - 2017.7s] So these look good to me, this kind of snippet taking the first and second number.
+[2017.7s - 2020.9s] Okay, yeah, so we casted it.
+[2020.9s - 2023.6s] Okay, so that got parsed, right?
+[2023.6s - 2025.2s] Let's make sure you're parsed, right?
+[2025.2s - 2027.3s] Nothing stupid there.
+[2027.3s - 2030.6s] It looks like we're comparing the numbers wrong.
+[2031.6s - 2038.8s] Shripped, combine number, remainder length, S index out of bounds.
+[2038.8s - 2048.8s] So that means we are going one, two, five.
+[2048.8s - 2053.9s] The second index at that point would be what?
+[2053.9s - 2055.0s] Two.
+[2055.0s - 2057.2s] So what part are we looking at right now?
+[2057.2s - 2065.2s] So basically on line 35, when we're checking the strings, we're checking if that combine
+[2065.2s - 2072.5s] number is in, we're validating that it's in the rest of the substring.
+[2072.5s - 2082.2s] Basically there is a index out of range, so I just, that means we're going too far, trying
+[2082.2s - 2087.8s] to substring too far into the string.
+[2087.8s - 2098.0s] I don't know what the second index is, let me just, so I think this combine number calculation
+[2098.0s - 2099.2s] looks good.
+[2099.2s - 2110.0s] So we do the integer, integer, and then we cast, okay, and then, okay, so we have the
+[2110.0s - 2116.7s] combine number, okay, and then we do this if statement, so we have the combine number,
+[2116.7s - 2122.2s] okay, does this combine number equal, you know, the kind of what we expect in the remaining
+[2122.2s - 2128.1s] string, so we take the center from second index, that looks good as a lower bound there.
+[2128.1s - 2130.5s] Second index plus length, combine number looks good.
+[2130.5s - 2134.5s] So this line looks good to me, that's where it's indexing, I think that's where it's going
+[2134.5s - 2135.5s] out of bounds.
+[2135.5s - 2139.1s] Oh, interesting, okay, so, okay, we'll look at that.
+[2139.1s - 2148.6s] So, okay, and then, okay, so we have the remainder, we take from the second index plus the
+[2148.6s - 2153.6s] length of the combine number, okay, and then if that's empty, okay, then that means we
+[2153.6s - 2160.8s] decompose everything, otherwise we do this, is additive, okay, okay, and I think we might
+[2160.8s - 2168.6s] need to do a slice operator there, yeah, I think, no, I think that should have done it.
+[2168.6s - 2173.0s] But I think, because if we index into the, I think it'll give us just a single character.
+[2173.0s - 2176.2s] Oh, yeah, yeah, I was an honest place, I'm not familiar with Python.
+[2176.2s - 2178.6s] No, yeah, yeah, you're totally right, this should have been there.
+[2178.6s - 2182.1s] So then that's going to give us, from the first index on, so that's going to give us the
+[2182.1s - 2188.4s] second and third number, yeah, okay, so yeah, where I forgot where we were, where we
+[2188.4s - 2189.4s] were, airwashed.
+[2189.4s - 2193.4s] So, yeah, I think line, let me just do a check, it's line 30, so basically when we're trying
+[2193.4s - 2198.7s] to get the remainder length, it's doing the length of the second index plus the length
+[2198.7s - 2212.9s] of the combine number was trying to, yeah, so I think a way we could, we could switch this
+[2212.9s - 2218.4s] and say, you know, instead of actually taking this indexing operation that can fail, let's
+[2218.4s - 2226.7s] switch it to this, let's do, let's do second index, the second index plus, yeah, let's
+[2226.7s - 2231.2s] just operate only on the indices and then see, okay, if, from the second index divider
+[2231.2s - 2236.8s] onward plus this length of this combine number that we expect is just the whole string.
+[2236.8s - 2240.2s] If it's, yeah, if it's the whole string, that's a successful dot with decomposition, we're
+[2240.2s - 2244.5s] not even going into the territory of where we can like throw an error because we're trying
+[2244.5s - 2245.5s] to chop up a string.
+[2245.5s - 2252.5s] So, if this overflows in any manner, okay, whatever, so, you know, return to otherwise,
+[2252.5s - 2257.8s] okay, so then, yeah, now we need to think about the logic here, if combine number is equivalent
+[2257.8s - 2265.0s] to, let's play second number, so hopefully this doesn't error, okay, this return true,
+[2265.0s - 2272.8s] uncommon doesn't, so we should get true, true false, so let's see, okay, so let's pause
+[2272.8s - 2277.3s] on the debugging, let's kind of go into talking about the time and space complexity, I think
+[2277.3s - 2281.1s] I think we've gotten to a good point where we're sitting and I think we've gone through
+[2281.1s - 2284.8s] the meat of like what the approach would look like, so let's kind of talk about like the
+[2284.8s - 2289.0s] runtime and like how efficient we're being right now, so maybe you could talk about that.
+[2289.0s - 2295.8s] Yeah, so for the time complexity, it's lower bounded to n squared, when I do like the time
+[2295.8s - 2299.6s] complexity stuff, I do a pretty simple approach, you just kind of count the four loops and we're
+[2299.6s - 2304.3s] having nested one, so there's two four loops, so it's n squared, that's how I do it,
+[2304.3s - 2305.6s] usually it's usually pretty correct.
+[2305.6s - 2310.5s] Right, well, that's not always the case, but yeah, not always, yeah, which time it gets
+[2310.5s - 2311.5s] you right?
+[2311.5s - 2314.6s] Right, right, lower bounded to n squared, okay, that makes sense because, okay, we have
+[2314.6s - 2319.9s] a linear workout here, we have a linear work nested here, what would the runtime be of,
+[2319.9s - 2324.6s] you know, we're calling this recursive, this is additive recursively, how would we kind
+[2324.6s - 2328.8s] of reason about that, and we could just leave it at lower bounds, I think, I think, you
+[2328.8s - 2333.8s] know, lower bound to n squared, I'd imagine this is additive is lower bounded to, you know,
+[2333.8s - 2334.8s] okay.
+[2334.8s - 2335.8s] What's the same function?
+[2335.8s - 2341.9s] Yeah, exactly, and then, you know, right, so we'd probably be lower bounded to n squared,
+[2341.9s - 2346.3s] lower bound is like a cubic ton of complexity, something like that, I'd imagine.
+[2346.3s - 2351.9s] Yep, and then space complexity, we're not really doing anything special, so just be, we
+[2351.9s - 2360.2s] have the string, and could the combined number could be as big as the string, it could
+[2360.2s - 2364.4s] be n squared 2, or just n, I don't know about that.
+[2364.4s - 2368.1s] Alright, so I think we're good, I think let's kind of step into the meta and kind of let's
+[2368.1s - 2373.4s] talk about how you think things once, how you think you approach things and like just your
+[2373.4s - 2376.8s] initial thoughts on this question, and you can also pull in your experience from, you
+[2376.8s - 2380.4s] know, maybe being in interviews, so like just, I don't know, just, what's your meta
+[2380.4s - 2381.4s] analysis?
+[2381.4s - 2382.4s] For sure.
+[2382.4s - 2388.7s] So, I thought this question was pretty hard, anytime you're like, you know, splicing strings
+[2388.7s - 2393.8s] and substring and stuff and doing like this type of work, it gets like, it's very tedious
+[2393.8s - 2399.6s] work and it's hard to do, it's hard to talk about these types of cases, I think.
+[2399.6s - 2405.0s] Usually I'd like to ask more questions at the beginning and really have the entire approach
+[2405.0s - 2406.0s] nailed down.
+[2406.0s - 2410.7s] I like, so basically my rule is, I spent about 50% of the time asking questions, getting
+[2410.7s - 2414.8s] to make sure you fully understand the problem before you do any coding.
+[2414.8s - 2418.4s] I didn't think I'd get to do that here because it was just a different type of problem
+[2418.4s - 2424.1s] than I hoped for that approach to work for, but that was, yeah.
+[2424.1s - 2429.4s] Asking questions wise, I mean, I think I asked all the good questions.
+[2429.4s - 2433.0s] We covered the edge cases, I think there was edge cases we've been covered with like leading
+[2433.0s - 2434.0s] zeros.
+[2434.0s - 2435.0s] Yeah, we didn't talk about that.
+[2435.0s - 2439.6s] Leading zeros, we did cover overflow, whatever, you know, just pump that off, that's
+[2439.6s - 2440.6s] on issue.
+[2440.6s - 2444.8s] In a practical scenario, we could overflow pretty quickly, but yeah, we just imagined
+[2444.8s - 2445.8s] input wouldn't overflow.
+[2445.8s - 2448.9s] And then, okay, yeah, how do you think you did overall or like, what would your assessment
+[2448.9s - 2454.5s] be on like, you know, did I did good for no interview preparation?
+[2454.5s - 2455.8s] You have not seen this question.
+[2455.8s - 2456.8s] Not seen this question.
+[2456.8s - 2457.8s] I haven't worked.
+[2457.8s - 2458.8s] I literally just walked in.
+[2458.8s - 2460.3s] You have no preparation.
+[2460.3s - 2469.5s] No work with Python in the past six months, yeah, that part went well.
+[2469.5s - 2476.8s] I think this is like pretty comparable to how some of my interviews have gone, uh, yeah.
+[2476.8s - 2482.4s] I think usually when you're, I haven't been at, when I, like, interviewing for Amazon,
+[2482.4s - 2487.4s] the questions that I were asked weren't as hard as that one, but I've had some other
+[2487.4s - 2491.6s] interviews where they asked some pretty tough questions, but I'd say this is definitely
+[2491.6s - 2494.8s] like one of the harder and type of questions you're going to be asked in any of your
+[2494.8s - 2495.8s] scenarios.
+[2495.8s - 2496.8s] Right.
+[2496.8s - 2497.8s] Alright, so thank you so much for watching.
+[2497.8s - 2501.4s] If you want to practice this problem, you can practice it on interviewpen.com.
+[2501.4s - 2504.4s] We cover this problem in depth with a video lesson.
+[2504.4s - 2508.8s] You can also code along, and we have plenty of other problems on our site.
+[2508.8s - 2512.6s] So I'm going to think no for as time, and we'll do plenty of these in the future.
+[2512.6s - 2513.8s] So yeah, thanks for watching.

@@ -1,0 +1,347 @@
+SOURCE: YouTube
+VIDEO_ID: 6erP70R_NGs
+URL: https://www.youtube.com/watch?v=6erP70R_NGs
+GPU: 1
+DURATION: 2311.7s (38.5 min)
+TRANSCRIBED: 2025-11-28 09:42
+================================================================================
+
+FULL TRANSCRIPT:
+--------------------------------------------------------------------------------
+ I would let you to design the back end of an app that lets users download their data from their Facebook account. Sounds like a very useful service to have. Awesome. Yeah, I wonder why. Sounds neat. Cool. So I'm happy to dive in. I do have some clarifying questions. If that's okay, maybe we can run with them first. Just want to make sure I'm clarifying some of my assumptions. So let's see. The main use case as I understand it will be will provide some kind of a user interface that allows users request their copy of their Facebook data will out the back end service that does all of the processing prepares the data for for the user and then have sort of a front end service that lets user you that actual download and copy the data to their local environments. Yeah. Okay, great. A couple of clarifying questions that would be helpful for me. First is how fresh should this data be? Once the user sends the request, do we care about the freshness of the data? I'd like to hear you talk here some options for yeah, what would we consider here? Okay, okay, great. Then how fast do we have to respond to requests? Are we under any obligations to fulfill their their data requests within a certain period of time? Let's say that we are promised to the users that we can give them their data within a reasonable amount of time being within that data. They request the data. Yes, and then I for from a product perspective, let's say that we want to communicate whatever amount of time it's going to take. And if you have an estimate for me for how much time it would take, I'd look to your dot. Okay, okay. Yeah, we can talk through some options. Then the next question I have is do we have to include all of the data for their account or can we give them options for what data they should be able to select? Let's begin by listing out the kinds of things that they would be able to download whatever you'd like to brainstorm there. And then maybe we can talk through what would be reasonable as an MVP. Okay, yeah, sounds good. So given that we're operating within a very large application of Facebook, what assumptions are can we make about a single source of truth for data versus like having to do the data discovery piece ourselves? Talk a little bit more about the data discovery piece. Yeah, so for example, I'm sure that Facebook has as a Facebook user, I know Facebook has a ton of different services that they run on the back end, right? There's one doing post or probably some other ones for uploading your images. There might be some other ones for marketplace. And so are they keeping all of user associated data in one place or do we kind of have to discover where we have pieces about the of data about the user? Let's assume that we have to discover it. Typically these operations will be very expensive because you're spending a bunch of time gathering up large sets of data about the user and then you have to store it. Do we care about the cost? Do we care about how often a user can do that essentially? Like, if we care about the cost and how long it's going to take us and the processing part behind it, we probably want to limit. When you say we have to store it to what are we storing the together piece of their data that's ready for their download. And then we probably don't want to duplicate and generate these things on an ongoing basis. So we would like they do it when a user sends us a request to do so. And the process is also probably somewhat costly. So, you know, do we want to allow them to do this every day? Do we want to limit like how depending on the data freshness piece like we talked about? Like, yeah, yeah, want to limit how often they're storing it? I think let's let's answer that question once we've answered the data freshness piece. I think we'll have a little more clarity on what limits we can draw here. Okay. Then what do we do we as a team that's building this feature? Do we know I like what average percentage of users we expect to perform this action on a regular basis? Great question. Let's assume it's a large number, but let's say 5% of users every month requested download their data. Okay. And then I think do we know what the average size of the download will be like how average size of these archives for users or these? I don't think so. I think we might need to do some back of the map in estimates to come to an average. Okay. And then do we care what the users do with their data once they have access to it? Like how much do we care about the usability once it's in their hands? As in how readable is that data? That's right. Yeah. Got it. I don't think we care. Sorry. We don't care about that as much for for the beginning, but if you do have some thoughts about how to strike a balance there, I'd love to hear one. Okay. Great. And then so that brings me to I think my maybe final question on some of the require clarification is why are we working on this? What's like the driving force behind this feature? I'd say the primary driving force behind this paper behind this feature is giving people the power to see what they have put on their profiles on Facebook and to make it easy for them to determine what kind of control they would like to wield over that information. Yeah. So like when we think about metrics of success, how are we thinking about them? Like if we were to measure this feature at the end and whether we build a successful feature, what will we measure? Great question. I'd like to hear some of your thoughts on that. And then we can maybe talk about this when we're when we're discussing ultimately what metric we want to arrive at. Okay. Okay. All right. So let me start screen share. And is that okay for me to look sideways? Because that's where my second screen is. And I'll be able to find. Yeah. Totally fine. Okay. So hopefully you're seeing a blank whimsical board. Yeah. I see it. So I know in the beginning we said we're designing the back end system, but I think just talking through some of the front end components will be important because I think there's some assumption in what the front end does that is I think about designing the back end system. Okay. Sounds good. Okay. So let me start off by adding a little user icon. So we have this user who's going to decide that they want to start a process of downloading their Facebook data. Okay. So we're going to make an assumption that within within Facebook, there typically is some sort of a front end service that does a lot for us that initially takes in user requests that will do things like load balance, see routing users to the right data center, checking in things like authorization and authentication. I don't think we're building those services right now. So we're just going to hand wave and make some assumptions that those things already exist. Is that big? I think that's her. So I'm just going to call that out. There's a she's book front end service or load bound, like load balancing, well remitting, and then to cache arm, and send, etc. So that it just that we know that our service doesn't really need to worry about that. Maybe not. There's someone else who's going to take care of that for us. So we're the first, the first thing we're going to see is we're going to, at this point, hopefully we know that it is the right user. You know, they have an account and what we're building is this patient service that will receive a request. So I'm going to suggest some things. So I think it will be important for us to allow users to specify the date range for the date array on the make. The reasoning behind that is it takes a lot of work to gather up all of the data, especially, you know, we know that some accounts, let's make assumptions, some accounts pretty old, they have a lot of data. So I think it would be beneficial for us to be able to limit how much data probably got it in a request. Got it. Okay. So are you envisioning this as something where the user does not have an option to download all the data, or if they want to do that, they just have to specify like the first date that they opened their account to that. I would say that it's an option, but they should certainly have an option to download everything. So okay. Yeah, it's easy for us to do less work essentially if we can. So we would have the user, we have a date range, and I will say that probably within our, you know, again, an assumption on what clarify is we probably have a lot of extra user tied data that we maybe have some inference data. We probably have a lot of like ML and stuff like that that we added additional data on top of users. They want to see that if they're super curious, but my guess is for most users, like they just want to give their pictures and their posts and maybe some other stuff. So giving them an option of filtering what they want to download again will allow us to just do less work, I think. Yeah. Yeah, I like that reasoning. And then that filtered. So yeah. Sometimes, you know, users might not know also they should be able to get all of it, but I think just for the sake of, again, doing less work, this will help us do less work. I'm making a ton of other assumptions that we'll talk for a minute, but so this is, you know, there's a bunch of these things because we're going to be taking a lot of requests. Another thing that we might consider as a non-functional requirement is, well, there is already a lot of authorization and not authentication stuff that Facebook does for accounts. For these particular services that access personal, like a lot of user data in one go, we might actually want to add some additional checks on top or secure our service in another way. So I don't know if that would be something that you think is required for this initial phase of the launch, but something for us to consider as a security, this is probably a high sensitivity service that we need to add additional security. You got it. Yeah. I would say, I think that's fair. I like the reasoning that you've given, potentially one additional security check, just to ensure that the user is actually who they say they are. I think that's a reasonable thing to have in place, especially if you're downloading personal information. Yeah. Okay. So, cool. Other things that I'm thinking about that I ask the question about that maybe we should talk about. So scalability, assuming that, you know, 5% of our users are using the service. You know, if we know the size of our active users on Facebook, we can calculate that amount and then determine how many machines we need. Yeah. Also our application service as well as data processing if we can roughly estimate the kind of the amount of data you can check out holds. So we'll take that into account. Some other performance implications. So the only other thing I say is that we might be under regulatory obligations, especially due to things like GDPR to deliver it at a certain amount of time. Did it? Or some accounts gathering out the data might take a really long period of time. So we probably need to make a decision what happens in those cases and how we want to communicate to those users, especially if we have any kind of outgations to do so. Okay. Yeah. Let's communicate to those users the size of the data that they're downloading or what else would you expect it? Yeah, completion timeline. Yes, that's fair. Okay. Any other things to consider here? So yeah, on a high level, that's kind of what the some of the things we would have to think through. Okay. So I think the main pieces that we'll want our service to do is take in the requests. And then let's talk a little bit about the data discovery piece. We have some kind of a mechanism by which we can discover what data we can have about every every user, right? So we either need a single source of truth for mapping all the services that could potentially touch user data or then geo with user data. Maybe there is some kind of a data store that gives us that information or another type of registry. So if there is, that's great. That's one of the ways we can use that for discovery. That kind of thing doesn't exist. Then frankly, we probably need to do some like human work first to figure out what are the required data pieces that we need to gather. And then if we're operating within a company, like Facebook, understand what those services are and then create a contract with those services so that they provide us data in the formats that we need. Got it. Let's assume that we do have that mapping done and ready for you to use. Right. So then we would, that would be our source of truth. We would consult that mapping. So, so some services mapping. There's some kind of a service. So we would use that. We would use that mapping. And based on that, by or off, I don't, my curvy little data lines are very interesting, but yeah. And fire off some requests to get data. Any questions so far? No questions so far. So we'll have a couple of these services. I'm just going to call them a data service because they're just going to process and return or, you know, gather up some data that we need. Mm-hmm. Nice. We're going to ask them these services for data. And they're going to do two things, I think. One, they're going to send us back a completion event once they're done. So we can keep track of that. These things are getting a little bit crowded. So, and then they are also. Okay. So once, you know, assuming that these services are going to gather up some data and dump it somewhere, we probably need to do some post-processing once all the data is gathered up so that we can actually give it to the user in a format that they want because I'm assuming they don't want a bunch of like object in whatever format we get it back. So maybe, maybe that's fine, but you know, also like there's probably a bunch of duplicate data and data just like maybe that doesn't make sense. So you'd like the probably want to do some, um, processing. And so here we have a data processing phase. We have a couple of these. Can you try it? Okay. So they're going to place the data somewhere. And depending on what, you know, how quickly we need to get this down, we could use something like my previous experience. We could use something like HDFS and map reduced. Our first pre-processed data the way we want. And then actually reduce it to, um, to what we need. And, and then kind of a critical phase here is that when the data is all gathered up, it's going to be a large thing. So we probably want to repress it somehow and then store it at a location where the user can download it from. And during the download phase, a couple of things that will be important for us. Again, given the size of the data likely, we need some kind of a, a place where they would already take scare of things like restarting the download, downloading data and chunks. We have to know, we end with because not everyone has high bandwidth. So if we have such a, such a infrastructure at Facebook, which let's assume we do because we're probably not the only service that needs to do this sort of thing, then we're just going to store it at that location at that location so that users can download it from there. And do you have any thoughts about how long we would want to keep it at that location? Yeah. So I think that kind of goes, uh, goes hand in hand with a question of how often we'd want to do this. And that goes hand in hand with like how, how fast do we have to fulfill some of these requests? So let's say we have, you know, whatever, 45 days to fulfill a request. I know that's going to be a good time. That's probably not very realistic. So let's go back and say we have 10 days to fulfill a data request. Okay. So if it takes 10 days to generate some of these like larger data, data, data pieces and say we probably want to store it for 10 days at least. And because all of these processes will be asynchronous, one, they're probably like when you think about the data request, they're probably not on the critical path. Like they're not the same priority as let's say a new post or, you know, viewing an image or whatnot. So I think they're lower priority requests. We can kind of run them in the background as background jobs for something services. So we, yeah, we just like I think it's fine for us to leave them there for let's say 30 days. And then delete them out. And then users can request a fresher version of 30 days. They need to. What do you think are possible trade-offs of us taking longer with these requests versus prioritizing them and getting them done faster? I'm just like users don't have become impatient and don't have access to the download of their data. Okay. So got us to our increase. How do you want to handle the data that gets added to their profile in that period of time? I think we could have a couple of approaches. One, I think it would be hard, hard for us to guarantee any freshness for something that's async. So let's say, have multiple data sources from one, we might be, you know, depending on how quickly it can fulfill the request. It might finish in the first hour from, you know, the request that we get from the user. We're in service. Might take three days, right? So at that point, the first job already finished. And we don't like it's already kind of stale or data. So I think we just wouldn't be able to guarantee the freshness of the data. And so the request is finished. So I think the thing that the user can do is request another version of their archive. That would be the trade-off that they're making. Got it. And if we say we're keeping the data you said for 30 days, then I guess the last question then becomes how long do we want people to, or how often do we want people to be able to do that? Yeah. So my suggestion would be that they can do this every 30 days. Every, okay, got it. It would go hand in hand with, you know, if, for example, if we hear back from users that that time frame is too long, I think it is kind of hand in hand with how often, how quickly we delete their archive is like kind of a questiony one. I see, I see. So and basically there's a trade-off between how long we take to fulfill their request, how long we keep the data, the freshness of that data, and how often they can, they can do this, right? Okay, I see. I think, I think the reasoning makes sense. So let's stick with the numbers that you gave for it for this one. Okay. Okay. Great. Okay. These are, yeah, great questions. And I think there are qualifications and I just want to reiterate that I think we should be listening and hearing from our users and in the timing doesn't, doesn't make sense for them. I think some of the pieces we should design with that in mind. That's fair. Yeah. Scaling them in a way that we could make it faster if we needed to. But I do think there's probably a limit in terms of how fast we can fulfill some of these requests. Yeah. Okay. So we got our data processing. It's going to create, give us, you know, create some data. It's going to put it in a data store. Okay. And then so we got the completion request. We probably want data processing requests to come to back to our, yeah. Oops. Now Twitter wanted to do. I don't know. We wanted to just come back to our application. So our application service would need to keep track of all jobs that have begun, like essentially all of the requests that we have started. And then we need to keep track of as it sends the request to data service. I pay get the data once we get the completion request from the completion event from the data service. It also probably want to keep track where we need to keep track of all the data processing. So once the data processing completes so that we can notify our users that their data is ready for them to to download. Another assumption that we're going to make is that there is some kind of notification service at Facebook because we send out a lot of notifications to our users. So if we don't have that kind of registration that needs to do that all together and we don't want to be in the business of doing that. So somewhere over here is a situation service. So once everything is completed, we will say, hey, could you notify our users that their data is ready and then the notification service will send a notification. Oh, sorry. Is there a really far way to our user letting them know that their data is ready? And then they would have to go through another flow where they would go through the again, log into Facebook, go to the place where they can actually see that the data is ready and then said, what do we call us to our data storage and then actually download our view through our data? So where would the failsafes live for, let's say there's a failure for some reason in the middle of collecting the data that is required for one packet, right? Where would that live and what were elementary things could we have in place for, yeah, failsafes do we have in place for that? That's great. That's a great question and something I should have talked about. So I think our application service is kind of that main service that is there of all of that. And we would have to decide on either retry mechanism or if we are going to fulfill the user request with incomplete data. I think most of these things we probably can't. So that's one thing that I haven't touched on at all is that we need some kind of a logging mechanism as well, just to lock things for both metrics as well as, right? So if we ever need to like debug our system and say, hey, where did the failure occur? What happened? Yeah, yeah. Of the process that happened and then two for metrics. So we'd probably want to do monitoring of average job completion time. We'd probably want to do some alerting and monitoring for jobs that have taken over a certain period of time so that we could debug the system. We probably want to have some retry mechanism for every step of this flow. We need flow fails. We probably want to retry a couple of times before we actually start manual interference. So the more we can automate these pieces within the system, the better, but sure, like any error, they can occur and we just have to make a decision of what we want to do about that. Yeah. Okay. I think that's fair. Let me see if there's other things that I should think about. Yeah. And I think we, you know, we haven't really talked about any kind of testing. I think with these sort of systems, there is a lot of testing that you have to do. And one of the things that you are relying a lot in, for example, in this architecture, you're relying a lot on other services to complete the requests, right? So if let's say the data service doesn't return you a complete data set, but doesn't return your failure, those will be the kinds of things that you have to decide how you want to test and how you want to handle failures for because you don't really own the service. And so you might not have full visibility in the kinds of things that are being returned to you and whether they're complete or not or true or not. Yeah. Yeah, that's fair. I think one last question I have. So we were talking about the tradeoff between how fast we want to be able to fulfill a request, how long we're keeping the data freshness. So let's say we do get feedback from consumers that 10 days just wait too much time. We want to start prioritizing freshness, not just for consumers satisfaction, but also legally. We are supposed to fulfill these requests within, let's say GDPR changes and it says that we have to be able to fulfill this request within 48 hours of someone asking for it. What would this system, if anything, what would change in the system in order to accommodate that? Yeah. So one of the things that I talked a lot about is if we allow users to set date ranges and filtered like filter the list of data, especially for date ranges, you can probably do a lot more in parallel if you do chunked filter and data. So we want to figure out, for example, if gathering up all of the data by one data service takes too long, we probably want to get it chunked or like how more services in parallel running for different date ranges. Design, commitment, or date range filtering, we can scale, but all of I think all of our scale will be focused on essentially getting all of the relevant data for the user. You got it. Okay. Not at all. And we can, you know, we might be able to like, let's say we, we're not actually probably, they're probably the processing pieces. Oh, it's just because it's going to be working through a pretty large data set. There's probably stations we want to do there. So if we're doing more async processing, let's let's say on like HDFS, we might want to see if there's other services that are more like, I think Apache Spark might be able to handle like is more costly, but can handle this a lot of master. So just kind of depending on what the current infrastructure is and if there are other options for us to do more processing and data faster, got it. Okay. So chunking according to the chunking in different date ranges, basically within the ones that they specified. Yeah. Yeah. Would, would being able to consolidate. So within each of those date ranges, I assume there's going to be some searching of some gathering of photos, some gathering of posts, some gathering of, I don't know, your friend connection that we're made in that date range. Does that, does that slow things down or are there more optimizations that we can make by consolidating those different types of data that are gathered? Yeah. I mean, I think we're making a lot of like, I think when I say these things, I make a lot of assumptions about how the data is started in the first place. So the data is, you know, if it's already like, it's started differently and this would be a lot of query time and like shuffling data from one thing to another, then we consider other ways of optimizing how we gather, how we gather the data. Yeah. If like speed of the utmost concern, we could probably also just have some of these services start. Like, if it's only 5% of the user, so I was going to say like, we could see if we just want to prep some of these archives, right? For some of our, for some of our users, but I think if it's only 5% of our users, that's really expensive because we're not going to be able to like necessarily guess which account. If it was like 80% of our users are going to do this, then we could just start prepping these data dumps ahead of time and then when the user requests it, it's already available. So it would be super easy. But with only 5% of our users, I think anything that we would try to guess that would be just wrong. Okay. Yeah. Okay. I think that's there. Do you have any closing thoughts? Yeah. I mean, I think there's one thing that we didn't touch on at all is like the user experience of using this data. So if we about for looking optimization, that's probably one of one of the things that I would think about how we can make better is how users experience once they have access to all of this wonderful data, how they do with it and thinking about how how we can build a nicer service for them there. Yeah. It's pretty interesting. Yeah. I mean, I think this is a good place to stop and you're right. I think if we were to work on this further, future considerations would be, well, why are users downloading this in the first place? What are they going to use it for? What is the best format to present them this data with? And one of the questions you asked initially, like what are assumptions that we're making about? What is a metric of success here? Is it just how many people requested download their data? Or is it whether if someone says that a request, do they actually download come back and download the data that they have requested for? So yeah, I think that's a consideration that we would dive a little bit deeper into if we were if we were working on this. So I'd love to hear your thoughts, Tonya. How do you think that went? I think it went well. Yeah, just a ton to consider and a ton of assumptions, I think, being made in the design phase. So definitely feels a little like the more you know kind of the better system you can design. But yeah, overall, I think a good starting point. Yeah, yeah, I think so. A couple of things that I noticed that you did really well. Like you said, there's a lot of assumptions that you have to make with the system that a company like Meadow or Facebook would have, right? You don't know how their internal shorting system work. You don't know how their data is distributed. You have no idea. You're just kind of guessing. And what I think you did really well was asking very, very specific questions at the beginning to try and get as much information as you can, as much as information that is reasonable to get in that amount of time, right? And otherwise, stating whatever assumption that you are making if there are holds that you feel like you're kind of glossing over, which with whatever you think is going on in Facebook system. I think that's totally fair. And it also, as you think out loud about these things, it showed the interviewer that you are not only consider, you not only know the gaps in your knowledge, but you're filling them in with reasonable assumptions that work for for the situation at hand. I think that's great. Number two, there were a lot of things that I didn't even have to ask you to follow up because you got there pretty beat me to the punch basically in addressing something pretty quickly. And I think that's fantastic. It just shows the interviewer that you know how to drive the discussion. And you know what is needed to be able to answer a question that is this big and complex. Yeah, I think those were those were things that you did really well. I think it's always a great sign for for media interviewer when I am asked questions right at the beginning that I'm stumped by. I'm like, hi, I don't even think about that when you ask the question about metrics of success. And like, actually, this would help in designing the right system and figuring out what trade-offs we want to make. But yeah, if we don't, if I don't have an answer for you at the moment, I think it's a great sign that you know what you're talking about. And it's a signal that you're aware that you have experience in this kind of work. And then you're aware of how important a question like that is in the direction of of a systems design. So yeah, thank you. I didn't think. Sorry, I said that again. Thank you for the feedback. Of course. I think this is going to be super valuable for everyone who's watching this at home. So thank you very much for your time. And yeah, and good luck with your interview.
+
+TIMESTAMPED SEGMENTS:
+--------------------------------------------------------------------------------
+[0.0s - 4.9s] I would let you to design the back end of an app that lets users download their data from their
+[4.9s - 13.6s] Facebook account. Sounds like a very useful service to have. Awesome. Yeah, I wonder why.
+[15.1s - 21.1s] Sounds neat. Cool. So I'm happy to dive in. I do have some clarifying questions. If that's okay,
+[21.1s - 25.5s] maybe we can run with them first. Just want to make sure I'm clarifying some of my assumptions.
+[25.5s - 34.2s] So let's see. The main use case as I understand it will be will provide some kind of a user interface
+[34.2s - 41.6s] that allows users request their copy of their Facebook data will out the back end service that
+[41.6s - 47.9s] does all of the processing prepares the data for for the user and then have sort of a front end
+[47.9s - 52.6s] service that lets user you that actual download and copy the data to their local environments.
+[53.2s - 59.7s] Yeah. Okay, great. A couple of clarifying questions that would be helpful for me. First is
+[59.7s - 66.0s] how fresh should this data be? Once the user sends the request, do we care about the
+[66.0s - 72.5s] freshness of the data? I'd like to hear you talk here some options for yeah, what would we
+[72.5s - 79.5s] consider here? Okay, okay, great. Then how fast do we have to respond to requests? Are we under
+[79.5s - 84.0s] any obligations to fulfill their their data requests within a certain period of time?
+[84.9s - 92.4s] Let's say that we are promised to the users that we can give them their data within a reasonable
+[92.4s - 99.2s] amount of time being within that data. They request the data. Yes, and then I for from a product
+[99.2s - 102.8s] perspective, let's say that we want to communicate whatever amount of time it's going to take.
+[102.8s - 106.6s] And if you have an estimate for me for how much time it would take, I'd look to your dot.
+[106.6s - 116.5s] Okay, okay. Yeah, we can talk through some options. Then the next question I have is do we have
+[116.5s - 123.7s] to include all of the data for their account or can we give them options for what data they should
+[123.7s - 130.6s] be able to select? Let's begin by listing out the kinds of things that they would be able to
+[130.6s - 136.6s] download whatever you'd like to brainstorm there. And then maybe we can talk through what would
+[136.6s - 148.5s] be reasonable as an MVP. Okay, yeah, sounds good. So given that we're operating within a very
+[148.5s - 156.2s] large application of Facebook, what assumptions are can we make about a single source of truth for
+[156.2s - 162.6s] data versus like having to do the data discovery piece ourselves? Talk a little bit more about
+[162.6s - 168.4s] the data discovery piece. Yeah, so for example, I'm sure that Facebook has as a Facebook user,
+[168.4s - 172.4s] I know Facebook has a ton of different services that they run on the back end, right? There's one
+[172.4s - 179.3s] doing post or probably some other ones for uploading your images. There might be some other ones
+[179.3s - 186.2s] for marketplace. And so are they keeping all of user associated data in one place or do we kind
+[186.2s - 193.0s] of have to discover where we have pieces about the of data about the user? Let's assume that we
+[193.0s - 199.0s] have to discover it. Typically these operations will be very expensive because you're spending a
+[199.0s - 205.1s] bunch of time gathering up large sets of data about the user and then you have to store it.
+[205.3s - 213.5s] Do we care about the cost? Do we care about how often a user can do that essentially? Like,
+[213.5s - 217.3s] if we care about the cost and how long it's going to take us and the processing part behind it,
+[217.3s - 223.8s] we probably want to limit. When you say we have to store it to what are we storing the
+[224.8s - 231.7s] together piece of their data that's ready for their download. And then we probably don't want to
+[231.8s - 236.8s] duplicate and generate these things on an ongoing basis. So we would like they do it when a user
+[236.8s - 243.7s] sends us a request to do so. And the process is also probably somewhat costly. So, you know,
+[243.7s - 248.5s] do we want to allow them to do this every day? Do we want to limit like how depending on the
+[248.5s - 253.8s] data freshness piece like we talked about? Like, yeah, yeah, want to limit how often they're storing it?
+[253.8s - 258.6s] I think let's let's answer that question once we've answered the data freshness piece. I think
+[258.6s - 262.4s] we'll have a little more clarity on what limits we can draw here. Okay.
+[263.4s - 271.3s] Then what do we do we as a team that's building this feature? Do we know I like what average percentage
+[271.3s - 279.9s] of users we expect to perform this action on a regular basis? Great question. Let's assume it's a
+[279.9s - 285.4s] large number, but let's say 5% of users every month requested download their data.
+[285.9s - 298.2s] Okay. And then I think do we know what the average size of the download will be like how
+[299.0s - 306.2s] average size of these archives for users or these? I don't think so. I think we might need to do
+[306.2s - 313.2s] some back of the map in estimates to come to an average. Okay. And then do we care what the
+[313.3s - 319.4s] users do with their data once they have access to it? Like how much do we care about the usability
+[319.4s - 327.9s] once it's in their hands? As in how readable is that data? That's right. Yeah. Got it. I don't think
+[327.9s - 333.8s] we care. Sorry. We don't care about that as much for for the beginning, but if you do have some
+[333.8s - 339.0s] thoughts about how to strike a balance there, I'd love to hear one. Okay. Great. And then so that
+[339.0s - 344.6s] brings me to I think my maybe final question on some of the require clarification is why are we
+[344.6s - 349.9s] working on this? What's like the driving force behind this feature? I'd say the primary driving
+[349.9s - 355.9s] force behind this paper behind this feature is giving people the power to see what they have put
+[355.9s - 363.1s] on their profiles on Facebook and to make it easy for them to determine what kind of control they
+[363.1s - 371.1s] would like to wield over that information. Yeah. So like when we think about metrics of success,
+[371.1s - 376.3s] how are we thinking about them? Like if we were to measure this feature at the end and whether
+[376.3s - 382.5s] we build a successful feature, what will we measure? Great question. I'd like to hear some of your
+[382.5s - 386.2s] thoughts on that. And then we can maybe talk about this when we're when we're discussing
+[387.1s - 397.4s] ultimately what metric we want to arrive at. Okay. Okay. All right. So let me start screen share.
+[397.4s - 401.0s] And is that okay for me to look sideways? Because that's where my second screen is. And I'll be
+[401.0s - 409.1s] able to find. Yeah. Totally fine. Okay. So hopefully you're seeing a blank whimsical board.
+[409.8s - 415.2s] Yeah. I see it. So I know in the beginning we said we're designing the back end system,
+[415.2s - 419.4s] but I think just talking through some of the front end components will be important because I
+[419.4s - 426.2s] think there's some assumption in what the front end does that is I think about designing the back end
+[426.2s - 437.8s] system. Okay. Sounds good. Okay. So let me start off by adding a little user icon.
+[437.8s - 447.2s] So we have this user who's going to decide that they want to start a process of downloading
+[447.2s - 456.6s] their Facebook data. Okay. So we're going to make an assumption that within within Facebook,
+[457.4s - 462.9s] there typically is some sort of a front end service that does a lot for us that initially takes
+[462.9s - 469.8s] in user requests that will do things like load balance, see routing users to the right data center,
+[471.8s - 478.7s] checking in things like authorization and authentication. I don't think we're building those services
+[478.7s - 483.5s] right now. So we're just going to hand wave and make some assumptions that those things already
+[483.5s - 491.7s] exist. Is that big? I think that's her. So I'm just going to call that out. There's a she's book
+[492.8s - 501.5s] front end service or load bound, like load balancing, well remitting,
+[502.5s - 512.6s] and then to cache arm, and send, etc. So that it just that we know that our service doesn't
+[512.6s - 518.4s] really need to worry about that. Maybe not. There's someone else who's going to take care of that
+[518.4s - 528.2s] for us. So we're the first, the first thing we're going to see is we're going to, at this point,
+[528.2s - 532.7s] hopefully we know that it is the right user. You know, they have an account
+[536.2s - 547.5s] and what we're building is this patient service that will receive a request.
+[547.8s - 558.6s] So I'm going to suggest some things. So I think it will be important for us to allow users to
+[558.6s - 565.0s] specify the date range for the date array on the make. The reasoning behind that is it takes a
+[565.0s - 570.5s] lot of work to gather up all of the data, especially, you know, we know that some accounts,
+[570.5s - 575.2s] let's make assumptions, some accounts pretty old, they have a lot of data. So I think it would
+[575.4s - 582.6s] be beneficial for us to be able to limit how much data probably got it in a request.
+[583.4s - 588.6s] Got it. Okay. So are you envisioning this as something where the user does not have an option
+[588.6s - 593.0s] to download all the data, or if they want to do that, they just have to specify like the first
+[593.0s - 599.6s] date that they opened their account to that. I would say that it's an option, but they should
+[599.6s - 607.9s] certainly have an option to download everything. So okay. Yeah, it's easy for us to do less work
+[607.9s - 618.6s] essentially if we can. So we would have the user, we have a date range, and I will say that
+[618.6s - 626.6s] probably within our, you know, again, an assumption on what clarify is we probably have a lot of
+[626.9s - 636.7s] extra user tied data that we maybe have some inference data. We probably have a lot of like
+[638.1s - 644.2s] ML and stuff like that that we added additional data on top of users. They want to see that if
+[644.2s - 649.9s] they're super curious, but my guess is for most users, like they just want to give their pictures
+[649.9s - 657.4s] and their posts and maybe some other stuff. So giving them an option of filtering what they want
+[657.4s - 664.2s] to download again will allow us to just do less work, I think. Yeah. Yeah, I like that reasoning.
+[667.4s - 671.8s] And then that filtered. So yeah.
+[672.3s - 680.9s] Sometimes, you know, users might not know also they should be able to get all of it, but I think
+[681.9s - 689.6s] just for the sake of, again, doing less work, this will help us do less work. I'm making a ton of
+[689.6s - 698.9s] other assumptions that we'll talk for a minute, but so this is, you know, there's a bunch of these
+[698.9s - 701.8s] things because we're going to be taking a lot of requests.
+[705.8s - 714.2s] Another thing that we might consider as a non-functional requirement is, well,
+[714.8s - 719.4s] there is already a lot of authorization and not authentication stuff that Facebook does for
+[719.4s - 726.8s] accounts. For these particular services that access personal, like a lot of user data in one go,
+[726.8s - 734.2s] we might actually want to add some additional checks on top or secure our service in another way.
+[734.2s - 740.2s] So I don't know if that would be something that you think is required for this initial
+[740.2s - 745.0s] phase of the launch, but something for us to consider as a security, this is probably a high
+[745.0s - 749.8s] sensitivity service that we need to add additional security. You got it. Yeah. I would say,
+[750.7s - 756.0s] I think that's fair. I like the reasoning that you've given, potentially one additional
+[756.0s - 760.9s] security check, just to ensure that the user is actually who they say they are. I think that's
+[760.9s - 765.7s] a reasonable thing to have in place, especially if you're downloading personal information. Yeah.
+[766.6s - 775.3s] Okay. So, cool. Other things that I'm thinking about that I ask the question about that maybe
+[775.3s - 781.0s] we should talk about. So scalability, assuming that, you know, 5% of our users are using the
+[781.0s - 789.8s] service. You know, if we know the size of our active users on Facebook, we can calculate that
+[789.8s - 795.2s] amount and then determine how many machines we need. Yeah. Also our application service as well
+[795.2s - 799.5s] as data processing if we can roughly estimate the kind of the amount of data you can check
+[799.5s - 806.9s] out holds. So we'll take that into account. Some other performance implications. So the only
+[806.9s - 814.9s] other thing I say is that we might be under regulatory obligations, especially due to things
+[814.9s - 822.0s] like GDPR to deliver it at a certain amount of time. Did it? Or some accounts gathering out the
+[822.0s - 826.9s] data might take a really long period of time. So we probably need to make a decision what happens
+[826.9s - 830.4s] in those cases and how we want to communicate to those users, especially if we have any kind of
+[830.4s - 837.2s] outgations to do so. Okay. Yeah. Let's communicate to those users the size of the data that they're
+[837.2s - 843.3s] downloading or what else would you expect it? Yeah, completion timeline. Yes, that's fair.
+[846.0s - 853.0s] Okay. Any other things to consider here? So yeah, on a high level, that's kind of what the
+[853.0s - 857.8s] some of the things we would have to think through. Okay. So I think the main pieces that we'll
+[857.8s - 863.8s] want our service to do is take in the requests. And then let's talk a little bit about the data
+[863.8s - 872.4s] discovery piece. We have some kind of a mechanism by which we can discover what data we can have
+[872.4s - 880.8s] about every every user, right? So we either need a single source of truth for mapping all the
+[880.8s - 886.6s] services that could potentially touch user data or then geo with user data. Maybe there is
+[889.4s - 894.4s] some kind of a data store that gives us that information or another type of registry. So if there
+[894.4s - 899.8s] is, that's great. That's one of the ways we can use that for discovery. That kind of thing
+[899.8s - 906.5s] doesn't exist. Then frankly, we probably need to do some like human work first to figure out what
+[906.6s - 912.7s] are the required data pieces that we need to gather. And then if we're operating within a company,
+[912.7s - 919.0s] like Facebook, understand what those services are and then create a contract with those services so
+[919.0s - 926.8s] that they provide us data in the formats that we need. Got it. Let's assume that we do have that
+[926.8s - 933.8s] mapping done and ready for you to use. Right. So then we would, that would be our source of truth.
+[934.7s - 952.8s] We would consult that mapping. So, so some services mapping. There's some kind of a service. So we
+[952.8s - 976.1s] would use that. We would use that mapping. And based on that, by or off, I don't, my curvy
+[976.1s - 990.9s] little data lines are very interesting, but yeah. And fire off some requests to get data.
+[992.1s - 999.8s] Any questions so far? No questions so far. So we'll have a couple of these services.
+[999.8s - 1010.6s] I'm just going to call them a data service because they're just going to process and return or,
+[1010.6s - 1013.4s] you know, gather up some data that we need.
+[1014.2s - 1014.6s] Mm-hmm.
+[1025.6s - 1028.8s] Nice. We're going to ask them these services for data.
+[1031.3s - 1040.2s] And they're going to do two things, I think. One, they're going to send us back a completion event
+[1040.2s - 1043.4s] once they're done. So we can keep track of that.
+[1047.4s - 1049.1s] These things are getting a little bit crowded.
+[1052.5s - 1057.0s] So, and then they are also.
+[1061.7s - 1066.5s] Okay. So once, you know, assuming that these services are going to gather up some data and
+[1066.6s - 1071.4s] dump it somewhere, we probably need to do some post-processing once all the data is gathered up so
+[1071.4s - 1075.4s] that we can actually give it to the user in a format that they want because I'm assuming they don't
+[1075.4s - 1086.5s] want a bunch of like object in whatever format we get it back. So maybe, maybe that's fine,
+[1086.5s - 1090.5s] but you know, also like there's probably a bunch of duplicate data and data just like maybe that
+[1090.6s - 1099.8s] doesn't make sense. So you'd like the probably want to do some, um, processing. And so
+[1101.6s - 1104.0s] here we have a data processing phase.
+[1106.2s - 1115.2s] We have a couple of these. Can you try it? Okay. So they're going to place the data somewhere.
+[1116.1s - 1123.7s] And depending on what, you know, how quickly we need to get this down, we could use something like
+[1125.2s - 1129.3s] my previous experience. We could use something like HDFS and map reduced.
+[1131.3s - 1138.6s] Our first pre-processed data the way we want. And then actually reduce it to, um, to what we need.
+[1139.5s - 1147.2s] And, and then kind of a critical phase here is that when the data is all gathered up,
+[1148.2s - 1156.0s] it's going to be a large thing. So we probably want to repress it somehow and then store it at a
+[1156.0s - 1161.2s] location where the user can download it from. And during the download phase, a couple of things
+[1161.2s - 1166.2s] that will be important for us. Again, given the size of the data likely, we need some kind of a,
+[1167.0s - 1172.3s] a place where they would already take scare of things like restarting the download, downloading data
+[1172.3s - 1182.6s] and chunks. We have to know, we end with because not everyone has high bandwidth. So if we have
+[1182.6s - 1188.8s] such a, such a infrastructure at Facebook, which let's assume we do because we're probably not
+[1188.8s - 1193.0s] the only service that needs to do this sort of thing, then we're just going to store it at that
+[1193.0s - 1199.0s] location at that location so that users can download it from there. And do you have any thoughts
+[1199.0s - 1206.6s] about how long we would want to keep it at that location? Yeah. So I think that kind of goes, uh,
+[1206.6s - 1212.2s] goes hand in hand with a question of how often we'd want to do this. And that goes hand in hand
+[1212.2s - 1218.8s] with like how, how fast do we have to fulfill some of these requests? So let's say we have, you know,
+[1218.9s - 1222.8s] whatever, 45 days to fulfill a request. I know that's going to be a good time. That's probably not
+[1222.8s - 1232.4s] very realistic. So let's go back and say we have 10 days to fulfill a data request. Okay. So if
+[1232.4s - 1240.4s] it takes 10 days to generate some of these like larger data, data, data pieces and say we probably
+[1240.5s - 1249.4s] want to store it for 10 days at least. And because all of these processes will be asynchronous,
+[1250.1s - 1254.8s] one, they're probably like when you think about the data request, they're probably not on the
+[1254.8s - 1261.8s] critical path. Like they're not the same priority as let's say a new post or, you know, viewing
+[1261.8s - 1266.2s] an image or whatnot. So I think they're lower priority requests. We can kind of run them in the
+[1266.2s - 1275.6s] background as background jobs for something services. So we, yeah, we just like I think it's fine
+[1275.6s - 1281.4s] for us to leave them there for let's say 30 days. And then delete them out. And then users can
+[1281.4s - 1287.4s] request a fresher version of 30 days. They need to. What do you think are possible trade-offs of us
+[1288.4s - 1293.0s] taking longer with these requests versus prioritizing them and getting them done faster?
+[1293.0s - 1303.1s] I'm just like users don't have become impatient and don't have access to the download of their data.
+[1303.8s - 1313.4s] Okay. So got us to our increase. How do you want to handle the data that gets added to their
+[1313.4s - 1321.2s] profile in that period of time? I think we could have a couple of approaches. One, I think it would
+[1321.2s - 1327.0s] be hard, hard for us to guarantee any freshness for something that's async. So let's say,
+[1327.8s - 1332.9s] have multiple data sources from one, we might be, you know, depending on how quickly it can fulfill
+[1332.9s - 1339.9s] the request. It might finish in the first hour from, you know, the request that we get from the user.
+[1339.9s - 1346.3s] We're in service. Might take three days, right? So at that point, the first job already finished.
+[1347.0s - 1352.2s] And we don't like it's already kind of stale or data. So I think we just wouldn't be able to
+[1352.2s - 1358.3s] guarantee the freshness of the data. And so the request is finished. So I think the thing that
+[1358.3s - 1362.3s] the user can do is request another version of their archive. That would be the trade-off that they're
+[1362.3s - 1370.2s] making. Got it. And if we say we're keeping the data you said for 30 days, then I guess the last
+[1370.2s - 1375.9s] question then becomes how long do we want people to, or how often do we want people to be able to
+[1375.9s - 1386.9s] do that? Yeah. So my suggestion would be that they can do this every 30 days.
+[1387.5s - 1394.4s] Every, okay, got it. It would go hand in hand with, you know, if, for example, if we hear back
+[1394.4s - 1402.5s] from users that that time frame is too long, I think it is kind of hand in hand with how often,
+[1402.5s - 1408.6s] how quickly we delete their archive is like kind of a questiony one. I see, I see. So
+[1409.5s - 1414.8s] and basically there's a trade-off between how long we take to fulfill their request, how long we
+[1414.8s - 1420.6s] keep the data, the freshness of that data, and how often they can, they can do this, right?
+[1421.9s - 1426.4s] Okay, I see. I think, I think the reasoning makes sense. So let's stick with the numbers that you
+[1426.5s - 1433.9s] gave for it for this one. Okay. Okay. Great. Okay. These are, yeah, great questions. And I think
+[1433.9s - 1438.6s] there are qualifications and I just want to reiterate that I think we should be listening and hearing
+[1438.6s - 1447.4s] from our users and in the timing doesn't, doesn't make sense for them. I think some of the pieces we
+[1447.4s - 1453.4s] should design with that in mind. That's fair. Yeah. Scaling them in a way that we could make it faster
+[1453.4s - 1461.2s] if we needed to. But I do think there's probably a limit in terms of how fast we can fulfill
+[1461.2s - 1470.3s] some of these requests. Yeah. Okay. So we got our data processing. It's going to create, give us,
+[1470.3s - 1479.1s] you know, create some data. It's going to put it in a data store. Okay. And then so we got the
+[1479.1s - 1487.3s] completion request. We probably want data processing requests to come to back to our,
+[1490.5s - 1494.2s] yeah. Oops. Now Twitter wanted to do.
+[1494.9s - 1498.9s] I don't know.
+[1509.4s - 1519.1s] We wanted to just come back to our application.
+[1519.8s - 1529.8s] So our application service would need to keep track of all jobs that have begun, like essentially
+[1529.8s - 1537.1s] all of the requests that we have started. And then we need to keep track of as it sends the
+[1537.1s - 1544.9s] request to data service. I pay get the data once we get the completion request from the completion
+[1544.9s - 1549.0s] event from the data service. It also probably want to keep track where we need to keep track of all
+[1549.0s - 1555.9s] the data processing. So once the data processing completes so that we can notify our users that
+[1555.9s - 1563.2s] their data is ready for them to to download. Another assumption that we're going to make is that there
+[1563.2s - 1568.8s] is some kind of notification service at Facebook because we send out a lot of notifications to our
+[1568.8s - 1576.0s] users. So if we don't have that kind of registration that needs to do that all together and we don't
+[1576.0s - 1587.8s] want to be in the business of doing that. So somewhere over here is a situation service.
+[1588.4s - 1601.2s] So once everything is completed, we will say, hey, could you notify our users that their data is
+[1601.2s - 1609.6s] ready and then the notification service will send a notification. Oh, sorry.
+[1609.8s - 1619.0s] Is there a really far way to our user letting them know that their data is ready?
+[1619.8s - 1624.6s] And then they would have to go through another flow where they would go through the
+[1624.6s - 1630.1s] again, log into Facebook, go to the place where they can actually see that the data is ready
+[1630.1s - 1634.9s] and then said, what do we call us to our data storage and then actually download our view through
+[1634.9s - 1643.1s] our data? So where would the failsafes live for, let's say there's a failure for some reason
+[1644.2s - 1651.0s] in the middle of collecting the data that is required for one packet, right? Where would that live
+[1651.0s - 1656.5s] and what were elementary things could we have in place for, yeah, failsafes do we have in place
+[1656.5s - 1663.0s] for that? That's great. That's a great question and something I should have talked about. So I
+[1663.0s - 1669.5s] think our application service is kind of that main service that is there of all of that.
+[1669.5s - 1676.8s] And we would have to decide on either retry mechanism or if we are going to fulfill the user
+[1676.8s - 1684.6s] request with incomplete data. I think most of these things we probably can't. So that's one thing
+[1684.6s - 1691.7s] that I haven't touched on at all is that we need some kind of a logging mechanism as well,
+[1691.8s - 1698.6s] just to lock things for both metrics as well as, right? So if we ever need to like debug our system
+[1698.6s - 1704.7s] and say, hey, where did the failure occur? What happened? Yeah, yeah. Of the process that happened
+[1704.7s - 1710.9s] and then two for metrics. So we'd probably want to do monitoring of average job completion time.
+[1710.9s - 1716.2s] We'd probably want to do some alerting and monitoring for jobs that have taken over a certain
+[1716.2s - 1722.7s] period of time so that we could debug the system. We probably want to have some retry mechanism
+[1722.7s - 1728.9s] for every step of this flow. We need flow fails. We probably want to retry a couple of times before
+[1728.9s - 1734.5s] we actually start manual interference. So the more we can automate these pieces within the system,
+[1734.5s - 1740.7s] the better, but sure, like any error, they can occur and we just have to make a decision of what
+[1740.8s - 1747.1s] we want to do about that. Yeah. Okay. I think that's fair. Let me see if there's other things that I
+[1747.1s - 1754.6s] should think about. Yeah. And I think we, you know, we haven't really talked about
+[1758.1s - 1765.5s] any kind of testing. I think with these sort of systems, there is a lot of testing that you have
+[1765.6s - 1771.3s] to do. And one of the things that you are relying a lot in, for example, in this
+[1772.7s - 1778.0s] architecture, you're relying a lot on other services to complete the requests, right? So
+[1778.0s - 1783.4s] if let's say the data service doesn't return you a complete data set, but doesn't return your
+[1783.4s - 1788.2s] failure, those will be the kinds of things that you have to decide how you want to test and how
+[1788.2s - 1794.2s] you want to handle failures for because you don't really own the service. And so you might not have
+[1794.2s - 1798.0s] full visibility in the kinds of things that are being returned to you and whether they're
+[1798.0s - 1805.3s] complete or not or true or not. Yeah. Yeah, that's fair. I think one last question I have. So
+[1805.3s - 1811.2s] we were talking about the tradeoff between how fast we want to be able to fulfill a request,
+[1811.2s - 1818.3s] how long we're keeping the data freshness. So let's say we do get feedback from consumers that
+[1818.3s - 1823.9s] 10 days just wait too much time. We want to start prioritizing freshness, not just for consumers
+[1823.9s - 1832.3s] satisfaction, but also legally. We are supposed to fulfill these requests within, let's say GDPR
+[1832.3s - 1836.8s] changes and it says that we have to be able to fulfill this request within 48 hours of someone
+[1836.8s - 1843.3s] asking for it. What would this system, if anything, what would change in the system in order to
+[1843.3s - 1850.2s] accommodate that? Yeah. So one of the things that I talked a lot about is if we allow users to
+[1850.2s - 1856.3s] set date ranges and filtered like filter the list of data, especially for date ranges,
+[1856.3s - 1863.4s] you can probably do a lot more in parallel if you do chunked filter and data. So we want to figure
+[1863.4s - 1869.4s] out, for example, if gathering up all of the data by one data service takes too long, we probably
+[1869.4s - 1875.7s] want to get it chunked or like how more services in parallel running for different date ranges.
+[1875.8s - 1881.8s] Design, commitment, or date range filtering, we can scale, but all of I think all of our scale
+[1882.6s - 1889.0s] will be focused on essentially getting all of the relevant data for the user. You got it.
+[1889.0s - 1894.0s] Okay. Not at all. And we can, you know, we might be able to like, let's say we,
+[1894.0s - 1897.9s] we're not actually probably, they're probably the processing pieces. Oh, it's just because it's
+[1897.9s - 1902.7s] going to be working through a pretty large data set. There's probably stations we want to do there.
+[1902.7s - 1909.0s] So if we're doing more async processing, let's let's say on like HDFS, we might want to see if
+[1909.0s - 1917.2s] there's other services that are more like, I think Apache Spark might be able to handle like
+[1917.2s - 1923.3s] is more costly, but can handle this a lot of master. So just kind of depending on what the current
+[1923.3s - 1929.1s] infrastructure is and if there are other options for us to do more processing and data faster,
+[1930.1s - 1935.2s] got it. Okay. So chunking according to the chunking in different date ranges,
+[1935.2s - 1941.7s] basically within the ones that they specified. Yeah. Yeah. Would, would being able to
+[1943.3s - 1949.0s] consolidate. So within each of those date ranges, I assume there's going to be some searching of
+[1949.0s - 1954.3s] some gathering of photos, some gathering of posts, some gathering of, I don't know, your friend
+[1954.3s - 1962.1s] connection that we're made in that date range. Does that, does that slow things down or are there
+[1962.1s - 1967.2s] more optimizations that we can make by consolidating those different types of data that are gathered?
+[1967.2s - 1971.5s] Yeah. I mean, I think we're making a lot of like, I think when I say these things, I make a lot
+[1971.5s - 1977.4s] of assumptions about how the data is started in the first place. So the data is, you know, if it's
+[1977.4s - 1982.4s] already like, it's started differently and this would be a lot of query time and like shuffling data
+[1982.5s - 1990.2s] from one thing to another, then we consider other ways of optimizing how we gather, how we gather the
+[1990.2s - 1998.4s] data. Yeah. If like speed of the utmost concern, we could probably also just have some of these
+[1999.8s - 2007.8s] services start. Like, if it's only 5% of the user, so I was going to say like, we could see if we
+[2007.8s - 2016.6s] just want to prep some of these archives, right? For some of our, for some of our users, but I
+[2016.6s - 2021.0s] think if it's only 5% of our users, that's really expensive because we're not going to be able to
+[2021.0s - 2025.9s] like necessarily guess which account. If it was like 80% of our users are going to do this,
+[2025.9s - 2033.7s] then we could just start prepping these data dumps ahead of time and then when the user requests
+[2034.4s - 2040.9s] it, it's already available. So it would be super easy. But with only 5% of our users, I think
+[2040.9s - 2048.6s] anything that we would try to guess that would be just wrong. Okay. Yeah. Okay. I think that's
+[2048.6s - 2056.2s] there. Do you have any closing thoughts? Yeah. I mean, I think there's one thing that we didn't
+[2056.2s - 2062.9s] touch on at all is like the user experience of using this data. So if we about for looking
+[2063.0s - 2068.5s] optimization, that's probably one of one of the things that I would think about how we can make
+[2068.5s - 2075.6s] better is how users experience once they have access to all of this wonderful data, how they
+[2075.6s - 2086.4s] do with it and thinking about how how we can build a nicer service for them there. Yeah. It's
+[2086.4s - 2091.5s] pretty interesting. Yeah. I mean, I think this is a good place to stop and you're right. I think
+[2093.4s - 2100.2s] if we were to work on this further, future considerations would be, well, why are users downloading
+[2100.2s - 2104.6s] this in the first place? What are they going to use it for? What is the best format to present
+[2104.6s - 2109.1s] them this data with? And one of the questions you asked initially, like what are assumptions
+[2109.1s - 2115.4s] that we're making about? What is a metric of success here? Is it just how many people requested
+[2115.4s - 2120.7s] download their data? Or is it whether if someone says that a request, do they actually download
+[2121.1s - 2127.0s] come back and download the data that they have requested for? So yeah, I think that's a consideration
+[2127.0s - 2130.5s] that we would dive a little bit deeper into if we were if we were working on this.
+[2132.2s - 2135.3s] So I'd love to hear your thoughts, Tonya. How do you think that went?
+[2139.5s - 2147.5s] I think it went well. Yeah, just a ton to consider and a ton of assumptions, I think, being made
+[2148.2s - 2156.9s] in the design phase. So definitely feels a little like the more you know kind of the better system
+[2156.9s - 2164.6s] you can design. But yeah, overall, I think a good starting point. Yeah, yeah, I think so.
+[2166.6s - 2170.4s] A couple of things that I noticed that you did really well. Like you said, there's a lot of
+[2170.4s - 2176.2s] assumptions that you have to make with the system that a company like Meadow or Facebook would have,
+[2176.2s - 2180.7s] right? You don't know how their internal shorting system work. You don't know how their data is
+[2180.7s - 2185.5s] distributed. You have no idea. You're just kind of guessing. And what I think you did really
+[2185.5s - 2190.9s] well was asking very, very specific questions at the beginning to try and get as much information
+[2190.9s - 2195.8s] as you can, as much as information that is reasonable to get in that amount of time, right?
+[2197.0s - 2203.0s] And otherwise, stating whatever assumption that you are making if there are holds that you
+[2203.0s - 2208.1s] feel like you're kind of glossing over, which with whatever you think is going on in Facebook
+[2208.1s - 2215.4s] system. I think that's totally fair. And it also, as you think out loud about these things,
+[2215.4s - 2223.4s] it showed the interviewer that you are not only consider, you not only know the gaps in your
+[2223.4s - 2229.4s] knowledge, but you're filling them in with reasonable assumptions that work for for the situation
+[2229.4s - 2236.2s] at hand. I think that's great. Number two, there were a lot of things that I didn't even have to
+[2236.2s - 2242.4s] ask you to follow up because you got there pretty beat me to the punch basically in addressing
+[2242.4s - 2247.4s] something pretty quickly. And I think that's fantastic. It just shows the interviewer that you
+[2247.4s - 2253.0s] know how to drive the discussion. And you know what is needed to be able to answer a question that
+[2253.1s - 2258.6s] is this big and complex. Yeah, I think those were those were things that you did really well.
+[2258.6s - 2265.9s] I think it's always a great sign for for media interviewer when I am asked questions right at the
+[2265.9s - 2269.8s] beginning that I'm stumped by. I'm like, hi, I don't even think about that when you ask the question
+[2269.8s - 2275.5s] about metrics of success. And like, actually, this would help in designing the right system and
+[2275.5s - 2280.9s] figuring out what trade-offs we want to make. But yeah, if we don't, if I don't have an answer
+[2281.0s - 2285.7s] for you at the moment, I think it's a great sign that you know what you're talking about. And
+[2285.7s - 2290.3s] it's a signal that you're aware that you have experience in this kind of work. And then you're aware
+[2290.3s - 2297.5s] of how important a question like that is in the direction of of a systems design. So yeah, thank
+[2297.5s - 2303.7s] you. I didn't think. Sorry, I said that again. Thank you for the feedback. Of course. I think
+[2303.7s - 2307.9s] this is going to be super valuable for everyone who's watching this at home. So thank you very much
+[2307.9s - 2311.7s] for your time. And yeah, and good luck with your interview.

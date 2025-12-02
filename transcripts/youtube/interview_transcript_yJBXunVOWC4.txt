@@ -1,0 +1,105 @@
+SOURCE: YouTube
+VIDEO_ID: yJBXunVOWC4
+URL: https://www.youtube.com/watch?v=yJBXunVOWC4
+GPU: 1
+DURATION: 549.8s (9.2 min)
+TRANSCRIBED: 2025-11-28 09:18
+================================================================================
+
+FULL TRANSCRIPT:
+--------------------------------------------------------------------------------
+ So this is a mock interview for an engineering manager role at Uber. I'll be speaking with Ragu today about himself and who he is as an engineering manager was important to him and one or two projects that he's led and how he approaches managing and leading other engineers. So thanks for joining Ragu, I really appreciate your time. Why don't you go ahead and tell me about yourself. Hey, Josh, nice to meet you. Thanks for having me. So yeah, I'm Lagoo. I'm an engineering manager. I spent what 10 years as an engineering manager with the big, large companies. I have had the opportunity to start and be a founder member for large, multiple engineering teams. I've grown global teams across London and India. And yeah, I've been very successful at hiring and growing teams and landing a lot of impact through delivering large bets for the organizations I've worked with. Fantastic. Tell me about a time that you resolved the conflict. Okay. So this was a time when we were doing this project at Amazon where there were multiple entire Amazon was actually involved in something called Redshift, which is basically deprecating Oracle databases and moving to Amazon's internal tech stack using either DynamoDB or using the relational database service. And obviously, all teams were frantically trying to get to their goals of being able to do this. Now, so one of the things which happened at the time was we realized we had to make changes to one of our services. We almost had to rewrite it because the way it was implemented was if it was an Oracle database, it was allowed to store some of the PII data, which is like the secure data. But if we had to move out, we would have had to build another solution. Now the main conflict there was that we realized very quickly that that's not even we shouldn't even be storing that. We were not the source of truth for that data and that data should reside in some other system. Now, obviously, when we approached that team that owned that data or should be owning that data, they were challenged with their own timelines. And they did not have the bandwidth to make these changes. So what we were, we had a couple of meetings, we did not end up with any solution. So one of the ways which I thought at the back at the time is that the engineer who owned this project from my team was on a career path to the next level or was kind of ready to go to the next level and needed an opportunity to kind of showcase or demonstrate those next level behaviors. So I kind of created a plan where we would do some of the initial work, which would just set a platform for moving this data into the upstream team. And we will just store the metadata about that particular data and create this service and points for them to use later. We next went to them with this approach. They still would have had to do a little bit of work. It wasn't going to be much for them, which would kind of delay them in their own work. And that was the way forward to kind of solve this situation. The engineer did the work, you know, it was a bit of a win-win for everyone, the manager of the other team decided to give a good feedback for the engineer on my team who got promoted and we all kind of were able to complete the project on time. That sounds like there was a difficult or challenging situation. What was your specific role in this situation? My specific role was working with the engineer from my team to come up with a solution for this problem. Or we had to make sure that we could not complete this project without moving out some of the PII data. And if it had to go and sit in some other team, the logical team or the logical owners for that data did not have the bandwidth. So I had to kind of mediate with the engineers and the engineering manager of that team along with the engineer on my team and come up with a solution that works for everyone. And then once we cross this obstacle and go live with the Redshift project, we would then work with the upstream team again to make sure we have a different milestone where we migrate off that service completely and they are able to kind of stand up their service which would vend us the data. What would you say was the impact of this project or maybe better said, what would happen if nothing were done, if it didn't lead through this? I don't think that was an option because the other options were stay with Akkiz which was not an option, continue storing the PII data which was again not an option because DynamoDB does not allow or at least back then did not allow us to store that data securely. And you know, it had to be migrated off and the upstream team would have to build and launch a new service which was the right thing to do but we kind of just helped them to come up with a solution in the intermediate that would work where we stored a metadata, we temporarily created a service that would store the data on their side and we were the only client for that period and then they would kind of expand it to other clients. So what was the impact of the business by achieving this project? So the Redshift project was a project that was came straight from the S team at Amazon which is like the very top senior leadership at Amazon. So it was again not negotiable in any way either in terms of the timelines or the solution. So if it didn't done this, there was no material benefit to any of the business teams across Amazon for people doing this project but it had a much bigger impact with the fact that we would be saving probably hundreds of millions of dollars by using our own technology. So cost savings by using Amazon technology for storing this sensitive data got it or at least disambiguating the sensitive data. Sounds like. Yeah. Yeah. Cool. Let's take a turn. Let's take a shift towards a slightly different topic. What would you say is a product that you're most proud of? Product that I'm most proud of. Okay. So I can tell about an accounting closed platform that I developed. I was one of the first and I'm proud of it for multiple reasons. This was a ground new product, ground up new product, which was which became the center.
+
+TIMESTAMPED SEGMENTS:
+--------------------------------------------------------------------------------
+[0.0s - 5.1s] So this is a mock interview for an engineering manager role at Uber.
+[5.1s - 13.8s] I'll be speaking with Ragu today about himself and who he is as an engineering manager
+[13.8s - 23.6s] was important to him and one or two projects that he's led and how he approaches managing
+[23.6s - 25.6s] and leading other engineers.
+[25.6s - 30.8s] So thanks for joining Ragu, I really appreciate your time.
+[30.8s - 33.4s] Why don't you go ahead and tell me about yourself.
+[33.4s - 35.2s] Hey, Josh, nice to meet you.
+[35.2s - 37.7s] Thanks for having me.
+[37.7s - 40.0s] So yeah, I'm Lagoo.
+[40.0s - 42.0s] I'm an engineering manager.
+[42.0s - 50.7s] I spent what 10 years as an engineering manager with the big, large companies.
+[50.7s - 60.0s] I have had the opportunity to start and be a founder member for large, multiple engineering
+[60.0s - 61.0s] teams.
+[61.0s - 67.6s] I've grown global teams across London and India.
+[67.6s - 77.3s] And yeah, I've been very successful at hiring and growing teams and landing a lot of impact
+[77.3s - 87.2s] through delivering large bets for the organizations I've worked with.
+[87.2s - 88.2s] Fantastic.
+[88.2s - 94.8s] Tell me about a time that you resolved the conflict.
+[94.8s - 97.0s] Okay.
+[97.0s - 111.2s] So this was a time when we were doing this project at Amazon where there were multiple
+[111.2s - 119.4s] entire Amazon was actually involved in something called Redshift, which is basically deprecating
+[119.4s - 128.9s] Oracle databases and moving to Amazon's internal tech stack using either DynamoDB or using
+[128.9s - 132.4s] the relational database service.
+[132.4s - 140.3s] And obviously, all teams were frantically trying to get to their goals of being able to
+[140.3s - 141.6s] do this.
+[141.6s - 150.8s] Now, so one of the things which happened at the time was we realized we had to make changes
+[150.8s - 153.4s] to one of our services.
+[153.4s - 159.8s] We almost had to rewrite it because the way it was implemented was if it was an Oracle
+[159.8s - 166.8s] database, it was allowed to store some of the PII data, which is like the secure data.
+[166.8s - 173.8s] But if we had to move out, we would have had to build another solution.
+[173.8s - 183.8s] Now the main conflict there was that we realized very quickly that that's not even we shouldn't
+[183.8s - 184.8s] even be storing that.
+[184.8s - 188.3s] We were not the source of truth for that data and that data should reside in some other
+[188.3s - 189.3s] system.
+[189.3s - 194.6s] Now, obviously, when we approached that team that owned that data or should be owning
+[194.6s - 200.2s] that data, they were challenged with their own timelines.
+[200.2s - 203.3s] And they did not have the bandwidth to make these changes.
+[203.3s - 213.7s] So what we were, we had a couple of meetings, we did not end up with any solution.
+[213.7s - 220.5s] So one of the ways which I thought at the back at the time is that the engineer who owned
+[220.5s - 226.7s] this project from my team was on a career path to the next level or was kind of ready to
+[226.7s - 234.0s] go to the next level and needed an opportunity to kind of showcase or demonstrate those next
+[234.0s - 235.8s] level behaviors.
+[235.8s - 244.0s] So I kind of created a plan where we would do some of the initial work, which would just
+[244.0s - 251.4s] set a platform for moving this data into the upstream team.
+[251.4s - 259.4s] And we will just store the metadata about that particular data and create this service
+[259.4s - 262.6s] and points for them to use later.
+[262.6s - 266.4s] We next went to them with this approach.
+[266.4s - 268.9s] They still would have had to do a little bit of work.
+[268.9s - 274.6s] It wasn't going to be much for them, which would kind of delay them in their own work.
+[274.6s - 279.8s] And that was the way forward to kind of solve this situation.
+[279.8s - 286.0s] The engineer did the work, you know, it was a bit of a win-win for everyone, the manager
+[286.0s - 292.6s] of the other team decided to give a good feedback for the engineer on my team who got promoted
+[292.6s - 299.8s] and we all kind of were able to complete the project on time.
+[299.8s - 305.2s] That sounds like there was a difficult or challenging situation.
+[305.2s - 309.8s] What was your specific role in this situation?
+[309.8s - 316.4s] My specific role was working with the engineer from my team to come up with a solution for
+[316.4s - 320.0s] this problem.
+[321.0s - 327.9s] Or we had to make sure that we could not complete this project without moving out some
+[327.9s - 329.9s] of the PII data.
+[329.9s - 335.6s] And if it had to go and sit in some other team, the logical team or the logical owners
+[335.6s - 339.2s] for that data did not have the bandwidth.
+[339.2s - 345.0s] So I had to kind of mediate with the engineers and the engineering manager of that team along
+[345.1s - 350.6s] with the engineer on my team and come up with a solution that works for everyone.
+[350.6s - 359.8s] And then once we cross this obstacle and go live with the Redshift project, we would
+[359.8s - 367.6s] then work with the upstream team again to make sure we have a different milestone where
+[367.6s - 374.0s] we migrate off that service completely and they are able to kind of stand up their
+[374.0s - 377.6s] service which would vend us the data.
+[377.6s - 384.6s] What would you say was the impact of this project or maybe better said, what would happen
+[384.6s - 389.9s] if nothing were done, if it didn't lead through this?
+[389.9s - 396.2s] I don't think that was an option because the other options were stay with Akkiz which
+[396.2s - 402.8s] was not an option, continue storing the PII data which was again not an option because
+[402.9s - 411.4s] DynamoDB does not allow or at least back then did not allow us to store that data securely.
+[411.4s - 419.6s] And you know, it had to be migrated off and the upstream team would have to build and launch
+[419.6s - 426.9s] a new service which was the right thing to do but we kind of just helped them to come up with
+[426.9s - 433.8s] a solution in the intermediate that would work where we stored a metadata, we temporarily
+[433.8s - 440.4s] created a service that would store the data on their side and we were the only client
+[440.4s - 446.5s] for that period and then they would kind of expand it to other clients.
+[446.5s - 451.0s] So what was the impact of the business by achieving this project?
+[451.0s - 458.2s] So the Redshift project was a project that was came straight from the S team at Amazon
+[458.2s - 463.8s] which is like the very top senior leadership at Amazon.
+[463.8s - 472.2s] So it was again not negotiable in any way either in terms of the timelines or the solution.
+[472.2s - 479.4s] So if it didn't done this, there was no material benefit to any of the business teams across
+[479.4s - 487.2s] Amazon for people doing this project but it had a much bigger impact with the fact that we would
+[487.2s - 493.0s] be saving probably hundreds of millions of dollars by using our own technology.
+[495.0s - 501.9s] So cost savings by using Amazon technology for storing this sensitive data got it or at least
+[501.9s - 509.8s] disambiguating the sensitive data. Sounds like. Yeah. Yeah. Cool. Let's take a turn.
+[509.8s - 516.6s] Let's take a shift towards a slightly different topic. What would you say is a product that you're
+[516.6s - 521.1s] most proud of? Product that I'm most proud of. Okay.
+[521.1s - 534.6s] So I can tell about an accounting closed platform that I developed. I was one of the first
+[534.6s - 544.4s] and I'm proud of it for multiple reasons. This was a ground new product, ground up new product,
+[544.4s - 549.8s] which was which became the center.

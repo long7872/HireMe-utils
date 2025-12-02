@@ -1,0 +1,472 @@
+SOURCE: YouTube
+VIDEO_ID: lZ5QuFLCVn0
+URL: https://www.youtube.com/watch?v=lZ5QuFLCVn0
+GPU: 1
+DURATION: 2564.9s (42.7 min)
+TRANSCRIBED: 2025-11-28 09:39
+================================================================================
+
+FULL TRANSCRIPT:
+--------------------------------------------------------------------------------
+ Hey, I'd like you to design a distributed L.R.U. cash. Hi, everyone, and welcome to another mock interview with Exponent. I'm here today with Ravi. Ravi, would you like to introduce yourself? Hey, everyone. I'm Ravi. I am currently a senior engineer at a man company. Probably around 11 years plus is what has spent in software engineering in different companies, a couple of them were man companies. And primarily into distributed technologies back end is where I specialize. And I love to interact with learners over these kind of sessions to impart some of my learnings that I have gathered over all these years. So happy to be here. If you're enjoying this video, you can watch dozens more of videos like this at tri-exponent.com. Check out our real interview questions with full written solutions. Over a million people use Exponent to ace their interviews and product management software engineering, engineering management, machine learning, data science, and much, much more. Get started for free at tri-exponent.com. Lovely. Happy to have you here. Okay. Let's jump into our question. So Ravi, today I'd like you to design and distributed LRU cash. Okay. So LRU, like the least recently used kind of thing. Fair enough. Okay. So let me actually kind of get some details around this so that I have, I have the, you know, details, what are like the requirements, what we are going to design essentially. So as I understand NEMA about cash, like it is primarily used for, you know, data storage and reading the data. And it, it is used for like some frequently access data and makes the reads and writes faster essentially. And distributed cash is a catching system where like multiple servers will store the information, like it will be distributed across multiple servers. And we can, we can still have that frequently access data, fast access to that data. That's primarily what I'm thinking. Now, the question that we have here is that, I mean, the main use case is you should be able to insert your data and retrieve the data. That's a primary use case requirement that you have apart from this. No, I think that that about sums it up. We wanted to be distributed. That's the main, that's the main thing. All right. So I'll use this one here. So for the functional requirements, primarily, I think what we can have, I'll use this here. Users can insert up just a moment. I'll just do a few. All right. OK. So users should be able to insert the data, insert data and users should be. Users can fetch or retrieve data. I would say, well, that's primarily, I would say, the main functionalities that we are looking at for the cache. All right. So you said a distributed cache shape, by the way. So distributed LRU cache shape. Now, when you say distributed, obviously, there are some non-functional requirements that are coming into my mind. And primarily, actually, I would say something like availability is for sure is coming into my mind being highly available because at any point of time, user should be able to get their data into the cache and obviously retrieve that data. So high availability for sure seems like one. Similarly, like highly scalable, because there might be the number of requests might increase and we should be able to accommodate and not degrade the performance of our cache service. Apart from that, I mean, obviously, the performance, I mean, it has to be performant like we should be able to retrieve the data as fast as possible. And obviously, insert the data also as fast as possible. Yeah, overall, I think these are the things any other consideration that you want me to have here. Let's talk a little bit about consistency. What are your thoughts on that? Well, I mean, going by the principles of system design, obviously, we cannot have, you know, high tight consistency with high availability also. So it kind of, it's a tricky situation to have, I would say, I mean, I would look to discuss it as we have all been to the design for sure. I'll keep a marker here, something like I would say look, look for tight consistency and discuss accordingly. I would go to marker here. Yep. There will be some trade offs is what I'm forcing here and would love to discuss when we reach tip to that point, that point here. Okay. All right. So these are the requirements here that we have. And let's get started with this. So I can clearly see that, you know, first, I would like to address these, the functional requirements and then would like to move it into the distributed or the non functional things actually. So let's first start with a single machine implementation where I can have I would like to talk about the API design actually. So if I just discuss on the API design for this, okay. We need for the functional requirement, we need to insert the data. So one of the first methods that I'm thinking is an insert method here. And the parameters that I'm thinking about the insert method is a, first of all, I mean, let's say if I talk about fast retrieval, if I have to implement the cache on a single machine, let's say, and for a fast retrieval, I should be, I should be talking about the implementation of this cache. And as far as the implementation goes, I think hash map is something that comes to my mind where we usually store it in the form of a key value pair in the cache, like the value will be stored against a key. And essentially in a hash map kind of a data structure, you should be able to retrieve it in one time. So insert should have a key and the corresponding value is what I'm thinking here. And a key obviously will be unique. Similarly, for the retrieval, I think there will be something like a retrieve method. That's what I'm thinking. And for the retrieval, I think we should, by the way, like insert would return something as simple as 200 if it's successfully inserted. Or if there is any kind of an issue accordingly, it will either return a 4XX or a 5XX kind of an error. If it's a client's head or a server's head can up an error. So that's the response that insert would give a retrieve. We only need a key. Accordingly, it should be able to return as the relevant value. Or again, if there are some errors, accordingly, relevant error codes. Like if it's a successful retrieve 200 otherwise 4XX or 5XX kind of an error. Now, that's primarily I'm thinking about from an API design perspective. And one more thing which I'm thinking here is about the single service or single machine implementation. So just talking about the implementation briefly, I mean, the insert would work something like, I would say, I would go and check in the cache that if that key already exists or not. So something like if key exists and if it does not exist, by the way, if it does not exist, we can go ahead and insert it if it does not exist. However, now when I'm thinking that it's not like we have unlimited space here, right? Caches will have a limited space. So even if the key does not exist, we also need to make a check that if the cache is full or not, if we have memory to insert a new information or not. And that is where I mean, this consideration comes from the place that that is where this LRU nature of the cache would primarily stand out. So how do we evict the item? How do we evict the item? This is where the LRU algorithm will come into picture that whichever item is least recently used, is not that much popular with the users, we will kick that out to make space for the new item. Yeah. And HashMap, a simple HashMap would not be able to track it. I mean, we have essentially just a key and a value. So a simple HashMap would not be able to track the order in which the items exist. And what I would essentially go with is to have another data structure like along with the HashMap. And that would be something like a queue, I would say, a queue. And not exactly a queue, but I mean, kind of an implementation of a queue in essentially, I think I will go for a linked list actually, because we should be able to traverse across the items present at the same key, I would say, sorry, not the same key, but essentially, we should be able to arrange the item, rearrange the items, the order of the items actually. So that is where I think the linked list makes sense. And more so, I mean, say better retrieval space and all, since performance is a major consideration here, I would actually suggest using a doubly linked list. So that from any place, we can iterate or move either in the forward or the backward direction. Now, what would happen that, okay, we see cash is full, we go through the doubly linked list, we go to the fill of the doubly linked list, essentially, because that would be the least recently used, like least a popular item. We would kick that out, we would remove that, we get a space now, we insert our new item, and when we insert, we place that at the head, because that is the fresh, completely fresh item. So we insert that item as the head of the list. And similarly, if the cash is not full, a similar thing follows, except that we do not need to kick out anything else, because we still have space, we can insert the new item at the head, it's as simple as that. If the key already exists, obviously, we don't need to insert the item in the cash, we already have the key. Now, for the retrieval, for the retrieval, I would go with, so this is for insert, this is for insert, and for the retrieval, we can go with something like, okay, okay, if the key exists, all right, we will again go through the same question, if key exists, we can actually go ahead and fetch the key, and when we fetch the key, so like this is a yes situation, when we fetch the key, that key becomes used, like that has been our recently used, so essentially, wherever that lies in this doubly linked list, we need to move that particular item to the head of the linked list, because now that's the order that we are maintaining. Accordingly, the other items will shift one place for the, to make space for the head, like that rearrangement will happen. And similarly, like if the key does not exist, then essentially it's a cash miss, and we have to, and I would say retrieve the item from the actual data store, where you know, where we are serving the cash from. So, this is how the implementation would work, so the get would see that, okay, if, you know, if we have the item, we will access the item and move it to the head of the list, and if the item is not there, no, then it's a cash miss, we will go to the actual data store and fetch the item from there, it's as simple as that. Insert, well, two places, I would say two phase, if the key already exists, all right, so then we would, we would not have to insert anything, by the way, I just realized that if the key exists, yes situation, in the yes situation also, we don't need to insert anything new, but we have tried to access that key, and that key again would be moved to the head of the head of the doubly linked list, because that increases its recentness action, and if it's not there, then we will check cash full kind of condition, and accordingly we will either, you know, delete item from the tail to make space for the thing and all those kind of stuff, and if the cash, we have the space, we would anyways insert it, in any, either case, the new item will be at the head of the linked list. Is there a particular reason we need linked list here, and not a simple linked list? We, that's a good question, yeah, now I'm thinking out loud that if we go with a single simple linked list here, this rearrangement, I would say this rearrangement would be like, we can, we have to always start from the head, I would say, we have to always start from the head, in order to go for the rearrangement, if we have to like shift items by one place, is what I'm trying to suggest. Now, if we have a doubly linked list, it's not like we are bound to start only from the head, we should be able to start from any position, actually, so for example, what I'm trying to say is, okay, so let's say if I have some item, which is somewhere in the middle here, all right, and I try to access it, by the algorithm, first of all, it should be moved to the head, and we should be able to move the remaining items accordingly, shift their place. I cannot think of any particular reason that a doubly linked list stands out there, it is just that when I think about the more granular implementation, is where I'm thinking that, you know, there might be some algorithmic optimization, something like, probably not sure, I mean, why not research will not be used, because this is not sorted and all, but I'm just thinking from a granular level implementation, maybe that is where the doubly linked list might be helpful, but again, I might come up with a better reason later on. Yeah, are you losing anything by using a doubly linked list versus a simple linked list? That's where I'm thinking, right now, I don't think a doubly linked list is offering any significant advantage as such, but I just was thinking out maybe from a futuristic aspect that from an access point of view, doubly linked list gives us the freedom to move in any direction. With a single linked list, we only can move in a in a single, I would say, you know, forward direction, with a doubly linked list, we can move even in the backward direction, actually. Even though right now, we don't really have a huge space for that, but you're saying that for the future, in case there is a situation. Absolutely, absolutely. And I see that, I mean, if we use a doubly linked list, essentially, I'm not seeing any significant advantage that it is actually having. I mean, there is just an extra point that we are adding to each node, so there is nothing much of a space thing that we are losing here. So that's why I went for a doubly linked list, that there is no significant disadvantage here. So, API design, and I would say this implementation, now I'm thinking of, you know, moving to, I would say, and by the way, one more thing with respect to the implementation, which I'm thinking, is we can have some setup. I'm thinking of a dedicated cache cluster. Let me draw this line here. So, when I say dedicated cache cluster, I mean to say that essentially, there will be microservices or there will be different services, which will be making a calls to the data store, and that is where somewhere in the middle, the cache would come into picture. So, what I mean to say that there will be this services, and then there will be this cache, and then there will be your data store. So, these services actually try to access the data from the data store, and cache is optimized that retrieval, is what I'm trying to suggest. Now, we can have these dedicated cache cluster, that is, dedicated separate machines, where we can host our caches or implement our caches. So, I'm trying to suggest is dedicated cache cluster, is what I'm trying to suggest here, where the services would be implemented in a different machine, the caches would be in a different machine, and now when I'm thinking from a distributed systems perspective, I'm thinking that we can in a distributed system, essentially, we are going for a distributed cache, because a single cache machine would not be able to store that much data, that's why we want to distribute the data across different machines. And the distribution mechanism, I'm thinking about a simple range based kind of a sharding, where maybe certain keys, let's say, giving an example, like let's say A to N, the keys which start from A, and accordingly A to N entries can be present in this one single machine, accordingly N to further, let's say Z, let's say, for example, can be present in this one, and each service posts, or I would say each service, would have the information about this partitioning, I would say, about this division, that which servers have which range of data, accordingly they will have this information locally, and based on what queries that they get, based on the query that they get, they will be able to decide which cache server or cache cluster do they need to make a call, if let's say this service gets a request for something which is starting from T, so it knows that hey, the T1 is stored in this cache cluster, actually, not in this one, it will be able to make that decision. So that's the distributed implementation that I'm thinking about, just making a quick check, do you have any questions here? What are some other strategies you would consider, and why pick this one? So, I went with a separate cache cluster here. The other option which I can think of is possibly have the caching implemented as a simple process in these servers or a service itself, I would say. So we have these service hosts, and what I'm suggesting is these caches are co-located in these service hosts itself. The rest of the implementation is still the same, like they are still sharded based on this range and all, but now, I mean what this implementation does now, when I compare them, we are saving on the hardware cost here, that's one advantage, if we go with a co-located kind of an option. So we are saving on the hardware cost, it is less operational overhead compared to this, because now we don't need to maintain a separate cluster as such. However, I can see the advantage of this dedicated cache cluster, so this is the co-located option, where the advantages are that we are not having to have extra hardware, no operational cost as such, and it kind of helps with the scaling, like scaling wise, if we scale the service host accordingly, the cache also will scale, so we don't need to put out a separate activity for the cache scaling. These are the advantages, but then when I think about the dedicated one, I think it offers the better isolation of resources between the service and the cache, like both have their own purpose, and when I think from, you know, when I think from the system design principles of a single responsibility principle and separation of concern and all those things, I think this stands out to me, because while scaling is an advantage here, the hardware availability requirement that we have, if the service host goes down, well, we lose the cache also, by the way. So compromising on one service, like if it plays a problem with a service host, well, we don't have access to the cache also, so these are the trade-offs, these are the problems that exist here, and considering the requirements that we have like high availability, scalability, and all those things, I think I'll go with a dedicated cache cluster, where it provides for a better isolation of resources, like we have a single, I would say, single view, a unified view of the caches for different services, and we have the flexibility, like since we have the division, so we can, it's not like whatever service or type of machine that we choose for the service host, we have to do with that only for the cache. Now, with this division, we can choose, you know, multiple types of hardware, we have the flexibility. So that's why we'll go with a dedicated cache cluster, yeah. Sounds good. All right. All right. Okay. Fairness. I think so far, so good, we have been able to, I would say implement a design, so essentially for the high-level design, I would say that we have a client, we have a client, and then we will have obviously some kind of a load balancer here, or an API gateway, which does the load balancing activity, I'm not going to details of that, but it does a lot of things like authentication maybe, and your load balancing rate limiting, and all those kind of stuff. Okay. Then we have all our service hosts here, I would say, the service hosts, and the service hosts, as I told earlier, they have the configuration of the cache cluster, like which cache cluster holds which range, they have that configuration locally, and then we have the actual cache servers, or cache cluster, as you would say, and each of these service hosts has access to each of these cache clusters because of that configuration. So that's the setup, and finally, we have the data store. Okay. So that's how the, I would say that's how the setup looks like the high-level design. I think we are good so far, and if you don't have further questions, I would get into the details, the non-functional requirements, and we can address the distributed requirements. Yeah. All right. Awesome. Now, one of the first things that I'm thinking here is how will, you know, how will this, you know, this cache, the service, would make a call to these cache servers actually. And for that one essential thing, which I think should be good to have is I would have a process. I would say, you know, a simple kind of library. So let's say this is the service host. This is the service host. I would have a process or a service called the client, the cache client. Now, this client is different from this client, by the way. So this is the cache client, actually. All right. Now, this is a simple, I would say, a simple library, which resides in this application server. And it holds all the information regarding the cache server. And the cache client will choose, it will choose that, you know, which of the, one of the cache servers. So we decided that we had this ranging and all. So the owners of choosing which, you know, cache cluster we have to go to, that will be decided with the cache client because it will have all that information. And all the cache clients will have the consistent view of all the cache servers. What that means is, you know, we have different cache servers is what I meant. And let's say, again, we have this ranging and all and to P, let's say, and few, some other range. Now, there might be different server or service hosts. And again, each will have their own cache client. I'll call that cc for now. Each one of them will have the same view. Like, when I say same view or constant view, this cache client will be aware of these three cache servers and the ranges that they are serving. Similarly, this cache client will be aware of these three cache servers and the ranges that they are serving. So that's how the cache client would assist or would work. However, now stepping into the distributed nature, I'm seeing a problem here, which I can identify is that let's say if one of the cache servers, if one of the cache servers goes down, how will this client be updated? Or let's say if a new cache server is added actually, if a new cache server is added and maybe all that information, how will this cache client be updated about this? So one of the simplest way to do this is have a configuration file locally on these cache lines. It will be a simple configuration file, which would have this configuration, maybe in a key value format, again, that range, let's say a to m, cache server one, let's say something like that, range n to t, cache server two, a very simple configuration file. Then again, the problem here is that this is manual, this is very manual and would require constant manual intervention for the change in updates and all those kind of stuff. The other thing, and by the way, this manual stuff includes updating it on all the cache quints, which is again increasing our complexity. The simple, I would say, solution to this is maybe have a single unified configuration file. I would say something like a central configuration where all the cache client can actually read from that configuration file, that would, I would say help us with that multi-level manual effort, but again, still, it's a manual effort because we still need to keep it this configuration file updated manually. So in consideration of all of this, I think one proposal that I have is to have a separate service, separate configuration management service, I would say something like a zookeeper kind of a thing. Now zookeeper is very famous, I would say, or very well, I would say configuration service, which means the information or keeps is used to maintain this server-related information in a distributed nature where it will constantly be maintained a heartbeat connection with these different cache servers. And let's say if it does not find the help check to succeed for some cache server, the cache server will be taken out of the cluster, and accordingly, zookeeper would update the configuration, and whenever the service or the cache client have to access the cache server, they would refer or read from the zookeeper, that hey, what is the latest configuration, give me the latest configuration, according to that information exchange, they can now go ahead and retrieve their data as usual. So that's one way to solve this, and this is completely automated, is how I see with the zookeeper thing, like having a separate configuration service, we are actually automating things, or I would say taking hands off the wheels, where we don't need to be worried about constantly updating this configuration, the zookeeper will take care of that by checking the heartbeat and the help of the cache servers, and if there is a problem in all, it will update the configuration, and the services can read that updated configuration accordingly, access the data. All right, now this is something with respect to, I would say, the configuration management and all, now thinking a bit more from some more aspects of non-functional requirements, so that's going back to the requirements that we collected. So we have higher availability performance, I think we have discussed, I think the implementation, hash map, and that linked list implementation would essentially help us, help us with the performance, and this configuration service would present a consistent view, services can read from that configuration service, and I hate the cache servers, so I think performance wise, we are pretty much covered, let's talk about the high availability, high scalability, and we will also have a look at the consistency part here, so when I look at high availability, let me go here, let's look at high availability, availability, all right, now I would say that the problem with availability here is right now we only discussed about, let's say, what if we have only a single cache server, I mean what if that cache server goes down, basically don't have the data, and the best way to, I mean the very straightforward way is to, I would use a different color, probably just to show it better, so we have the cache server, and we can have read replicas actually, so this will be the primary, let's say, primary cache, and this would be the read replicas, I would say, now read replicas would definitely help us with our improving our availability, and what happens is that we can have these primary and backup nodes, and this would include, I would say this would constitute one cache cluster, this would be a single cache cluster, and it works in a pretty straightforward fashion, that if the primary goes down, essentially there would be one of the read replicas, which would be promoted to the primary, which would be promoted to the primary, if the primary goes down, and again, who promotes it, well, this is where the zookeeper service, let's say this goes down, this is again where services like zookeeper shine, because they can carry out this leader election, and then there are different algorithms, like RAFT, is a very popular leader election algorithm, consensus algorithm by the way, not a leader election, but RAFT is a very popular consensus algorithm, and zookeeper can trigger, who should be the new leader, accordingly, the one of the read replicas will be promoted, and operations will continue as usual, so another thing is that these read replicas, ideally, I would have them in different data centers, so for example, this would be, let's say, in data center, AZ1, this would be in a different data center, AZ2, and this would further increase my availability, as you know, I'm not affected by only one particular region, let's say, something happens in this region, then if I have all my read replicas in that region, everything will be affected, so I'm further improving my availability by going like this, there are some considerations here, though, yeah, there are some consideration that, you know, we may choose to maintain strong consistency, and this is where consistency comes into question, that you know, what if we want to maintain the information between these replicas consistently, the replica and the master, in that case, well, our performance will take a bit of it, in what I mean to say, that we may choose to implement it like, hey, fine, the rights will be going to the primary, but the reads will be going to the, to let's say, the read replicas, we can say like that, but when the right comes to the primary, we will say that unless and until they are replicated across the replicas, we will not give a confirmation to the client, something like that, I mean, if we go with that kind of an implementation, our performance would take a backseat, slightly, slight backseat, I would say, wait, can we take a step? Why would writing to the primary, but reading from the replicas help with consistency? Yeah, okay, so it does not help with the consistency, I just proposed that this can be a setup. Consistency is a different discussion here, so what I'm trying to suggest about consistency is, first of all, let me take this read and write out of the equation for now, what I'm suggesting more consistency is, let's say if a write comes to the primary, and if we want to maintain a consistent view, so what I mean by a consistent view is that's, is let's say, you know, the primary has the updated data, has an updated data like a latest key, all right, but it is still not present at the read replicas. Now, if some read comes to the read replicas, they don't have this updated key, updated data, so that's not a consistent view actually, right? Yeah. Yes. Now, that's what, that's what, like if we want to provide a best performance, like best latency and all, then we have to take a step back, like we have to take a step back on the consistency part that we do not promote or promise tight consistency, that's something we'll have to go with. Otherwise, if we go with tight consistency, then our performance has to take a backseat, is what I'm trying to suggest. Okay, I understand. Yeah, so these are some trade-offs, obviously, and this totally depends on the business use case, what we are dealing with, and what the business wants to promise dear clients, so accordingly we can implement them. So, that's one thing. And similarly about scalability, I mean, we, with this, with this quest-trend concept, and with these replicas and all, essentially, and also with this zookeeper kind of a kind of a configuration service, essentially, all, in fact, let me take this space here to draw the final design diagram. So, we'll have this client, and then we will have this API gateway and load balance thing, which we discussed earlier. And then finally, we have this, all these services, server hosts, and then we have all these, I would say cache clusters, cache clusters, or cache shards, you can call them cache shards, I would call them cache shards, actually, cache shard clusters. Now, this would have this setup, like this, why did I choose the same color, I should have chosen interesting color. Yep, so, this would have this primary and these replicas in each cluster. And essentially, this will be repeated, this will be something which will be repeated. So, that's the final setup I would say. And overall, I mean, we'll have this configuration service in the middle here somewhere, let's say something like a zookeeper configuration. Now, with this setup, what do we have is, we have a very highly available setup for our cache, and we have a highly scalable, because now we can add or remove servers, or I would say add or remove new clusters, and just need to update them in the configuration service, which would present all these services with a unified view of the caching setup. So, we have a highly available, highly scalable setup here, and performance wise, well, the core implementation, as I suggested, is in the form of a hash map, and a linguist, I suggested a double in linguist, but yes, we can go with a single in linguist also, but, yeah, obviously, from a futuristic consideration, I think maybe from some access improvement perspective, double in linguist might have some advantage, but, yeah, again, we can look into that probably in a more granular use case. But that would be the primary, I would say, setup here. So, this is the configuration service, we might need some monitoring also, yep, sorry, just finishing it up, some monitoring also that we might want to have, so that we can have a full complete cache service. So, we might constantly want to monitor, and maybe share this monitoring information, with the zookeeper service configuration management service. So, yeah, I think that will be the final design that I will go with, and I will take any question that you might have. What are some of the biggest limitations of this design? So, the biggest limitations, I think I'll go with the discussion that we cannot have first starting off with the high availability versus consistency debate, we cannot have both of them. If we are going for high availability, we have to compromise on the consistency in the sense that I discussed that, you know, the rights would be going only to the master, but we can read from any of the replicas, that way we are improving the availability, but compromising on the consistency. So, there is a limitation whichever option we go with, if we go with tight consistency, well, we are compromising the performance as we discussed already earlier. Other thing which I'm thinking here, we have some operational overhead, obviously, as I discussed earlier, that operational overhead of maintaining this configuration service, keeping it updated, and then we are maintaining different read replicas in different data centers. So, there is a lot of maintenance, a lot of operational overhead which is involved here, but again, all of that comes with a trade-off of providing the best services, best caching experience to our clients. So, those are some limitations that I will talk about. Okay, I think this is a good place to stop. How do you think that went? What are your thoughts? I think that went pretty well. We started off with some requirements discussion, and all across our design, along our design, I would say, we were able to abide by those requirements, so putting all the granular implementation level perspective into place, and then addressing some interesting questions which you threw at me. Thank you so much for all those questions. I think we have a design which pretty much satisfies highly scalable, available, and a performant caching service for us. What are some tips that you would give people who encounter questions like this in the wild? This didn't have a particular use case behind it or anything. It was just purely theoretical. So, what are some suggestions that you have for people who get questions like this? Absolutely. Yeah, some suggestions that I have for folks and something which even I when I look back in the hindsight is like trying to maintain communication with the interviewer as much as possible to ask as much as questions. I would say when I did all the questioning thing, but I think somewhere in the middle, I could have constantly checked with you every now and then periodically to make sure that you are following along because I realized that some places you had to stop me and then ask certain questions. So, as a candidate, I feel it's my responsibility to keep the interviewer in check, keep them carrying along that make sure that they're following along. So, that's one of the things. It's something like a pure backend kind of system is what I'm trying to say. You know, it's something not which is a user-facing something like a YouTube, maybe an Uber or a Facebook kind of a system. So, thinking about something which helps you achieve that backend capabilities requires a bit more hot process, requires a bit more, I would say stepping from the basic and then evolving the design like I did. I started from a single server implementation and then evolved into the distributed world. So, I think we a good way if you are not, if you get a question like this, which is not super intuitive, super user-facing and it's more of a backend and all those technological kind of stuff where you have to go. So, start simple, start from the basic and then gradually evolve, discuss with the interviewer, obviously what they are looking for in which direction they want to go ahead and that should be it, I would say. Yeah. Lovely. Thank you so much, Ravi. It was wonderful having you on again and I am sure this is going to be very useful to people watching from home. If I can just add one final thing, I would also just talk about consistent hashing just to improve the availability. I mean, that is one thing which I could have talked about, but that's just a follow-up thing. Anyways, that's my final note. Gotcha. All right. Thanks so much everyone. Take care.
+
+TIMESTAMPED SEGMENTS:
+--------------------------------------------------------------------------------
+[0.0s - 3.3s] Hey, I'd like you to design a distributed L.R.U. cash.
+[6.8s - 9.6s] Hi, everyone, and welcome to another mock interview with Exponent.
+[9.6s - 11.1s] I'm here today with Ravi.
+[11.3s - 12.9s] Ravi, would you like to introduce yourself?
+[13.2s - 13.8s] Hey, everyone.
+[14.0s - 14.5s] I'm Ravi.
+[15.1s - 18.4s] I am currently a senior engineer at a man company.
+[19.8s - 23.6s] Probably around 11 years plus is what has spent in software engineering in
+[23.6s - 25.9s] different companies, a couple of them were man companies.
+[25.9s - 29.9s] And primarily into distributed technologies back end is where I specialize.
+[30.4s - 35.6s] And I love to interact with learners over these kind of sessions to impart
+[35.6s - 38.2s] some of my learnings that I have gathered over all these years.
+[38.4s - 39.6s] So happy to be here.
+[39.9s - 43.0s] If you're enjoying this video, you can watch dozens more of videos like this at
+[43.0s - 44.1s] tri-exponent.com.
+[44.2s - 47.3s] Check out our real interview questions with full written solutions.
+[47.4s - 50.5s] Over a million people use Exponent to ace their interviews and product
+[50.5s - 53.9s] management software engineering, engineering management, machine learning,
+[53.9s - 55.6s] data science, and much, much more.
+[55.8s - 58.1s] Get started for free at tri-exponent.com.
+[58.5s - 59.0s] Lovely.
+[59.1s - 60.1s] Happy to have you here.
+[60.4s - 60.8s] Okay.
+[60.8s - 62.3s] Let's jump into our question.
+[62.4s - 66.3s] So Ravi, today I'd like you to design and distributed LRU cash.
+[66.7s - 67.2s] Okay.
+[67.2s - 71.3s] So LRU, like the least recently used kind of thing.
+[72.5s - 73.0s] Fair enough.
+[73.1s - 73.4s] Okay.
+[73.4s - 79.1s] So let me actually kind of get some details around this so that I have,
+[79.1s - 83.3s] I have the, you know, details, what are like the requirements,
+[83.3s - 85.0s] what we are going to design essentially.
+[86.0s - 90.1s] So as I understand NEMA about cash, like it is primarily used for,
+[90.3s - 92.4s] you know, data storage and reading the data.
+[92.5s - 98.2s] And it, it is used for like some frequently access data and makes the
+[98.2s - 101.0s] reads and writes faster essentially.
+[101.5s - 106.6s] And distributed cash is a catching system where like multiple servers will
+[107.2s - 110.2s] store the information, like it will be distributed across multiple servers.
+[110.6s - 114.5s] And we can, we can still have that frequently access data,
+[114.5s - 115.8s] fast access to that data.
+[116.0s - 117.4s] That's primarily what I'm thinking.
+[117.8s - 123.0s] Now, the question that we have here is that, I mean,
+[123.3s - 128.2s] the main use case is you should be able to insert your data and retrieve the
+[128.2s - 133.4s] data. That's a primary use case requirement that you have apart from this.
+[135.0s - 137.1s] No, I think that that about sums it up.
+[137.1s - 138.6s] We wanted to be distributed.
+[138.6s - 140.2s] That's the main, that's the main thing.
+[141.1s - 141.5s] All right.
+[141.5s - 143.0s] So I'll use this one here.
+[143.0s - 145.7s] So for the functional requirements,
+[147.2s - 149.9s] primarily, I think what we can have, I'll use this here.
+[150.8s - 157.4s] Users can insert up just a moment.
+[159.4s - 161.8s] I'll just do a few.
+[166.4s - 166.8s] All right.
+[167.2s - 168.2s] OK.
+[168.2s - 177.2s] So users should be able to insert the data, insert data and users should be.
+[179.2s - 181.6s] Users can fetch or retrieve data.
+[181.6s - 184.7s] I would say, well, that's primarily, I would say,
+[185.4s - 187.8s] the main functionalities that we are looking at for the cache.
+[188.0s - 188.4s] All right.
+[190.4s - 193.5s] So you said a distributed cache shape, by the way.
+[194.0s - 199.5s] So distributed LRU cache shape.
+[200.0s - 202.7s] Now, when you say distributed, obviously,
+[202.7s - 205.4s] there are some non-functional requirements that are coming into my mind.
+[206.8s - 213.9s] And primarily, actually, I would say something like availability is
+[213.9s - 218.2s] for sure is coming into my mind being highly available because at any point of
+[218.2s - 223.0s] time, user should be able to get their data into the cache and
+[223.4s - 224.6s] obviously retrieve that data.
+[224.6s - 228.6s] So high availability for sure seems like one.
+[230.4s - 235.2s] Similarly, like highly scalable, because there might be the number of requests
+[235.2s - 239.8s] might increase and we should be able to accommodate and not degrade the
+[239.8s - 241.8s] performance of our cache service.
+[243.8s - 248.8s] Apart from that, I mean, obviously, the performance, I mean, it has to be
+[248.8s - 253.5s] performant like we should be able to retrieve the data as fast as possible.
+[253.5s - 256.1s] And obviously, insert the data also as fast as possible.
+[257.6s - 261.3s] Yeah, overall, I think these are the things any other consideration that you
+[261.3s - 262.4s] want me to have here.
+[263.1s - 265.1s] Let's talk a little bit about consistency.
+[265.1s - 266.0s] What are your thoughts on that?
+[266.6s - 270.7s] Well, I mean, going by the principles of system design, obviously, we
+[270.7s - 276.0s] cannot have, you know, high tight consistency with high availability also.
+[276.6s - 281.2s] So it kind of, it's a tricky situation to have, I would say, I mean,
+[281.9s - 285.1s] I would look to discuss it as we have all been to the design for sure.
+[285.1s - 293.5s] I'll keep a marker here, something like I would say look, look for
+[295.2s - 297.9s] tight consistency and discuss accordingly.
+[298.0s - 300.6s] I would go to marker here.
+[301.3s - 302.3s] Yep.
+[302.4s - 306.4s] There will be some trade offs is what I'm forcing here and would love to
+[306.4s - 308.8s] discuss when we reach tip to that point, that point here.
+[308.8s - 309.6s] Okay.
+[310.9s - 311.3s] All right.
+[311.3s - 313.9s] So these are the requirements here that we have.
+[313.9s - 315.9s] And let's get started with this.
+[316.8s - 320.2s] So I can clearly see that, you know,
+[321.4s - 325.9s] first, I would like to address these, the functional requirements and then
+[325.9s - 330.2s] would like to move it into the distributed or the non functional things actually.
+[330.6s - 335.2s] So let's first start with a single machine implementation where I can have
+[335.9s - 338.5s] I would like to talk about the API design actually.
+[339.0s - 346.8s] So if I just discuss on the API design for this, okay.
+[349.0s - 352.6s] We need for the functional requirement, we need to insert the data.
+[352.6s - 357.5s] So one of the first methods that I'm thinking is an insert method here.
+[358.4s - 363.0s] And the parameters that I'm thinking about the insert method is a,
+[364.2s - 368.3s] first of all, I mean, let's say if I talk about fast retrieval,
+[368.6s - 374.1s] if I have to implement the cache on a single machine, let's say, and for a fast retrieval,
+[376.2s - 380.6s] I should be, I should be talking about the implementation of this cache.
+[381.0s - 385.0s] And as far as the implementation goes, I think hash map is something
+[385.8s - 391.6s] that comes to my mind where we usually store it in the form of a key value pair
+[392.2s - 396.1s] in the cache, like the value will be stored against a key.
+[396.1s - 398.7s] And essentially in a hash map kind of a data structure,
+[398.7s - 401.1s] you should be able to retrieve it in one time.
+[402.0s - 408.0s] So insert should have a key and the corresponding value is what I'm thinking here.
+[408.8s - 412.0s] And a key obviously will be unique.
+[412.0s - 417.8s] Similarly, for the retrieval, I think there will be something like a retrieve method.
+[417.8s - 418.7s] That's what I'm thinking.
+[419.4s - 423.5s] And for the retrieval, I think we should, by the way, like insert would return
+[424.2s - 428.4s] something as simple as 200 if it's successfully inserted.
+[428.4s - 433.8s] Or if there is any kind of an issue accordingly, it will either return a 4XX or a 5XX kind of an error.
+[434.6s - 436.6s] If it's a client's head or a server's head can up an error.
+[437.5s - 440.9s] So that's the response that insert would give a retrieve.
+[440.9s - 441.8s] We only need a key.
+[442.7s - 445.8s] Accordingly, it should be able to return as the relevant value.
+[446.9s - 448.9s] Or again, if there are some errors,
+[448.9s - 450.8s] accordingly, relevant error codes.
+[450.8s - 455.3s] Like if it's a successful retrieve 200 otherwise 4XX or 5XX kind of an error.
+[457.7s - 462.2s] Now, that's primarily I'm thinking about from an API design perspective.
+[463.2s - 472.3s] And one more thing which I'm thinking here is about the single service or single machine implementation.
+[472.3s - 479.5s] So just talking about the implementation briefly, I mean, the insert would work something like,
+[480.4s - 489.4s] I would say, I would go and check in the cache that if that key already exists or not.
+[490.0s - 498.2s] So something like if key exists and if it does not exist, by the way, if it does not exist,
+[500.1s - 504.4s] we can go ahead and insert it if it does not exist.
+[505.0s - 512.8s] However, now when I'm thinking that it's not like we have unlimited space here,
+[512.8s - 515.0s] right? Caches will have a limited space.
+[515.6s - 522.3s] So even if the key does not exist, we also need to make a check that if the cache is full
+[522.3s - 525.9s] or not, if we have memory to insert a new information or not.
+[528.5s - 534.7s] And that is where I mean, this consideration comes from the place that that is where this LRU
+[534.7s - 542.0s] nature of the cache would primarily stand out. So how do we evict the item?
+[542.0s - 546.6s] How do we evict the item? This is where the LRU algorithm will come into picture that whichever
+[546.6s - 552.7s] item is least recently used, is not that much popular with the users, we will kick that out to
+[552.7s - 558.6s] make space for the new item. Yeah. And HashMap, a simple HashMap would not be able to track it.
+[558.6s - 564.9s] I mean, we have essentially just a key and a value. So a simple HashMap would not be able to track
+[565.0s - 574.8s] the order in which the items exist. And what I would essentially go with is to have another data
+[574.8s - 583.6s] structure like along with the HashMap. And that would be something like a queue, I would say, a queue.
+[584.4s - 589.4s] And not exactly a queue, but I mean, kind of an implementation of a queue in essentially,
+[589.4s - 595.0s] I think I will go for a linked list actually, because we should be able to traverse across
+[596.1s - 602.0s] the items present at the same key, I would say, sorry, not the same key, but essentially,
+[602.0s - 606.2s] we should be able to arrange the item, rearrange the items, the order of the items actually.
+[606.2s - 611.8s] So that is where I think the linked list makes sense. And more so, I mean,
+[613.2s - 617.2s] say better retrieval space and all, since performance is a major consideration here,
+[617.2s - 624.2s] I would actually suggest using a doubly linked list. So that from any place, we can iterate or move
+[624.2s - 629.6s] either in the forward or the backward direction. Now, what would happen that, okay, we see cash
+[629.6s - 634.5s] is full, we go through the doubly linked list, we go to the fill of the doubly linked list,
+[634.5s - 640.5s] essentially, because that would be the least recently used, like least a popular item.
+[640.5s - 645.9s] We would kick that out, we would remove that, we get a space now, we insert our new item,
+[645.9s - 650.1s] and when we insert, we place that at the head, because that is the fresh,
+[651.4s - 655.8s] completely fresh item. So we insert that item as the head of the list.
+[657.8s - 663.8s] And similarly, if the cash is not full, a similar thing follows, except that we do not need to
+[663.8s - 668.6s] kick out anything else, because we still have space, we can insert the new item at the head,
+[668.6s - 675.4s] it's as simple as that. If the key already exists, obviously, we don't need to insert the item in
+[675.4s - 685.6s] the cash, we already have the key. Now, for the retrieval, for the retrieval, I would go with,
+[685.6s - 694.2s] so this is for insert, this is for insert, and for the retrieval, we can go with something like, okay,
+[694.8s - 704.8s] okay, if the key exists, all right, we will again go through the same question, if key exists,
+[706.2s - 711.8s] we can actually go ahead and fetch the key, and when we fetch the key, so like this is a yes
+[711.8s - 718.2s] situation, when we fetch the key, that key becomes used, like that has been our recently used,
+[718.2s - 724.7s] so essentially, wherever that lies in this doubly linked list, we need to move that particular item
+[724.7s - 730.5s] to the head of the linked list, because now that's the order that we are maintaining. Accordingly,
+[730.5s - 738.2s] the other items will shift one place for the, to make space for the head, like that rearrangement
+[738.2s - 745.1s] will happen. And similarly, like if the key does not exist, then essentially it's a cash miss,
+[745.7s - 753.0s] and we have to, and I would say retrieve the item from the actual data store, where you know,
+[753.0s - 759.0s] where we are serving the cash from. So, this is how the implementation would work, so the get would
+[759.0s - 766.4s] see that, okay, if, you know, if we have the item, we will access the item and move it to the
+[766.4s - 772.5s] head of the list, and if the item is not there, no, then it's a cash miss, we will go to the actual
+[772.6s - 777.5s] data store and fetch the item from there, it's as simple as that. Insert, well, two places,
+[777.5s - 785.8s] I would say two phase, if the key already exists, all right, so then we would, we would not have to
+[785.8s - 792.7s] insert anything, by the way, I just realized that if the key exists, yes situation, in the yes situation
+[792.7s - 798.9s] also, we don't need to insert anything new, but we have tried to access that key, and that key
+[798.9s - 803.4s] again would be moved to the head of the head of the doubly linked list, because that
+[804.1s - 809.8s] increases its recentness action, and if it's not there, then we will check cash full kind of
+[809.8s - 814.6s] condition, and accordingly we will either, you know, delete item from the tail to make space for
+[814.6s - 819.3s] the thing and all those kind of stuff, and if the cash, we have the space, we would anyways insert
+[819.3s - 822.4s] it, in any, either case, the new item will be at the head of the linked list.
+[823.2s - 828.6s] Is there a particular reason we need linked list here, and not a simple linked list?
+[830.4s - 837.5s] We, that's a good question, yeah, now I'm thinking out loud that if we go with a single simple
+[837.5s - 847.7s] linked list here, this rearrangement, I would say this rearrangement would be like, we can,
+[847.7s - 853.5s] we have to always start from the head, I would say, we have to always start from the head,
+[853.5s - 859.1s] in order to go for the rearrangement, if we have to like shift items by one place, is what I'm
+[859.1s - 865.8s] trying to suggest. Now, if we have a doubly linked list, it's not like we are bound to start only
+[865.8s - 871.1s] from the head, we should be able to start from any position, actually, so for example, what I'm
+[871.1s - 879.2s] trying to say is, okay, so let's say if I have some item, which is somewhere in the middle here,
+[879.2s - 884.0s] all right, and I try to access it, by the algorithm, first of all, it should be moved to the head,
+[885.4s - 891.6s] and we should be able to move the remaining items accordingly, shift their place.
+[894.6s - 899.8s] I cannot think of any particular reason that a doubly linked list stands out there,
+[899.8s - 906.4s] it is just that when I think about the more granular implementation, is where I'm thinking that,
+[906.4s - 911.6s] you know, there might be some algorithmic optimization, something like, probably not sure,
+[911.6s - 915.9s] I mean, why not research will not be used, because this is not sorted and all, but I'm just
+[915.9s - 920.2s] thinking from a granular level implementation, maybe that is where the doubly linked list might
+[920.2s - 926.2s] be helpful, but again, I might come up with a better reason later on. Yeah, are you losing anything
+[926.2s - 932.0s] by using a doubly linked list versus a simple linked list? That's where I'm thinking, right now,
+[932.0s - 937.4s] I don't think a doubly linked list is offering any significant advantage as such, but I just was
+[937.4s - 943.5s] thinking out maybe from a futuristic aspect that from an access point of view, doubly linked list
+[943.5s - 947.9s] gives us the freedom to move in any direction. With a single linked list, we only can move in a
+[949.0s - 953.5s] in a single, I would say, you know, forward direction, with a doubly linked list, we can move even
+[953.5s - 957.2s] in the backward direction, actually. Even though right now, we don't really have a huge
+[957.2s - 961.2s] space for that, but you're saying that for the future, in case there is a situation. Absolutely,
+[961.2s - 967.4s] absolutely. And I see that, I mean, if we use a doubly linked list, essentially, I'm not seeing any
+[967.4s - 971.4s] significant advantage that it is actually having. I mean, there is just an extra point that we are
+[971.4s - 977.3s] adding to each node, so there is nothing much of a space thing that we are losing here. So that's
+[977.3s - 980.0s] why I went for a doubly linked list, that there is no significant disadvantage here.
+[981.0s - 991.0s] So, API design, and I would say this implementation, now I'm thinking of, you know, moving to,
+[993.0s - 997.2s] I would say, and by the way, one more thing with respect to the implementation, which I'm thinking,
+[997.2s - 1005.9s] is we can have some setup. I'm thinking of a dedicated cache cluster. Let me draw this line here.
+[1006.9s - 1012.6s] So, when I say dedicated cache cluster, I mean to say that essentially, there will be
+[1013.6s - 1018.0s] microservices or there will be different services, which will be making a calls to the data store,
+[1018.0s - 1022.3s] and that is where somewhere in the middle, the cache would come into picture. So, what I mean
+[1022.3s - 1027.8s] to say that there will be this services, and then there will be this cache, and then there will
+[1027.8s - 1031.9s] be your data store. So, these services actually try to access the data from the data store,
+[1032.6s - 1036.2s] and cache is optimized that retrieval, is what I'm trying to suggest.
+[1037.0s - 1043.4s] Now, we can have these dedicated cache cluster, that is, dedicated separate machines,
+[1043.4s - 1049.8s] where we can host our caches or implement our caches. So, I'm trying to suggest is
+[1050.9s - 1059.9s] dedicated cache cluster, is what I'm trying to suggest here, where the services would be implemented
+[1059.9s - 1067.3s] in a different machine, the caches would be in a different machine, and now when I'm thinking
+[1067.3s - 1075.6s] from a distributed systems perspective, I'm thinking that we can in a distributed system,
+[1076.2s - 1082.3s] essentially, we are going for a distributed cache, because a single cache machine would not be
+[1082.3s - 1086.3s] able to store that much data, that's why we want to distribute the data across different machines.
+[1086.8s - 1091.7s] And the distribution mechanism, I'm thinking about a simple range based kind of a
+[1092.6s - 1099.7s] sharding, where maybe certain keys, let's say, giving an example, like let's say A to N,
+[1099.7s - 1107.1s] the keys which start from A, and accordingly A to N entries can be present in this one single
+[1107.1s - 1114.2s] machine, accordingly N to further, let's say Z, let's say, for example, can be present in this one,
+[1114.8s - 1121.2s] and each service posts, or I would say each service, would have the information about this
+[1121.2s - 1128.0s] partitioning, I would say, about this division, that which servers have which range of data,
+[1128.0s - 1133.7s] accordingly they will have this information locally, and based on what queries that they get,
+[1134.6s - 1139.9s] based on the query that they get, they will be able to decide which cache server or cache cluster
+[1140.0s - 1145.3s] do they need to make a call, if let's say this service gets a request for something which is
+[1145.3s - 1152.4s] starting from T, so it knows that hey, the T1 is stored in this cache cluster, actually,
+[1152.4s - 1158.9s] not in this one, it will be able to make that decision. So that's the distributed implementation
+[1158.9s - 1163.1s] that I'm thinking about, just making a quick check, do you have any questions here?
+[1163.8s - 1168.8s] What are some other strategies you would consider, and why pick this one?
+[1168.8s - 1176.0s] So, I went with a separate cache cluster here. The other option which I can think of is
+[1177.7s - 1189.0s] possibly have the caching implemented as a simple process in these servers or a service
+[1189.5s - 1199.2s] itself, I would say. So we have these service hosts, and what I'm suggesting is these caches
+[1200.4s - 1208.0s] are co-located in these service hosts itself. The rest of the implementation is still the same,
+[1208.0s - 1215.5s] like they are still sharded based on this range and all, but now, I mean what this implementation
+[1216.0s - 1222.0s] does now, when I compare them, we are saving on the hardware cost here, that's one advantage,
+[1222.0s - 1230.7s] if we go with a co-located kind of an option. So we are saving on the hardware cost, it is
+[1230.7s - 1236.0s] less operational overhead compared to this, because now we don't need to maintain a separate
+[1236.0s - 1244.2s] cluster as such. However, I can see the advantage of this dedicated cache cluster, so this is the
+[1244.2s - 1251.7s] co-located option, where the advantages are that we are not having to have extra hardware,
+[1251.7s - 1256.8s] no operational cost as such, and it kind of helps with the scaling, like scaling wise,
+[1257.5s - 1261.4s] if we scale the service host accordingly, the cache also will scale, so we don't need to
+[1262.1s - 1266.0s] put out a separate activity for the cache scaling. These are the advantages, but then when I
+[1266.0s - 1273.1s] think about the dedicated one, I think it offers the better isolation of resources between the
+[1273.1s - 1278.9s] service and the cache, like both have their own purpose, and when I think from, you know,
+[1278.9s - 1284.8s] when I think from the system design principles of a single responsibility principle and separation
+[1284.8s - 1290.8s] of concern and all those things, I think this stands out to me, because while scaling is an
+[1290.8s - 1297.0s] advantage here, the hardware availability requirement that we have, if the service host goes down,
+[1297.0s - 1302.5s] well, we lose the cache also, by the way. So compromising on one service, like if it plays a problem
+[1302.5s - 1306.6s] with a service host, well, we don't have access to the cache also, so these are the trade-offs,
+[1306.6s - 1311.0s] these are the problems that exist here, and considering the requirements that we have like high
+[1311.0s - 1315.7s] availability, scalability, and all those things, I think I'll go with a dedicated cache cluster,
+[1315.7s - 1321.9s] where it provides for a better isolation of resources, like we have a single, I would say,
+[1323.3s - 1329.9s] single view, a unified view of the caches for different services, and we have the flexibility,
+[1330.0s - 1335.5s] like since we have the division, so we can, it's not like whatever service or type of
+[1335.5s - 1339.8s] machine that we choose for the service host, we have to do with that only for the cache.
+[1339.8s - 1344.6s] Now, with this division, we can choose, you know, multiple types of hardware, we have the flexibility.
+[1345.4s - 1347.7s] So that's why we'll go with a dedicated cache cluster, yeah.
+[1348.4s - 1355.8s] Sounds good. All right. All right. Okay. Fairness. I think so far, so good, we have been able to,
+[1356.5s - 1362.7s] I would say implement a design, so essentially for the high-level design, I would say that
+[1363.9s - 1371.4s] we have a client, we have a client, and then we will have obviously some kind of a load balancer here,
+[1371.4s - 1376.0s] or an API gateway, which does the load balancing activity, I'm not going to details of that,
+[1376.0s - 1381.4s] but it does a lot of things like authentication maybe, and your load balancing rate limiting,
+[1381.4s - 1387.5s] and all those kind of stuff. Okay. Then we have all our service hosts here, I would say,
+[1387.5s - 1392.8s] the service hosts, and the service hosts, as I told earlier, they have the configuration
+[1392.8s - 1399.0s] of the cache cluster, like which cache cluster holds which range, they have that configuration
+[1399.0s - 1405.6s] locally, and then we have the actual cache servers, or cache cluster, as you would say,
+[1406.0s - 1414.0s] and each of these service hosts has access to each of these cache clusters because of that
+[1414.0s - 1422.2s] configuration. So that's the setup, and finally, we have the data store. Okay. So that's how the,
+[1422.2s - 1427.4s] I would say that's how the setup looks like the high-level design. I think we are good so far,
+[1427.4s - 1431.8s] and if you don't have further questions, I would get into the details, the non-functional
+[1432.0s - 1438.4s] requirements, and we can address the distributed requirements. Yeah. All right. Awesome.
+[1439.0s - 1444.5s] Now, one of the first things that I'm thinking here is how will, you know, how will this,
+[1447.3s - 1453.6s] you know, this cache, the service, would make a call to these cache servers actually.
+[1454.2s - 1463.8s] And for that one essential thing, which I think should be good to have is I would have a process.
+[1463.8s - 1468.6s] I would say, you know, a simple kind of library. So let's say this is the service host.
+[1469.8s - 1475.8s] This is the service host. I would have a process or a service called the client, the cache
+[1475.8s - 1479.8s] client. Now, this client is different from this client, by the way. So this is the cache client,
+[1479.8s - 1485.4s] actually. All right. Now, this is a simple, I would say, a simple library, which resides in this
+[1485.4s - 1493.0s] application server. And it holds all the information regarding the cache server. And the cache client
+[1493.0s - 1500.4s] will choose, it will choose that, you know, which of the, one of the cache servers. So we decided
+[1500.4s - 1506.9s] that we had this ranging and all. So the owners of choosing which, you know, cache cluster we have to
+[1506.9s - 1511.6s] go to, that will be decided with the cache client because it will have all that information.
+[1512.4s - 1517.2s] And all the cache clients will have the consistent view of all the cache servers.
+[1517.8s - 1523.9s] What that means is, you know, we have different cache servers is what I meant. And let's say,
+[1523.9s - 1530.2s] again, we have this ranging and all and to P, let's say, and few, some other range. Now,
+[1530.2s - 1535.8s] there might be different server or service hosts. And again, each will have their own cache client.
+[1535.8s - 1541.6s] I'll call that cc for now. Each one of them will have the same view. Like, when I say same view
+[1541.6s - 1547.0s] or constant view, this cache client will be aware of these three cache servers and the ranges that
+[1547.0s - 1551.4s] they are serving. Similarly, this cache client will be aware of these three cache servers and the
+[1551.4s - 1557.3s] ranges that they are serving. So that's how the cache client would assist or would work.
+[1557.3s - 1565.9s] However, now stepping into the distributed nature, I'm seeing a problem here,
+[1566.5s - 1573.9s] which I can identify is that let's say if one of the cache servers, if one of the cache
+[1573.9s - 1580.8s] servers goes down, how will this client be updated? Or let's say if a new cache server is added
+[1581.0s - 1589.5s] actually, if a new cache server is added and maybe all that information, how will this cache
+[1589.5s - 1596.9s] client be updated about this? So one of the simplest way to do this is have a configuration file
+[1597.4s - 1603.1s] locally on these cache lines. It will be a simple configuration file, which would have this
+[1603.1s - 1608.6s] configuration, maybe in a key value format, again, that range, let's say a to m,
+[1610.2s - 1616.2s] cache server one, let's say something like that, range n to t, cache server two, a very simple
+[1616.2s - 1623.6s] configuration file. Then again, the problem here is that this is manual, this is very manual
+[1623.6s - 1627.8s] and would require constant manual intervention for the change in updates and all those kind of
+[1627.8s - 1637.3s] stuff. The other thing, and by the way, this manual stuff includes updating it on all the
+[1637.3s - 1645.9s] cache quints, which is again increasing our complexity. The simple, I would say, solution to this
+[1645.9s - 1654.8s] is maybe have a single unified configuration file. I would say something like a central configuration
+[1654.8s - 1660.2s] where all the cache client can actually read from that configuration file, that would, I would say
+[1660.2s - 1668.2s] help us with that multi-level manual effort, but again, still, it's a manual effort because we
+[1668.2s - 1673.9s] still need to keep it this configuration file updated manually. So in consideration of all of this,
+[1673.9s - 1682.4s] I think one proposal that I have is to have a separate service, separate configuration management
+[1682.4s - 1691.8s] service, I would say something like a zookeeper kind of a thing. Now zookeeper is very famous,
+[1691.8s - 1701.8s] I would say, or very well, I would say configuration service, which means the information or keeps is
+[1701.8s - 1707.5s] used to maintain this server-related information in a distributed nature where it will constantly
+[1707.5s - 1713.7s] be maintained a heartbeat connection with these different cache servers. And let's say if it does
+[1713.7s - 1719.6s] not find the help check to succeed for some cache server, the cache server will be taken out of
+[1719.6s - 1727.0s] the cluster, and accordingly, zookeeper would update the configuration, and whenever the service
+[1727.0s - 1733.2s] or the cache client have to access the cache server, they would refer or read from the zookeeper,
+[1734.0s - 1737.4s] that hey, what is the latest configuration, give me the latest configuration,
+[1737.4s - 1743.6s] according to that information exchange, they can now go ahead and retrieve their data as usual.
+[1743.6s - 1749.8s] So that's one way to solve this, and this is completely automated, is how I see with the zookeeper
+[1749.8s - 1757.4s] thing, like having a separate configuration service, we are actually automating things, or I would
+[1757.4s - 1762.5s] say taking hands off the wheels, where we don't need to be worried about constantly updating this
+[1762.5s - 1768.7s] configuration, the zookeeper will take care of that by checking the heartbeat and the help of the
+[1768.7s - 1774.6s] cache servers, and if there is a problem in all, it will update the configuration, and the services
+[1774.6s - 1782.8s] can read that updated configuration accordingly, access the data. All right, now this is something with
+[1782.8s - 1788.6s] respect to, I would say, the configuration management and all, now thinking a bit more from
+[1789.3s - 1794.2s] some more aspects of non-functional requirements, so that's going back to the requirements that we
+[1794.2s - 1799.3s] collected. So we have higher availability performance, I think we have discussed, I think
+[1800.9s - 1805.5s] the implementation, hash map, and that linked list implementation would essentially help us,
+[1806.5s - 1813.2s] help us with the performance, and this configuration service would present a consistent view,
+[1814.1s - 1817.8s] services can read from that configuration service, and I hate the cache servers,
+[1817.8s - 1822.7s] so I think performance wise, we are pretty much covered, let's talk about the high availability,
+[1822.7s - 1830.5s] high scalability, and we will also have a look at the consistency part here, so when I look at
+[1830.5s - 1841.5s] high availability, let me go here, let's look at high availability, availability, all right, now I would
+[1841.5s - 1846.3s] say that the problem with availability here is right now we only discussed about, let's say,
+[1846.4s - 1850.7s] what if we have only a single cache server, I mean what if that cache server goes down,
+[1850.7s - 1857.4s] basically don't have the data, and the best way to, I mean the very straightforward way is to,
+[1858.9s - 1865.8s] I would use a different color, probably just to show it better, so we have the cache server,
+[1865.8s - 1870.7s] and we can have read replicas actually, so this will be the primary, let's say,
+[1871.3s - 1880.8s] primary cache, and this would be the read replicas, I would say, now read replicas would definitely
+[1880.8s - 1891.0s] help us with our improving our availability, and what happens is that we can have these primary
+[1891.0s - 1899.8s] and backup nodes, and this would include, I would say this would constitute one cache cluster,
+[1899.8s - 1906.3s] this would be a single cache cluster, and it works in a pretty straightforward fashion,
+[1906.3s - 1911.8s] that if the primary goes down, essentially there would be one of the read replicas,
+[1911.8s - 1915.5s] which would be promoted to the primary, which would be promoted to the primary,
+[1915.5s - 1922.1s] if the primary goes down, and again, who promotes it, well, this is where the zookeeper service,
+[1922.1s - 1926.9s] let's say this goes down, this is again where services like zookeeper shine, because they can
+[1927.8s - 1933.5s] carry out this leader election, and then there are different algorithms, like RAFT,
+[1934.2s - 1939.7s] is a very popular leader election algorithm, consensus algorithm by the way, not a leader election,
+[1939.7s - 1944.0s] but RAFT is a very popular consensus algorithm, and zookeeper can trigger,
+[1944.9s - 1948.6s] who should be the new leader, accordingly, the one of the read replicas will be promoted,
+[1948.6s - 1955.4s] and operations will continue as usual, so another thing is that these read replicas,
+[1957.4s - 1961.4s] ideally, I would have them in different data centers, so for example, this would be, let's say,
+[1961.4s - 1968.8s] in data center, AZ1, this would be in a different data center, AZ2, and this would further increase my
+[1968.8s - 1974.1s] availability, as you know, I'm not affected by only one particular region, let's say,
+[1974.1s - 1977.8s] something happens in this region, then if I have all my read replicas in that region,
+[1977.8s - 1982.3s] everything will be affected, so I'm further improving my availability by going like this,
+[1982.3s - 1986.1s] there are some considerations here, though, yeah, there are some consideration that,
+[1986.9s - 1993.4s] you know, we may choose to maintain strong consistency, and this is where consistency comes into
+[1993.4s - 1998.6s] question, that you know, what if we want to maintain the information between these replicas
+[1998.6s - 2003.9s] consistently, the replica and the master, in that case, well, our performance will take a bit of
+[2003.9s - 2010.6s] it, in what I mean to say, that we may choose to implement it like, hey, fine, the rights will be
+[2010.6s - 2016.6s] going to the primary, but the reads will be going to the, to let's say, the read replicas,
+[2016.6s - 2021.4s] we can say like that, but when the right comes to the primary, we will say that unless and until
+[2021.4s - 2026.3s] they are replicated across the replicas, we will not give a confirmation to the client,
+[2026.3s - 2030.6s] something like that, I mean, if we go with that kind of an implementation, our performance
+[2030.6s - 2034.9s] would take a backseat, slightly, slight backseat, I would say, wait, can we take a step?
+[2035.8s - 2042.2s] Why would writing to the primary, but reading from the replicas help with consistency?
+[2043.2s - 2046.6s] Yeah, okay, so it does not help with the consistency, I just
+[2047.4s - 2053.9s] proposed that this can be a setup. Consistency is a different discussion here, so what I'm trying to
+[2055.0s - 2060.8s] suggest about consistency is, first of all, let me take this read and write out of the equation for
+[2061.8s - 2065.4s] now, what I'm suggesting more consistency is, let's say if a write comes to the primary,
+[2066.1s - 2071.0s] and if we want to maintain a consistent view, so what I mean by a consistent view is that's,
+[2071.0s - 2077.0s] is let's say, you know, the primary has the updated data, has an updated data like a latest key,
+[2077.0s - 2082.7s] all right, but it is still not present at the read replicas. Now, if some read comes to the read
+[2082.7s - 2088.7s] replicas, they don't have this updated key, updated data, so that's not a consistent view actually,
+[2088.8s - 2094.8s] right? Yeah. Yes. Now, that's what, that's what, like if we want to provide a best performance,
+[2094.8s - 2101.1s] like best latency and all, then we have to take a step back, like we have to take a step back on
+[2101.1s - 2106.0s] the consistency part that we do not promote or promise tight consistency, that's something we'll
+[2106.0s - 2110.3s] have to go with. Otherwise, if we go with tight consistency, then our performance has to take
+[2110.3s - 2116.2s] a backseat, is what I'm trying to suggest. Okay, I understand. Yeah, so these are some trade-offs,
+[2116.2s - 2120.2s] obviously, and this totally depends on the business use case, what we are dealing with,
+[2120.2s - 2126.1s] and what the business wants to promise dear clients, so accordingly we can implement them. So,
+[2126.1s - 2134.2s] that's one thing. And similarly about scalability, I mean, we, with this, with this quest-trend concept,
+[2134.7s - 2141.4s] and with these replicas and all, essentially, and also with this zookeeper kind of a kind of
+[2141.4s - 2149.9s] a configuration service, essentially, all, in fact, let me take this space here to draw the
+[2149.9s - 2158.6s] final design diagram. So, we'll have this client, and then we will have this API gateway and load
+[2158.6s - 2164.8s] balance thing, which we discussed earlier. And then finally, we have this, all these services,
+[2165.6s - 2173.3s] server hosts, and then we have all these, I would say cache clusters,
+[2174.3s - 2179.0s] cache clusters, or cache shards, you can call them cache shards, I would call them cache shards,
+[2179.0s - 2189.3s] actually, cache shard clusters. Now, this would have this setup, like this, why did I choose the
+[2189.3s - 2194.6s] same color, I should have chosen interesting color. Yep, so, this would have this primary and these
+[2194.6s - 2201.9s] replicas in each cluster. And essentially, this will be repeated, this will be something which
+[2201.9s - 2210.9s] will be repeated. So, that's the final setup I would say. And overall, I mean, we'll have this
+[2210.9s - 2216.3s] configuration service in the middle here somewhere, let's say something like a zookeeper configuration.
+[2216.9s - 2226.2s] Now, with this setup, what do we have is, we have a very highly available setup for our cache,
+[2227.1s - 2232.2s] and we have a highly scalable, because now we can add or remove servers, or I would say add or
+[2232.2s - 2238.2s] remove new clusters, and just need to update them in the configuration service, which would present
+[2238.8s - 2245.4s] all these services with a unified view of the caching setup. So, we have a highly available,
+[2245.4s - 2251.1s] highly scalable setup here, and performance wise, well, the core implementation, as I suggested,
+[2251.1s - 2255.8s] is in the form of a hash map, and a linguist, I suggested a double in linguist, but yes, we can go
+[2255.8s - 2264.1s] with a single in linguist also, but, yeah, obviously, from a futuristic consideration, I think maybe
+[2264.1s - 2268.6s] from some access improvement perspective, double in linguist might have some advantage, but,
+[2268.6s - 2274.1s] yeah, again, we can look into that probably in a more granular use case. But that would be
+[2274.6s - 2279.8s] the primary, I would say, setup here. So, this is the configuration service, we might need some
+[2279.8s - 2284.5s] monitoring also, yep, sorry, just finishing it up, some monitoring also that we might want to have,
+[2285.4s - 2292.0s] so that we can have a full complete cache service. So, we might constantly want to monitor,
+[2292.0s - 2296.3s] and maybe share this monitoring information, with the zookeeper service configuration management
+[2296.3s - 2301.5s] service. So, yeah, I think that will be the final design that I will go with, and I will
+[2302.2s - 2307.4s] take any question that you might have. What are some of the biggest limitations of this design?
+[2307.4s - 2316.2s] So, the biggest limitations, I think I'll go with the discussion that we cannot have first
+[2316.2s - 2320.7s] starting off with the high availability versus consistency debate, we cannot have both of them.
+[2321.4s - 2327.8s] If we are going for high availability, we have to compromise on the consistency in the sense that
+[2328.4s - 2334.2s] I discussed that, you know, the rights would be going only to the master, but we can read from any
+[2334.2s - 2339.4s] of the replicas, that way we are improving the availability, but compromising on the consistency.
+[2339.4s - 2342.8s] So, there is a limitation whichever option we go with, if we go with tight consistency,
+[2342.8s - 2346.0s] well, we are compromising the performance as we discussed already earlier.
+[2347.6s - 2353.4s] Other thing which I'm thinking here, we have some operational overhead, obviously,
+[2353.4s - 2358.1s] as I discussed earlier, that operational overhead of maintaining this configuration service,
+[2358.1s - 2365.5s] keeping it updated, and then we are maintaining different read replicas in different data centers.
+[2365.5s - 2369.1s] So, there is a lot of maintenance, a lot of operational overhead which is involved here,
+[2369.1s - 2373.4s] but again, all of that comes with a trade-off of providing the best services, best caching
+[2373.4s - 2377.8s] experience to our clients. So, those are some limitations that I will talk about.
+[2378.8s - 2383.6s] Okay, I think this is a good place to stop. How do you think that went? What are your thoughts?
+[2385.6s - 2391.9s] I think that went pretty well. We started off with some requirements discussion,
+[2391.9s - 2398.2s] and all across our design, along our design, I would say, we were able to abide by those requirements,
+[2398.2s - 2404.6s] so putting all the granular implementation level perspective into place, and then addressing
+[2404.6s - 2408.2s] some interesting questions which you threw at me. Thank you so much for all those questions.
+[2409.0s - 2416.4s] I think we have a design which pretty much satisfies highly scalable, available, and a performant
+[2416.4s - 2423.7s] caching service for us. What are some tips that you would give people who encounter questions
+[2423.7s - 2428.9s] like this in the wild? This didn't have a particular use case behind it or anything.
+[2428.9s - 2433.5s] It was just purely theoretical. So, what are some suggestions that you have for people who get
+[2433.5s - 2442.3s] questions like this? Absolutely. Yeah, some suggestions that I have for folks and something which
+[2442.3s - 2451.0s] even I when I look back in the hindsight is like trying to maintain communication with the
+[2451.0s - 2456.2s] interviewer as much as possible to ask as much as questions. I would say when I did all the
+[2456.2s - 2460.6s] questioning thing, but I think somewhere in the middle, I could have constantly checked with you
+[2460.7s - 2465.2s] every now and then periodically to make sure that you are following along because I realized that
+[2465.2s - 2470.7s] some places you had to stop me and then ask certain questions. So, as a candidate, I feel it's
+[2470.7s - 2475.0s] my responsibility to keep the interviewer in check, keep them carrying along that make sure that
+[2475.0s - 2478.2s] they're following along. So, that's one of the things. It's something like a pure backend
+[2478.2s - 2483.1s] kind of system is what I'm trying to say. You know, it's something not which is a user-facing
+[2483.1s - 2490.3s] something like a YouTube, maybe an Uber or a Facebook kind of a system. So, thinking about something
+[2490.7s - 2497.4s] which helps you achieve that backend capabilities requires a bit more hot process, requires a bit more,
+[2497.4s - 2503.0s] I would say stepping from the basic and then evolving the design like I did. I started from a
+[2503.0s - 2510.2s] single server implementation and then evolved into the distributed world. So, I think we a good way
+[2510.2s - 2516.2s] if you are not, if you get a question like this, which is not super intuitive, super user-facing
+[2517.0s - 2522.3s] and it's more of a backend and all those technological kind of stuff where you have to go. So,
+[2522.8s - 2527.3s] start simple, start from the basic and then gradually evolve, discuss with the interviewer,
+[2527.3s - 2532.1s] obviously what they are looking for in which direction they want to go ahead and that should be it,
+[2532.1s - 2537.4s] I would say. Yeah. Lovely. Thank you so much, Ravi. It was wonderful having you on again and I
+[2537.4s - 2542.1s] am sure this is going to be very useful to people watching from home. If I can just add one final
+[2542.1s - 2547.4s] thing, I would also just talk about consistent hashing just to improve the availability. I mean,
+[2547.4s - 2552.5s] that is one thing which I could have talked about, but that's just a follow-up thing. Anyways,
+[2552.5s - 2564.9s] that's my final note. Gotcha. All right. Thanks so much everyone. Take care.

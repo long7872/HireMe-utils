@@ -1,0 +1,361 @@
+SOURCE: YouTube
+VIDEO_ID: T9Y82JH4-pY
+URL: https://www.youtube.com/watch?v=T9Y82JH4-pY
+GPU: 1
+DURATION: 2156.1s (35.9 min)
+TRANSCRIBED: 2025-11-28 09:21
+================================================================================
+
+FULL TRANSCRIPT:
+--------------------------------------------------------------------------------
+ solve the game of life. Hi everyone, we're here today for another exponent block interview with Simon. For those of you who aren't already familiar with exponent, exponent helps you get your dream tech career with our online courses, expert coaching, peer-to-peer mock interviewing platform, and interview question database. Check it out at tryexponent.com. I thank so much for being here with us today Simon. It's awesome to have you back again. Would you quickly introduce yourself to our viewers? Yeah, definitely. Hi everyone, my name is Simon Eisman, and I'm currently a software engineer at Google. I've previously worked at Spotify, at Etsy, Bloomberg, and Forceware, and I received my MBA and Masters in Computer Science from the University of Chicago. And I'm looking forward to being here. It's such a diverse array of experience, and I'm really excited to see how you solve this problem. Okay, so let's get into it. So the question today is, solve the game of life. And so the way that you play this game is that it's a board game that's made up of an M by N grid of cells, where each cell has an initial state. So either it can be alive, which will represent with a one. It can be dead, which will represent by zero. And then each cell interacts with its eight neighbors, so the horizontal, vertical, and diagonal neighbors, according to a set of four rules. First of all, any live cell with fewer than two live neighbors will die, basically by underpopulation. Any live cell with two or three live neighbors will live on to the next generation. Any live cell with more than three live neighbors dies by overpopulation. And then any dead cell with exactly three live neighbors becomes a live cell as if by reproduction. So then you can create the next state by applying all of those rules simultaneously to every cell in the current grid. So where births and that's occur simultaneously. So if you're given the current state, I want you to basically return the next state. Got it. Got it. Yeah, I think I remember something like this, many years ago in a computer science class, we probably talked about it. But would it be okay to get a version of the question that kind of has all the rules enunciated? Yes, sorry, what do you mean by that? Could we just get the question shared so we have the rules in front of us? We have, we have this yeah, we have this m by n grid. And we have to change it according to these rules. Got it. All right, I think this makes sense. In terms of the output, like in terms of getting the next state, do you want me to return an entirely new copy of the grid with the updated values? I'd prefer if you could do it in place. Sure, yeah, I think that makes sense. We probably want to be space saving. Um, would you be able to show me some example input and what we think that the next state would look like? Sure, yeah, um, so I can example, put that together with the instructions. Yeah, this is starting to make sense. And this might be an assumption, but the cells outside of the grid are we just assuming that they're considered dead, that they have a zero value? Yes. Why don't we go through some of the actual cells and kind of reason about why they changed the way they did? So if we kind of look at the initial state, this cell, for example, it died and turned into a zero over here. And the reason for that is because of rule, uh, number one, because it only has one live neighbor around it and we need two or three. Okay, so that makes sense. Let's look for a cell that stayed alive. So for example, something like this cell and this cell, it has, this one has three live neighbors. This one has two live neighbors. And that's the reason why it stayed alive into the next generation. Right. Um, now we see one cell that actually became alive. So this, this zero right here turned into this one, uh, because it has three live neighbors. Okay, yeah, that makes sense. So that's an example of, uh, rule number four. I don't know if I see an example of rule number three, but I think it makes sense, right? If, if there's ever four or five or more alive neighbors, it would, it would die. It would die. Okay, I think this makes sense. Um, so I think I have an idea of what the algorithm would be. Basically, I would go cell by cell, uh, row by column. I would look at each cell's neighbors and then I would update its living status, depending on what the neighbor count is. But, but, okay, I think I'm kind of, I'm starting to see what the issue with the problem is. Um, what the crux of the problem is, you, you basically can't, you can't update the, the cells themselves to their final, dead or alive status. And then also simultaneously count them as neighbors for the other cells. I think that's, it's in place, right? Right, exactly. Because, you know, if I go cell by cell from the top to the bottom, um, if I accidentally, you know, kill the cell right here, I'll incorrectly count the number of alive neighbors in its respective neighbors. So I kind of need to find a way to, as the problem says, to kind of do it, uh, simultaneously. Yeah, exactly. Okay, so it seems then that we have to do it somehow in multiple steps. We can't just do it all at once towards the end. Um, like you said, we kind of, I don't really want to make a full copy of it, um, because we are trying to save space. And like you said, we don't need that secondary copy if we're doing it in place. Um, so I think what I need to do is I probably need to update each cell to some sort of an intermediate state and then update it to its final state. Okay, so what would that intermediate state look like? Yeah, um, I suppose that the intermediate state somehow needs to encapsulate both the previous state and the next state, um, so what it was before and what it's going to be. Um, I guess one approach would be to just replace all the cells with two poles, where we could have like the first entry be the old living status and the second entry be the, the new living status. Um, okay, so I guess well, technically that would work. That's almost equivalent to just like using another array, then it uses a lot of extra like storage. Is it right to do it without two poles? Yeah, yeah. Is like the, is the idea there basically to keep the, the sort of like the types consistent to like only to use integers in the square? Yeah, exactly. Yeah. Got it. Yeah. Okay. I mean, that makes sense. Yeah, the tuple approach is kind of, yeah, it doubles the space. Um, if that's the case, uh, if we're only allowed to use these, these integers basically, then I suppose we just have to make our own mapping. If that makes sense, um, you know, the same way where we would, we would represent the same information of like this transitory state, um, without a sort of like other structure. So for, for example, I think it helps to be specific here. So let's take a look at some examples. So, uh, you have the state where a zero becomes a one. Um, we have the state where a one stays a one. We have the state where a zero, um, becomes a zero and then we have the state where a one becomes the zero. Okay. Yeah. Yeah. I think that that's like the closed universe of what we have. Um, so how about this? Why don't we just actually set these sort of states to have their, their own mapping? Maybe I can rearrange these just so it's a little bit clear. So zero to zero would be zero. That makes sense. Um, zero to one. I don't want to confuse that and make that a one. So maybe a one to a one would be a one. So it stays alive. Okay. A zero to a one would be a two. So it becomes alive. So let's switch that order and then a one to a zero is a three. Yeah. I think that sounds to me. Yeah. I think that's a reasonable mapping. So then to kind of like re summarize the approach, what we're going to do is we're going to have this two step approach where in the first step, we iterate cell by cell and we reach this intermediate state of zero, ones, twos and threes and then we would basically re iterate through the graph and kind of clean up all of those twos and threes to convert them to what they actually mean. So a two would be converted to a one, a three would be converted to a zero. That sounds like it would work to me. Yeah. Do you want to get started with writing the code? Yeah. Awesome. Let's just jump right into it. Okay. Great. Let's comment that out. Let's give ourselves some space to work here. Game of life is very profound. Okay. So we have this grid. We want to return the grid back. Basically, the first thing I'd want to do is basically iterate over the grid itself. So yeah, for row and numerate grid. So this would give me the index and the actual row itself for the column and the cell itself in numerate row. So this is the actual step where we want to kind of convert it. So I think what I'm actually going to do here, when we're converting it, we need to count the neighbors around us. So if we kind of look at this initial state, it would probably help us if we have another helper function called get live neighbors. So what this will do is basically this will iterate over all of our neighbors and count their values. So this will do something like live neighbors equals zero. Get live neighbors would have to take the grid, the row and the column. And then it would kind of iterate over all of its different eight neighbors. So let's actually give ourselves a helper function for a helper tuple here. One good approach would actually just be to provide the offset basically. So something like zero one, one zero, one one, negative one, negative one, zero negative one. And what is a data type of grid here? So the data type of grid here is basically a list of integers, right? Is that a fair representation? And directions here basically just represents that offset. So we're going to be using that to instead of writing eight different checks, we're going to do a four loop where we can iterate over directions. Yeah, that makes sense. So for, let's say, direction and directions. So I didn't finish this, but just kind of give a view into what that'll look like. Negative one. Okay, and then the last one would be negative one zero. Oh, I already did that. Negative one one and then the opposite of that one negative one. Okay, so that's state. Yeah, okay, that makes sense. So basically four direction and directions, what we're going to figure out is that they actually like grow offset at that point. So no offset equals. And then what that tells us is the actual value of the neighbor itself. So we would do neighbor equals three grow offset call offset. So what we can do now is we can actually do this check like we said. Now normally, we would just count the ones, but we actually have to do it according to this mapping here. So if neighbor equals one or neighbor equals, let's see, what was our original mapping? A three, that would be that case. Then we can simply do live neighbors plus equals one. And then we return the live neighbors. Okay, so that's what we would do here. And then inside of this original function, we just use that helper. Okay, I think this makes sense. And then now is when we can actually implement the rules. So based on the number of live neighbors that I have, we change the cell value itself. So get live neighbors assumes that you've already have the intermediate state them. Yes, exactly. So there could be a potential situation where one of the neighbors themselves, like let's say, let's say we're at this cell right here. When we would look back up at some of these cells, they might actually be a different value. So for example, this one would have converted to, I guess, a three, most likely after this situation. Yeah. So we want to make sure that get live neighbors properly encapsulates that information. Yeah, okay. So is there like a function somewhere that actually populates the intermediate state of like the zeros or three? Yeah, that would happen right here inside of this for loop. So here I would have the rules. Like if if the live neighbors, for example, is less than two, then I would change grid basically. Okay, I meant like so here you're checking like if neighbor equals one or neighbor equals three. So that can, assumes that you've already converted the zeros at once to zero through three's. Yeah. So that would have to happen before you call get live neighbors, right? Yeah, I think it can happen at the same time. Okay. Yeah, let's see how you would implement that. I think I'm a little bit confused by this part. Okay. So at this point, what we're doing is we're checking the live neighbor count. So in this case, we can, you know, take care of rule number one, if the cell dies by underpopulation. So that would be when it goes from a one to a three. So then what we would do here, we would do something like grid, grid, all index equals three, for example, we can ignore the case, we can ignore case two, because that basically tells us that nothing has changed. For row three, what that basically tell for rules three rather, we can check if there's more than three neighbors. So if live neighbors is greater than three, then that would basically change to a different number. Let's see, according to a rule, if it dies, it goes from a one to a zero. I'm sorry, if it goes from a one to a zero, that would also be three. So we can probably combine these two cases, let's just confirm that that's the case. If you were then live dies, dies. Yes, so basically rule one or three. And in another scenario where we have exactly three, so if live neighbors equals three, then what that basically tells us is that we would have to be able to check, if the current cell that we're at is a zero or a one, that's like the kind of condition that we're missing here. So if the actual cell itself equals one and both of these cases are true, then we have to do this step where we flip it basically. So in the opposite case where we have exactly three, so if cell equals zero and live neighbors equals three, then that means we kind of actually flip to an alive state. So that would be situation zero to one, that would convert to two. So I think this kind of encapsulates a set of rules basically. With rule number two, a one would continue on to the next generation, that's this one. And then if there are more than three live neighbors, it dies. Yeah, okay, so that encapsulates that rule. So one thing that we're actually missing here is a boundary check that actually occurs to me. So for example, get live neighbors, it's potentially incorrectly going over all of the directions. So what we have to do is we have to check that we're actually not, you know, going to throw an exception for index out of bounds. So let's give ourselves another helper function. So is in bounds. And that could be something as simple as, you know, checking the size of the grid. So if row is less than zero or call, or actually, in bounds means has to be positive. So row is greater than equals to zero. Gotcha. So then what I would do here is if is in bounds, or I would say if not is in bounds, grid, all of a sudden, call of sudden, then basically I would, I would continue. So that gives us like an early exit condition. Otherwise, we know that we are in bounds and therefore we can, we can properly calculate this. Yeah, perfect. And then finally, I think the last thing that we want to do is we want to do a cleanup where basically iterate over the cells and fix them. So And by fixing, you mean converting zero to three back to the original zeros and ones? Yeah, exactly. So we could have something similar to this. And then we just check what the cell value is. So if, if cell equals, for example, two, then we want to convert it to a one. Then what we do is grid. Comes to one, cell equals three, then we convert it to the other one. So zero. And I think that overall this should work. I think maybe this gives me some pause. Like maybe the rules need to be properly encapsulated, but I think this looks almost there. Yeah, so I did have a point of clarification. So when you first get the grid, the grid only contains zeros and ones, right? Yeah. Right. So then the first function that you call on it is get live neighbors, which then like pulls out individual cells from that grid. And it checks if the neighbor equals one or neighbor equals three. But at that point, grid only contains zeros and one. So I'm confused about why there's this like neighbor equals three case. Yeah. So we can, we can think of a scenario where when we do go cell by cell, like a good example of that, be if I like scroll up to the initial state up here. So let's say I'm kind of showing this as my, my in place, my in place grid. This one would become, let's see, it would become a three because it dies. It only it's underpopulated. So once I reach this cell, it changes to a three. When I reach this cell, it stays the same. When I reach this cell, it would count its neighbors. So it basically see I have a one over here, a one over here, and a one that used to be kind of over here, right? So that would be this case. So, right. So even though we're kind of doing it in place, we still want to properly count that one over here so that we can properly flip this to be zero to a one, which is a two, right? Yep. Perfect. Yeah. So it's because it's going in row a major order and see. Right. And you know what the mapping is. Okay. Great. Yeah. And you had wanted to make a point about the coding. I'm sorry. What was that? And you had wanted to make a point about like how to clean up the code. Yeah. So in terms of in terms of cleaning up the code, I think these helpers definitely help. I think I don't know if we need to necessarily clean up this aspect of it because we are like redoing it. Maybe we could put this into another function of some kind that kind of cleans it up. That would be a good candidate for that. But this looks pretty close. I think it could be worth it to like maybe do a unit, a unit tester too. Yeah. I'd love to see that. Awesome. So let's actually take these data sets. So that's the first one. That's the second one. So this is the initial state. Sorry about that. This is the initial state expected next state. That would be the same. So what we're looking for at the end of this unit test is basically like a true. So what I want to do is game of life on the initial state. Game of life of the initial state equals the expected next state. And let's just print whether it passed the test. Okay. So let's run that. Okay. So basically we're kind of improperly iterating over this somehow. Let me see. Maybe I just can't see it. Oh, there it is. Yes. I forgot a comma. Amazing. Amazing. Yeah. All right. Okay. It failed somewhere. So somewhere we're improperly actually printing out the, we're improperly setting the cells. So the way that I would probably test this to figure out where is I'll print the expected next state and I'll print my current result. And then we'll see where that gets us. So actual next state is this. So what we want to do is here is we're rowing actual next state print row. So that's it'll allow us to test it. And similarly, let's see what it looks like. So we know what we want it to look like. Oh, well, none type is not iterable. So I mean, not actually returning anything in that function right now. That makes a whole lot of sense. So what we want to instead do is we want to have the initial state. What I'm going to do is I'm going to do in place grid equals initial state copied. And then what I'm going to do is actually I'll call it like this. So expected next state. That passed. All right, excellent. So the issue based through there, like you said, game of life is doing it in place. And I wasn't properly. I was getting none back. So that's what I was telling. Great. Okay. So are there any other test cases that you might want to test? Yeah. So I mean, a great one. You know, we want to test corner cases where it's all zeros. Another good one is when it's all ones, because it would be all overpopulated. So we'd want to see that that basically all becomes zeros again. So that would be a good test case. You also mentioned earlier on that this test example doesn't actually cover all the rules, right? Exactly. Yeah. So rule number three was the one where we had a situation that something should die by having more than three neighbors. So we can test that out by maybe putting another one over here or something like that. Yeah. Okay. We copy this just so it's separate for us. So if we have this one right here, let's actually think that through. So if this was a one right here, what should die? This cell should die. It should turn into a zero. And yeah, I think that's it. Like this would be the only difference. Maybe some of the other neighbors will actually change because now you have another alive neighbor. So this one might die. This one will actually become alive. Yeah. This is the thing about the rules for this that you kind of it's actually ever changing exactly. So like I've seen the simulation of it and it just kind of, it's doing a lot of stuff like where it goes to infinity and a lot of changes happening all at once. So in this case, this cell would die. Let's actually change it. So this is case one. This is case two. All right. So if we made this a one, let's see. So this would still be dead afterwards. This cell would still, it would still be alive actually because it has two alive neighbors. This cell would spring to life because it has exactly three neighbors. This cell would, let's just set these all to P0. Just so it's a little clear what I'm reading. So this cell right here, it would stay dead. This cell right here, it would definitely die. This cell right here, it would also definitely die. This cell right here, it would stay alive. It has two alive neighbors. This cell right here, it would die. This cell right here, it would stay alive. This would be a one. This cell dead, this cell becomes alive because it has exactly three neighbors and then this cell would stay dead. So I think this would be our expected output from that other case. Yeah. I think I agree. So let's set that here. All right, let's try that again. I should see hopefully two passes. Yep. Awesome. Looks good. Great. Okay. Fantastic. So I think this is a good place for us to pause then and debrief a little bit. I'd love to hear from you what you think went well and what do you think you would want to improve? Because this is honestly fantastic. Yeah. So I think one thing that I did well at the outset was that, you know, there are some aspects that I wasn't sure about in terms of the problem. So asking some clarifying questions as I went along as I sort of adjusted the algorithm and realized that something wouldn't work. So asking those clarifying questions was definitely helpful. I think another thing is that like I kind of took your suggestions in terms of what wasn't quite working with that initial approach and I kind of adjusted as necessary. In terms of what could have gone better, I think that I tripped up on certain aspects of the code, especially when I was unit testing or I, you know, for example, I had the boundary condition that I didn't quite realize was an issue until later into coding. So that could have maybe gone a little bit smoother. Yeah. Okay. Yeah. Those are all really good points. I think I agree with a lot of that. I think there was a lot that you did really well on your interview. So I want to start with that first. You had some really great clarifying questions in the beginning that I think totally changed your implementation at the end. Like had you not asked about whether or not it should be in place? Like your initial solution might have been much less efficient actually. So that was awesome. And then you once you decided that you wanted to use an in place implementation, you had the clever insight that like in order to do this, the main difficulty is that it's hard to simultaneously read and edit the same array at the same time. Yeah. And then overall, I thought that like the code itself was really modular and in general had descriptive method and variable names, which is also important. And you were really good at using various like Python primitives, like using the array slice to basically get a copy of the array. And in general, I really like that you did such a thorough job of like testing with many different test cases and you seem to know how to debug to and like identify the specific cases where your code might go wrong. And you caught your own mistakes as you went along, you know, like identifying the boundary condition. So I didn't need to point that out to you. So that was awesome. So I think like one thing that could have been even better, especially because in interviews, they tend to be a little bit more particular about this is like coding style. So I think you mentioned this a little bit earlier actually, but we never sort of got to it is that for the mapping. So the mappings from these years to ones to the intermediate mapping custom mapping from 0 to 3. And then back, we could probably implement those either as dictionaries or helper functions. And that would like probably get rid of a lot of these like if cases that you see throughout the code and make it a lot easier to read. Yeah, that's true. Yeah. And then another thing, specifically with Python too, it's often in many style guides that you should use type hints for the arguments and also like some method comments, right? Especially for code like this that can be a little bit confusing if you don't entirely know what the algorithm is beforehand, especially for loose where you're simultaneously like editing and reading the grid at the same time. So the for the contents of the collection that you're iterating through is changing as you're iterating through it. It's good to include a comment there indicating that that will happen, you know. Yeah, but I think other than that, it was excellent. Thank you so much for joining us today. Yeah, thank you. Really appreciate it at the time. Yeah. And this is such an interesting question. So thanks everybody for watching and good luck with your upcoming interviews. Bye, everyone. Thanks so much for watching. Don't forget to hit the like and subscribe buttons below to let us know that this video is valuable for you. And of course, check out hundreds more videos just like this at try exponent dot com. Thanks for watching and good luck on your upcoming interview.
+
+TIMESTAMPED SEGMENTS:
+--------------------------------------------------------------------------------
+[0.0s - 2.0s] solve the game of life.
+[4.0s - 7.7s] Hi everyone, we're here today for another exponent block interview with Simon.
+[7.7s - 10.3s] For those of you who aren't already familiar with exponent,
+[10.3s - 13.6s] exponent helps you get your dream tech career with our online courses,
+[13.6s - 16.5s] expert coaching, peer-to-peer mock interviewing platform,
+[16.5s - 18.2s] and interview question database.
+[18.2s - 20.6s] Check it out at tryexponent.com.
+[20.6s - 22.6s] I thank so much for being here with us today Simon.
+[22.6s - 24.2s] It's awesome to have you back again.
+[24.2s - 26.4s] Would you quickly introduce yourself to our viewers?
+[27.1s - 28.4s] Yeah, definitely.
+[28.4s - 30.6s] Hi everyone, my name is Simon Eisman,
+[30.6s - 33.3s] and I'm currently a software engineer at Google.
+[33.8s - 38.7s] I've previously worked at Spotify, at Etsy, Bloomberg, and Forceware,
+[38.7s - 44.0s] and I received my MBA and Masters in Computer Science from the University of Chicago.
+[44.0s - 45.7s] And I'm looking forward to being here.
+[46.4s - 50.5s] It's such a diverse array of experience, and I'm really excited to see how you solve this problem.
+[51.1s - 52.9s] Okay, so let's get into it.
+[52.9s - 55.5s] So the question today is, solve the game of life.
+[56.4s - 60.6s] And so the way that you play this game is that it's a board game that's made up of an
+[60.6s - 64.2s] M by N grid of cells, where each cell has an initial state.
+[64.2s - 67.4s] So either it can be alive, which will represent with a one.
+[67.4s - 69.8s] It can be dead, which will represent by zero.
+[69.8s - 72.3s] And then each cell interacts with its eight neighbors,
+[72.3s - 75.2s] so the horizontal, vertical, and diagonal neighbors,
+[75.8s - 77.7s] according to a set of four rules.
+[77.7s - 81.5s] First of all, any live cell with fewer than two live neighbors will die,
+[82.3s - 84.2s] basically by underpopulation.
+[84.2s - 89.1s] Any live cell with two or three live neighbors will live on to the next generation.
+[89.1s - 93.5s] Any live cell with more than three live neighbors dies by overpopulation.
+[93.5s - 99.0s] And then any dead cell with exactly three live neighbors becomes a live cell as if by reproduction.
+[100.2s - 105.0s] So then you can create the next state by applying all of those rules simultaneously to
+[105.0s - 106.7s] every cell in the current grid.
+[107.5s - 110.2s] So where births and that's occur simultaneously.
+[110.3s - 114.8s] So if you're given the current state, I want you to basically return the next state.
+[115.8s - 116.7s] Got it. Got it.
+[116.7s - 118.6s] Yeah, I think I remember something like this,
+[119.6s - 123.6s] many years ago in a computer science class, we probably talked about it.
+[124.7s - 131.7s] But would it be okay to get a version of the question that kind of has all the rules enunciated?
+[131.7s - 133.8s] Yes, sorry, what do you mean by that?
+[133.8s - 138.1s] Could we just get the question shared so we have the rules in front of us?
+[138.1s - 140.7s] We have, we have this yeah, we have this m by n grid.
+[142.1s - 145.7s] And we have to change it according to these rules.
+[147.2s - 147.8s] Got it.
+[147.8s - 149.3s] All right, I think this makes sense.
+[150.5s - 154.8s] In terms of the output, like in terms of getting the next state, do you want me to
+[155.9s - 159.6s] return an entirely new copy of the grid with the updated values?
+[160.4s - 161.9s] I'd prefer if you could do it in place.
+[163.3s - 164.6s] Sure, yeah, I think that makes sense.
+[164.6s - 166.2s] We probably want to be space saving.
+[166.2s - 173.4s] Um, would you be able to show me some example input and what we think that the next state would look like?
+[173.9s - 179.7s] Sure, yeah, um, so I can example, put that together with the instructions.
+[181.5s - 183.0s] Yeah, this is starting to make sense.
+[183.0s - 188.9s] And this might be an assumption, but the cells outside of the grid are we just assuming that
+[188.9s - 191.3s] they're considered dead, that they have a zero value?
+[192.2s - 192.8s] Yes.
+[193.8s - 199.0s] Why don't we go through some of the actual cells and kind of reason about why they changed the way
+[199.0s - 199.4s] they did?
+[200.3s - 202.4s] So if we kind of look at the initial state,
+[205.2s - 209.8s] this cell, for example, it died and turned into a zero over here.
+[209.8s - 212.3s] And the reason for that is because of rule,
+[213.4s - 220.6s] uh, number one, because it only has one live neighbor around it and we need two or three.
+[220.6s - 221.7s] Okay, so that makes sense.
+[223.0s - 225.9s] Let's look for a cell that stayed alive.
+[225.9s - 229.9s] So for example, something like this cell and this cell, it has,
+[231.1s - 232.6s] this one has three live neighbors.
+[233.8s - 235.4s] This one has two live neighbors.
+[236.3s - 240.4s] And that's the reason why it stayed alive into the next generation.
+[241.0s - 241.3s] Right.
+[242.2s - 246.3s] Um, now we see one cell that actually became alive.
+[246.3s - 253.4s] So this, this zero right here turned into this one, uh, because it has three live neighbors.
+[253.4s - 254.6s] Okay, yeah, that makes sense.
+[254.6s - 257.9s] So that's an example of, uh, rule number four.
+[257.9s - 260.6s] I don't know if I see an example of rule number three,
+[261.4s - 263.5s] but I think it makes sense, right?
+[263.5s - 269.2s] If, if there's ever four or five or more alive neighbors, it would, it would die.
+[270.9s - 271.4s] It would die.
+[272.6s - 274.9s] Okay, I think this makes sense.
+[275.4s - 278.2s] Um, so I think I have an idea of what the algorithm would be.
+[279.4s - 283.7s] Basically, I would go cell by cell, uh, row by column.
+[284.2s - 289.6s] I would look at each cell's neighbors and then I would update its living status,
+[289.6s - 292.2s] depending on what the neighbor count is.
+[293.1s - 300.1s] But, but, okay, I think I'm kind of, I'm starting to see what the issue with the problem is.
+[300.2s - 306.3s] Um, what the crux of the problem is, you, you basically can't, you can't update the,
+[306.3s - 310.1s] the cells themselves to their final, dead or alive status.
+[310.1s - 315.9s] And then also simultaneously count them as neighbors for the other cells.
+[316.6s - 318.6s] I think that's, it's in place, right?
+[319.4s - 320.2s] Right, exactly.
+[320.2s - 323.9s] Because, you know, if I go cell by cell from the top to the bottom,
+[324.6s - 328.6s] um, if I accidentally, you know, kill the cell right here,
+[328.7s - 334.1s] I'll incorrectly count the number of alive neighbors in its respective neighbors.
+[334.1s - 341.8s] So I kind of need to find a way to, as the problem says, to kind of do it, uh, simultaneously.
+[342.3s - 343.1s] Yeah, exactly.
+[344.8s - 350.5s] Okay, so it seems then that we have to do it somehow in multiple steps.
+[351.3s - 354.6s] We can't just do it all at once towards the end.
+[355.4s - 362.6s] Um, like you said, we kind of, I don't really want to make a full copy of it, um,
+[362.6s - 364.2s] because we are trying to save space.
+[364.2s - 369.6s] And like you said, we don't need that secondary copy if we're doing it in place.
+[370.6s - 378.2s] Um, so I think what I need to do is I probably need to update each cell to some sort of an
+[378.2s - 382.5s] intermediate state and then update it to its final state.
+[383.0s - 386.6s] Okay, so what would that intermediate state look like?
+[388.6s - 393.7s] Yeah, um, I suppose that the intermediate state somehow needs to encapsulate
+[394.2s - 398.5s] both the previous state and the next state, um, so what it was before and what it's going to be.
+[399.1s - 405.4s] Um, I guess one approach would be to just replace all the cells with two poles,
+[406.1s - 411.0s] where we could have like the first entry be the old living status and the second entry be the,
+[411.1s - 412.4s] the new living status.
+[414.0s - 417.4s] Um, okay, so I guess well, technically that would work.
+[417.4s - 422.3s] That's almost equivalent to just like using another array, then it uses a lot of extra
+[422.3s - 430.4s] like storage. Is it right to do it without two poles? Yeah, yeah.
+[432.4s - 436.7s] Is like the, is the idea there basically to keep the, the sort of like the types consistent to
+[436.8s - 439.7s] like only to use integers in the square? Yeah, exactly. Yeah.
+[439.7s - 443.2s] Got it. Yeah. Okay. I mean, that makes sense. Yeah, the tuple approach is kind of,
+[444.2s - 454.0s] yeah, it doubles the space. Um, if that's the case, uh, if we're only allowed to use these,
+[455.0s - 460.4s] these integers basically, then I suppose we just have to make our own mapping.
+[460.4s - 466.8s] If that makes sense, um, you know, the same way where we would, we would represent the same
+[466.8s - 474.0s] information of like this transitory state, um, without a sort of like other structure. So for,
+[474.0s - 479.8s] for example, I think it helps to be specific here. So let's take a look at some examples. So,
+[481.3s - 488.7s] uh, you have the state where a zero becomes a one. Um, we have the state where a one
+[489.7s - 498.4s] stays a one. We have the state where a zero, um, becomes a zero and then we have the state where a one
+[499.4s - 507.8s] becomes the zero. Okay. Yeah. Yeah. I think that that's like the closed universe of what we have.
+[508.5s - 514.2s] Um, so how about this? Why don't we just actually set these sort of states to have their,
+[514.3s - 519.4s] their own mapping? Maybe I can rearrange these just so it's a little bit clear. So zero to zero
+[519.4s - 528.5s] would be zero. That makes sense. Um, zero to one. I don't want to confuse that and make that a one.
+[528.5s - 536.6s] So maybe a one to a one would be a one. So it stays alive. Okay. A zero to a one would be a two.
+[536.6s - 542.2s] So it becomes alive. So let's switch that order and then a one to a zero is a three.
+[543.2s - 548.4s] Yeah. I think that sounds to me. Yeah. I think that's a reasonable mapping. So then to kind of like
+[548.4s - 554.1s] re summarize the approach, what we're going to do is we're going to have this two step approach where
+[554.6s - 560.6s] in the first step, we iterate cell by cell and we reach this intermediate state of zero,
+[560.6s - 565.8s] ones, twos and threes and then we would basically re iterate through the graph and kind of
+[565.8s - 570.6s] clean up all of those twos and threes to convert them to what they actually mean. So a two would
+[570.6s - 576.3s] be converted to a one, a three would be converted to a zero. That sounds like it would work to me.
+[576.3s - 580.8s] Yeah. Do you want to get started with writing the code? Yeah. Awesome. Let's just jump right into it.
+[580.8s - 587.8s] Okay. Great. Let's comment that out. Let's give ourselves some space to work here.
+[587.8s - 604.7s] Game of life is very profound. Okay. So we have this grid. We want to return the grid back.
+[606.4s - 611.6s] Basically, the first thing I'd want to do is basically iterate over the grid itself. So
+[611.6s - 626.8s] yeah, for row and numerate grid. So this would give me the index and the actual row itself
+[629.0s - 634.4s] for the column and the cell itself in numerate row.
+[634.6s - 645.4s] So this is the actual step where we want to kind of convert it. So I think what I'm actually going to do
+[645.4s - 650.8s] here, when we're converting it, we need to count the neighbors around us. So if we kind of look at
+[650.8s - 655.9s] this initial state, it would probably help us if we have another helper function called
+[656.7s - 666.4s] get live neighbors. So what this will do is basically this will iterate over all of our neighbors
+[666.4s - 669.8s] and count their values. So this will do something like
+[673.5s - 680.6s] live neighbors equals zero. Get live neighbors would have to take the grid, the row and the column.
+[681.6s - 685.4s] And then it would kind of iterate over all of its different
+[685.8s - 691.1s] eight neighbors. So let's actually give ourselves a helper function for a helper tuple here.
+[693.1s - 699.4s] One good approach would actually just be to provide the offset basically. So something like
+[699.5s - 715.9s] zero one, one zero, one one, negative one, negative one,
+[720.4s - 724.7s] zero negative one. And what is a data type of grid here?
+[725.7s - 734.4s] So the data type of grid here is basically a list of integers, right? Is that a fair representation?
+[735.7s - 739.6s] And directions here basically just represents that offset. So we're going to be using that to
+[740.5s - 746.2s] instead of writing eight different checks, we're going to do a four loop where we can iterate over
+[746.2s - 753.2s] directions. Yeah, that makes sense. So for, let's say, direction and directions. So I didn't
+[753.2s - 760.5s] finish this, but just kind of give a view into what that'll look like. Negative one.
+[763.0s - 765.9s] Okay, and then the last one would be negative one zero.
+[768.7s - 775.5s] Oh, I already did that. Negative one one and then the opposite of that one negative one.
+[776.4s - 781.6s] Okay, so that's state. Yeah, okay, that makes sense. So basically four direction and directions,
+[781.6s - 785.4s] what we're going to figure out is that they actually like grow offset at that point. So
+[789.4s - 791.4s] no offset equals.
+[801.0s - 805.7s] And then what that tells us is the actual value of the neighbor itself. So we would do
+[806.0s - 807.9s] neighbor equals
+[810.6s - 812.2s] three grow offset call offset.
+[816.1s - 821.5s] So what we can do now is we can actually do this check like we said. Now normally,
+[821.5s - 825.7s] we would just count the ones, but we actually have to do it according to this mapping here. So
+[826.6s - 833.3s] if neighbor equals one or neighbor equals, let's see, what was our original mapping?
+[833.3s - 843.0s] A three, that would be that case. Then we can simply do live neighbors plus equals one.
+[844.6s - 850.3s] And then we return the live neighbors. Okay, so that's what we would do here.
+[852.2s - 857.8s] And then inside of this original function, we just use that helper.
+[864.2s - 870.9s] Okay, I think this makes sense. And then now is when we can actually
+[871.5s - 874.9s] implement the rules. So based on the number of live neighbors that I have,
+[875.6s - 882.4s] we change the cell value itself. So get live neighbors assumes that you've already
+[882.4s - 891.0s] have the intermediate state them. Yes, exactly. So there could be a potential situation where
+[891.7s - 897.6s] one of the neighbors themselves, like let's say, let's say we're at this cell right here.
+[900.6s - 905.0s] When we would look back up at some of these cells, they might actually be a different value. So
+[905.0s - 912.4s] for example, this one would have converted to, I guess, a three, most likely after this situation.
+[913.0s - 918.0s] Yeah. So we want to make sure that get live neighbors properly encapsulates that information.
+[918.5s - 924.7s] Yeah, okay. So is there like a function somewhere that actually populates the intermediate state
+[924.7s - 931.4s] of like the zeros or three? Yeah, that would happen right here inside of this for loop. So
+[932.6s - 938.4s] here I would have the rules. Like if if the live neighbors, for example, is less than two,
+[938.4s - 947.0s] then I would change grid basically. Okay, I meant like so here you're checking like if neighbor
+[947.0s - 952.0s] equals one or neighbor equals three. So that can, assumes that you've already converted the
+[952.0s - 958.1s] zeros at once to zero through three's. Yeah. So that would have to happen before you call get
+[958.1s - 965.5s] live neighbors, right? Yeah, I think it can happen at the same time. Okay. Yeah, let's see how you
+[965.5s - 971.3s] would implement that. I think I'm a little bit confused by this part. Okay. So at this point,
+[971.4s - 978.1s] what we're doing is we're checking the live neighbor count. So in this case, we can, you know, take
+[978.1s - 983.9s] care of rule number one, if the cell dies by underpopulation. So that would be when it goes from
+[983.9s - 989.5s] a one to a three. So then what we would do here, we would do something like grid,
+[990.0s - 1003.0s] grid, all index equals three, for example, we can ignore the case, we can ignore case two,
+[1003.0s - 1009.3s] because that basically tells us that nothing has changed. For row three,
+[1010.1s - 1015.4s] what that basically tell for rules three rather, we can check if there's more than three neighbors.
+[1015.4s - 1025.6s] So if live neighbors is greater than three, then that would basically change to a different number.
+[1031.4s - 1035.6s] Let's see, according to a rule, if it dies, it goes from a one to a zero.
+[1037.4s - 1043.6s] I'm sorry, if it goes from a one to a zero, that would also be three. So we can probably combine
+[1043.6s - 1049.5s] these two cases, let's just confirm that that's the case. If you were then live dies, dies. Yes,
+[1049.5s - 1056.9s] so basically rule one or three. And in another scenario where we have exactly three, so if live
+[1056.9s - 1062.9s] neighbors equals three, then what that basically tells us is that we would have to be able to check,
+[1063.6s - 1069.4s] if the current cell that we're at is a zero or a one, that's like the kind of condition that we're
+[1069.4s - 1079.0s] missing here. So if the actual cell itself equals one and both of these cases are true,
+[1080.1s - 1089.4s] then we have to do this step where we flip it basically. So in the opposite case where we have
+[1089.4s - 1095.1s] exactly three, so if cell equals zero and live neighbors equals three, then that means we kind of
+[1095.1s - 1101.3s] actually flip to an alive state. So that would be situation zero to one, that would convert to
+[1102.6s - 1108.1s] two. So I think this kind of encapsulates a set of rules basically. With rule number two,
+[1108.1s - 1114.7s] a one would continue on to the next generation, that's this one. And then if there are more
+[1114.7s - 1119.1s] than three live neighbors, it dies. Yeah, okay, so that encapsulates that rule. So one thing that we're
+[1119.1s - 1125.2s] actually missing here is a boundary check that actually occurs to me. So for example, get live
+[1125.2s - 1130.9s] neighbors, it's potentially incorrectly going over all of the directions. So what we have to do is
+[1130.9s - 1136.6s] we have to check that we're actually not, you know, going to throw an exception for index out of bounds.
+[1137.8s - 1143.8s] So let's give ourselves another helper function. So is in bounds.
+[1143.8s - 1152.4s] And that could be something as simple as, you know, checking the size of the grid. So
+[1153.2s - 1160.6s] if row is less than zero or call, or actually, in bounds means has to be positive. So
+[1161.5s - 1171.5s] row is greater than equals to zero.
+[1183.4s - 1185.9s] Gotcha. So then what I would do here is
+[1191.4s - 1204.9s] if is in bounds, or I would say if not is in bounds, grid, all of a sudden, call of sudden,
+[1204.9s - 1210.7s] then basically I would, I would continue. So that gives us like an early exit condition.
+[1210.7s - 1215.4s] Otherwise, we know that we are in bounds and therefore we can, we can properly calculate this.
+[1215.9s - 1216.8s] Yeah, perfect.
+[1218.0s - 1221.8s] And then finally, I think the last thing that we want to do is we want to do a cleanup
+[1222.6s - 1226.2s] where basically iterate over the cells and fix them. So
+[1227.4s - 1232.5s] And by fixing, you mean converting zero to three back to the original zeros and ones?
+[1232.5s - 1235.7s] Yeah, exactly. So we could have something similar to this.
+[1237.5s - 1243.0s] And then we just check what the cell value is. So if, if cell equals, for example, two,
+[1243.8s - 1249.8s] then we want to convert it to a one. Then what we do is grid.
+[1259.3s - 1267.4s] Comes to one, cell equals three, then we convert it to the other one.
+[1267.4s - 1283.7s] So zero. And I think that overall this should work. I think maybe this gives me some pause.
+[1283.7s - 1290.0s] Like maybe the rules need to be properly encapsulated, but I think this looks almost there.
+[1291.1s - 1295.8s] Yeah, so I did have a point of clarification. So when you first get the grid, the grid only
+[1295.8s - 1300.5s] contains zeros and ones, right? Yeah. Right. So then the first function that you call on it is
+[1300.5s - 1306.3s] get live neighbors, which then like pulls out individual cells from that grid. And it checks
+[1306.3s - 1311.3s] if the neighbor equals one or neighbor equals three. But at that point, grid only contains zeros
+[1311.3s - 1314.6s] and one. So I'm confused about why there's this like neighbor equals three case.
+[1315.4s - 1322.6s] Yeah. So we can, we can think of a scenario where when we do go cell by cell, like a good example
+[1322.6s - 1329.8s] of that, be if I like scroll up to the initial state up here. So let's say I'm kind of showing this
+[1329.8s - 1337.8s] as my, my in place, my in place grid. This one would become, let's see, it would become a three
+[1337.8s - 1344.9s] because it dies. It only it's underpopulated. So once I reach this cell, it changes to a three.
+[1344.9s - 1352.0s] When I reach this cell, it stays the same. When I reach this cell, it would count its neighbors.
+[1352.0s - 1361.4s] So it basically see I have a one over here, a one over here, and a one that used to be kind of
+[1361.4s - 1367.1s] over here, right? So that would be this case. So, right. So even though we're kind of doing it in
+[1367.1s - 1372.8s] place, we still want to properly count that one over here so that we can properly flip this to be
+[1373.4s - 1380.9s] zero to a one, which is a two, right? Yep. Perfect. Yeah. So it's because it's going in row
+[1380.9s - 1387.6s] a major order and see. Right. And you know what the mapping is. Okay. Great. Yeah. And you had
+[1387.6s - 1394.2s] wanted to make a point about the coding. I'm sorry. What was that? And you had wanted to make a point
+[1394.2s - 1403.3s] about like how to clean up the code. Yeah. So in terms of in terms of cleaning up the code, I think
+[1403.5s - 1413.4s] these helpers definitely help. I think I don't know if we need to necessarily clean up this aspect
+[1413.4s - 1419.8s] of it because we are like redoing it. Maybe we could put this into another function of some kind
+[1419.8s - 1425.2s] that kind of cleans it up. That would be a good candidate for that. But this looks pretty close.
+[1425.2s - 1430.7s] I think it could be worth it to like maybe do a unit, a unit tester too. Yeah. I'd love to see that.
+[1431.7s - 1444.8s] Awesome. So let's actually take these data sets. So that's the first one. That's the second one.
+[1447.5s - 1452.4s] So this is the initial state.
+[1453.1s - 1459.8s] Sorry about that.
+[1464.8s - 1473.7s] This is the initial state expected next state. That would be the same.
+[1473.7s - 1486.2s] So what we're looking for at the end of this unit test is basically like a true. So
+[1487.7s - 1491.4s] what I want to do is game of life on the initial state.
+[1491.4s - 1505.6s] Game of life of the initial state equals the expected next state. And let's just print whether it
+[1506.6s - 1518.1s] passed the test. Okay. So let's run that.
+[1525.0s - 1532.1s] Okay. So basically we're kind of improperly iterating over this somehow.
+[1532.9s - 1537.4s] Let me see. Maybe I just can't see it.
+[1539.8s - 1541.7s] Oh, there it is. Yes. I forgot a comma.
+[1543.3s - 1544.9s] Amazing. Amazing. Yeah.
+[1549.5s - 1557.4s] All right. Okay. It failed somewhere. So somewhere we're improperly actually printing out the,
+[1557.4s - 1564.1s] we're improperly setting the cells. So the way that I would probably test this to figure out where
+[1564.1s - 1571.6s] is I'll print the expected next state and I'll print my current result. And then we'll see where
+[1571.6s - 1583.8s] that gets us. So actual next state is this. So what we want to do is here is
+[1584.7s - 1593.2s] we're rowing actual next state print row. So that's it'll allow us to test it.
+[1594.5s - 1599.9s] And similarly, let's see what it looks like. So we know what we want it to look like.
+[1602.6s - 1607.3s] Oh, well, none type is not iterable.
+[1607.3s - 1613.2s] So I mean, not actually returning anything in that function right now.
+[1615.8s - 1622.6s] That makes a whole lot of sense. So what we want to instead do is we want to have the initial state.
+[1623.6s - 1625.1s] What I'm going to do is I'm going to
+[1625.1s - 1640.0s] do in place grid equals initial state copied. And then what I'm going to do is actually I'll call
+[1640.0s - 1643.4s] it like this. So expected next state.
+[1655.2s - 1668.4s] That passed. All right, excellent. So the issue based through there, like you said,
+[1669.0s - 1674.2s] game of life is doing it in place. And I wasn't properly. I was getting none back. So that's
+[1674.2s - 1679.0s] what I was telling. Great. Okay. So are there any other test cases that you might want to test?
+[1679.9s - 1684.8s] Yeah. So I mean, a great one. You know, we want to test corner cases where it's all zeros.
+[1685.6s - 1689.4s] Another good one is when it's all ones, because it would be all overpopulated.
+[1691.0s - 1698.0s] So we'd want to see that that basically all becomes zeros again. So that would be a good test case.
+[1698.7s - 1703.4s] You also mentioned earlier on that this test example doesn't actually cover all the rules, right?
+[1703.4s - 1709.8s] Exactly. Yeah. So rule number three was the one where we had a situation that something
+[1709.8s - 1715.7s] should die by having more than three neighbors. So we can test that out by maybe putting
+[1715.7s - 1726.0s] another one over here or something like that. Yeah. Okay. We copy this just so it's separate for us.
+[1726.8s - 1733.8s] So if we have this one right here, let's actually think that through. So if this was a one right
+[1733.8s - 1739.7s] here, what should die? This cell should die. It should turn into a zero.
+[1743.9s - 1751.1s] And yeah, I think that's it. Like this would be the only difference. Maybe some of the other
+[1751.1s - 1757.0s] neighbors will actually change because now you have another alive neighbor. So this one might die.
+[1760.3s - 1767.0s] This one will actually become alive. Yeah. This is the thing about the rules for this that you kind of
+[1769.0s - 1777.8s] it's actually ever changing exactly. So like I've seen the simulation of it and it just kind of,
+[1777.8s - 1783.4s] it's doing a lot of stuff like where it goes to infinity and a lot of changes happening all at once.
+[1784.7s - 1792.4s] So in this case, this cell would die. Let's actually change it. So
+[1798.3s - 1801.5s] this is case one. This is case two.
+[1808.0s - 1816.2s] All right. So if we made this a one, let's see. So this would still be dead afterwards.
+[1817.8s - 1824.2s] This cell would still, it would still be alive actually because it has two alive neighbors.
+[1825.6s - 1832.2s] This cell would spring to life because it has exactly three neighbors. This cell would,
+[1832.2s - 1838.2s] let's just set these all to P0. Just so it's a little clear what I'm reading.
+[1841.3s - 1847.9s] So this cell right here, it would stay dead. This cell right here, it would definitely die.
+[1849.3s - 1857.0s] This cell right here, it would also definitely die. This cell right here, it would stay alive.
+[1857.0s - 1860.9s] It has two alive neighbors. This cell right here, it would die.
+[1862.2s - 1868.9s] This cell right here, it would stay alive. This would be a one.
+[1871.6s - 1879.8s] This cell dead, this cell becomes alive because it has exactly three neighbors and then this cell would stay dead.
+[1880.4s - 1883.6s] So I think this would be our expected output from that other case.
+[1884.7s - 1885.7s] Yeah. I think I agree.
+[1887.6s - 1890.2s] So let's set that here.
+[1892.6s - 1912.3s] All right, let's try that again. I should see hopefully two passes. Yep. Awesome. Looks good.
+[1913.0s - 1919.0s] Great. Okay. Fantastic. So I think this is a good place for us to pause then and debrief a
+[1919.0s - 1923.7s] little bit. I'd love to hear from you what you think went well and what do you think you would
+[1923.7s - 1930.5s] want to improve? Because this is honestly fantastic. Yeah. So I think one thing that I did well at the
+[1930.5s - 1936.2s] outset was that, you know, there are some aspects that I wasn't sure about in terms of the problem.
+[1936.2s - 1942.0s] So asking some clarifying questions as I went along as I sort of adjusted the algorithm and realized
+[1942.0s - 1946.6s] that something wouldn't work. So asking those clarifying questions was definitely helpful.
+[1946.6s - 1955.4s] I think another thing is that like I kind of took your suggestions in terms of what wasn't quite
+[1955.4s - 1962.1s] working with that initial approach and I kind of adjusted as necessary. In terms of what could have
+[1962.1s - 1966.9s] gone better, I think that I tripped up on certain aspects of the code, especially when I was
+[1966.9s - 1972.3s] unit testing or I, you know, for example, I had the boundary condition that I didn't quite realize
+[1972.4s - 1977.7s] was an issue until later into coding. So that could have maybe gone a little bit smoother.
+[1978.2s - 1982.3s] Yeah. Okay. Yeah. Those are all really good points. I think I agree with a lot of that.
+[1983.1s - 1987.0s] I think there was a lot that you did really well on your interview. So I want to start with that first.
+[1987.0s - 1991.4s] You had some really great clarifying questions in the beginning that I think totally changed your
+[1991.4s - 1996.0s] implementation at the end. Like had you not asked about whether or not it should be in place?
+[1996.0s - 2000.6s] Like your initial solution might have been much less efficient actually. So that was awesome.
+[2000.6s - 2005.1s] And then you once you decided that you wanted to use an in place implementation,
+[2005.1s - 2009.8s] you had the clever insight that like in order to do this, the main difficulty is that it's hard
+[2009.8s - 2013.9s] to simultaneously read and edit the same array at the same time. Yeah.
+[2014.8s - 2020.8s] And then overall, I thought that like the code itself was really modular and in general had
+[2020.8s - 2025.8s] descriptive method and variable names, which is also important. And you were really good at using
+[2025.9s - 2032.6s] various like Python primitives, like using the array slice to basically get a copy of the array.
+[2033.7s - 2037.2s] And in general, I really like that you did such a thorough job of like testing with many
+[2037.2s - 2043.3s] different test cases and you seem to know how to debug to and like identify the specific cases
+[2043.3s - 2046.7s] where your code might go wrong. And you caught your own mistakes as you went along, you know,
+[2046.7s - 2051.4s] like identifying the boundary condition. So I didn't need to point that out to you. So that was
+[2051.4s - 2057.8s] awesome. So I think like one thing that could have been even better, especially because in interviews,
+[2057.8s - 2064.6s] they tend to be a little bit more particular about this is like coding style. So I think you
+[2064.6s - 2069.3s] mentioned this a little bit earlier actually, but we never sort of got to it is that for the mapping.
+[2069.3s - 2074.4s] So the mappings from these years to ones to the intermediate mapping custom mapping from 0 to 3.
+[2074.4s - 2080.7s] And then back, we could probably implement those either as dictionaries or helper functions.
+[2080.7s - 2084.5s] And that would like probably get rid of a lot of these like if cases that you see throughout
+[2084.5s - 2089.3s] the code and make it a lot easier to read. Yeah, that's true. Yeah. And then another thing,
+[2089.3s - 2094.8s] specifically with Python too, it's often in many style guides that you should use
+[2096.0s - 2100.8s] type hints for the arguments and also like some method comments, right? Especially for
+[2100.8s - 2106.2s] code like this that can be a little bit confusing if you don't entirely know what the algorithm is
+[2106.2s - 2111.3s] beforehand, especially for loose where you're simultaneously like editing and reading the grid at
+[2111.3s - 2116.8s] the same time. So the for the contents of the collection that you're iterating through is changing
+[2116.8s - 2121.4s] as you're iterating through it. It's good to include a comment there indicating that that will happen,
+[2121.4s - 2128.9s] you know. Yeah, but I think other than that, it was excellent. Thank you so much for joining us
+[2128.9s - 2134.1s] today. Yeah, thank you. Really appreciate it at the time. Yeah. And this is such an interesting
+[2134.1s - 2138.6s] question. So thanks everybody for watching and good luck with your upcoming interviews. Bye,
+[2138.6s - 2144.5s] everyone. Thanks so much for watching. Don't forget to hit the like and subscribe buttons below to
+[2144.5s - 2149.7s] let us know that this video is valuable for you. And of course, check out hundreds more videos
+[2149.7s - 2155.4s] just like this at try exponent dot com. Thanks for watching and good luck on your upcoming
+[2155.4s - 2156.1s] interview.

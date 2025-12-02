@@ -1,0 +1,47 @@
+# Good IT/Software Engineering Mock Interview Videos
+youtube_video_ids = [
+x    "1qw5ITr3k9E",  # Software Engineering Mock Interview
+x    "V8DGdPkBBxg",  # Coding Interview
+x    "t3qZR6Qjy-c",  # System Design
+x    "gnkrDse9QKc",  # Technical Interview
+x    "q4Ps6cdrnw4",  # Mock Interview
+    "yJBXunVOWC4",  # Software Engineer Interview
+    "CJVpg4enHPA",  # Tech Interview
+    "wWPSz7o2RJs",  # Mock Technical Interview
+    "rw4s4M3hFfs",  # Engineering Interview
+    "5xf4_Kx7azg",  # System Design Mock
+    "GneS80iYa7I",  # Coding Interview Practice
+    "T9Y82JH4-pY",  # Technical Mock Interview
+    "Z-0g_aJL5Fw",  # Software Engineering
+    "uzeJb7ZjoQ4",  # Mock Interview Session
+    "VJpfO6KdyWE",  # Tech Interview Prep
+    "lZ5QuFLCVn0",  # Engineering Mock Interview
+    "6erP70R_NGs",  # System Design Interview
+    "ZwwYgiT9GH0",  # Software Engineering Mock
+    "I9-PUPYZyiw",  # Technical Interview Practice
+    "6fOoXT1HYxk"   # Mock Coding Interview
+]
+
+# interviewing.io links (you'll manually fetch these)
+interviewingio_links = [
+    "https://interviewing.io/mocks/google-system-design-design-youtube",
+    "https://interviewing.io/mocks/google-machine-learning-personalized-newsfeed-system",
+    "https://interviewing.io/mocks/amazon-system-design-calendar-system",
+    "https://interviewing.io/mocks/amazon-system-design-charity-donating-system",
+    "https://interviewing.io/mocks/amazon-system-design-amazon-ranking-system",
+    "https://interviewing.io/mocks/netflix-system-design-payment-pipeline",
+    "https://interviewing.io/mocks/meta-system-design-ml-instagram-reels",
+    "https://interviewing.io/mocks/facebook-system-design-centralized-ml-management-platform",
+    "https://interviewing.io/mocks/microsoft-system-design-gaming-leaderboard",
+    "https://interviewing.io/mocks/faang-system-design-design-coderpad",
+    "https://interviewing.io/mocks/faang-system-design-design-robinhood",
+    "https://interviewing.io/mocks/facebook-system-design-design-live-comments",
+    "https://interviewing.io/mocks/facebook-system-design-design-a-free-food-app",
+    "https://interviewing.io/mocks/google-system-design-design-facebook-events",
+    "https://interviewing.io/mocks/faang-system-design-designing-whatsapp",
+    "https://interviewing.io/mocks/facebook-system-design-design-online-judge",
+    "https://interviewing.io/mocks/amazon-system-design-design-leetcode",
+    "https://interviewing.io/mocks/faang-system-design-ml-detect-scam-and-fraudulent-practices",
+    "https://interviewing.io/mocks/ml-harmful-content-removal",
+    "https://interviewing.io/mocks/amazon-behavioral-leadership-principles"
+]

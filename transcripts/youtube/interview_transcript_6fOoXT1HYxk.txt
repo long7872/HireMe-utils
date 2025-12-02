@@ -1,0 +1,333 @@
+SOURCE: YouTube
+VIDEO_ID: 6fOoXT1HYxk
+URL: https://www.youtube.com/watch?v=6fOoXT1HYxk
+GPU: 1
+DURATION: 2189.2s (36.5 min)
+TRANSCRIBED: 2025-11-28 09:46
+================================================================================
+
+FULL TRANSCRIPT:
+--------------------------------------------------------------------------------
+ I would like you to design a key value store, like Memcache. Hi, everyone, and welcome to another mock interview with Exponent. I'm here today with Praveen. Would you like to introduce yourself? Hi, I'm Praveen. I currently work with Microsoft in Canada. Awesome. Nice to meet you, Praveen. Let's jump right into the question. So today, I would like you to design a key value store, like Memcache. Okay. Okay. Yeah. Thank you, and for having me here today, let's get started. Okay. So just to iterate and understand the question correctly, we are trying to design a system which is primarily going to use for caching. And when I think of any data or any system, like key value for caching, we are thinking of two things, which is first, anyway, I talked about caching. Another is the memory. So any caching system is always deployed on highly efficient, but less planned on hardware. Since it's very costly, we need to take some consideration while developing this system, especially that we cannot have all the data in the system, right? The reason we have this database is so that we can take some load from our regular databases and have frequently asked query from this caching system, right? Okay. So now let's jump into how and what are the approaches we can take to design the system, right? So the very first thing which we can do is let's start with the requirements gathering, right? So what I see for any key value pair system, there will be two kinds of requirement gathering. One is categorized in functional and another is non-functional requirement. So for, yeah, let's categorize the requirements into two sections, which is functional and the non-functional, right? And since we know it's a key value pair system, the two functional requirements would be put and key output and date. The reason we are having these functional requirement because these are the operations we're performing on this system, right? And when you think of a port, it will be usually you'll associate any data you're storing in the cache with the key and the value which you are storing. For now, we just, we'll just think of this system as it's storing key and value both as in text and forget. We'll use the system service will simply pass the key to get the data. When we think of a non-functional requirement, we want to see accept technical services and queries and all those things. What are things we are taking into account for this system? First thing which comes to my mind is availability, right? That we want system to be highly available because if system is not highly available, then we are doing the same sort of all the queries to the database. And remember, if you call from the start, we want to make sure that the system is the reason we want to avoid all the queries back to the database, right? And it should be scalable because not just having one node when your system is distributed across multiple services, each services it's a different set of cache and you want to divide those cache into different geographical locations. It should be scalable enough. And the third thing is it should be performant enough that it's able to take all the operations in the fast manner, right? Now, let's get started with the functional requirements and then we'll move slowly to the non-functional requirement and together we see how we can achieve both of them. Okay, now before we jump into the functional depth of this requirement, think from how you can design the system for simple computer, simple services as a step, basic step, right? So before we scale down to multiple systems, let's see how we can implement this for one system. So assuming you have a service here, which, and then you have your database. Okay, now for this service, let's implement simple cache. Just do it this. Okay, now this is one simple. We are not going to complicate with multiple servers. Now let's start. Okay, so when you think from key value pair, in order to maintain a cache, the very first thing which comes to our mind is hash table, right? It provides, it's efficient in terms of retrieving and adding the data and it provides the get and put functionality which we need, right? So we can have a one cache service A and with the service A and a cache A and we can always, the service, this particular service A will be responsible for checking anything into the cache A. If it's not there, it's going to go to the database and fetch it and make sure to update the cache so that next query will be able to get the data from the cache, right? Now let's go back to the hash table which we discussed. So there is one challenge with the hash table, though it's great for our usage, but that we know the keys in the hash table are always limited, right? We cannot have all the data into the cache and like we talked about in the very first section that since cache are deployed on a expensive memory, we also want to have consideration of memory usage into the mind, right? So to fix that part, what we can do is we can take something into the cache policies into account. So caching policy is where we talk about how much data will be stored in the cache, how you're going to evict the particular data from the cache, right? And one of the eviction policies we can consider is L-I-U which is recently used, just to share a few more. There are least frequently used. So anytime you see a cache as fold, any particular item which is not frequently used compared to rest of the elements in the cache, you just remove that. And there is one more which we can also consider is first and first stop, any item which was last put into the list, we just remove it in case we see that cache as fold. But for the course of this discussion, we can go with the least recently used cache. So what happens in the least recently used cache is anytime you see a cache as fold, any other new item incoming to the cache, you see that whichever item was last used by any request, you just remove that item, right? And how we are going to do that is if you see that hash table gives us get and post, but the question comes is how do you drag which item was used and when, right? Because hash table only provides you key value pair stories, but it does not provide you any mechanism to drag which was stored and which was exist and when. Just before we move on, are there any particular reasons that you're going to pick, LRU over any of the other policies? No, so there is not specific, it's an often it's driven from the business perspective, what's the best balance you're able to find. If you take an example, if you're having a website where you want to see based on recommendation system is that what videos are views how many times we may want to use these frequently used, but if you want to show the high top videos and in those cases, but as of now, I think we just want to go with LRU for this use case. Okay. Sounds good. Just okay, perfect. So now when we move for the, okay, so what we discuss so far is we can see hash table and in order to take into account that which data structure can be used for tracking, one of the simplest and the optimized data structure which comes to our mind is doubly linked list, right? So what we'll be having is we'll be having a hash table. So this will be hash table and I'll just make a hash table. Okay, and this will be a doubly linked list. So what will happen is that each element of a hash table will map to a doubly linked list and as you, as the data enters into the, as the data enters into the queue, we are going to have changed the reference into doubly linked list. So I'll just demonstrate with the how three elements will work in the doubly linked list for this manner. So assuming we have, as of now, your cache is limited by only size two, right? And you have two elements into your doubly linked list. So A and B, right? And you know that these since A was first B was added, then A was added to anything. In the case of LRU, any item which is newly added, we move to the head of the doubly linked list. So if this is, this is points to head, right? So now if an item C comes to just change the R, so it's correct. Okay, yeah. Now when you see an item, third is added, which is C, you see the cache current limit is full. So you cannot add that element into the cache. So what you can do instead is you can delete the evict the B and remove it from the cache since it was the least recently used. And also just to emphasize on that, you don't have to always calculate which was least recently used. The way you form linked list, automatically, you know, the last item in the doubly linked list are least recently used. And the references will be kept in the hash table. So you don't have to worry. So now we just remove the B reference and we add another A. Just go ahead. Okay, and then you add a new node and you add C and you point head to the C. Okay, right? So this is how the references will work in the doubly linked list and you will use the hash table. So now you have problem solved for one system. Let's revisit it once. So you have a caching mechanism service A and the database and the caching will work with hash table and the doubly linked list. But this works only this works well for the one system, but in real scenarios, we'll have a way more system or way many more caches and services. Let's see how we can implement this for multiple services, right? Okay, so let's try to scale our simple approach. So in the real scenario, assuming you have multiple services. Okay, now there are multiple approaches which can be taken in terms of how you put a cache. Take an example. If I'm storing a cache from A to Z, maybe those are alphabetical keys, just an example. Maybe the name of the user starts with A and A to Z and then I'm just going to split them into different different caches. So I can think of cache A will store from A to M and then I can think of cache B that will store from A to N, sorry, N to Z. Yeah, now I do have caches and I know these are distributed from the entire dictionary and for the cache. Now, one approach can be that you can deploy these cache A and cache B on a different machines altogether, right? You don't want to deploy them in the service A whichever the host is hosting services assuming this is hosted on one one host and the service B is on other hosts. You can deploy these cache on a different host and the reason we are deploying these cache on a different host is, okay, yeah, let me take a step back and explain what I have did so far. Now, there are two ways you can deploy these caches. One is you can deploy them on the same host and the benefit you get out of deploying them in the same host so I can say service A and caches deploying on one host. Service B and cache B is deployed on another host and the benefit you get out of that is you avoid your maintenance overhead. Now, you have only one host to maintain and also as you scale service A since it has cache B also, it automatically gets scaled. You don't have to add additional hardware to cache A but there comes a challenge. If something happens to the host, so if something happens to the host A, service B will not be able to access cache A because we have deployed them in the same host. So this is one of the consideration that needs to be kept in mind while designing these caches. Also, if you go for the other approach, which I say that you deploy service A on host one, service B on host two, cache A on a host three, cache B on a host four, right? This is also consideration but the benefit you get out of this is that you don't have to worry about one host going down and taking another cache also with itself. But another challenge comes is that you have to maintain two different host but you also get another plus point which could be that you can independently scale these caches assuming service O is running on hardware of 64 GB but you said caches being used a lot. You can just independently scale this hardware. So these other two approaches you can take and all of both of them have their own pros and cons. It depends take an example for a use case where you see that having cache always up and ready is really important. On those particular cases, you can always consider deploy them on a different machines, right? One took for probably higher availability, right? So now we have covered how we can deploy our caches. I'm just going to check my notes. Okay, so this is the, okay, so this is the scalable architecture we have created now. But one of the questions comes in our mind is the previous section we talked about our LRU algorithm and who is going to do all those things and how are we going to select a cache, right? Now before we build a component who is responsible for doing all reaching out to cache and fetching the data and updating the database, those operations, let's figure out how we are going to figure out a cache, right? So in order to figure out a cache, the naive approach which would be, okay, the naive approach would be you can always mod the number of forces. So take an example, mod function is something which can help. So assuming you have three cache, right? Now in order to have three cache, what you can do is you can have a hash function. And hash function will take the key in which whatever the key you get from the service. And then you can mod the number of forces you have. Okay, so this is the naive approach and the reason I called it naive approach, it does work very well. But there is a challenge with this approach. If something happens to any of the caches, assuming you have three cache or take an example for this case since we are talking about two cache, assuming you have two cache. And tomorrow if you're adding a cache, see, if something goes, something happens to cache in cache P and they go down for any reason, the hash function will start returning the wrong value. And the reason is even though it says number of host, which remains, which changes, right? And so you don't get the same answer. So if I change the number of host, I won't get the same answer I got the previously. When I added the cache, because when I added the cache, the number of host was two. So function returns x. But now once over goes down, and when that server comes up, that three host, a four host. So the function does not return the same value. So I'll go and I'll check the key in a server where it does not even exist. Yeah. So how do we tackle this? One simple way to solve this problem is consistent hashing. Okay. So we won't be going into the depth of condition, consistent hashing, but I'll give you complete overview on why do we use it? Okay. So the goal of consistent hashing is to make sure that it instead of using this particular hash function, what it does is it draws a circle. Okay. So what it does is it points each cache as a point on this circle, right? Which is ideally equally distributed across the circle. So what happens is that take an example if I'm going to draw one, this is my probably cache. I will just name it A and B so that it's easy to read in the stand and assuming you have let's take an example of three caches. Okay. So just think of this circle as an entire range of numbers, right? Which is A to set and we talked about. So probably A takes care of A to J and then it is distributed equally to B and C, right? Now the main thing which need to keep in mind here is that the B sub B caching server will take care of only the subset key which goes from A to A and A will only take care of the keys which goes from A to B and same for B it will take care of the keys which goes from B to C and now assuming we have cache day coming into a system. When we have cache day coming into the system, what happens is that if you see nothing gets changed for A and B the range of key which A was handling and now the range of key which B is handling remains same, right? But there is only a small subset of the change which happens for the C and that's the whole point of using consistent has a consistent hashing is when there is a change in system whether cache are added or removed we want to have minimum, minimal impact into the system. In this case only a small set of key for C gets affected that's all and as they get into the system the keys will rebuild for B and those key range will be from D to A that's all and same if you add another cache tomorrow probably E the same goes for E also B will get only small keys will get affected in the B those will be these one and A E will be managing the keys from A to C so like you see in the naive approach though it was also simple but if we add more server or something goes wrong in the system it affects the entire system but in consistent hashing it makes sure that only subset of the keys where new servers are added or removed gets affected and rest of the system remains proper. Okay so we have the basic approach hashedable double linked list we have the services and we have shown how we can deploy these we have approach how we can pick a particular cache but the question comes is who does that? Okay so I'm going to introduce a new component here and I will call it as cache client. Okay one idea is that these services service A and service B have their own purpose we don't want these services to be focusing on figuring out where to fetch the data from or which cache to update or where the cache lies right so what we are going to do is we are going to build an independent component and this component will probably be deployed as part of these services and you can think of them as a library or as a module each service here will have an instance of cache client and the reason we have a cache client is because we want to separate the responsibility each component that system is holding right and here the cache client will be deployed with every services you have and based on the number of services on the number of cache have the responsible cache cache client is to find the cache where to fetch the cache from which URLs or where cache servers are hosted and update the database according to those things right now the key things to make keep in mind is that how does cache client gets the name of the cache server right so we haven't talked about that but part as of now so let's jump into it there are multiple ways you can always share let's say I have two server cache in cache b and they're specific you are and we know that week tomorrow we can add more caching so how does cache client gets to know the URLs right one nine approach you can always take is have a configuration file which lists down the URLs for each caching server and deploy them as part of CI or DevOps process right one other approach you can always take is that the services or the cache clients fetch these files periodically from a global location or you can think of an s3 file right but there is a drawback to it you cannot pull too often to the s3 server just to get the list of the caching server you have right what better approach you can always take is that you can use an intermediate service like zookeeper where whenever a cache server gets registered it can add a registry to zookeeper and it's more fun health check and cache client works with the zookeeper to get the list of an updated cache server so based on the scenario if you know that cache server cache server may not go down or probably it's not that important you can go for the very first approach a nine approach which is simple enough but has an old drawback or you can go for the more advanced approach where you know it's highly critical to have an updated cache server list with us so that we can fetch the right data and also the reason what we want to consider a best approach here is because if your cache server goes down you are going to have a lot of cache is and in that case all the queries will go into database so that can also affect okay now we have we have our approaches in mind let's let's go and revisit our requirements which we gathered in initial part of it let's see if we are able to meet our requirements or not okay so we know we we are able to meet get input because we have a library cache with hash table and doubly linked list we'll be able to do get input operations to get the data not let's talk about availability as of now our system is available but is it highly available can it be available in other in all almost all these scenarios I would say probably not and the reason I would say it's probably not is because if you think of as of now we have only one instance of a particular cache server which is running so we'll see how we can improve that aspect of availability in a minute let's go and check our scalability yes the system is scalable because you can always deploy these caches on an individual host and we have a mechanism with the help of a cache client that we can add any number of cache and URLs will be configured with the help of some system like zookeeper or cICC process and yes we have a performance system because we chose one of the past approach which is hash table and doubly linked list which gives the data a constant time that let's go back to see availability right and see how we can fix the availability part here okay so now take an example I have a service a here and which is accessing the cache a now how you can make sure that even in even if you're getting a lot of request to the cache you can make sure that it's available so what we'll be doing is we'll adding read replica to this system right and the reason we're adding read replica okay so just a minute okay so in order to open a system to be highly available what we are going to do is we are going to add read replica to the cache a and the reason we are going to do is tomorrow if cache a which is the means over if that's over goes down we know that the URLs for the configurations of read replica is also available with our clash client in that particular case cache client can get the data from read replica there is another approach which can be taken for these read replica is that all the right request I would say all the put request can go to the so you can always input and get requests to the main server but if you want to read and if just want to read that data since we know these are read replica you can always direct only the read query which is the category to the read replica however there is one thing you that needs to be kept in mind and I think the answer to that goes based on how sensitive and important data is for those scenarios is assuming you add something to the cache a now we know as of now we are just doing asynchronous replication from cache a to these read replica assuming you updated a particular name or particular information cache a now before the data gets propagated asynchronously to read replica a and b if cache a goes down and cache client fetches the same data which is now updated from read replica a or read replica b you may not get the most of the last updated data from the cache the reason is that because we are doing asynchronous replication right even if the a server does not crash it's it's there there will be a chance that you may not get the most updated information to get around this is that what you can do is you can have a synchronous replication between from cache a to these read replica but you may get slight performance sit in that case because unless the replication happens to both of these databases you may not get a response back so based on how since given that informs I think take an example from a financial systems I think in that particular scenario it's okay to slightly latency when you're treating this statements but you want to make sure that statements are correct so in that case you can go for the correct information where you have the integrity of the data but maybe take an example from feed or if there is social media you're okay to see the view counts and certain things blade are probably the next three fresh and you can go from the asynchronous approach right so this solves our highly availability system right and that's that talked about data consistency is really important and often there is no one answer or one no one solution which fits for all the design system it's the business consultation that you can take in mind which works for which system right now there is one thing however I want to talk about we have our system but we also want to make sure that our system is secure enough right in the general practices you will not be placing your caching server outside of the firewall and you want to make sure that your caching server will only be accessed by the trusted clients it can be web services or it can be load balances right and those considerations are really important and that's where a lot of monitoring needs to happen in the caching server with the help of a log you want to make sure that who are accessing these servers how frequently these are accessing how much cache hit and cache misses happening in these services and you also want to keep track as for analysis and for understanding how much disk usage is happening on these servers so that you have the number and it's often said that if you cannot if you don't have the number it's difficult to improve it right if you can't measure it you can't improve it so having measurement is not only important from the performance but also from the secretive standpoint yeah so now I'll just probably yeah so let's let's do a conclusion of what system architecture we have built and then we'll see from there okay so what we chose is we chose the simplest recently risk mechanism with the help of hash table and doubly linked list it has performance because it uses constant get input from the cache and those cache servers will be accessed via the help of consistent hashing consistent hashing will be placed all the logic of which service to find where to find will be a part of a component cache client we can deploy this cache client as part of services into a different so tomorrow if you roll a service see you make sure you can add the cache client to that service and if you know that in service see you don't need cache client because it's not going to access any cache you could simply not include it and that's the reason we want to make sure that it's an individual component which can be deployed along with the services and to have a highly scalable and available caching server we are going to use the red replica and with the asynchronous replication and we are going to distribute the queries so that we are reducing the load on our caching the main caching server and we'll be doing that by distributing around in the get queries to a red replica and they get managed asynchronously with the caching server so this is the system design which if we can come up with for the key value pair a similar database or so system design like man cache okay this looks great I was wondering are there any are there any approaches alternative to the consistent hashing one that you've taken and are there any drawbacks to the one that you chose yeah I think I think that's a great question though we know that consistent hashing solve a majority of the problem often there are two challenges with consistent hashing also is that you when you add a lot many servers into the clusters you may not get the even distribution of the keys right some servers will have a lot many keys compared to the rest of the servers with caching server which you have deployed in the ring and another challenge which comes with consistent hashing is the memory the memory requirement can goes up to the number of cache servers you have deployed into the number of multiplied with the number of services right so there are much better and improved version of consistent hashing available like an example jump hashing which aims to solve these problems okay I think that sounds good I thank you so much for being for your time and I'm sure this is very useful to everyone watching this is there any advice you would give people who come across questions like these in their interviews yeah I think one of the things that needs to be kept in mind is when you're designing a system like this make sure to start from the very basic step it's like how would you implement this on a very small level probably would just one service right if you often start uh implement the output or having a service so you can directly scale scale from the step one it becomes challenging right so come up with a small approach like we came up with one service one cache and algorithm and once we have that approach perfectly built in then you can add more server and see challenges we see when we scale this out yeah so hopefully this can help you yeah that's good advice start small then build from there yeah thank you so much Pervine it was wonderful having you and good luck to everyone watching good luck to all on all of your interviews thank you nice talking to you and thank you so much for having have a great day
+
+TIMESTAMPED SEGMENTS:
+--------------------------------------------------------------------------------
+[0.0s - 5.0s] I would like you to design a key value store, like Memcache.
+[8.2s - 12.0s] Hi, everyone, and welcome to another mock interview with Exponent.
+[12.0s - 15.2s] I'm here today with Praveen. Would you like to introduce yourself?
+[16.4s - 20.2s] Hi, I'm Praveen. I currently work with Microsoft in Canada.
+[21.3s - 25.7s] Awesome. Nice to meet you, Praveen. Let's jump right into the question.
+[25.7s - 31.2s] So today, I would like you to design a key value store, like Memcache.
+[32.6s - 37.4s] Okay. Okay. Yeah. Thank you, and for having me here today, let's get started.
+[38.1s - 42.8s] Okay. So just to iterate and understand the question correctly, we are trying to design
+[42.8s - 51.2s] a system which is primarily going to use for caching. And when I think of any data or any system,
+[51.2s - 57.5s] like key value for caching, we are thinking of two things, which is first,
+[57.5s - 62.6s] anyway, I talked about caching. Another is the memory. So any caching system is always
+[62.6s - 69.7s] deployed on highly efficient, but less planned on hardware. Since it's very costly,
+[69.7s - 75.6s] we need to take some consideration while developing this system, especially that we cannot have
+[75.6s - 81.9s] all the data in the system, right? The reason we have this database is so that we can take some
+[81.9s - 88.9s] load from our regular databases and have frequently asked query from this caching system, right?
+[90.2s - 97.3s] Okay. So now let's jump into how and what are the approaches we can take to design the system,
+[97.3s - 105.4s] right? So the very first thing which we can do is let's start with the requirements gathering,
+[105.4s - 111.5s] right? So what I see for any key value pair system, there will be two kinds of requirement
+[111.5s - 117.1s] gathering. One is categorized in functional and another is non-functional requirement.
+[117.1s - 123.2s] So for, yeah, let's categorize the requirements into two sections, which is functional
+[123.2s - 128.8s] and the non-functional, right? And since we know it's a key value pair system, the two functional
+[128.8s - 136.6s] requirements would be put and key output and date. The reason we are having these functional
+[136.6s - 142.2s] requirement because these are the operations we're performing on this system, right? And when you
+[142.2s - 147.7s] think of a port, it will be usually you'll associate any data you're storing in the cache with the key
+[148.3s - 153.7s] and the value which you are storing. For now, we just, we'll just think of this system as it's
+[153.7s - 161.2s] storing key and value both as in text and forget. We'll use the system service will simply pass the
+[161.2s - 168.2s] key to get the data. When we think of a non-functional requirement, we want to see accept technical
+[168.2s - 173.5s] services and queries and all those things. What are things we are taking into account for this
+[173.5s - 182.1s] system? First thing which comes to my mind is availability, right? That we want system to be highly
+[182.1s - 192.7s] available because if system is not highly available, then we are doing the same sort of all the queries
+[192.7s - 198.2s] to the database. And remember, if you call from the start, we want to make sure that the system is
+[198.2s - 205.0s] the reason we want to avoid all the queries back to the database, right? And it should be scalable
+[205.6s - 212.0s] because not just having one node when your system is distributed across multiple services,
+[212.1s - 216.9s] each services it's a different set of cache and you want to divide those cache into different
+[216.9s - 223.1s] geographical locations. It should be scalable enough. And the third thing is it should be
+[223.1s - 229.0s] performant enough that it's able to take all the operations in the fast manner, right?
+[231.0s - 237.0s] Now, let's get started with the functional requirements and then we'll move slowly to the
+[237.0s - 241.1s] non-functional requirement and together we see how we can achieve both of them.
+[241.8s - 247.1s] Okay, now before we jump into the functional depth of this requirement,
+[247.1s - 254.5s] think from how you can design the system for simple computer, simple services as a step,
+[254.5s - 259.2s] basic step, right? So before we scale down to multiple systems, let's see how we can
+[259.5s - 265.7s] implement this for one system. So assuming you have a service here,
+[267.1s - 271.4s] which, and then you have your database.
+[275.0s - 279.0s] Okay, now for this service, let's implement simple cache.
+[281.6s - 282.6s] Just do it this.
+[289.8s - 295.1s] Okay, now this is one simple. We are not going to complicate with multiple servers.
+[295.1s - 301.7s] Now let's start. Okay, so when you think from key value pair, in order to maintain a cache,
+[301.7s - 307.2s] the very first thing which comes to our mind is hash table, right? It provides,
+[308.0s - 313.7s] it's efficient in terms of retrieving and adding the data and it provides the get and put
+[313.7s - 320.2s] functionality which we need, right? So we can have a one cache service A and with the service A
+[320.2s - 327.0s] and a cache A and we can always, the service, this particular service A will be responsible
+[327.0s - 332.1s] for checking anything into the cache A. If it's not there, it's going to go to the database
+[332.1s - 336.6s] and fetch it and make sure to update the cache so that next query will be able to
+[337.4s - 343.0s] get the data from the cache, right? Now let's go back to the hash table which we discussed. So
+[343.9s - 350.6s] there is one challenge with the hash table, though it's great for our usage, but that we know
+[350.6s - 355.4s] the keys in the hash table are always limited, right? We cannot have all the data into the cache
+[355.4s - 360.6s] and like we talked about in the very first section that since cache are deployed on a
+[361.4s - 367.0s] expensive memory, we also want to have consideration of memory usage into the mind, right?
+[367.7s - 375.4s] So to fix that part, what we can do is we can take something into the cache policies into account.
+[375.4s - 381.4s] So caching policy is where we talk about how much data will be stored in the cache,
+[381.4s - 388.1s] how you're going to evict the particular data from the cache, right? And one of the eviction
+[388.1s - 396.6s] policies we can consider is L-I-U which is recently used, just to share a few more. There are
+[397.1s - 403.2s] least frequently used. So anytime you see a cache as fold, any particular item which is not
+[403.2s - 407.3s] frequently used compared to rest of the elements in the cache, you just remove that.
+[407.8s - 413.4s] And there is one more which we can also consider is first and first stop, any item which was last
+[413.4s - 418.8s] put into the list, we just remove it in case we see that cache as fold. But for the course of
+[419.5s - 425.8s] this discussion, we can go with the least recently used cache. So what happens in the least recently
+[425.8s - 431.7s] used cache is anytime you see a cache as fold, any other new item incoming to the cache, you see
+[431.7s - 439.8s] that whichever item was last used by any request, you just remove that item, right? And how we are going
+[439.8s - 447.2s] to do that is if you see that hash table gives us get and post, but the question comes is how do you
+[447.2s - 453.7s] drag which item was used and when, right? Because hash table only provides you key value pair stories,
+[453.7s - 460.9s] but it does not provide you any mechanism to drag which was stored and which was exist and when.
+[460.9s - 464.0s] Just before we move on, are there any particular reasons that you're going to pick,
+[465.1s - 467.3s] LRU over any of the other policies?
+[469.3s - 475.1s] No, so there is not specific, it's an often it's driven from the business perspective,
+[475.1s - 480.5s] what's the best balance you're able to find. If you take an example, if you're having a website
+[480.5s - 486.0s] where you want to see based on recommendation system is that what videos are views how many times
+[486.0s - 491.7s] we may want to use these frequently used, but if you want to show the high top videos and in those
+[491.7s - 497.0s] cases, but as of now, I think we just want to go with LRU for this use case. Okay.
+[499.2s - 506.5s] Sounds good. Just okay, perfect. So now when we move for the, okay, so what we discuss so far is
+[506.5s - 512.7s] we can see hash table and in order to take into account that which data structure can be used
+[513.0s - 519.5s] for tracking, one of the simplest and the optimized data structure which comes to our mind is
+[519.5s - 524.2s] doubly linked list, right? So what we'll be having is we'll be having a hash table.
+[525.8s - 531.8s] So this will be hash table and I'll just make a hash table.
+[532.8s - 546.1s] Okay, and this will be a doubly linked list. So what will happen is that each element of a hash
+[546.1s - 554.8s] table will map to a doubly linked list and as you, as the data enters into the, as the data enters
+[554.8s - 559.2s] into the queue, we are going to have changed the reference into doubly linked list. So I'll just
+[559.3s - 563.4s] demonstrate with the how three elements will work in the doubly linked list for this manner.
+[564.7s - 570.9s] So assuming we have, as of now, your cache is limited by only size two, right? And you have
+[571.4s - 577.2s] two elements into your doubly linked list. So A and B, right? And you know that these since
+[578.1s - 585.2s] A was first B was added, then A was added to anything. In the case of LRU, any item which is newly
+[585.2s - 592.2s] added, we move to the head of the doubly linked list. So if this is, this is points to head, right? So
+[593.4s - 600.8s] now if an item C comes to just change the R, so it's correct. Okay, yeah. Now when you see an item,
+[600.8s - 607.3s] third is added, which is C, you see the cache current limit is full. So you cannot add that
+[607.3s - 614.2s] element into the cache. So what you can do instead is you can delete the evict the B and remove it
+[614.2s - 621.8s] from the cache since it was the least recently used. And also just to emphasize on that, you
+[621.8s - 627.2s] don't have to always calculate which was least recently used. The way you form linked list,
+[627.2s - 631.8s] automatically, you know, the last item in the doubly linked list are least recently used.
+[631.8s - 636.6s] And the references will be kept in the hash table. So you don't have to worry. So now we just
+[636.6s - 640.6s] remove the B reference and we add another A.
+[645.8s - 653.0s] Just go ahead. Okay, and then you add a new node and you add C and you point head to the C.
+[653.8s - 659.7s] Okay, right? So this is how the references will work in the doubly linked list and you will use
+[659.7s - 665.4s] the hash table. So now you have problem solved for one system. Let's revisit it once. So you have
+[665.4s - 671.1s] a caching mechanism service A and the database and the caching will work with hash table and the
+[671.1s - 677.4s] doubly linked list. But this works only this works well for the one system, but in real scenarios,
+[677.4s - 683.3s] we'll have a way more system or way many more caches and services. Let's see how we can implement
+[683.3s - 690.6s] this for multiple services, right? Okay, so let's try to scale our simple approach. So in the real
+[690.6s - 702.9s] scenario, assuming you have multiple services. Okay, now there are multiple approaches which
+[702.9s - 708.2s] can be taken in terms of how you put a cache. Take an example. If I'm storing a cache from A to
+[708.2s - 715.5s] Z, maybe those are alphabetical keys, just an example. Maybe the name of the user starts with A
+[715.5s - 719.8s] and A to Z and then I'm just going to split them into different different caches.
+[720.4s - 731.4s] So I can think of cache A will store from A to M and then I can think of
+[736.0s - 746.3s] cache B that will store from A to N, sorry, N to Z. Yeah, now I do have caches and I know these are
+[746.3s - 752.4s] distributed from the entire dictionary and for the cache. Now, one approach can be that you can
+[752.4s - 758.6s] deploy these cache A and cache B on a different machines altogether, right? You don't want to
+[758.6s - 765.0s] deploy them in the service A whichever the host is hosting services assuming this is hosted on one
+[766.0s - 772.9s] one host and the service B is on other hosts. You can deploy these cache on a different host
+[772.9s - 777.0s] and the reason we are deploying these cache on a different host is,
+[779.0s - 783.8s] okay, yeah, let me take a step back and explain what I have did so far. Now,
+[784.6s - 789.0s] there are two ways you can deploy these caches. One is you can deploy them on the same host
+[789.5s - 795.6s] and the benefit you get out of deploying them in the same host so I can say service A and caches
+[795.6s - 801.0s] deploying on one host. Service B and cache B is deployed on another host and the benefit you get
+[801.1s - 806.8s] out of that is you avoid your maintenance overhead. Now, you have only one host to maintain
+[807.4s - 815.3s] and also as you scale service A since it has cache B also, it automatically gets
+[815.3s - 822.0s] scaled. You don't have to add additional hardware to cache A but there comes a challenge.
+[822.6s - 827.9s] If something happens to the host, so if something happens to the host A,
+[828.5s - 835.5s] service B will not be able to access cache A because we have deployed them in the same host.
+[835.5s - 840.6s] So this is one of the consideration that needs to be kept in mind while designing these caches.
+[842.2s - 847.5s] Also, if you go for the other approach, which I say that you deploy service A on host one,
+[847.5s - 854.6s] service B on host two, cache A on a host three, cache B on a host four, right? This is also
+[854.6s - 861.0s] consideration but the benefit you get out of this is that you don't have to worry about
+[861.0s - 866.9s] one host going down and taking another cache also with itself. But another challenge comes
+[866.9s - 873.5s] is that you have to maintain two different host but you also get another plus point which
+[873.5s - 879.8s] could be that you can independently scale these caches assuming service O is running on
+[879.8s - 886.7s] hardware of 64 GB but you said caches being used a lot. You can just independently scale
+[886.7s - 893.2s] this hardware. So these other two approaches you can take and all of both of them have their
+[893.2s - 899.5s] own pros and cons. It depends take an example for a use case where you see that having cache
+[899.5s - 905.4s] always up and ready is really important. On those particular cases, you can always consider
+[905.4s - 913.1s] deploy them on a different machines, right? One took for probably higher availability, right?
+[914.6s - 921.1s] So now we have covered how we can deploy our caches. I'm just going to check my notes.
+[924.2s - 930.2s] Okay, so this is the, okay, so this is the scalable architecture we have created now.
+[930.9s - 936.5s] But one of the questions comes in our mind is the previous section we talked about our
+[937.1s - 943.9s] LRU algorithm and who is going to do all those things and how are we going to select a cache,
+[943.9s - 951.5s] right? Now before we build a component who is responsible for doing all reaching out to cache
+[951.5s - 957.8s] and fetching the data and updating the database, those operations, let's figure out how we are
+[957.8s - 965.0s] going to figure out a cache, right? So in order to figure out a cache, the naive approach which
+[965.0s - 975.1s] would be, okay, the naive approach would be you can always mod the number of forces. So take an
+[975.1s - 980.9s] example, mod function is something which can help. So assuming you have three cache, right?
+[981.8s - 986.6s] Now in order to have three cache, what you can do is you can have a hash function.
+[987.4s - 993.4s] And hash function will take the key in which whatever the key you get from the service.
+[994.7s - 998.6s] And then you can mod the number of forces you have.
+[1000.6s - 1007.4s] Okay, so this is the naive approach and the reason I called it naive approach,
+[1007.4s - 1011.6s] it does work very well. But there is a challenge with this approach.
+[1013.0s - 1018.7s] If something happens to any of the caches, assuming you have three cache or take an example for
+[1018.7s - 1024.2s] this case since we are talking about two cache, assuming you have two cache. And tomorrow if you're
+[1024.2s - 1031.7s] adding a cache, see, if something goes, something happens to cache in cache P and they go down for
+[1031.7s - 1039.8s] any reason, the hash function will start returning the wrong value. And the reason is even though
+[1039.8s - 1046.0s] it says number of host, which remains, which changes, right? And so you don't get the same answer.
+[1046.0s - 1050.6s] So if I change the number of host, I won't get the same answer I got the previously.
+[1051.4s - 1056.3s] When I added the cache, because when I added the cache, the number of host was two. So function
+[1056.3s - 1062.8s] returns x. But now once over goes down, and when that server comes up, that three host,
+[1062.8s - 1068.2s] a four host. So the function does not return the same value. So I'll go and I'll check the key in
+[1068.2s - 1075.8s] a server where it does not even exist. Yeah. So how do we tackle this? One simple way to solve this
+[1075.8s - 1084.8s] problem is consistent hashing. Okay. So we won't be going into the depth of condition,
+[1085.8s - 1091.4s] consistent hashing, but I'll give you complete overview on why do we use it? Okay. So the goal of
+[1091.4s - 1097.0s] consistent hashing is to make sure that it instead of using this particular hash function, what it does
+[1097.0s - 1114.7s] is it draws a circle. Okay. So what it does is it points each cache
+[1115.7s - 1122.5s] as a point on this circle, right? Which is ideally equally distributed across the circle.
+[1123.0s - 1130.3s] So what happens is that take an example if I'm going to draw one, this is my probably cache.
+[1130.3s - 1136.3s] I will just name it A and B so that it's easy to read in the stand and assuming you have
+[1137.5s - 1139.8s] let's take an example of three caches.
+[1145.3s - 1155.0s] Okay. So just think of this circle as an entire range of numbers, right? Which is A to set and
+[1155.0s - 1161.4s] we talked about. So probably A takes care of A to J and then it is distributed equally to B and C,
+[1161.4s - 1168.9s] right? Now the main thing which need to keep in mind here is that the B sub B caching server
+[1168.9s - 1177.5s] will take care of only the subset key which goes from A to A and A will only take care of the
+[1177.5s - 1183.8s] keys which goes from A to B and same for B it will take care of the keys which goes from B to C
+[1184.6s - 1188.5s] and now assuming we have cache day coming into a system.
+[1192.2s - 1197.5s] When we have cache day coming into the system, what happens is that if you see
+[1198.9s - 1207.3s] nothing gets changed for A and B the range of key which A was handling and now the range of key
+[1207.3s - 1216.4s] which B is handling remains same, right? But there is only a small subset of the change which happens
+[1216.4s - 1222.6s] for the C and that's the whole point of using consistent has a consistent hashing
+[1223.2s - 1229.0s] is when there is a change in system whether cache are added or removed we want to have
+[1229.0s - 1235.4s] minimum, minimal impact into the system. In this case only a small set of key for C gets affected
+[1235.4s - 1243.0s] that's all and as they get into the system the keys will rebuild for B and those key range will
+[1243.0s - 1252.2s] be from D to A that's all and same if you add another cache tomorrow probably E the same goes for E
+[1252.2s - 1262.0s] also B will get only small keys will get affected in the B those will be these one and A E will
+[1262.0s - 1268.8s] be managing the keys from A to C so like you see in the naive approach though it was also simple
+[1268.8s - 1274.4s] but if we add more server or something goes wrong in the system it affects the entire system
+[1274.9s - 1280.8s] but in consistent hashing it makes sure that only subset of the keys where new servers are added or
+[1280.8s - 1291.7s] removed gets affected and rest of the system remains proper. Okay so we have the basic approach
+[1291.7s - 1298.1s] hashedable double linked list we have the services and we have shown how we can deploy these we have
+[1298.1s - 1305.2s] approach how we can pick a particular cache but the question comes is who does that? Okay so I'm going
+[1305.2s - 1319.5s] to introduce a new component here and I will call it as cache client. Okay one idea is that
+[1319.5s - 1326.6s] these services service A and service B have their own purpose we don't want these services to be
+[1326.6s - 1332.8s] focusing on figuring out where to fetch the data from or which cache to update or where the
+[1332.8s - 1338.0s] cache lies right so what we are going to do is we are going to build an independent component
+[1338.6s - 1345.0s] and this component will probably be deployed as part of these services and you can think of them
+[1345.0s - 1352.2s] as a library or as a module each service here will have an instance of cache client
+[1355.4s - 1359.8s] and the reason we have a cache client is because we want to separate the responsibility each
+[1359.9s - 1365.5s] component that system is holding right and here the cache client will be deployed with every
+[1365.5s - 1372.4s] services you have and based on the number of services on the number of cache have the responsible
+[1372.4s - 1380.5s] cache cache client is to find the cache where to fetch the cache from which URLs or where
+[1380.7s - 1387.8s] cache servers are hosted and update the database according to those things right now
+[1389.8s - 1397.4s] the key things to make keep in mind is that how does cache client gets the name of the cache server
+[1397.4s - 1403.6s] right so we haven't talked about that but part as of now so let's jump into it there are multiple
+[1403.6s - 1410.5s] ways you can always share let's say I have two server cache in cache b and they're specific
+[1410.5s - 1418.0s] you are and we know that week tomorrow we can add more caching so how does cache client gets to know
+[1418.0s - 1425.3s] the URLs right one nine approach you can always take is have a configuration file which lists down
+[1425.3s - 1432.8s] the URLs for each caching server and deploy them as part of CI or DevOps process right
+[1433.7s - 1441.2s] one other approach you can always take is that the services or the cache clients fetch these files
+[1441.2s - 1448.0s] periodically from a global location or you can think of an s3 file right but there is a drawback to
+[1448.0s - 1456.3s] it you cannot pull too often to the s3 server just to get the list of the caching server you have
+[1456.3s - 1463.4s] right what better approach you can always take is that you can use an intermediate service like
+[1463.5s - 1472.3s] zookeeper where whenever a cache server gets registered it can add a registry to zookeeper and it's
+[1472.3s - 1477.9s] more fun health check and cache client works with the zookeeper to get the list of an updated cache
+[1477.9s - 1485.5s] server so based on the scenario if you know that cache server cache server may not go down or
+[1485.5s - 1490.2s] probably it's not that important you can go for the very first approach a nine approach which is
+[1490.2s - 1495.0s] simple enough but has an old drawback or you can go for the more advanced approach where you know
+[1495.0s - 1501.6s] it's highly critical to have an updated cache server list with us so that we can fetch the right data
+[1501.6s - 1507.3s] and also the reason what we want to consider a best approach here is because if your cache server
+[1507.3s - 1513.7s] goes down you are going to have a lot of cache is and in that case all the queries will go into
+[1513.7s - 1526.2s] database so that can also affect okay now we have we have our approaches in mind let's let's go
+[1526.2s - 1534.9s] and revisit our requirements which we gathered in initial part of it let's see if we are able to
+[1534.9s - 1543.1s] meet our requirements or not okay so we know we we are able to meet get input because we have
+[1544.1s - 1549.8s] a library cache with hash table and doubly linked list we'll be able to do get input operations to get
+[1549.8s - 1558.6s] the data not let's talk about availability as of now our system is available but is it highly
+[1558.6s - 1565.8s] available can it be available in other in all almost all these scenarios I would say probably not
+[1566.5s - 1572.2s] and the reason I would say it's probably not is because if you think of as of now we have only
+[1572.2s - 1578.8s] one instance of a particular cache server which is running so we'll see how we can improve that
+[1578.8s - 1586.7s] aspect of availability in a minute let's go and check our scalability yes the system is scalable
+[1586.7s - 1593.8s] because you can always deploy these caches on an individual host and we have a mechanism
+[1593.8s - 1599.6s] with the help of a cache client that we can add any number of cache and URLs will be
+[1599.6s - 1606.9s] configured with the help of some system like zookeeper or cICC process and yes we have a
+[1606.9s - 1612.4s] performance system because we chose one of the past approach which is hash table and doubly linked
+[1612.4s - 1620.7s] list which gives the data a constant time that let's go back to see availability right and see
+[1620.7s - 1629.4s] how we can fix the availability part here okay so now take an example I have a service a here
+[1630.0s - 1637.1s] and which is accessing the cache a now how you can make sure that even in even if you're getting a
+[1637.1s - 1643.1s] lot of request to the cache you can make sure that it's available so what we'll be doing is we'll
+[1643.1s - 1650.1s] adding read replica to this system right and the reason we're adding read replica
+[1651.8s - 1654.2s] okay so just a minute
+[1659.6s - 1670.5s] okay so in order to open a system to be highly available what we are going to do is we are going
+[1670.5s - 1677.9s] to add read replica to the cache a and the reason we are going to do is tomorrow if cache a which
+[1677.9s - 1685.1s] is the means over if that's over goes down we know that the URLs for the configurations of read
+[1685.8s - 1691.5s] replica is also available with our clash client in that particular case cache client can get the
+[1691.5s - 1698.6s] data from read replica there is another approach which can be taken for these read replica
+[1698.6s - 1702.8s] is that all the right request I would say all the put request can go to the
+[1705.8s - 1711.0s] so you can always input and get requests to the main server but if you want to read and
+[1711.4s - 1715.9s] if just want to read that data since we know these are read replica you can always direct
+[1716.6s - 1723.8s] only the read query which is the category to the read replica however there is one thing
+[1724.4s - 1729.4s] you that needs to be kept in mind and I think the answer to that goes based on how sensitive
+[1729.4s - 1736.6s] and important data is for those scenarios is assuming you add something to the cache a now we know
+[1737.1s - 1742.8s] as of now we are just doing asynchronous replication from cache a to these read replica
+[1743.4s - 1747.6s] assuming you updated a particular name or particular information cache a
+[1748.4s - 1755.8s] now before the data gets propagated asynchronously to read replica a and b if cache a goes down
+[1756.6s - 1763.5s] and cache client fetches the same data which is now updated from read replica a or read replica b
+[1764.2s - 1771.6s] you may not get the most of the last updated data from the cache the reason is that
+[1771.6s - 1778.2s] because we are doing asynchronous replication right even if the a server does not crash it's
+[1778.2s - 1785.2s] it's there there will be a chance that you may not get the most updated information to get around
+[1785.2s - 1791.5s] this is that what you can do is you can have a synchronous replication between from cache a to
+[1791.5s - 1799.1s] these read replica but you may get slight performance sit in that case because unless the replication
+[1799.1s - 1804.4s] happens to both of these databases you may not get a response back so based on how since
+[1804.4s - 1810.9s] given that informs I think take an example from a financial systems I think in that particular
+[1810.9s - 1816.2s] scenario it's okay to slightly latency when you're treating this statements but you want to make
+[1816.2s - 1822.3s] sure that statements are correct so in that case you can go for the correct information where
+[1822.3s - 1827.8s] you have the integrity of the data but maybe take an example from feed or if there is social media you're
+[1827.8s - 1833.5s] okay to see the view counts and certain things blade are probably the next three fresh and you can
+[1833.5s - 1842.4s] go from the asynchronous approach right so this solves our highly availability system right and that's
+[1842.7s - 1848.6s] that talked about data consistency is really important and often there is no one answer or one
+[1848.6s - 1855.0s] no one solution which fits for all the design system it's the business consultation that you can
+[1855.0s - 1862.8s] take in mind which works for which system right now there is one thing however I want to talk
+[1862.8s - 1870.1s] about we have our system but we also want to make sure that our system is secure enough right in
+[1870.1s - 1877.3s] the general practices you will not be placing your caching server outside of the firewall and you
+[1877.3s - 1884.7s] want to make sure that your caching server will only be accessed by the trusted clients it can be
+[1884.7s - 1891.0s] web services or it can be load balances right and those considerations are really important and
+[1891.0s - 1897.0s] that's where a lot of monitoring needs to happen in the caching server with the help of a log you
+[1897.0s - 1902.5s] want to make sure that who are accessing these servers how frequently these are accessing
+[1903.4s - 1908.9s] how much cache hit and cache misses happening in these services and you also want to keep track
+[1908.9s - 1914.7s] as for analysis and for understanding how much disk usage is happening on these servers so that
+[1914.7s - 1921.0s] you have the number and it's often said that if you cannot if you don't have the number it's
+[1921.0s - 1926.3s] difficult to improve it right if you can't measure it you can't improve it so having measurement
+[1926.3s - 1933.0s] is not only important from the performance but also from the secretive standpoint yeah so now I'll
+[1933.0s - 1946.0s] just probably yeah so let's let's do a conclusion of what system architecture we have built and then
+[1946.0s - 1955.2s] we'll see from there okay so what we chose is we chose the simplest recently risk mechanism
+[1955.3s - 1961.4s] with the help of hash table and doubly linked list it has performance because it uses
+[1961.4s - 1968.7s] constant get input from the cache and those cache servers will be accessed via the help of consistent
+[1968.7s - 1976.7s] hashing consistent hashing will be placed all the logic of which service to find where to find
+[1976.7s - 1983.0s] will be a part of a component cache client we can deploy this cache client as part of services
+[1983.0s - 1988.3s] into a different so tomorrow if you roll a service see you make sure you can add the cache client
+[1988.3s - 1993.5s] to that service and if you know that in service see you don't need cache client because it's not
+[1993.5s - 1998.3s] going to access any cache you could simply not include it and that's the reason we want to make sure
+[1998.3s - 2004.2s] that it's an individual component which can be deployed along with the services and to have a
+[2004.2s - 2011.8s] highly scalable and available caching server we are going to use the red replica and with the
+[2011.8s - 2017.8s] asynchronous replication and we are going to distribute the queries so that we are reducing
+[2017.8s - 2023.7s] the load on our caching the main caching server and we'll be doing that by distributing
+[2023.7s - 2030.4s] around in the get queries to a red replica and they get managed asynchronously with the caching
+[2030.4s - 2040.5s] server so this is the system design which if we can come up with for the key value pair a similar
+[2040.5s - 2048.7s] database or so system design like man cache okay this looks great I was wondering are there any
+[2048.7s - 2054.0s] are there any approaches alternative to the consistent hashing one that you've taken and are
+[2054.0s - 2058.0s] there any drawbacks to the one that you chose yeah I think I think that's a great question
+[2058.6s - 2064.6s] though we know that consistent hashing solve a majority of the problem often there are two
+[2064.6s - 2072.2s] challenges with consistent hashing also is that you when you add a lot many servers into the clusters
+[2072.2s - 2078.3s] you may not get the even distribution of the keys right some servers will have a lot many keys
+[2078.3s - 2083.9s] compared to the rest of the servers with caching server which you have deployed in the ring and
+[2083.9s - 2090.2s] another challenge which comes with consistent hashing is the memory the memory requirement can
+[2090.2s - 2095.3s] goes up to the number of cache servers you have deployed into the number of multiplied with the
+[2095.3s - 2102.1s] number of services right so there are much better and improved version of consistent hashing available
+[2102.6s - 2110.6s] like an example jump hashing which aims to solve these problems okay I think that sounds good
+[2110.6s - 2115.8s] I thank you so much for being for your time and I'm sure this is very useful to everyone
+[2115.8s - 2121.2s] watching this is there any advice you would give people who come across questions like these in
+[2121.2s - 2128.0s] their interviews yeah I think one of the things that needs to be kept in mind is when you're
+[2128.0s - 2134.9s] designing a system like this make sure to start from the very basic step it's like how would you
+[2134.9s - 2140.8s] implement this on a very small level probably would just one service right if you often start
+[2141.8s - 2147.6s] uh implement the output or having a service so you can directly scale scale from the step one
+[2147.6s - 2152.8s] it becomes challenging right so come up with a small approach like we came up with one service one
+[2152.8s - 2159.4s] cache and algorithm and once we have that approach perfectly built in then you can add
+[2159.4s - 2165.3s] more server and see challenges we see when we scale this out yeah so hopefully this can help
+[2165.8s - 2171.8s] you yeah that's good advice start small then build from there yeah thank you so much Pervine it
+[2171.8s - 2177.1s] was wonderful having you and good luck to everyone watching good luck to all on all of your interviews
+[2177.8s - 2189.2s] thank you nice talking to you and thank you so much for having have a great day

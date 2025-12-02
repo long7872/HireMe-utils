@@ -1,0 +1,259 @@
+SOURCE: YouTube
+VIDEO_ID: CJVpg4enHPA
+URL: https://www.youtube.com/watch?v=CJVpg4enHPA
+GPU: 0
+DURATION: 636.1s (10.6 min)
+TRANSCRIBED: 2025-11-28 09:18
+================================================================================
+
+FULL TRANSCRIPT:
+--------------------------------------------------------------------------------
+ Let's say your engineering team has to build two features, but there's only bandwidth to build one of them. What do you do as the engineering manager? Hey everyone, welcome back to another exponent, engineering manager, mock interview. My name's Kevin, and on today's show we have Vidal. We're going to be doing a behavioral or leadership type question today. And before we get into that, Vidal, do you mind just telling the audience a little bit about what you do and who you are? Sure, my name is Vidal. I'm an engineering manager currently at LinkedIn, and I lead a couple of teams there. I'm really passionate about engineering, leadership, and management. I also have a website and podcast where I write about it as well. Great, thanks for coming on today's show. So we're going to be doing a leadership or behavioral type question today, and this is what I like to ask. Let's say your engineering team has to build two features, but there's only bandwidth to build one of them. What do you do as the engineering manager? Okay, well, part of it depends on the company. So I'll tell you a couple of different companies I've worked at. For example, when I worked at Walmart, it was a very, very data driven company. And so there I led an engineering team that worked on a mobile website, and I would get requests all the time for features. And so in this case, say we had two features only had bandwidth to build one. Okay, we had a north star, which was to increase the conversion rate of the website. That was the most important thing. It came from senior management, plus everyone on the team agreed that this would be the thing that would be most impactful. So when product managers would come with feature requests, it would always ask them, okay, how much do you think this is going to move the conversion rate? Do you have a theory for how much it'll improve it, or how it will improve it? If we had any kind of data to show that'd be even better. And then the team would do, so that's the data they would give us, right? And then the team, I was a good estimate the effort, right? So engineering team would estimate the effort of the feature and we would look at the impact to effort ratio, right? How much is going to move the conversion rate based on the effort? So in this case, two features, if they were equal effort, we'd look at which one would improve the conversion rate more or that we believed would improve it more. Otherwise, we would just, you know, do this impact effort calculation in that case. Cool, sounds like you would look at the company goal and then you would also look at some matrix consisting of impact and effort. Yeah, how does this feature move like the big goal we have? In this case, and that team was to improve the conversion rate. So that was very, very clear. At another company I worked on, we had a list of prioritized programs, okay? So if two different features came in, we would see which program they mapped to and the higher priority program would get preference unless there was some extenuating circumstance that there wouldn't be. I'll just say two more things there, which I think are helpful is one, it helps that the product managers that are coming to you or was asking for the features kind of understands that process, right? They understand, hey, this is what we're, this is how we're thinking about it. We're trying to move this metric or we're looking at this list of prioritized programs and this is what we're going to do so that they buy into it. But we also give them an escape valve, right? We say, okay, if you don't like the result, no offense, it's fine. Here's how you can escalate, you know? You can escalate to these people and if they agree with you, you know, maybe we're wrong and then we'll do the other feature. So as long as there's a clear escalation path and the process is clear, it's fine and this happens all the time. I mean, this is like engineering manager job a lot when you're doing planning, whether you do quarterly planning, yearly planning, any kind of planning. What does that escalation process look like? So do you give them like the engineering directors or do you, like, who do you link them up with? Well, so like at LinkedIn, we have a very nice process for this. We have this rapid process which you, you know, may have read about. So there's discussions, you know, between say me and the other engineering manager then, you know, you can involve their manager trying to find like a common point, you know, where there's a decision maker. Okay, maybe maybe we both fall into the same VP, for example. So then the VP might be the decision maker. They usually be some negotiation. We'll write up a document which lists the pros and cons of all the approaches and what the recommendations are. So it'll be like spelled out, you know, a little bit. I don't want to say it's like a legal brief, but you know, the arguments will be laid out in writing. And then that will be sent up the chain and presentations will be made and decision will be handed down. I like that. Yeah, I think a ring culture really helps people get their thoughts out and helps people be more comprehensive in thinking about decisions. So that that sounds good for choosing the one of the two that you have to build. Let's imagine that the one that you choose is a progress bar, for example, in the UI. And let's imagine that there's some edge cases in the bugs. So the team is building this progress bar and sometimes the progress bar goes past 100%. Sometimes it goes to a negative percentage when it's not supposed to. And the team is not going to meet the deadline. What would you do here? Okay, well, that's that these things happen also. So I would look at first of all. You know, how important is it to meet the deadline, right? Can we extend the deadline? Like what do we take to fix this bug? And is it acceptable to extend the deadline to deliver the bug? It could be, you know, I don't know what product this is going into, but say we, I mean, it's not a good customer experience, right? So I'm always thinking about the customer a lot because I manage front-end engineering teams that manage mobile engineering teams where things, I'd like stuff that customers can touch. And it doesn't look good, right? If the progress bar goes. So that'd be one thing. Okay, how much, what's it going to take to fix it? It's some amount of time. Usually you can't get an extension, but I'd want to ask anyway, right? Is that a possibility? What's the impact of this being late? Okay, like maybe it's no big deal if it's late an extra day or two, but maybe it's a really big deal. Maybe this is holding up some other, you know, it's not usually just the progress bar that's going out, right? It's going out. I would assume it's part of a larger project, right? So now if that's going to hold up a larger deliverable which is going to have impacts, then we probably can't hold it up just for the progress bar. So then we're going to have to look at, well, what is the impact if the progress bar goes negative or positive? Okay, it looks bad, but is any user data going to be lost, right? That'd be the first thing. Like if user data is going to be lost or there's going to be some financial impact or regulatory violation, there's some really bad thing like that. You know, then we might have to say, wait, we really have to stop this because you can't lose user data, we can't lose financial information, legally protected stuff. But a progress bar doesn't seem likely that it would have those kind of serious negative impacts, okay? So that makes sense for it in the event that the progress bar cannot be moved. So let's maybe talk about what could you do as the injury manager if you learn that you can move the deadline? Well, if we, if we can move the deadline, I mean, we might fix the bug, right? I think you're just using that as an example, right? Like a progress bar is like a very tiny thing, but if we could move the deadline, there's no real impact to moving it. I mean, there's also the cost, you know, here's the other thing too. Maybe we wouldn't even move the deadline. It's not that big of deal. I guess I'd really want to understand what is the impact. Again, I really hate to send stuff out that doesn't look good, but software does ship with bugs, right? Every piece of software out there has like known bugs that it goes out with. So maybe if the impact's not that bad and there's lots of other goodness, you know, because the other delay is if we delay it, then all the other goodness which is going on this feature will also be delayed, which might have far more negative impact to delay, right? So you could just put it in the release notes, right? What does it say to your team, though, if you're allowing them to ship software with these known bugs? Well, look, I want to keep a high bar for everything, but the reality is software does ship with bugs, right? Video game ship with bugs, you know, all kind of things have, you know, they're not perfect. And as we don't know what the bugs are, so this is like a known bug. I don't like to. I'd like it to be at a high level of craftsmanship. But I mean, these are things that I'd be kind of trading off in my mind, you know, how many people are going to see this? Okay, so you say the progress from micro negative or over a hundred percent, how many people, how likely is it that a customer is going to see this, right? If it's like one in a million customers in an odd edge case, then it's not that important. If you're saying every customer is going to see this bad experience, then I'm much more concerned, right? So I guess I want to understand how many people are going to see this? If it's a very, very tiny number, maybe that's acceptable because to delay it would like say one percent of people are going to have this experience. But if I delay it 100 percent of people aren't going to have the other experience, which is better, right? By rolling the thing out, you'd have to make that kind of trade off. I feel okay. Are there any sort of frameworks that you use at work when it comes to moving deadlines, or is it mainly just thinking about the impact and going from there? It's a good question. I don't know if there's a formal phrase.
+
+TIMESTAMPED SEGMENTS:
+--------------------------------------------------------------------------------
+[0.0s - 3.4s] Let's say your engineering team has to build two features,
+[3.4s - 6.3s] but there's only bandwidth to build one of them.
+[6.3s - 9.0s] What do you do as the engineering manager?
+[12.0s - 15.0s] Hey everyone, welcome back to another exponent,
+[15.0s - 17.3s] engineering manager, mock interview.
+[17.3s - 20.0s] My name's Kevin, and on today's show we have Vidal.
+[20.0s - 23.4s] We're going to be doing a behavioral or leadership type question today.
+[23.4s - 24.9s] And before we get into that, Vidal,
+[24.9s - 28.7s] do you mind just telling the audience a little bit about what you do and who you are?
+[28.8s - 30.3s] Sure, my name is Vidal.
+[30.3s - 32.8s] I'm an engineering manager currently at LinkedIn,
+[32.8s - 35.8s] and I lead a couple of teams there.
+[35.8s - 39.1s] I'm really passionate about engineering, leadership, and management.
+[39.1s - 43.8s] I also have a website and podcast where I write about it as well.
+[43.8s - 46.0s] Great, thanks for coming on today's show.
+[46.0s - 49.5s] So we're going to be doing a leadership or behavioral type question today,
+[49.5s - 51.3s] and this is what I like to ask.
+[51.3s - 54.7s] Let's say your engineering team has to build two features,
+[54.7s - 57.6s] but there's only bandwidth to build one of them.
+[57.8s - 60.0s] What do you do as the engineering manager?
+[61.2s - 64.5s] Okay, well, part of it depends on the company.
+[64.5s - 66.5s] So I'll tell you a couple of different companies I've worked at.
+[66.5s - 69.4s] For example, when I worked at Walmart,
+[69.4s - 72.7s] it was a very, very data driven company.
+[72.7s - 78.5s] And so there I led an engineering team that worked on a mobile website,
+[78.5s - 82.5s] and I would get requests all the time for features.
+[82.5s - 84.1s] And so in this case,
+[84.1s - 86.5s] say we had two features only had bandwidth to build one.
+[86.6s - 90.1s] Okay, we had a north star,
+[90.1s - 93.6s] which was to increase the conversion rate of the website.
+[93.6s - 95.3s] That was the most important thing.
+[95.3s - 98.3s] It came from senior management,
+[98.3s - 101.3s] plus everyone on the team agreed that this would be the thing
+[101.3s - 103.1s] that would be most impactful.
+[103.1s - 107.9s] So when product managers would come with feature requests,
+[107.9s - 108.9s] it would always ask them,
+[108.9s - 113.3s] okay, how much do you think this is going to move the conversion rate?
+[113.9s - 116.2s] Do you have a theory for how much it'll improve it,
+[116.2s - 118.1s] or how it will improve it?
+[118.1s - 121.9s] If we had any kind of data to show that'd be even better.
+[121.9s - 124.5s] And then the team would do,
+[126.0s - 128.8s] so that's the data they would give us, right?
+[128.8s - 130.2s] And then the team,
+[130.2s - 131.8s] I was a good estimate the effort, right?
+[131.8s - 134.1s] So engineering team would estimate the effort of the feature
+[134.1s - 138.2s] and we would look at the impact to effort ratio, right?
+[138.2s - 141.1s] How much is going to move the conversion rate based on the effort?
+[141.1s - 141.9s] So in this case,
+[142.0s - 144.6s] two features, if they were equal effort,
+[144.6s - 147.6s] we'd look at which one would improve the conversion rate more
+[147.6s - 149.8s] or that we believed would improve it more.
+[151.1s - 152.3s] Otherwise, we would just, you know,
+[152.3s - 156.3s] do this impact effort calculation in that case.
+[157.6s - 159.7s] Cool, sounds like you would look at the company goal
+[159.7s - 162.2s] and then you would also look at some matrix consisting
+[162.2s - 164.4s] of impact and effort.
+[164.4s - 168.7s] Yeah, how does this feature move like the big goal we have?
+[168.7s - 169.4s] In this case,
+[169.4s - 172.6s] and that team was to improve the conversion rate.
+[172.6s - 175.4s] So that was very, very clear.
+[176.4s - 177.6s] At another company I worked on,
+[177.6s - 182.5s] we had a list of prioritized programs, okay?
+[182.5s - 185.7s] So if two different features came in,
+[185.7s - 188.0s] we would see which program they mapped to
+[188.0s - 191.5s] and the higher priority program would get preference
+[191.5s - 194.1s] unless there was some extenuating circumstance
+[194.1s - 196.0s] that there wouldn't be.
+[197.2s - 198.6s] I'll just say two more things there,
+[198.6s - 201.3s] which I think are helpful is one,
+[202.2s - 204.5s] it helps that the product managers that are coming to you
+[204.5s - 208.8s] or was asking for the features kind of understands that process,
+[208.8s - 209.8s] right? They understand,
+[209.8s - 211.6s] hey, this is what we're,
+[213.0s - 214.3s] this is how we're thinking about it.
+[214.3s - 215.8s] We're trying to move this metric
+[215.8s - 218.8s] or we're looking at this list of prioritized programs
+[218.8s - 220.4s] and this is what we're going to do
+[221.2s - 222.6s] so that they buy into it.
+[222.6s - 224.6s] But we also give them an escape valve, right?
+[224.6s - 225.6s] We say, okay,
+[226.4s - 228.0s] if you don't like the result,
+[228.6s - 230.5s] no offense, it's fine.
+[230.5s - 232.8s] Here's how you can escalate, you know?
+[232.8s - 235.5s] You can escalate to these people
+[235.5s - 237.4s] and if they agree with you, you know,
+[237.4s - 241.2s] maybe we're wrong and then we'll do the other feature.
+[241.2s - 243.1s] So as long as there's a clear escalation path
+[243.1s - 245.9s] and the process is clear,
+[245.9s - 248.2s] it's fine and this happens all the time.
+[248.2s - 252.2s] I mean, this is like engineering manager job a lot
+[252.2s - 253.5s] when you're doing planning,
+[253.5s - 255.1s] whether you do quarterly planning,
+[255.1s - 257.4s] yearly planning, any kind of planning.
+[257.4s - 259.2s] What does that escalation process look like?
+[259.2s - 262.1s] So do you give them like the engineering directors
+[262.1s - 263.3s] or do you, like,
+[263.3s - 265.3s] who do you link them up with?
+[265.3s - 267.6s] Well, so like at LinkedIn,
+[267.6s - 268.8s] we have a very nice process for this.
+[268.8s - 271.8s] We have this rapid process which you,
+[271.8s - 273.8s] you know, may have read about.
+[274.8s - 276.4s] So there's discussions, you know,
+[276.4s - 281.8s] between say me and the other engineering manager
+[281.8s - 284.0s] then, you know, you can involve their manager
+[284.0s - 286.0s] trying to find like a common point,
+[286.0s - 290.0s] you know, where there's a decision maker.
+[290.0s - 293.6s] Okay, maybe maybe we both fall into the same VP,
+[293.6s - 294.6s] for example.
+[294.6s - 297.4s] So then the VP might be the decision maker.
+[297.4s - 299.4s] They usually be some negotiation.
+[299.4s - 301.0s] We'll write up a document
+[301.0s - 304.7s] which lists the pros and cons of all the approaches
+[304.7s - 306.4s] and what the recommendations are.
+[306.4s - 309.0s] So it'll be like spelled out, you know,
+[309.0s - 309.9s] a little bit.
+[309.9s - 312.5s] I don't want to say it's like a legal brief,
+[312.5s - 316.3s] but you know, the arguments will be laid out in writing.
+[316.3s - 319.4s] And then that will be sent up the chain
+[319.4s - 322.9s] and presentations will be made and decision will be handed down.
+[322.9s - 323.4s] I like that.
+[323.4s - 325.3s] Yeah, I think a ring culture really helps people
+[325.3s - 326.3s] get their thoughts out
+[326.3s - 328.1s] and helps people be more comprehensive
+[328.1s - 329.6s] in thinking about decisions.
+[329.6s - 332.7s] So that that sounds good for choosing the one of the two
+[332.7s - 333.9s] that you have to build.
+[333.9s - 335.7s] Let's imagine that the one that you choose
+[335.7s - 338.4s] is a progress bar, for example, in the UI.
+[338.4s - 341.8s] And let's imagine that there's some edge cases in the bugs.
+[341.9s - 344.0s] So the team is building this progress bar
+[344.0s - 346.6s] and sometimes the progress bar goes past 100%.
+[346.6s - 348.4s] Sometimes it goes to a negative percentage
+[348.4s - 350.1s] when it's not supposed to.
+[350.1s - 353.0s] And the team is not going to meet the deadline.
+[353.0s - 354.8s] What would you do here?
+[355.8s - 359.9s] Okay, well, that's that these things happen also.
+[359.9s - 364.4s] So I would look at first of all.
+[364.4s - 366.9s] You know, how important is it to meet the deadline, right?
+[366.9s - 368.2s] Can we extend the deadline?
+[368.2s - 370.6s] Like what do we take to fix this bug?
+[370.6s - 374.1s] And is it acceptable to extend the deadline
+[374.1s - 375.5s] to deliver the bug?
+[375.5s - 377.6s] It could be, you know, I don't know what product
+[377.6s - 379.9s] this is going into, but say we,
+[379.9s - 382.1s] I mean, it's not a good customer experience, right?
+[382.1s - 384.8s] So I'm always thinking about the customer a lot
+[384.8s - 387.7s] because I manage front-end engineering teams
+[387.7s - 390.6s] that manage mobile engineering teams where things,
+[390.6s - 392.3s] I'd like stuff that customers can touch.
+[392.3s - 393.8s] And it doesn't look good, right?
+[393.8s - 395.6s] If the progress bar goes.
+[395.6s - 396.7s] So that'd be one thing.
+[396.7s - 398.9s] Okay, how much, what's it going to take to fix it?
+[398.9s - 401.8s] It's some amount of time.
+[401.8s - 403.2s] Usually you can't get an extension,
+[403.2s - 405.2s] but I'd want to ask anyway, right?
+[405.2s - 406.6s] Is that a possibility?
+[406.6s - 408.8s] What's the impact of this being late?
+[408.8s - 411.8s] Okay, like maybe it's no big deal if it's late
+[411.8s - 414.8s] an extra day or two, but maybe it's a really big deal.
+[414.8s - 418.6s] Maybe this is holding up some other, you know,
+[418.6s - 420.8s] it's not usually just the progress bar that's going out, right?
+[420.8s - 421.6s] It's going out.
+[421.6s - 424.1s] I would assume it's part of a larger project, right?
+[424.1s - 427.4s] So now if that's going to hold up a larger deliverable
+[427.5s - 430.1s] which is going to have impacts,
+[430.1s - 433.6s] then we probably can't hold it up just for the progress bar.
+[433.6s - 435.3s] So then we're going to have to look at,
+[435.3s - 439.3s] well, what is the impact if the progress bar goes negative or positive?
+[439.3s - 440.3s] Okay, it looks bad,
+[440.3s - 443.5s] but is any user data going to be lost, right?
+[443.5s - 444.5s] That'd be the first thing.
+[444.5s - 445.8s] Like if user data is going to be lost
+[445.8s - 448.3s] or there's going to be some financial impact
+[448.3s - 450.1s] or regulatory violation,
+[450.1s - 452.3s] there's some really bad thing like that.
+[452.3s - 454.9s] You know, then we might have to say,
+[454.9s - 456.3s] wait, we really have to stop this
+[456.4s - 458.2s] because you can't lose user data,
+[458.2s - 460.3s] we can't lose financial information,
+[461.6s - 463.0s] legally protected stuff.
+[463.0s - 464.5s] But a progress bar doesn't seem likely
+[464.5s - 469.5s] that it would have those kind of serious negative impacts, okay?
+[469.5s - 472.3s] So that makes sense for it in the event
+[472.3s - 475.5s] that the progress bar cannot be moved.
+[475.5s - 478.7s] So let's maybe talk about what could you do
+[478.7s - 480.2s] as the injury manager if you learn
+[480.2s - 481.7s] that you can move the deadline?
+[482.7s - 485.5s] Well, if we, if we can move the deadline,
+[488.3s - 489.5s] I mean, we might fix the bug, right?
+[489.5s - 491.3s] I think you're just using that as an example, right?
+[491.3s - 493.1s] Like a progress bar is like a very tiny thing,
+[493.1s - 495.5s] but if we could move the deadline,
+[495.5s - 497.6s] there's no real impact to moving it.
+[500.4s - 501.7s] I mean, there's also the cost,
+[501.7s - 503.0s] you know, here's the other thing too.
+[503.0s - 504.4s] Maybe we wouldn't even move the deadline.
+[504.4s - 505.3s] It's not that big of deal.
+[505.3s - 507.3s] I guess I'd really want to understand what is the impact.
+[507.3s - 509.0s] Again, I really hate to send stuff out
+[509.0s - 510.6s] that doesn't look good,
+[510.6s - 514.9s] but software does ship with bugs, right?
+[514.9s - 519.0s] Every piece of software out there has like known bugs
+[519.0s - 520.1s] that it goes out with.
+[520.1s - 523.3s] So maybe if the impact's not that bad
+[523.3s - 525.1s] and there's lots of other goodness, you know,
+[525.1s - 526.9s] because the other delay is if we delay it,
+[526.9s - 528.1s] then all the other goodness
+[528.1s - 530.6s] which is going on this feature will also be delayed,
+[530.6s - 533.7s] which might have far more negative impact to delay, right?
+[533.7s - 537.0s] So you could just put it in the release notes, right?
+[537.0s - 538.5s] What does it say to your team, though,
+[538.5s - 540.2s] if you're allowing them to ship software
+[540.2s - 541.4s] with these known bugs?
+[542.3s - 547.3s] Well, look, I want to keep a high bar for everything,
+[548.9s - 553.4s] but the reality is software does ship with bugs, right?
+[555.6s - 557.4s] Video game ship with bugs, you know,
+[557.4s - 559.9s] all kind of things have, you know, they're not perfect.
+[559.9s - 561.5s] And as we don't know what the bugs are,
+[561.5s - 563.0s] so this is like a known bug.
+[564.1s - 565.1s] I don't like to.
+[565.1s - 568.4s] I'd like it to be at a high level of craftsmanship.
+[569.0s - 572.4s] But I mean, these are things that I'd be kind of trading off
+[572.4s - 575.4s] in my mind, you know, how many people are going to see this?
+[576.7s - 578.8s] Okay, so you say the progress from micro negative
+[578.8s - 582.0s] or over a hundred percent, how many people,
+[582.0s - 586.0s] how likely is it that a customer is going to see this, right?
+[586.0s - 590.5s] If it's like one in a million customers in an odd edge case,
+[590.7s - 592.2s] then it's not that important.
+[592.2s - 597.0s] If you're saying every customer is going to see this bad experience,
+[597.1s - 599.6s] then I'm much more concerned, right?
+[600.6s - 603.7s] So I guess I want to understand how many people are going
+[603.7s - 604.7s] to see this?
+[605.3s - 607.2s] If it's a very, very tiny number,
+[607.9s - 611.5s] maybe that's acceptable because to delay it would like say
+[611.5s - 613.2s] one percent of people are going to have this experience.
+[613.2s - 615.5s] But if I delay it 100 percent of people aren't going to have
+[615.5s - 618.6s] the other experience, which is better, right?
+[618.6s - 621.0s] By rolling the thing out, you'd have to make that kind of trade off.
+[621.0s - 622.5s] I feel okay.
+[622.7s - 626.6s] Are there any sort of frameworks that you use at work
+[626.6s - 629.5s] when it comes to moving deadlines,
+[629.5s - 632.7s] or is it mainly just thinking about the impact and going from there?
+[634.1s - 634.9s] It's a good question.
+[634.9s - 636.1s] I don't know if there's a formal phrase.
